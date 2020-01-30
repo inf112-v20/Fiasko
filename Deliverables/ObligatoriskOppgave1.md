@@ -73,3 +73,14 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 2. En spiller
 3. Spilleren kan bevege seg på brettet
 4. han objekter på kartet som vegger, lasere etc.
+###prosjketmetodikk
+ * 2 fysiske møter i uke. en på gruppetimen og en på torsdager. 
+ * møter på discord online med skjerm deling for parprogramering
+ * sykluser uppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus
+ * vi tenker å ta en blanding av srcum og parprogramering under prosjektet.
+ * Tisrdager brukes for å recape hva som har blitt gjordt uken før og for å avklare om vi føler oss ferdig med oppgaver.
+ * torsdag er satt av for parprogramering
+ * delig av documenter skjer over git eller discord
+ * bruke projectboardet for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
+ 
+ 

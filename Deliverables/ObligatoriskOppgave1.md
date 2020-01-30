@@ -23,7 +23,7 @@ Kristian -> Senior programmer og GitHub ansvarlig (Ansvarlig for å veilede andr
 
 Steinar -> Testing-leder (Ansvarlig for kvalitet av tester)
 
-Thorbjørn -> Grafikkleder (Ansvarlig for utforming av visuelt grensesnitt)
+Torbjørn -> Grafikkleder (Ansvarlig for utforming av visuelt grensesnitt)
 
 Gabriel -> Kundeansvarlig (Ansvarlig for å vite alle spillregler)
 ####Grunnlag
@@ -33,7 +33,7 @@ Kristian -> Han har mest erfaring med kode og den eneste som har gjort ting med 
 
 Steinar -> Sa ja til å være hovedansvarlig for tester
 
-Thorbjørn -> 
+Torbjørn -> 
 
 Gabriel -> 
 

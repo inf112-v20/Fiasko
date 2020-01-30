@@ -48,13 +48,28 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 * En visuell representasjon av et spillbrett
 * En spiller som kan bevege seg på brettet
 * En spiller må kunne dø og tape
+* En spiller trenger liv 
+* Spilleren trenger å kunne ta skade
 * En spiller må kunne vinne
 * Kort for å programmere roboten 
 * Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser)
 * Runder (Består av 5 faser. Du får nye kort, reparasjon, powerdown etc.)
 * Faser (Ett kort fra hver spiller blir brukt, og objekter på brettet intragerer. Registrering av flagg skjer etter hver fase)
 * Kunne spille med andre spillere over nettet
-
+* Lasere skyter i slutten av hver fase
+* Spillere beveger seg hver fase og kort bestemer hvem som går først
+* Velge kort i starteren av runden
+* Kunne velge Power down etter alle har låst kortene sine
+* Slutten av runden får spillere reprasjoner hvis de står på en reprasjons brikke eller flag.
+* Etter lasere må vi sjekke om noen spilere står på riktig flag
+* Respawn etter den er ødelagt ved slutten av runden/fasen
+* hvis en spiller er i power down blir spilleren spurt (i starten av nye runden) om han vil bli i powerdown eller ikke.
+* Roboter må kunne dytte hverandre.
+* Samle inn kort i slutten ev en runde
+* Ikke samle sammen kort som er låst.
+* Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut
 ###Prioriterte krav
-1. Vi har et spill brett
-2. En spiller som kan bevege seg på brettet
+1. Vi har et brett på størelse N*N
+2. En spiller
+3. Spilleren kan bevege seg på brettet
+4. han objekter på kartet som vegger, lasere etc.

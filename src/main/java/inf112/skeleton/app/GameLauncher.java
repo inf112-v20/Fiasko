@@ -59,6 +59,11 @@ public class GameLauncher extends ApplicationAdapter {
 
     @Override
     public void dispose() {
+        robotTexture.dispose();
+        tileTexture.dispose();
+        walledTileTexture.dispose();
+        doublyWalledTileTexture.dispose();
+        slowTransportBandTexture.dispose();
         batch.dispose();
     }
 

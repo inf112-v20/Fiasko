@@ -11,8 +11,6 @@ public class Game implements IDrawableGame {
     private final int BOARD_WIDTH = TILE_SIZE * TILE_NUMBER;
     private final int BOARD_HEIGHT = TILE_SIZE * TILE_NUMBER;
 
-
-
     /**
      * Instantiates a new Game object
      */

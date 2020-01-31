@@ -1,7 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.graphics.Texture;
-
 /**
  * This interface describes an object drawable using libgdx
  */
@@ -11,7 +9,7 @@ public interface IDrawableObject {
      * Gets the texture to use for drawing the object
      * @return The texture of the object
      */
-    Texture getTexture();
+    GameTexture getTexture();
 
     /**
      * Gets the x position the object should be drawn on

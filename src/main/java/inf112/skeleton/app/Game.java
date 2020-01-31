@@ -1,8 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-
 import java.util.List;
 
 /**
@@ -14,22 +11,13 @@ public class Game implements IDrawableGame {
     private final int BOARD_WIDTH = TILE_SIZE * TILE_NUMBER;
     private final int BOARD_HEIGHT = TILE_SIZE * TILE_NUMBER;
 
-    private Texture robotTexture;
-    private Texture tileTexture;
-    private Texture walledTileTexture;
-    private Texture doublyWalledTileTexture;
-    private Texture slowTransportBandTexture;
+
 
     /**
      * Instantiates a new Game object
      */
     public Game () {
-        //Loads some textures
-        robotTexture = new Texture(Gdx.files.internal("assets/Robot.png"));
-        tileTexture = new Texture(Gdx.files.internal("assets/Tile.png"));
-        walledTileTexture = new Texture(Gdx.files.internal("assets/WalledTile.png"));
-        doublyWalledTileTexture = new Texture(Gdx.files.internal("assets/DoublyWalledTile.png"));
-        slowTransportBandTexture = new Texture(Gdx.files.internal("assets/TransportBandSlow.png"));
+
     }
 
     @Override

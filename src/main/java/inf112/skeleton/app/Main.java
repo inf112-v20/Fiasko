@@ -12,6 +12,6 @@ public class Main {
         cfg.width = 768;
         cfg.height = 769;
 
-        new LwjglApplication(new GameBoard(), cfg);
+        new LwjglApplication(new GameLauncher(), cfg);
     }
 }

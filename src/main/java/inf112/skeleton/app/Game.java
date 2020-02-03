@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,16 +21,26 @@ public class Game implements IDrawableGame {
 
     @Override
     public int getWidth() {
-        return 0;
+        return BOARD_WIDTH;
     }
 
     @Override
     public int getHeight() {
-        return 0;
+        return BOARD_HEIGHT;
     }
 
     @Override
     public List<IDrawableObject> objectsToRender() {
-        return null;
+        List<IDrawableObject> list = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 12; j++) {
+                DrawableObject tileObj = new DrawableObject(i * 64, j * 64, GameTexture.TILE);
+                list.add(tileObj);
+            }
+        }
+        DrawableObject roboObj = new DrawableObject(128,128, GameTexture.ROBOT);
+        list.add(roboObj);
+
+        return list;
     }
 }

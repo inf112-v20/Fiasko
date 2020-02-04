@@ -80,5 +80,12 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
  * torsdag er satt av for parprogramering
  * delig av documenter skjer over git eller discord
  * bruke projectboardet for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
+###burker historie
+ * vise et brett
  
+ * som en spiller må jeg kunne se et brett får å kunne spille spillet.
+ * som spillbrett må jeg vise alle elemnter som er på meg 
+ * som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
+ * akseptanse krav er at vi kan se et brett der noe kan bli plassert på brette i en rute/tile
+  
  

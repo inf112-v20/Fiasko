@@ -6,5 +6,5 @@ vil vi gå over til en fase der målet blir å implementere ting som er gøy, me
 Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, Inc.
 
 ##Forkrav for å kunne kompilere og kjøre koden
-* [git](https://git-scm.com/)
-* [maven](https://maven.apache.org/)
+*   [git](https://git-scm.com/)
+*   [maven](https://maven.apache.org/)

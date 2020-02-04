@@ -60,32 +60,32 @@ Det skal kunne fungere over LAN med opptil 8 spillere.
 Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker til).
 
 ###Systemkrav
-*   En visuell representasjon av et spillbrett
-*   En spiller som kan bevege seg på brettet
-*   En spiller taper når de mister alle liv 
-*   En spiller dør om de tar 10 skade
-*   En spiller trenger liv 
-*   Spilleren trenger å kunne ta skade
-*   En spiller må kunne vinne
-*   Kort for å programmere roboten 
-*   Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser)
-*   Runder (Består av 5 faser. Du får nye kort, reparasjon, powerdown etc.)
+*   En visuell representasjon av et spillbrett.
+*   En spiller som kan bevege seg på brettet.
+*   En spiller taper når de mister alle liv.
+*   En spiller dør om de tar 10 skade.
+*   En spiller trenger liv. 
+*   Spilleren trenger å kunne ta skade.
+*   En spiller må kunne vinne.
+*   Kort for å programmere roboten. 
+*   Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser).
+*   Runder (Består av 5 faser. Du får nye kort, reparasjon, powerdown etc.).
 *   Faser (Ett kort fra hver spiller blir brukt, og objekter på brettet interagerer. 
-    Registrering av flagg skjer etter hver fase)
-*   Kunne spille med andre spillere over lan
-*   Lasere skyter i slutten av hver fase
-*   Spillere beveger seg hver fase og kort bestemmer hvem som går først
-*   Velge kort i starteren av runden
-*   Kunne velge powerdown etter alle har låst kortene sine
+    Registrering av flagg skjer etter hver fase).
+*   Kunne spille med andre spillere over lan.
+*   Lasere skyter i slutten av hver fase.
+*   Spillere beveger seg hver fase og kort bestemmer hvem som går først.
+*   Velge kort i starteren av runden.
+*   Kunne velge powerdown etter alle har låst kortene sine.
 *   Slutten av runden får spillere reparasjoner hvis de står på en reparasjonsbrikke eller flagg.
 *   Sjekke om noen spillere står på riktig flagg.
-*   Respawn etter en robot er ødelagt ved slutten av runden/fasen gitt at de har flere liv
+*   Respawn etter en robot er ødelagt ved slutten av runden/fasen gitt at de har flere liv.
 *   Hvis en spiller er i powerdown blir spilleren spurt (i starten av nye runden) om han vil bli i powerdown eller ikke.
 *   Roboter må kunne dytte hverandre.
-*   Samle inn kort i slutten av en runde
+*   Samle inn kort i slutten av en runde.
 *   Ikke samle sammen kort som er låst.
-*   Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut
-*   Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull
+*   Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut.
+*   Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull.
 
 ###Prioriterte krav
 1. Vi har et brett tegnet inn med libgdx.

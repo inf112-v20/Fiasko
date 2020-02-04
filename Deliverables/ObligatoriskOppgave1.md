@@ -120,9 +120,9 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 ###Prioriterte krav
 
-1. Vi har et brett tegnet inn med libgdx.
+1.  Vi har et brett tegnet inn med libgdx.
 
-2. Ha en brikke tegen inn med libgdx. 
+2.  Ha en brikke tegen inn med libgdx. 
 
 ###Prosjektmetodikk
 
@@ -159,8 +159,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
   
 ####Plassere en brikke på brettet
 
-*   Som brikke må jeg kunne plassere på spillbrettet  
-
+*   Som brikke må jeg kunne plassere på spillbrettet 
 *   Som brikke må jeg være synlig på brettet
 
 #####Akseptansekrav 

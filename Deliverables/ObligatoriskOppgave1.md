@@ -33,7 +33,7 @@ Kristian -> Han har mest erfaring med kode og var en naturlig leder.
 
 Steinar -> Sa ja til å være ansvarlig for tester
 
-Torbjørn -> sa ja til å være ansvarlig over å dokumentere møter og dokumentasjonen
+Torbjørn -> sa ja til å være ansvarlig over å dokumentere møter og dokumentasjonen  
 
 Gabriel -> sa ja til å være den som har kontroll over alle spillreglene
 
@@ -69,10 +69,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 * Ikke samle sammen kort som er låst.
 * Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut
 ###Prioriterte krav
-1. Vi har et brett på størelse N*N
-2. En spiller
-3. Spilleren kan bevege seg på brettet
-4. han objekter på kartet som vegger, lasere etc.
+1. Vi har et brett på størelse N*N tegnet i libgdx.
+2. Ha en spiller eller figur tegen inn i libgdx. 
 ###prosjketmetodikk
  * 2 fysiske møter i uke. en på gruppetimen og en på torsdager. 
  * møter på discord online med skjerm deling for parprogramering

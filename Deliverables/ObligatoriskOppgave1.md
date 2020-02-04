@@ -88,4 +88,10 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
  * som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
  * akseptanse krav er at vi kan se et brett der noe kan bli plassert på brette i en rute/tile
   
+ * plasere en brikke på brettet
+
+ som brikke må jeg kunne plassere på spillbettet  
+ som brikke må jeg være synelig texture på brettet
+ *akseptanse krav brikken blir plasert synelig i en bestemt tile på brettet
+
  

@@ -69,8 +69,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 * Ikke samle sammen kort som er låst.
 * Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut
 ###Prioriterte krav
-1. Vi har et brett på størelse N*N tegnet i libgdx.
-2. Ha en spiller eller figur tegen inn i libgdx. 
+1. Vi har et brett tegnet inn med libgdx.
+2. Ha en spiller eller figur tegen inn med libgdx. 
 ###prosjketmetodikk
  * 2 fysiske møter i uke. en på gruppetimen og en på torsdager. 
  * møter på discord online med skjerm deling for parprogramering
@@ -81,17 +81,17 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
  * delig av documenter skjer over git eller discord
  * bruke projectboardet for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
 ###burker historie
- * vise et brett
+ #### vise et brett
  
  * som en spiller må jeg kunne se et brett får å kunne spille spillet.
  * som spillbrett må jeg vise alle elemnter som er på meg 
  * som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
  * akseptanse krav er at vi kan se et brett der noe kan bli plassert på brette i en rute/tile
   
- * plasere en brikke på brettet
+ #### plasere en brikke på brettet
 
- som brikke må jeg kunne plassere på spillbettet  
- som brikke må jeg være synelig texture på brettet
- *akseptanse krav brikken blir plasert synelig i en bestemt tile på brettet
+ * som brikke må jeg kunne plassere på spillbettet  
+ * som brikke må jeg være synelig texture på brettet
+ * akseptanse krav brikken blir plasert synelig i en bestemt tile på brettet
 
  

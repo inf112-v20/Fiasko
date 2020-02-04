@@ -19,6 +19,7 @@
 *.tar.gz
 *.rar
 
+#IDE Files
 target
 .iml
 .idea

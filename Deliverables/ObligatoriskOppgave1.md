@@ -15,27 +15,30 @@ Litt erfaring men ikke veldig mye. Ingen GUI erfaring.
 
 Gabriel Ingolf og Olav Magnus:
 Relevante fag: INF101 og INF102. Litt komfortable med Java.
+
+###oppsumering
+ Overall kompetanse i java koding ligger på medium mens erfaring med git eller gui er relativt lav. 
 ###Roller
 ####Titler
 Kristian -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
 
-Tobias -> Tester (Ansvar for kvalitet av tester)
+Tobias -> kominakisjons leder ( planlegger møter og parprogrammerings timer)
 
-Steinar -> Tester (Ansvarlig for kvalitet av tester)
+Steinar -> møte organisere (Ansvarlig for å organisere hva som skal gjennomgås på de avtaltene møtene.)
 
 Torbjørn -> dukumentsjons ansvarlig (dokumenter møtene og sørger for at innleveringene er riktig)
 
 Gabriel -> Kundeansvarlig (Ansvarlig for å vite alle spillregler)
 ####Grunnlag
-Tobias -> Sa ja til å være ansvarlig for tester
+Tobias -> vi trenger noen som kan ta ansvar for å planlegge når vi skal ha møter. også kontakt person for om noe ikke kan møte til noen timer
 
-Kristian -> Han har mest erfaring med kode og var en naturlig leder.
+Kristian -> Han har mest erfaring med kode og var en naturlig leder. han har overblikk over hva som skal bli gjordt
 
-Steinar -> Sa ja til å være ansvarlig for tester
+Steinar -> skal organisere møtene slik at vi har en plan før møte. slik at vi ikke møter uten å ha noen plan
 
-Torbjørn -> sa ja til å være ansvarlig over å dokumentere møter og dokumentasjonen  
+Torbjørn -> skal sørge for at det er korrrekt dokumentasjon og bra nok dokumentasjon.   
 
-Gabriel -> sa ja til å være den som har kontroll over alle spillreglene
+Gabriel -> leder for spillregler og ansvar for riktig spillmekanikk 
 
 ##Produktutforming
 ###Overordnet mål
@@ -47,7 +50,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 ###Systemkrav
 * En visuell representasjon av et spillbrett
 * En spiller som kan bevege seg på brettet
-* En spiller må kunne dø og tape
+* En spiller taper når de mister alle liv 
+* En spiller dør om de tar 10 skade
 * En spiller trenger liv 
 * Spilleren trenger å kunne ta skade
 * En spiller må kunne vinne
@@ -55,22 +59,23 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 * Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser)
 * Runder (Består av 5 faser. Du får nye kort, reparasjon, powerdown etc.)
 * Faser (Ett kort fra hver spiller blir brukt, og objekter på brettet intragerer. Registrering av flagg skjer etter hver fase)
-* Kunne spille med andre spillere over nettet
+* Kunne spille med andre spillere over lan
 * Lasere skyter i slutten av hver fase
 * Spillere beveger seg hver fase og kort bestemer hvem som går først
 * Velge kort i starteren av runden
 * Kunne velge Power down etter alle har låst kortene sine
 * Slutten av runden får spillere reprasjoner hvis de står på en reprasjons brikke eller flag.
-* Etter lasere må vi sjekke om noen spilere står på riktig flag
-* Respawn etter den er ødelagt ved slutten av runden/fasen
+* Sjekke om noen spilere står på riktig flag
+* Respawn etter en robot er ødelagt ved slutten av runden/fasen gitt at de har flere liv
 * hvis en spiller er i power down blir spilleren spurt (i starten av nye runden) om han vil bli i powerdown eller ikke.
 * Roboter må kunne dytte hverandre.
 * Samle inn kort i slutten ev en runde
 * Ikke samle sammen kort som er låst.
 * Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut
+* roboter dør hvis de går utenfor spillbrettet eller faller i ett hull
 ###Prioriterte krav
 1. Vi har et brett tegnet inn med libgdx.
-2. Ha en spiller eller figur tegen inn med libgdx. 
+2. Ha en brikke tegen inn med libgdx. 
 ###prosjketmetodikk
  * 2 fysiske møter i uke. en på gruppetimen og en på torsdager. 
  * møter på discord online med skjerm deling for parprogramering

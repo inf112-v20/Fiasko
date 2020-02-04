@@ -9,11 +9,11 @@ import static org.junit.Assert.*;
 
 public class DrawableObjectTest {
 
-    DrawableObject testMinArg;
-    DrawableObject testMaxArg;
+    private DrawableObject testMinArg;
+    private DrawableObject testMaxArg;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         testMinArg = new DrawableObject(5,5, GameTexture.SLOW_TRANSPORT_BAND);
         testMaxArg = new DrawableObject(6, 6, GameTexture.ROBOT, 90, 50, 50, true, true);
     }

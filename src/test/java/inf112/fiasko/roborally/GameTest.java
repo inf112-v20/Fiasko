@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class GameTest {
-    IDrawableGame game;
+    private IDrawableGame game;
 
     @Before
     public void setUp() {

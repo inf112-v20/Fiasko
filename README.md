@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/inf112-v20/Fiasko.svg?branch=master)](https://travis-ci.com/inf112-v20/Fiasko)
 # INF112 Maven template 
 Simple skeleton with libgdx. 
 

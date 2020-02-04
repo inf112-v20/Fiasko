@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.fiasko.roborally;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.fiasko.roborally.abstractions.GameTexture;
+import inf112.fiasko.roborally.game.Game;
+import inf112.fiasko.roborally.game.IDrawableGame;
+import inf112.fiasko.roborally.objects.IDrawableObject;
 
 /**
  * This class renders a game using libgdx

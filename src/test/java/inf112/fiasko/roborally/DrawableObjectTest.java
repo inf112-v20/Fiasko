@@ -1,5 +1,7 @@
-package inf112.skeleton.app;
+package inf112.fiasko.roborally;
 
+import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.abstractions.GameTexture;
 import org.junit.Before;
 import org.junit.Test;
 

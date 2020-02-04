@@ -1,4 +1,8 @@
-package inf112.skeleton.app;
+package inf112.fiasko.roborally.game;
+
+import inf112.fiasko.roborally.abstractions.GameTexture;
+import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.objects.IDrawableObject;
 
 import java.util.ArrayList;
 import java.util.List;

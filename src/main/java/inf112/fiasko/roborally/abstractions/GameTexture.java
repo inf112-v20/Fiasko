@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.fiasko.roborally.abstractions;
 
 /**
  * This enum represents a drawable texture

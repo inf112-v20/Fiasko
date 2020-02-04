@@ -1,4 +1,6 @@
-package inf112.skeleton.app;
+package inf112.fiasko.roborally.objects;
+
+import inf112.fiasko.roborally.abstractions.GameTexture;
 
 /**
  * This class represents an object that can be drawn using libgdx

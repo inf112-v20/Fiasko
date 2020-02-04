@@ -1,8 +1,10 @@
-package inf112.skeleton.app;
+package inf112.fiasko.roborally;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import inf112.fiasko.roborally.game.Game;
+import inf112.fiasko.roborally.game.IDrawableGame;
 import org.junit.Before;
 import org.junit.Test;
 

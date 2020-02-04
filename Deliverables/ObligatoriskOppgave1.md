@@ -17,25 +17,25 @@ Gabriel Ingolf og Olav Magnus:
 Relevante fag: INF101 og INF102. Litt komfortable med Java.
 ###Roller
 ####Titler
-Tobias -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid)
+Kristian -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
 
-Kristian -> Senior programmer og GitHub ansvarlig (Ansvarlig for å veilede andre programmerere og effektiv bruk av GitHub)
+Tobias -> Tester (Ansvar for kvalitet av tester)
 
-Steinar -> Testing-leder (Ansvarlig for kvalitet av tester)
+Steinar -> Tester (Ansvarlig for kvalitet av tester)
 
-Torbjørn -> Grafikkleder (Ansvarlig for utforming av visuelt grensesnitt)
+Torbjørn -> dukumentsjons ansvarlig (dokumenter møtene og sørger for at innleveringene er riktig)
 
 Gabriel -> Kundeansvarlig (Ansvarlig for å vite alle spillregler)
 ####Grunnlag
-Tobias -> Hadde ikke noe i mot det å være gruppeleder og ta ansvar for å organisere og dele ut oppgaver/møter.
+Tobias -> Sa ja til å være ansvarlig for tester
 
-Kristian -> Han har mest erfaring med kode og den eneste som har gjort ting med git før.
+Kristian -> Han har mest erfaring med kode og var en naturlig leder.
 
-Steinar -> Sa ja til å være hovedansvarlig for tester
+Steinar -> Sa ja til å være ansvarlig for tester
 
-Torbjørn -> 
+Torbjørn -> sa ja til å være ansvarlig over å dokumentere møter og dokumentasjonen
 
-Gabriel -> 
+Gabriel -> sa ja til å være den som har kontroll over alle spillreglene
 
 ##Produktutforming
 ###Overordnet mål

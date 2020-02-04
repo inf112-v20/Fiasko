@@ -17,7 +17,7 @@ Gabriel Ingolf og Olav Magnus:
 Relevante fag: INF101 og INF102. Litt komfortable med Java.
 
 ###Oppsumering
- Overall kompetanse i java koding ligger på medium mens erfaring med git eller gui er relativt lav. 
+Overall kompetanse i java koding ligger på medium mens erfaring med git eller gui er relativt lav. 
 ###Roller
 ####Titler
 Kristian -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
@@ -79,25 +79,23 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 2. Ha en brikke tegen inn med libgdx. 
 
 ###Prosjektmetodikk
- *   2 fysiske møter i uke. en på gruppetimen og en på torsdager. 
- *   Møter på discord online med skjerm deling for parprogramering
- *   Sykluser uppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus
- *   Vi tenker å ta en blanding av srcum og parprogramering under prosjektet.
- *   Tisrdager brukes for å recape hva som har blitt gjordt uken før og for å avklare om vi føler oss ferdig med oppgaver.
- *   Torsdag er satt av for parprogramering
- *   Delig av documenter skjer over git eller discord
- *   Bruke projectboardet for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
+*   2 fysiske møter i uke. en på gruppetimen og en på torsdager. 
+*   Møter på discord online med skjerm deling for parprogramering
+*   Sykluser uppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus
+*   Vi tenker å ta en blanding av srcum og parprogramering under prosjektet.
+*   Tisrdager brukes for å recape hva som har blitt gjordt uken før og for å avklare om vi føler oss ferdig med oppgaver.
+*   Torsdag er satt av for parprogramering
+*   Delig av documenter skjer over git eller discord
+*   Bruke projectboardet for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
 
 ###Bruker historie
- #### Vise et brett
- *   Som en spiller må jeg kunne se et brett får å kunne spille spillet.
- *   Som spillbrett må jeg vise alle elemnter som er på meg 
- *   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
- *   Akseptanse krav er at vi kan se et brett der noe kan bli plassert på brette i en rute/tile
+#### Vise et brett
+*   Som en spiller må jeg kunne se et brett får å kunne spille spillet.
+*   Som spillbrett må jeg vise alle elemnter som er på meg 
+*   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
+*   Akseptanse krav er at vi kan se et brett der noe kan bli plassert på brette i en rute/tile
   
- ####Plasere en brikke på brettet
- *   Som brikke må jeg kunne plassere på spillbettet  
- *   Som brikke må jeg være synelig texture på brettet
- *   Akseptanse krav brikken blir plasert synelig i en bestemt tile på brettet
-
- 
+####Plasere en brikke på brettet
+*   Som brikke må jeg kunne plassere på spillbettet  
+*   Som brikke må jeg være synelig texture på brettet
+*   Akseptanse krav brikken blir plasert synelig i en bestemt tile på brettet

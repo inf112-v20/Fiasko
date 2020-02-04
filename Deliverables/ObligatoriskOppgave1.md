@@ -26,10 +26,13 @@ Relevante fag: INF101 og INF102.
 Litt komfortable med Java.
 
 ###Oppsummering
+
 Overall kompetanse i java koding ligger på medium mens erfaring med git eller gui er relativt lav. 
 
 ###Roller
+
 ####Titler
+
 Kristian -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
 
 Tobias -> Kommunikasjonsleder ( planlegger møter og parprogrammerings timer)
@@ -41,6 +44,7 @@ Torbjørn -> Dokumentasjons ansvarlig (dokumenter møtene og sørger for at innl
 Gabriel -> Kundeansvarlig (Ansvarlig for å vite alle spilleregler)
 
 ####Grunnlag
+
 Tobias -> Vi trenger noen som kan ta ansvar for å planlegge tidspunkt for møter 
           og kontaktperson for om noen ikke kan stille på møter.
 
@@ -53,13 +57,16 @@ Torbjørn -> skal sørge for at det er korrekt dokumentasjon og bra nok dokument
 Gabriel -> leder for spilleregler og ansvar for riktig spillmekanikk 
 
 ##Produktutforming
+
 ###Overordnet mål
+
 Vi vil lage en fungerende digital versjon av RoboRally som er kompatibel med MAC, Windows og Linux.
 Applikasjonen må kunne kjøre og fungere uten å ha noen ødeleggende feil eller mangler.
 Det skal kunne fungere over LAN med opptil 8 spillere.
 Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker til).
 
 ###Systemkrav
+
 *   En visuell representasjon av et spillbrett.
 
 *   En spiller som kan bevege seg på brettet.
@@ -112,10 +119,13 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 *   Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull.
 
 ###Prioriterte krav
+
 1. Vi har et brett tegnet inn med libgdx.
+
 2. Ha en brikke tegen inn med libgdx. 
 
 ###Prosjektmetodikk
+
 *   2 fysiske møter i uke. En på gruppetimen og en på torsdager. 
 
 *   Møter på discord online med skjerm deling for parprogrammering.
@@ -136,14 +146,23 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 ###Bruker historier
 
 #### Vise et brett
+
 *   Som en spiller må jeg kunne se et brett får å kunne spille spillet.
+
 *   Som spillbrett må jeg vise alle elementer som er på meg 
+
 *   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
+
 #####Akseptansekrav 
+
 *   Vi kan se et brett der noe kan bli plassert på brette i en rute/tile
   
 ####Plassere en brikke på brettet
+
 *   Som brikke må jeg kunne plassere på spillbrettet  
+
 *   Som brikke må jeg være synlig på brettet
+
 #####Akseptansekrav 
+
 *   Brikken blir plassert synlig i en bestemt tile på brettet

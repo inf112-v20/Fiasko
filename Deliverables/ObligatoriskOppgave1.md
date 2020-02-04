@@ -148,9 +148,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 #### Vise et brett
 
 *   Som en spiller må jeg kunne se et brett får å kunne spille spillet.
-
 *   Som spillbrett må jeg vise alle elementer som er på meg 
-
 *   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
 
 #####Akseptansekrav 

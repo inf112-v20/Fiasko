@@ -150,7 +150,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 -   Som spillbrett må jeg vise alle elementer som er på meg 
 -   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
 
-##### Akseptansekrav 
+##### Akseptansekrav for brett
 
 -   Vi kan se et brett der noe kan bli plassert på brette i en rute/tile
   
@@ -159,6 +159,6 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 -   Som brikke må jeg kunne plassere på spillbrettet 
 -   Som brikke må jeg være synlig på brettet
 
-##### Akseptansekrav 
+##### Akseptansekrav for brikke på brettet
 
 -   Brikken blir plassert synlig i en bestemt tile på brettet

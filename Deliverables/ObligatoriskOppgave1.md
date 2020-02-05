@@ -206,3 +206,6 @@ adminastrative slik at vi kunne jobbe med metodikkene vi hadde valgt. dette forv
 
 -   Vi har ikke tatt referat fra de tideligere møtene denne perioden fordi vi var ikke klar over at det var et krav før 
 etter vi hadde hatt de fleste av møtene våre. men vi planlegger å gjøre det nå fremover.
+
+## UML
+![UML](../Deliverables/Umls/UmlOblig1.png "UML Oblig 1")

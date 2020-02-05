@@ -129,18 +129,44 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Møter på discord online med skjerm deling for parprogrammering.
 
--   Syklus oppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus.
+-   Syklus oppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus som i scrum oppsettet.
+
+-   Vi skal ha en liten sprint som varer en uke hvor vi prøver å blir ferdig med alle oppgavene som blir tildelt på tirsdagene som i scrum oppsettet.
 
 -   Vi tenker å ta en blanding av scrum og parprogrammering under prosjektet.
 
 -   Tirsdager brukes for å re cape hva som har blitt gjort uken før 
     og for å avklare om vi føler oss ferdig med oppgaver.
 
--   Torsdag er satt av for parprogrammering.
-
 -   Deling av dokumenter skjer over git eller discord.
 
 -   Bruke project board for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
+
+-   Arbeids fordelese skal bli gjordt med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
+
+#### Prosessen
+
+-   Planlegger møter god stund før de skal skje.
+
+-   Diskuter ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøre til neste møte.
+
+-   Vi har planlagt å ha parprogramerings timer slik at alle føler seg konfortable med oppgavene og at alle får bidratt med prosjektet.
+
+-   Diskutere spill designe sammen i gruppen slik at alle er på samme nivå.
+
+-   Torsdag er satt av for parprogrammering kl 10:15-12:00.
+
+-   I slutten av en lange sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refakturere eller endere noen andre designe aspekter.
+
+-   kommunikasjon skjer over slack og discrod.
+
+#### organisering så langt
+
+-   planlegger å jobbe deloppgavene fra oblig 1.
+
+-   Sette opp møte tider og møte plasser samt. hva som skal bli gjordt.
+
+-   Planlegger parprogrammerings økter for den første kode delen.
 
 ### Bruker historier
 

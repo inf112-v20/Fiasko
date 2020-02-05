@@ -6,27 +6,28 @@ import inf112.fiasko.roborally.abstractions.GameTexture;
  * This class represents an object that can be drawn using libgdx
  */
 public class DrawableObject implements IDrawableObject {
+    private GameTexture texture;
     private int xPos;
     private int yPos;
     private int width = 64;
     private int height = 64;
     private int rotation = 0;
-    private GameTexture texture;
     private boolean flipX = false;
     private boolean flipY = false;
 
     /**
      * Initializes a drawable object
+     * @param texture The texture to use for drawing the element
      * @param xPos The pixel to start drawing on for the x axis
      * @param yPos The pixel to start drawing on for the y axis
-     * @param texture The texture to use for drawing the element
-     * @param rotation The amount of degrees to rotate the element counterclockwise
      * @param width The width of the element
      * @param height The height of the element
+     * @param rotation The amount of degrees to rotate the element counterclockwise
      * @param flipX Whether to flip/mirror the element over the x axis
      * @param flipY Whether to flip/mirror the element over the y axis
      */
-    public DrawableObject(int xPos, int yPos, GameTexture texture, int rotation, int width, int height, boolean flipX, boolean flipY) {
+    public DrawableObject(GameTexture texture, int xPos, int yPos, int width, int height, int rotation, boolean flipX,
+                          boolean flipY) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.rotation = rotation;
@@ -39,11 +40,11 @@ public class DrawableObject implements IDrawableObject {
 
     /**
      * Initializes a new drawable object
+     * @param texture The texture to use for drawing the element
      * @param xPos The pixel to start drawing on for the x axis
      * @param yPos The pixel to start drawing on for the y axis
-     * @param texture The texture to use for drawing the element
      */
-    public DrawableObject(int xPos, int yPos, GameTexture texture) {
+    public DrawableObject(GameTexture texture, int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.texture = texture;

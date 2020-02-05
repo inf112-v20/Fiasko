@@ -27,17 +27,16 @@ public class Game implements IDrawableGame {
     }
 
     @Override
-    public List<IDrawableObject> objectsToRender() {
+    public List<IDrawableObject> getObjectsToDraw() {
         List<IDrawableObject> list = new ArrayList<>();
-        for (int i = 0; i < 12; i++) {
-            for (int j = 0; j < 12; j++) {
-                DrawableObject tileObj = new DrawableObject(i * 64, j * 64, GameTexture.TILE);
-                list.add(tileObj);
+        for (int i = 0; i < TILE_NUMBER; i++) {
+            for (int j = 0; j < TILE_NUMBER; j++) {
+                DrawableObject tile = new DrawableObject(GameTexture.TILE, i * TILE_SIZE, j * TILE_SIZE);
+                list.add(tile);
             }
         }
-        DrawableObject roboObj = new DrawableObject(128,128, GameTexture.ROBOT);
-        list.add(roboObj);
-
+        DrawableObject robot = new DrawableObject(GameTexture.ROBOT, TILE_SIZE, TILE_SIZE);
+        list.add(robot);
         return list;
     }
 }

@@ -8,98 +8,109 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class DrawableObjectTest {
 
-    private DrawableObject testMinArg;
-    private DrawableObject testMaxArg;
+    public static final GameTexture TEXTURE_MIN_ARG = GameTexture.TILE;
+    public static final GameTexture TEXTURE_MAX_ARG = GameTexture.ROBOT;
+    public static final int X_POSITION_MIN_ARG = 5;
+    public static final int Y_POSITION_MIN_ARG = 8;
+    public static final int X_POSITION_MAX_ARG = 6;
+    public static final int Y_POSITION_MAX_ARG = 7;
+    private final int WIDTH_MAX_ARG = 50;
+    private final int HEIGHT_MAX_ARG = 60;
+    private final int ROTATION_MAX_ARG = 90;
+    private final boolean FLIP_X_MAX_ARG = true;
+    private final boolean FLIP_Y_MAX_ARG = true;
+    private DrawableObject drawableObjectMinimumArguments;
+    private DrawableObject drawableObjectMaximumArguments;
 
     @Before
     public void setUp() {
-        testMinArg = new DrawableObject(5,5, GameTexture.SLOW_TRANSPORT_BAND);
-        testMaxArg = new DrawableObject(6, 6, GameTexture.ROBOT, 90, 50, 50, true, true);
+        drawableObjectMinimumArguments = new DrawableObject(TEXTURE_MIN_ARG, X_POSITION_MIN_ARG, Y_POSITION_MIN_ARG);
+        drawableObjectMaximumArguments = new DrawableObject(TEXTURE_MAX_ARG, X_POSITION_MAX_ARG, Y_POSITION_MAX_ARG,
+                WIDTH_MAX_ARG, HEIGHT_MAX_ARG, ROTATION_MAX_ARG, FLIP_X_MAX_ARG, FLIP_Y_MAX_ARG);
     }
 
     @Test
     public void getTextureMinArg() {
-        assertSame(GameTexture.SLOW_TRANSPORT_BAND, testMinArg.getTexture());
+        assertSame(TEXTURE_MIN_ARG, drawableObjectMinimumArguments.getTexture());
     }
 
     @Test
     public void getTextureMaxArg() {
-        assertSame(GameTexture.ROBOT, testMaxArg.getTexture());
+        assertSame(TEXTURE_MAX_ARG, drawableObjectMaximumArguments.getTexture());
     }
 
     @Test
     public void getXPositionMinArg() {
-        assertEquals(5, testMinArg.getXPosition());
+        assertEquals(X_POSITION_MIN_ARG, drawableObjectMinimumArguments.getXPosition());
     }
 
     @Test
     public void getXPositionMaxArg() {
-        assertEquals(6, testMaxArg.getXPosition());
+        assertEquals(X_POSITION_MAX_ARG, drawableObjectMaximumArguments.getXPosition());
     }
 
     @Test
     public void getYPositionMinArg() {
-        assertEquals(5, testMinArg.getYPosition());
+        assertEquals(Y_POSITION_MIN_ARG, drawableObjectMinimumArguments.getYPosition());
     }
 
     @Test
     public void getYPositionMaxArg() {
-        assertEquals(6, testMaxArg.getYPosition());
+        assertEquals(Y_POSITION_MAX_ARG, drawableObjectMaximumArguments.getYPosition());
     }
 
 
     @Test
     public void getWidthMinArg() {
-        assertEquals(64, testMinArg.getWidth());
+        assertEquals(64, drawableObjectMinimumArguments.getWidth());
     }
 
     @Test
     public void getWidthMaxArg() {
-        assertEquals(50, testMaxArg.getWidth());
+        assertEquals(WIDTH_MAX_ARG, drawableObjectMaximumArguments.getWidth());
     }
 
     @Test
     public void getHeightMinArg() {
-        assertEquals(64, testMinArg.getHeight());
+        assertEquals(64, drawableObjectMinimumArguments.getHeight());
     }
 
     @Test
     public void getHeightMaxArg() {
-        assertEquals(50, testMaxArg.getHeight());
+        assertEquals(HEIGHT_MAX_ARG, drawableObjectMaximumArguments.getHeight());
     }
 
 
     @Test
     public void getRotationMinArg() {
-        assertEquals(0, testMinArg.getRotation());
+        assertEquals(0, drawableObjectMinimumArguments.getRotation());
     }
 
     @Test
     public void getRotationMaxArg() {
-        assertEquals(90, testMaxArg.getRotation());
+        assertEquals(ROTATION_MAX_ARG, drawableObjectMaximumArguments.getRotation());
     }
 
     @Test
     public void flipXMinArg() {
-        assertFalse(testMinArg.flipX());
+        assertFalse(drawableObjectMinimumArguments.flipX());
     }
 
     @Test
     public void flipXMaxArg() {
-        assertTrue(testMaxArg.flipX());
+        assertEquals(FLIP_X_MAX_ARG, drawableObjectMaximumArguments.flipX());
     }
 
     @Test
     public void flipYMinArg() {
-        assertFalse(testMinArg.flipY());
+        assertFalse(drawableObjectMinimumArguments.flipY());
     }
 
     @Test
     public void flipYMaxArg() {
-        assertTrue(testMaxArg.flipY());
+        assertEquals(FLIP_Y_MAX_ARG, drawableObjectMaximumArguments.flipY());
     }
 }

@@ -22,9 +22,9 @@ public interface IDrawableGame {
     int getHeight();
 
     /**
-     * Gets a list of objects which are to be rendered
+     * Gets a list of objects which are to be drawn
      * @return A list of drawable objects in the order they are to be drawn
      */
-    List<IDrawableObject> objectsToRender();
+    List<IDrawableObject> getObjectsToDraw();
 
 }

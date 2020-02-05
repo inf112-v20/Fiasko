@@ -17,27 +17,27 @@ public class GameTest {
     }
 
     @Test
-    public void gameWidthPositiveTest() {
+    public void gameWidthIsPositive() {
         assertTrue(game.getWidth() > 0);
     }
 
     @Test
-    public void gameWidthMaximumFullHDTest() {
+    public void gameWidthIsMaximumFullHD() {
         assertTrue(game.getWidth() <= 1920);
     }
 
     @Test
-    public void gameHeightPositiveTest() {
+    public void gameHeightIsPositive() {
         assertTrue(game.getWidth() > 0);
     }
 
     @Test
-    public void gameHeightMaximumFullHDTest() {
+    public void gameHeightIsMaximumFullHD() {
         assertTrue(game.getWidth() <= 1080);
     }
 
     @Test
-    public void getObjectsToRenderTest() {
-        assertFalse(game.objectsToRender().isEmpty());
+    public void getObjectsToDrawReturnsNonemptyList() {
+        assertFalse(game.getObjectsToDraw().isEmpty());
     }
 }

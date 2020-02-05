@@ -203,3 +203,6 @@ adminastrative slik at vi kunne jobbe med metodikkene vi hadde valgt. dette forv
 -   Vi bruker travisy fordi den sjekker at alt virker og at coden kompilere.
 
 -   Codasy sjekker at koden godt skrevet og at foramteringen er bra.
+
+-   Vi har ikke tatt referat fra de tideligere møtene denne perioden fordi vi var ikke klar over at det var et krav før 
+etter vi hadde hatt de fleste av møtene våre. men vi planlegger å gjøre det nå fremover.

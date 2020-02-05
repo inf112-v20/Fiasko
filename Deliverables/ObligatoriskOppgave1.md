@@ -127,45 +127,48 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   2 fysiske møter i uke. En på gruppetimen og en på torsdager. 
 
--   Møter på discord online med skjerm deling for parprogrammering.
-
--   Syklus oppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus som i scrum oppsettet.
-
--   Vi skal ha en liten sprint som varer en uke hvor vi prøver å blir ferdig med alle oppgavene som blir tildelt på tirsdagene som i scrum oppsettet.
-
 -   Vi tenker å ta en blanding av scrum og parprogrammering under prosjektet.
+
+-   Møter på discord online med skjermdeling for parprogrammering.
+
+-   Syklus oppsett mellom hver oblig. Sette opp oppgaver over 
+    hva som skal gjøres over hver syklus som i scrum oppsettet.
+
+-   Vi skal ha en liten sprint som varer en uke, hvor vi prøver å blir ferdig med 
+    alle oppgavene som blir tildelt på tirsdagene som i scrum oppsettet.
 
 -   Tirsdager brukes for å re cape hva som har blitt gjort uken før 
     og for å avklare om vi føler oss ferdig med oppgaver.
 
 -   Deling av dokumenter skjer over git eller discord.
 
--   Bruke project board for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
+-   Bruke project board for å ha kontroll over alle oppgavene og hvem som skal gjør hva.
 
--   Arbeids fordelese skal bli gjordt med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
+-   Arbeids fordelingen skal bli gjordt med hver enkeltes kompetanse 
+    og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
 
 #### Prosessen
 
--   Planlegger møter god stund før de skal skje.
+-   Planlegger møter god tid i forveien.
 
 -   Diskuter ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøre til neste møte.
 
--   Vi har planlagt å ha parprogramerings timer slik at alle føler seg konfortable med oppgavene og at alle får bidratt med prosjektet.
+-   Vi har planlagt å ha parprogrammerings timer slik at alle føler seg konfortable med 
+    oppgavene slik at alle får bidratt med prosjektet.
 
--   Diskutere spill designe sammen i gruppen slik at alle er på samme nivå.
+-   Diskutere spill design sammen i gruppen slik at alle er på samme nivå.
 
 -   Torsdag er satt av for parprogrammering kl 10:15-12:00.
 
--   I slutten av en lange sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refakturere eller endere noen andre designe aspekter.
+-   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet 
+    og koden i tilfelle vi føler vi må refaktorere mer eller endere noen andre design aspekter.
 
--   kommunikasjon skjer over slack og discrod.
+-   Kommunikasjon skjer over slack og discord.
 
-#### organisering så langt
+#### Organisering i starten
 
--   planlegger å jobbe deloppgavene fra oblig 1.
-
--   Sette opp møte tider og møte plasser samt. hva som skal bli gjordt.
-
+-   Planlegger å jobbe med deloppgavene i oblig 1.
+-   Sette opp møte tider og møte plasser samt hva som skal bli gjort.
 -   Planlegger parprogrammerings økter for den første kode delen.
 
 ### Bruker historier
@@ -173,39 +176,42 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 #### Vise et brett
 
 -   Som en spiller må jeg kunne se et brett får å kunne spille spillet.
--   Som spillbrett må jeg vise alle elementer som er på meg 
+-   Som spillbrett må jeg vise alle elementer som er på meg.
 -   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
 
 ##### Akseptansekrav for brett
 
--   Vi kan se et brett der noe kan bli plassert på brette i en rute/tile
+-   Vi kan se et brett der noe kan bli plassert på brettet i en rute/tile.
   
 #### Plassere en brikke på brettet
 
--   Som brikke må jeg kunne plassere på spillbrettet 
--   Som brikke må jeg være synlig på brettet
+-   Som brikke må jeg kunne plasseres på spillbrettet. 
+-   Som brikke må jeg være synlig på brettet.
 
 ##### Akseptansekrav for brikke på brettet
 
--   Brikken blir plassert synlig i en bestemt tile på brettet
+-   Brikken blir plassert synlig på en bestemt tile på brettet.
 
 ### Oppsumering
 
--   Etter denne først perioden er gruppe enig har vært litt kaotisk. dette kommer av at gruppen har hatt en del arbeid med å få til det 
-adminastrative slik at vi kunne jobbe med metodikkene vi hadde valgt. dette forventer vi forbedre seg inn i neste sprint.
+-   Etter denne først perioden er gruppe enig har vært litt kaotisk. 
+    Dette kommer av at gruppen har hatt en del arbeid med å få til det adminastrative 
+    slik at vi kunne jobbe med metodikkene vi hadde valgt. Dette forventer vi vil forbedre seg inn i neste sprint.
 
--   Det har også vært en del forandringer på rollene til medlemmene i teamet etter som vi har blitt bedere kjent med hverandre og funnet ut hvilken roller som hver enkelt heller burde ha.
+-   Det har også vært en del forandringer på rollene til medlemmene i teamet etter hvert som vi har 
+    blitt bedre kjent med hverandre og funnet ut hvilken roller som hver enkelt heller burde ha.
 
--   Vi føler par programmering fungere bra og planlegger å fortsette med dette i neste sprint.
+-   Vi føler parprogrammering fungerer bra og planlegger å fortsette med dette i neste sprint.
 
--   Vi føler at vi vil lage bedre og mer presisse Issus på projketboardet. etter som at noe av Issusene på boardet var for store og ikke spesisert nok 
+-   Vi føler at vi behøver å lage bedre og mer presise issues på projectboardet, 
+    etter som noen av issuene på boardet var for store og ikke spesifisert nok. 
 
--   Vi bruker travisy fordi den sjekker at alt virker og at coden kompilere.
+-   Vi bruker travis fordi den sjekker at alt virker og at coden kompilerer.
 
--   Codasy sjekker at koden godt skrevet og at foramteringen er bra.
+-   Codasy sjekker om koden er godt skrevet og om foramteringen på koden er bra.
 
 -   Vi har ikke tatt referat fra de tideligere møtene denne perioden fordi vi var ikke klar over at det var et krav før 
-etter vi hadde hatt de fleste av møtene våre. men vi planlegger å gjøre det nå fremover.
+    etter vi hadde hatt de fleste av møtene våre, men vi planlegger å gjøre det nå fremover.
 
 ## UML
 ![UML](../Deliverables/Umls/UmlOblig1.png "UML Oblig 1")

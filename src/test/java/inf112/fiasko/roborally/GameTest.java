@@ -28,12 +28,12 @@ public class GameTest {
 
     @Test
     public void gameHeightIsPositive() {
-        assertTrue(game.getWidth() > 0);
+        assertTrue(game.getHeight() > 0);
     }
 
     @Test
     public void gameHeightIsMaximumFullHD() {
-        assertTrue(game.getWidth() <= 1080);
+        assertTrue(game.getHeight() <= 1080);
     }
 
     @Test

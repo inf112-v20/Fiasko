@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.abstractions.GameTexture;
 import inf112.fiasko.roborally.game.Game;
 import inf112.fiasko.roborally.game.IDrawableGame;
@@ -20,19 +21,13 @@ public class GameLauncher extends ApplicationAdapter {
     private IDrawableGame game;
 
     private Texture robotTexture;
-    private Texture tileTexture;
-    private Texture walledTileTexture;
-    private Texture doublyWalledTileTexture;
-    private Texture slowTransportBandTexture;
+    private Texture textureSheet;
 
     @Override
     public void create() {
         //Loads some textures
         robotTexture = new Texture(Gdx.files.internal("assets/Robot.png"));
-        tileTexture = new Texture(Gdx.files.internal("assets/Tile.png"));
-        walledTileTexture = new Texture(Gdx.files.internal("assets/WalledTile.png"));
-        doublyWalledTileTexture = new Texture(Gdx.files.internal("assets/DoublyWalledTile.png"));
-        slowTransportBandTexture = new Texture(Gdx.files.internal("assets/TransportBandSlow.png"));
+        textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
 
         game = new Game();
         camera = new OrthographicCamera();
@@ -49,14 +44,15 @@ public class GameLauncher extends ApplicationAdapter {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        //Renders all elements the game wants to render
-        for (IDrawableObject object : game.objectsToRender()) {
-            Texture objectTexture = gameTextureToTexture(object.getTexture());
-            batch.draw(objectTexture, object.getXPosition(), object.getYPosition(),
-                    (float)object.getWidth()/2, (float)object.getHeight()/2, object.getWidth(),
-                    object.getHeight(), 1, 1, object.getRotation(),
-                    0, 0, objectTexture.getWidth(), objectTexture.getHeight(), object.flipX(),
-                    object.flipY());
+        //Draws all elements the game wants to draw
+        for (IDrawableObject object : game.getObjectsToDraw()) {
+            TextureRegion objectTextureRegion = gameTextureToTextureRegion(object.getTexture());
+            batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
+                    (float)object.getWidth()/2, (float)object.getHeight()/2,
+                    object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),
+                    objectTextureRegion.getRegionX(), objectTextureRegion.getRegionY(),
+                    objectTextureRegion.getRegionWidth(), objectTextureRegion.getRegionHeight(),
+                    object.flipX(), object.flipY());
         }
         batch.end();
     }
@@ -64,33 +60,24 @@ public class GameLauncher extends ApplicationAdapter {
     @Override
     public void dispose() {
         robotTexture.dispose();
-        tileTexture.dispose();
-        walledTileTexture.dispose();
-        doublyWalledTileTexture.dispose();
-        slowTransportBandTexture.dispose();
+        textureSheet.dispose();
         batch.dispose();
     }
 
     /**
-     * Turns a GameTexture element into a Texture element
+     * Turns a GameTexture element into a TextureRegion element
      *
      * This is necessary to keep all libgdx logic in this class only. Otherwise, testing would be painful.
      *
      * @param gameTexture A GameTexture enum
-     * @return A Gdx Texture
+     * @return A Gdx TextureRegion
      */
-    private Texture gameTextureToTexture(GameTexture gameTexture) {
+    private TextureRegion gameTextureToTextureRegion(GameTexture gameTexture) {
         switch (gameTexture) {
             case ROBOT:
-                return robotTexture;
+                return new TextureRegion(robotTexture, 0, 0, 64, 64);
             case TILE:
-                return tileTexture;
-            case WALLED_TILE:
-                return walledTileTexture;
-            case DOUBLY_WALLED_TILE:
-                return doublyWalledTileTexture;
-            case SLOW_TRANSPORT_BAND:
-                return slowTransportBandTexture;
+                return new TextureRegion(textureSheet, 4*300, 0, 300, 300);
             default:
                 throw new IllegalArgumentException("Non existing texture encountered.");
         }

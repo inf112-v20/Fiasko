@@ -24,15 +24,15 @@ En klar og kortfattet beskrivelse av hva du forventet at skulle skje.
 Om relevant, legg til skjermbilder for å forklare problemet.
 
 **Datamaskin (vennligst fullfør følgende informasjon):**
- - Operativsystem: [eks. iOS]
- - Nettleser [eks. chrome, safari]
- - Versjon [eks. 22]
+-   Operativsystem: \[eks. iOS]
+-   Nettleser \[eks. chrome, safari]
+-   Versjon \[eks. 22]
 
 **Smarttelefon (vennligst fullfør følgende informasjon):**
- - Enhet: [eks. iPhone6]
- - Operativsystem: [eks. iOS8.1]
- - Nettleser [eks. standard nettleser, safari]
- - Versjon [eks. 22]
+-   Enhet: \[eks. iPhone6]
+-   Operativsystem: \[eks. iOS8.1]
+-   Nettleser \[eks. standard nettleser, safari]
+-   Versjon \[eks. 22]
 
 **Tilleggsinnhold**
 Legg til hvilken som helst annen kontekst til problemet her.

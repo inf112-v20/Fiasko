@@ -52,7 +52,7 @@ Kristian -> Han har mest erfaring med kode og var en naturlig leder. han har ove
 
 Steinar -> skal organisere møtene slik at vi har en plan før møte. slik at vi ikke møter uten å ha noen plan
 
-Torbjørn -> skal sørge for at det er korrekt dokumentasjon og bra nok dokumentasjon.   
+Torbjørn -> skal sørge for at det er korrekt dokumentasjon og god nok dokumentasjon.   
 
 Gabriel -> leder for spilleregler og ansvar for riktig spillmekanikk 
 

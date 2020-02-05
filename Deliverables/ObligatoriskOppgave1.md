@@ -188,3 +188,18 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 ##### Akseptansekrav for brikke på brettet
 
 -   Brikken blir plassert synlig i en bestemt tile på brettet
+
+### Oppsumering
+
+-   Etter denne først perioden er gruppe enig har vært litt kaotisk. dette kommer av at gruppen har hatt en del arbeid med å få til det 
+adminastrative slik at vi kunne jobbe med metodikkene vi hadde valgt. dette forventer vi forbedre seg inn i neste sprint.
+
+-   Det har også vært en del forandringer på rollene til medlemmene i teamet etter som vi har blitt bedere kjent med hverandre og funnet ut hvilken roller som hver enkelt heller burde ha.
+
+-   Vi føler par programmering fungere bra og planlegger å fortsette med dette i neste sprint.
+
+-   Vi føler at vi vil lage bedre og mer presisse Issus på projketboardet. etter som at noe av Issusene på boardet var for store og ikke spesisert nok 
+
+-   Vi bruker travisy fordi den sjekker at alt virker og at coden kompilere.
+
+-   Codasy sjekker at koden godt skrevet og at foramteringen er bra.

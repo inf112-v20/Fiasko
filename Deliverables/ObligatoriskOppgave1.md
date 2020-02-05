@@ -3,25 +3,25 @@
 
 ### Kompetanse
 
-#### Petter Tobias Madsen:
+#### Petter Tobias Madsen
 Relevante fag: INF101. 
 Kan grunnleggende ting i Java men har ikke utført krevende prosjekter. 
 Nesten ingen GUI-erfaring.
 
-#### Steinar Aalstad Lillesund:
+#### Steinar Aalstad Lillesund
 Føler seg komfortabel med Java men ikke noe veldig avansert. 
 Ingen GUI-erfaring.
 
-#### Kristian Knarvik:
+#### Kristian Knarvik
 Relevante fag: INF100, INF101 og INF102. 
 Ganske erfaren i Java og har gjort ting med GUI før.
 
-#### Torbjørn lunde jensen:
+#### Torbjørn lunde jensen
 Relevante fag: Tar INF101 inneværende semester.
 Litt erfaring, men ikke veldig mye. 
 Ingen GUI-erfaring.
 
-#### Gabriel Ingolf Olav Magnus:
+#### Gabriel Ingolf Olav Magnus
 Relevante fag: INF101 og INF102. 
 Litt komfortable med Java.
 

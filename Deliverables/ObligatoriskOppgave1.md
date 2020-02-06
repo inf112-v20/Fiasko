@@ -127,7 +127,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   To fysiske møter per uke. En på gruppetimen og en på torsdager. 
 
--   Siden det ikke alltid er optimalt å møtes fysisk vil en del av parprogrammeringen skje ved hjelp av skjermdeling på Discord.
+-   Siden det ikke alltid er optimalt å møtes fysisk vil en del 
+    av parprogrammeringen skje ved hjelp av skjermdeling på Discord.
 
 -   Syklus oppsett mellom hver oblig. Sette opp oppgaver over hva som skal gjøres i hver syklus, som i scrum.
 
@@ -143,7 +144,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Bruke prosjekttavle for å ha kontroll over alle oppgavene og hvem som skal gjøre hva.
 
--   Arbeidsfordelingen skal bli gjort med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
+-   Arbeidsfordelingen skal bli gjort med hver enkeltes kompetanse og evner tatt i betraktning 
+    slik at en ikke blir for overbelastet under prosjektet.
 
 #### Prosessen
 
@@ -151,7 +153,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Diskutere ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøres til neste møte.
 
--   Vi har planlagt å ha parprogrammeringstimer slik at alle føler seg komfortable med oppgavene og slik at alle får bidratt til             prosjektet.
+-   Vi har planlagt å ha parprogrammeringstimer slik at alle føler seg komfortable med oppgavene 
+    og slik at alle får bidratt til prosjektet.
 
 -   Diskutere spilldesignet sammen i gruppen slik at alle er på samme nivå.
 
@@ -160,7 +163,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet 
     og koden i tilfelle vi føler vi må refaktorere mer eller endre noen andre designaspekter.
     
--   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refaktorere eller       endre noen andre designaspekter.
+-   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle 
+    vi føler vi må refaktorere eller endre noen andre designaspekter.
 
 -   Kommunikasjon skjer over Slack og Discord.
 
@@ -176,7 +180,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Som spiller må jeg kunne se et brett for å kunne spille spillet.
 -   Som spiller må jeg kunne se alle elementer på spillbrettet for å kunne programmere roboten.
--   Som spiller må jeg kunne se et rutenett på spillbrettet for å kunne bedømme avstanden roboten må bevege seg for å nå et spesefikt punkt på spillbrettet.
+-   Som spiller må jeg kunne se et rutenett på spillbrettet for å kunne bedømme avstanden 
+    roboten må bevege seg for å nå et spesefikt punkt på spillbrettet.
 
 ##### Akseptansekrav for brett
 

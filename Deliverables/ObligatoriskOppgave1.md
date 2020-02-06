@@ -163,10 +163,10 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet 
     og koden i tilfelle vi føler vi må refaktorere mer eller endre noen andre designaspekter.
-    
+
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og 
     koden i tilfelle vi føler vi må refaktorere eller endre noen andre designaspekter.
-    
+
 -   Kommunikasjon skjer over Slack og Discord.
 
 #### Organisering i starten

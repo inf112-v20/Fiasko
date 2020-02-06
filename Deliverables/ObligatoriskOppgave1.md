@@ -37,7 +37,7 @@ Kristian -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til
 
 Tobias -> Kommunikasjonsleder ( planlegger møter og parprogrammerings timer)
 
-Steinar -> Møte organisere (Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene.)
+Steinar -> Møteorganisator (Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene.)
 
 Torbjørn -> Dokumentasjons ansvarlig (dokumenter møtene og sørger for at innleveringene er riktig)
 
@@ -45,16 +45,16 @@ Gabriel -> Kundeansvarlig (Ansvarlig for å vite alle spilleregler)
 
 #### Grunnlag
 
-Tobias -> Vi trenger noen som kan ta ansvar for å planlegge tidspunkt for møter 
-          og kontaktperson for om noen ikke kan stille på møter.
+Tobias -> Vi trenger noen som kan ta ansvar for å planlegge tidspunkter for møter, 
+          og en kontaktperson dersom noen ikke kan stille på møter.
 
-Kristian -> Han har mest erfaring med kode og var en naturlig leder. han har overblikk over hva som skal bli gjort
+Kristian -> Han har mest erfaring med kode og var en naturlig leder. Han har overblikk over hva som skal bli gjort.
 
-Steinar -> skal organisere møtene slik at vi har en plan før møte. slik at vi ikke møter uten å ha noen plan
+Steinar -> Skal organisere møtene slik at vi har en plan før hvert møte. Dette forhindrer møter uten en plan.
 
-Torbjørn -> skal sørge for at det er korrekt dokumentasjon og god nok dokumentasjon.   
+Torbjørn -> Skal sørge for at det finnes korrekt dokumentasjon som overholder gitte krav.
 
-Gabriel -> leder for spilleregler og ansvar for riktig spillmekanikk 
+Gabriel -> Leder for spilleregler og har ansvar for riktig spillmekanikk.
 
 ## Produktutforming
 
@@ -100,7 +100,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Kunne velge powerdown etter alle har låst kortene sine.
 
--   Slutten av runden får spillere reparasjoner hvis de står på en reparasjonsbrikke eller flagg.
+-   Ved slutten av runden får spillere reparasjoner hvis de står på en reparasjonsbrikke eller flagg.
 
 -   Sjekke om noen spillere står på riktig flagg.
 
@@ -120,92 +120,102 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 ### Prioriterte krav
 
-1.  Vi har et brett tegnet inn med libgdx.
-2.  Ha en brikke tegen inn med libgdx. 
+1.  En visuell representasjon av et spillbrett.
+2.  Ha en brikke plassert på det visuelle spillbrettet. 
 
 ### Prosjektmetodikk
 
--   2 fysiske møter i uke. En på gruppetimen og en på torsdager. 
+-   To fysiske møter per uke. En på gruppetimen og en på torsdager. 
 
--   Møter på discord online med skjerm deling for parprogrammering.
+-   Siden det ikke alltid er optimalt å møtes fysisk vil en del av parprogrammeringen skje ved hjelp av skjermdeling på Discord.
 
--   Syklus oppsett mellom hver oblig. sette opp oppgaver over hva som skal gjøres over hver syklus som i scrum oppsettet.
+-   Syklus oppsett mellom hver oblig. Sette opp oppgaver over hva som skal gjøres i hver syklus, som i scrum.
 
--   Vi skal ha en liten sprint som varer en uke hvor vi prøver å blir ferdig med alle oppgavene som blir tildelt på tirsdagene som i scrum oppsettet.
+-   Vi skal ha en liten sprint som varer en uke hvor vi prøver å blir ferdig med 
+    alle oppgavene som blir tildelt på tirsdagene som i scrum oppsettet.
 
--   Vi tenker å ta en blanding av scrum og parprogrammering under prosjektet.
+-   Vi tenker å bruke en blanding av scrum og parprogrammering under prosjektet.
 
 -   Tirsdager brukes for å re cape hva som har blitt gjort uken før 
     og for å avklare om vi føler oss ferdig med oppgaver.
 
--   Deling av dokumenter skjer over git eller discord.
+-   Deling av dokumenter skjer over GitHub, Slack eller Discord.
 
 -   Bruke project board for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
 
--   Arbeids fordelese skal bli gjordt med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
+-   Arbeidsfordelingen skal bli gjort med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
 
 #### Prosessen
 
 -   Planlegger møter god stund før de skal skje.
 
--   Diskuter ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøre til neste møte.
+-   Diskutere ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøres til neste møte.
 
--   Vi har planlagt å ha parprogramerings timer slik at alle føler seg konfortable med oppgavene og at alle får bidratt med prosjektet.
+-   Vi har planlagt å ha parprogrammeringstimer slik at alle føler seg komfortable med oppgavene og slik at alle får bidratt til prosjektet.
 
--   Diskutere spill designe sammen i gruppen slik at alle er på samme nivå.
+-   Diskutere spilldesignet sammen i gruppen slik at alle er på samme nivå.
 
--   Torsdag er satt av for parprogrammering kl 10:15-12:00.
+-   Torsdag er satt av for parprogrammering kl. 10:15-12:00.
 
--   I slutten av en lange sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refakturere eller endere noen andre designe aspekter.
+-   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refaktorere eller endre noen andre designaspekter.
 
--   kommunikasjon skjer over slack og discrod.
+-   Kommunikasjon skjer over Slack og Discrod.
 
-#### organisering så langt
+#### Organisering så langt
 
--   planlegger å jobbe deloppgavene fra oblig 1.
+-   Planlegger å jobbe med deloppgavene fra oblig 1.
 
--   Sette opp møte tider og møte plasser samt. hva som skal bli gjordt.
+-   Sette opp møtetider og møtesteder, samt hva som skal bli gjort.
 
--   Planlegger parprogrammerings økter for den første kode delen.
+-   Planlegger parprogrammerings-økter for den første kode-delen.
 
-### Bruker historier
+### Brukerhistorier
 
 #### Vise et brett
 
--   Som en spiller må jeg kunne se et brett får å kunne spille spillet.
--   Som spillbrett må jeg vise alle elementer som er på meg 
--   Som spillbrett må jeg vær delt inn ruter/tiles der brikkene på meg må være i bare en rute av gangen.
+-   Som en spiller må jeg kunne se et brett for å kunne spille spillet.
+-   Som spillbrett må jeg vise alle elementer som er på meg.
+-   Som spillbrett må jeg være delt inn et rutenett der brikkene må være i en rute av gangen.
 
 ##### Akseptansekrav for brett
 
--   Vi kan se et brett der noe kan bli plassert på brette i en rute/tile
+-   Vi kan se et brett der noe kan bli plassert på brettet i en rute.
   
 #### Plassere en brikke på brettet
 
--   Som brikke må jeg kunne plassere på spillbrettet 
--   Som brikke må jeg være synlig på brettet
+-   Som brikke må jeg kunne plasseres på spillbrettet.
+-   Som brikke må jeg være synlig på brettet.
 
 ##### Akseptansekrav for brikke på brettet
 
--   Brikken blir plassert synlig i en bestemt tile på brettet
+-   Brikken blir plassert synlig i en bestemt rute på brettet.
 
 ### Oppsumering
 
--   Etter denne først perioden er gruppe enig har vært litt kaotisk. dette kommer av at gruppen har hatt en del arbeid med å få til det 
-adminastrative slik at vi kunne jobbe med metodikkene vi hadde valgt. dette forventer vi forbedre seg inn i neste sprint.
+-   Gruppen er enig om at denne første perioden har vært ganske kaotisk. Dette kommer av at gruppen har 
+    hatt en del arbeid med å få til det administrative for å kunne jobbe med metodikkene vi har valgt. 
+    Dette forventer vi forbedrer seg i neste sprint.
 
--   Det har også vært en del forandringer på rollene til medlemmene i teamet etter som vi har blitt bedere kjent med hverandre og funnet ut hvilken roller som hver enkelt heller burde ha.
+-   Det har også vært en del forandringer på rollene til medlemmene i teamet ettersom vi har blitt bedre 
+    kjent med hverandre, og funnet ut hvilke roller som hver enkelt burde ha. Vi endte opp med å bytte leder og de 
+    fleste andre roller fire dager før innleveringsfristen.
 
--   Vi føler par programmering fungere bra og planlegger å fortsette med dette i neste sprint.
+-   Vi føler parprogrammering fungerer bra, og planlegger å fortsette med dette i neste sprint.
 
--   Vi føler at vi vil lage bedre og mer presisse Issus på projketboardet. etter som at noe av Issusene på boardet var for store og ikke spesisert nok 
+-   Vi ønsker å lage bedre og mer presise issues på project boardet, ettersom noen av issuene på 
+    boardet var for store og ikke spesifikke nok.
 
--   Vi bruker travisy fordi den sjekker at alt virker og at coden kompilere.
+-   Vi valgte å bruke tid på Travis siden det gir en rask respons om noe som forventes å kjøre 
+    ikke kjører allikevel, slik at det kan bli fikset så snart som mulig. Det er spesielt nyttig 
+    om noen kommer til å glemme å teste koden før de sender den til GitHub.
 
--   Codasy sjekker at koden godt skrevet og at foramteringen er bra.
+-   Vi valgte å bruke tid på å sette opp Codacy fordi tjenesten hjelper med å holde kvaliteten 
+    på koden på et høyt nivå. Det ville vært mulig å sette det opp senere i prosjektet, men det 
+    er mye lettere å holde seg på et høyt kvalitetsnivå enn å komme seg opp på et høyt kvalitetsnivå 
+    fra et dårlig kvalitetsnivå.
 
--   Vi har ikke tatt referat fra de tideligere møtene denne perioden fordi vi var ikke klar over at det var et krav før 
-etter vi hadde hatt de fleste av møtene våre. men vi planlegger å gjøre det nå fremover.
+-   Vi har ikke tatt referat fra de tidligere møtene denne perioden fordi vi var ikke klar over at det var et krav før 
+    etter at vi hadde hatt de fleste av møtene våre. men vi planlegger å gjøre det i fremtiden.
 
 ## UML
 ![UML](../Deliverables/Umls/UmlOblig1.png "UML Oblig 1")

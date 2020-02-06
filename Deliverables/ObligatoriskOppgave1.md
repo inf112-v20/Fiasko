@@ -141,13 +141,13 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Deling av dokumenter skjer over GitHub, Slack eller Discord.
 
--   Bruke project board for at vi skal ha kontroll over alle oppgavene og hvem som skal gjør hva.
+-   Bruke project board for å ha kontroll over alle oppgavene og hvem som skal gjøre hva.
 
 -   Arbeidsfordelingen skal bli gjort med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
 
 #### Prosessen
 
--   Planlegger møter god stund før de skal skje.
+-   Planlegger møter god tid i forveien.
 
 -   Diskutere ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøres til neste møte.
 
@@ -157,16 +157,16 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Torsdag er satt av for parprogrammering kl. 10:15-12:00.
 
+-   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet 
+    og koden i tilfelle vi føler vi må refaktorere mer eller endre noen andre designaspekter.
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refaktorere eller endre noen andre designaspekter.
 
--   Kommunikasjon skjer over Slack og Discrod.
+-   Kommunikasjon skjer over Slack og Discord.
 
-#### Organisering så langt
+#### Organisering i starten
 
--   Planlegger å jobbe med deloppgavene fra oblig 1.
-
+-   Planlegger å jobbe med deloppgavene i oblig 1.
 -   Sette opp møtetider og møtesteder, samt hva som skal bli gjort.
-
 -   Planlegger parprogrammerings-økter for den første kode-delen.
 
 ### Brukerhistorier

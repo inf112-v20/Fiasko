@@ -35,11 +35,11 @@ Overall kompetanse i java koding ligger på medium mens erfaring med git eller g
 
 Kristian -> Teamleder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
 
-Tobias -> Kommunikasjonsleder ( planlegger møter og parprogrammerings timer)
+Tobias -> Kommunikasjonsleder (Planlegger møter og parprogrammerings timer)
 
 Steinar -> Møteorganisator (Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene.)
 
-Torbjørn -> Dokumentasjonsansvarlig (dokumenter møtene og sørger for at innleveringene er riktig)
+Torbjørn -> Dokumentasjonsansvarlig (Dokumenterer møtene og sørger for at innleveringene er riktig)
 
 Gabriel -> Kundekontakt (Ansvarlig for å vite alle spilleregler)
 
@@ -96,15 +96,16 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Spillere beveger seg hver fase og kort bestemmer hvem som går først.
 
--   Velge kort i starteren av runden.
+-   Velge kort i starten av runden.
 
 -   Kunne velge powerdown etter alle har låst kortene sine.
 
--   Ved slutten av runden får spillere reparasjoner hvis de står på en reparasjonsbrikke eller flagg.
+-   Ved slutten av runden mister roboten en i skade hvis de står på en reparasjonsbrikke eller flagg.
 
 -   Sjekke om noen spillere står på riktig flagg.
 
--   Respawn etter en robot er ødelagt ved slutten av runden/fasen gitt at de har flere liv.
+-   En robot som er ødelagt vil komme tilbake ved slutten av runden gitt at de har flere liv.
+    Roboten kommer tilbake med 1 liv mindre og 2 i skade.
 
 -   Hvis en spiller er i powerdown blir spilleren spurt (i starten av nye runden) om han vil bli i powerdown eller ikke.
 
@@ -114,7 +115,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Ikke samle sammen kort som er låst.
 
--   Vise hendelser som skjer på skjermen med en delay slik at spillet ser riktig ut.
+-   Vise hendelser som skjer på skjermen med en forsinkelse slik at spilleren ser bevegelsene i spillet.
 
 -   Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull.
 
@@ -130,15 +131,15 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 -   Siden det ikke alltid er optimalt å møtes fysisk vil en del 
     av parprogrammeringen skje ved hjelp av skjermdeling på Discord.
 
--   Syklus oppsett mellom hver oblig. Sette opp oppgaver over hva som skal gjøres i hver syklus, som i scrum.
+-   Syklusoppsett mellom hver oblig. Sette opp oppgaver over hva som skal gjøres i hver syklus, som i scrum.
 
--   Vi skal ha en liten sprint som varer en uke hvor vi prøver å blir ferdig med 
-    alle oppgavene som blir tildelt på tirsdagene som i scrum oppsettet.
+-   Vi skal ha en liten sprint som varer en uke hvor vi prøver å bli ferdig med 
+    alle oppgavene som blir tildelt på tirsdagene som i scrum.
 
 -   Vi tenker å bruke en blanding av scrum og parprogrammering under prosjektet.
 
--   Tirsdager brukes for å oppsumere hva som har blitt gjort uken før 
-    og for å avklare om vi føler oss ferdig med oppgaver.
+-   Tirsdager brukes for å oppsummere hva som har blitt gjort uken før, 
+    og for å avklare om vi føler oss ferdig med oppgavene.
 
 -   Deling av dokumenter skjer over GitHub, Slack eller Discord.
 

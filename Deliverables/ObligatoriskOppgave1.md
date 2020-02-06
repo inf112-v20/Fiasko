@@ -163,10 +163,10 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet 
     og koden i tilfelle vi føler vi må refaktorere mer eller endre noen andre designaspekter.
-    
+        
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle 
     vi føler vi må refaktorere eller endre noen andre designaspekter.
-
+    
 -   Kommunikasjon skjer over Slack og Discord.
 
 #### Organisering i starten
@@ -180,7 +180,9 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 #### Vise et brett
 
 -   Som spiller må jeg kunne se et brett for å kunne spille spillet.
+
 -   Som spiller må jeg kunne se alle elementer på spillbrettet for å kunne programmere roboten.
+
 -   Som spiller må jeg kunne se et rutenett på spillbrettet for å kunne bedømme avstanden 
     roboten må bevege seg for å nå et spesefikt punkt på spillbrettet.
 
@@ -210,7 +212,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 -   Vi føler parprogrammering fungerer bra, og planlegger å fortsette med dette i neste sprint.
 
 -   Vi ønsker å lage bedre og mer presise issues på prosjekttavlen, ettersom noen av issuene på 
-    boardet var for store og ikke spesifikke nok.
+    prosjekttavlen var for store og ikke spesifikke nok.
 
 -   Vi valgte å bruke tid på Travis siden det gir en rask respons om noe som forventes å kjøre 
     ikke kjører allikevel, slik at det kan bli fikset så snart som mulig. Det er spesielt nyttig 

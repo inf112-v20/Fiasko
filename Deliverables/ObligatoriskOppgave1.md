@@ -33,28 +33,28 @@ Overall kompetanse i java koding ligger på medium mens erfaring med git eller g
 
 #### Titler
 
-Kristian -> Team leder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
+Kristian -> Teamleder (Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid) 
 
 Tobias -> Kommunikasjonsleder ( planlegger møter og parprogrammerings timer)
 
 Steinar -> Møteorganisator (Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene.)
 
-Torbjørn -> Dokumentasjons ansvarlig (dokumenter møtene og sørger for at innleveringene er riktig)
+Torbjørn -> Dokumentasjonsansvarlig (dokumenter møtene og sørger for at innleveringene er riktig)
 
-Gabriel -> Kundeansvarlig (Ansvarlig for å vite alle spilleregler)
+Gabriel -> Kundekontakt (Ansvarlig for å vite alle spilleregler)
 
 #### Grunnlag
 
-Tobias -> Vi trenger noen som kan ta ansvar for å planlegge tidspunkter for møter, 
-          og en kontaktperson dersom noen ikke kan stille på møter.
+Komunikasjonsleder -> Vi trenger noen som kan ta ansvar for å planlegge tidspunkter for møter, 
+                      og en kontaktperson dersom noen ikke kan stille på møter.
 
-Kristian -> Han har mest erfaring med kode og var en naturlig leder. Han har overblikk over hva som skal bli gjort.
+Teamleder -> En som har oversikt over prosjektet og sørger for at prosjektet holder seg innenfor et gitt rammeverk.
 
-Steinar -> Skal organisere møtene slik at vi har en plan før hvert møte. Dette forhindrer møter uten en plan.
+Møteorganisator -> Skal organisere møtene slik at vi har en plan før hvert møte. Dette forhindrer møter uten en plan.
 
-Torbjørn -> Skal sørge for at det finnes korrekt dokumentasjon som overholder gitte krav.
+Dokumentasjonsansvarlig -> Skal sørge for at det finnes korrekt dokumentasjon som overholder gitte krav.
 
-Gabriel -> Leder for spilleregler og har ansvar for riktig spillmekanikk.
+Kundekontakt -> Det er lettere at en har oversikt over spilleregler og har ansvar for riktig spillmekanikk.
 
 ## Produktutforming
 
@@ -136,12 +136,12 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Vi tenker å bruke en blanding av scrum og parprogrammering under prosjektet.
 
--   Tirsdager brukes for å re cape hva som har blitt gjort uken før 
+-   Tirsdager brukes for å oppsumere hva som har blitt gjort uken før 
     og for å avklare om vi føler oss ferdig med oppgaver.
 
 -   Deling av dokumenter skjer over GitHub, Slack eller Discord.
 
--   Bruke project board for å ha kontroll over alle oppgavene og hvem som skal gjøre hva.
+-   Bruke prosjekttavle for å ha kontroll over alle oppgavene og hvem som skal gjøre hva.
 
 -   Arbeidsfordelingen skal bli gjort med hver enkeltes kompetanse og evner tatt i betraktning slik at en ikke blir for overbelastet under prosjektet.
 
@@ -151,7 +151,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Diskutere ting vi må ta felles på møter og planlegge arbeidoppgaver som skal gjøres til neste møte.
 
--   Vi har planlagt å ha parprogrammeringstimer slik at alle føler seg komfortable med oppgavene og slik at alle får bidratt til prosjektet.
+-   Vi har planlagt å ha parprogrammeringstimer slik at alle føler seg komfortable med oppgavene og slik at alle får bidratt til             prosjektet.
 
 -   Diskutere spilldesignet sammen i gruppen slik at alle er på samme nivå.
 
@@ -159,7 +159,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet 
     og koden i tilfelle vi føler vi må refaktorere mer eller endre noen andre designaspekter.
--   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refaktorere eller endre noen andre designaspekter.
+    
+-   I slutten av en lang sprint (slutten av hver oblig) skal vi se over designet og koden i tilfelle vi føler vi må refaktorere eller       endre noen andre designaspekter.
 
 -   Kommunikasjon skjer over Slack og Discord.
 
@@ -173,9 +174,9 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 #### Vise et brett
 
--   Som en spiller må jeg kunne se et brett for å kunne spille spillet.
--   Som spillbrett må jeg vise alle elementer som er på meg.
--   Som spillbrett må jeg være delt inn et rutenett der brikkene må være i en rute av gangen.
+-   Som spiller må jeg kunne se et brett for å kunne spille spillet.
+-   Som spiller må jeg kunne se alle elementer på spillbrettet for å kunne programmere roboten.
+-   Som spiller må jeg kunne se et rutenett på spillbrettet for å kunne bedømme avstanden roboten må bevege seg for å nå et spesefikt punkt på spillbrettet.
 
 ##### Akseptansekrav for brett
 
@@ -183,8 +184,8 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
   
 #### Plassere en brikke på brettet
 
--   Som brikke må jeg kunne plasseres på spillbrettet.
--   Som brikke må jeg være synlig på brettet.
+-   Som brikke må jeg kunne plasseres på spillbrettet for å være en del av spillet.
+-   Som brikke må jeg være synlig på brettet for å kunne vise spilleren hvor jeg er.
 
 ##### Akseptansekrav for brikke på brettet
 
@@ -202,7 +203,7 @@ Spillet skal implementere alle spillereglene fra RoboRally (om tiden strekker ti
 
 -   Vi føler parprogrammering fungerer bra, og planlegger å fortsette med dette i neste sprint.
 
--   Vi ønsker å lage bedre og mer presise issues på project boardet, ettersom noen av issuene på 
+-   Vi ønsker å lage bedre og mer presise issues på prosjekttavlen, ettersom noen av issuene på 
     boardet var for store og ikke spesifikke nok.
 
 -   Vi valgte å bruke tid på Travis siden det gir en rask respons om noe som forventes å kjøre 

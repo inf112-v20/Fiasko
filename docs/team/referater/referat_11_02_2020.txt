@@ -1,0 +1,60 @@
+## Oppmøte
+Alle i teamet var tilstede.
+
+## Gjennomgått
+Vi gikk igjennom det vi tenker må være tilstede av klasser for å lage et spillbrett med objekter på brettet.
+
+### Klasser med metoder og feltvariabler
+
+#### Game:
+-   spiller
+-   brett
+-   kortstokk
+
+#### Kortstokk:
+-   mange kort
+
+#### IGrid:
+-   element<K>
+-   høyde
+-   bredde
+-   list<list<K>> (matrise)
+-   set_element()
+-   get_element() // returnerer objekt
+-   get_height() // returnerer høyde
+-   get_width() // returnerer bredde
+
+#### Board:
+-   dead_player_list<robot>
+-   grid_object
+-   graf
+-   move_robot(robot, pos)
+-   remove_dead_robot(robot)
+
+#### Graf:
+-   is_neighbour(node, node)
+
+#### Node:
+-   key(pos)
+-   value
+
+#### Robot:
+-   int x pos
+-   int y pos
+-   retning enum
+-   health int
+-   lives int
+-   get_health
+-   set_health
+-   player_id int
+-   get_retning
+-   set_retning
+-   set_position
+-   get_position
+-   boolean powerdown
+
+#### Tiles
+
+#### Functional_tile
+-   fase_action(object)
+-   runde_action(object)

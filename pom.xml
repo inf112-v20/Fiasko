@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>inf112.fiasko.roborally</groupId>
-  <artifactId>mvn-app</artifactId>
+  <artifactId>roborally</artifactId>
   <version>0.1-alpha</version>
 
   <name>Robo Rally</name>

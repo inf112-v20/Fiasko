@@ -40,7 +40,7 @@ public enum TileType {
 
     /**
      * Gets the numerical id used for alternate identification of a tile type
-     * @return <p>The numerical id of the tile</p>
+     * @return <p>The numerical id of the tile type</p>
      */
     public int getTileTypeID() {
         return this.tileTypeID;
@@ -48,8 +48,8 @@ public enum TileType {
 
     /**
      * Gets a tile type value from its numerical representation
-     * @param tileTypeID <p>The numerical representation of a tile tpye</p>
-     * @return <p>The enum value representing the tile type</p>
+     * @param tileTypeID <p>The numerical representation of a tile type</p>
+     * @return <p>The enum value representing the tile type, or null if the id is invalid</p>
      */
     public static TileType getTileTypeFromID(int tileTypeID) {
         for (TileType type : TileType.values()) {

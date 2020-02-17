@@ -4,19 +4,22 @@ Game
     - Deck<ICard>
 
 Deck
-    - List<Card>
+    - List<ICardWithoutSuit>
 
     - void shuffle() //Randomizes order of cards in deck
     - void draw(Deck other) //Draws one card from deck other. Returns false if the other deck is empty
     - void draw(Deck other, int n) //Draws n cards from deck other
-    - void empty(Deck other) //Moves all cards in deck to deck other
+    - void emptyInto(Deck other) //Moves all cards in deck to deck other
     - boolean isEmpty() //Checks whether there are any cards in the deck
     - int size() //Gets number of cards in deck
     - List<ICard> getCards() //Gets copy of cards in deck in correct order
 
-ICard
+ICardWithoutSuit
     - S getValue() //Returns the value of the card
-    - T getSymbol() //Returns the symbol of the card
+    - T getSymbol() //Returns the symbol/color of the card
+
+ICard extends ICardWithoutSuit
+    - R getSuit() //Returns the suit of the card
 
 IGrid
     - K getElement(int x, int y)
@@ -25,7 +28,7 @@ IGrid
     - int getWidth()
 
 Board
-    - Grid
+    - Grid x2
     - List<Robot> deadRobots;
     - List<Robot> aliveRobots;
 
@@ -38,8 +41,14 @@ Position //Immutable
     int getYCoordinate()
 
 Direction {
-    NORTH, SOUTH, WEST, EAST
-    ???? NORTH_WEST, NORTH_EAST, SOUTH_WEST, SOUTH_EAST ????
+    NORTH (1),
+    NORTH_EAST (2),
+    EAST (3),
+    SOUTH_EAST (4),
+    SOUTH (5),
+    SOUTH_WEST (6),
+    WEST (7),
+    NORTH_WEST (8);
 }
 
 TileType {
@@ -66,32 +75,13 @@ TileType {
     WRENCH (21),
     WRENCH_AND_HAMMER (22),
     DEATH_TILE (23)
-
-    private final int tileID;
-
-    private TileType(int tileID) {
-        this.tileID = tileID;
-    }
-
-    public int getTileID() {
-        return this.tileID;
-    }
-
-    public static TileType getTileTypeFromID(int tileID) {
-        for (TileType type : TileType.values()) {
-            if (type.tileID == tileID) {
-                return tile;
-            }
-        }
-        return null;
-    }
 }
 
 WallType {
-    WALL_NORMAL,
-    WALL_CORNER,
-    WALL_LASER_SINGLE,
-    WALL_LASER_DOUBLE
+    WALL_NORMAL (1),
+    WALL_CORNER (2),
+    WALL_LASER_SINGLE (3),
+    WALL_LASER_DOUBLE (4);
 }
 
 Tile
@@ -118,7 +108,7 @@ Robot
     - setDamage(int damage)
     - Position getPosition()
     - setPosition(Position position)
-    - setPowerDown(boolean inPowerDown)
+    - setPowerDown(boolean value)
     - boolean isInPowerDown()
 
 BoardLoader

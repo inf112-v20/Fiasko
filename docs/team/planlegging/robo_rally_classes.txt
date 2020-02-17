@@ -1,0 +1,144 @@
+Game
+    - List<Player> or Map<PlayerId, Player>
+    - Board
+    - Deck<ICard>
+
+Deck
+    - List<Card>
+
+    - void shuffle() //Randomizes order of cards in deck
+    - void draw(Deck other) //Draws one card from deck other. Returns false if the other deck is empty
+    - void draw(Deck other, int n) //Draws n cards from deck other
+    - void empty(Deck other) //Moves all cards in deck to deck other
+    - boolean isEmpty() //Checks whether there are any cards in the deck
+    - int size() //Gets number of cards in deck
+    - List<ICard> getCards() //Gets copy of cards in deck in correct order
+
+ICard
+    - S getValue() //Returns the value of the card
+    - T getSymbol() //Returns the symbol of the card
+
+IGrid
+    - K getElement(int x, int y)
+    - setElement(int x, int y, K element)
+    - int getHeight()
+    - int getWidth()
+
+Board
+    - Grid
+    - List<Robot> deadRobots;
+    - List<Robot> aliveRobots;
+
+    - removeDeadRobotFromBoard(Robot robot);
+
+Position //Immutable
+    int xCoordinate;
+    int yCoordinate;
+    int getXCoordinate()
+    int getYCoordinate()
+
+Direction {
+    NORTH, SOUTH, WEST, EAST
+    ???? NORTH_WEST, NORTH_EAST, SOUTH_WEST, SOUTH_EAST ????
+}
+
+TileType {
+    TILE (1),
+    HOLE (2),
+    COGWHEEL_RIGHT (3),
+    COGWHEEL_LEFT (4),
+    TRANSPORT_BAND_SLOW (5),
+    TRANSPORT_BAND_SLOW_RIGHT (6),
+    TRANSPORT_BAND_SLOW_LEFT (7),
+    TRANSPORT_BAND_SLOW_SIDE_ENTRANCES (8),
+    TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_LEFT (9),
+    TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_RIGHT (10),
+    TRANSPORT_BAND_FAST (11),
+    TRANSPORT_BAND_FAST_RIGHT (12),
+    TRANSPORT_BAND_FAST_LEFT (13),
+    TRANSPORT_BAND_FAST_SIDE_ENTRANCES (14),
+    TRANSPORT_BAND_FAST_SIDE_ENTRANCE_LEFT (15),
+    TRANSPORT_BAND_FAST_SIDE_ENTRANCE_RIGHT (16),
+    FLAG_1 (17),
+    FLAG_2 (18),
+    FLAG_3 (19),
+    FLAG_4 (20),
+    WRENCH (21),
+    WRENCH_AND_HAMMER (22),
+    DEATH_TILE (23)
+
+    private final int tileID;
+
+    private TileType(int tileID) {
+        this.tileID = tileID;
+    }
+
+    public int getTileID() {
+        return this.tileID;
+    }
+
+    public static TileType getTileTypeFromID(int tileID) {
+        for (TileType type : TileType.values()) {
+            if (type.tileID == tileID) {
+                return tile;
+            }
+        }
+        return null;
+    }
+}
+
+WallType {
+    WALL_NORMAL,
+    WALL_CORNER,
+    WALL_LASER_SINGLE,
+    WALL_LASER_DOUBLE
+}
+
+Tile
+    TileType type
+    Direction direction
+
+FunctionalTile extends Tile
+    doPhaseAction() //Information required has not been decided
+    doRoundAction() //Information required has not been decided
+    doStepOnAction() //Information required has not been decided. Not needed for all functional tiles
+
+Wall
+    WallType type
+    Direction direction
+
+Robot
+    - int playerId
+    - int currentDamage
+    - boolean inPowerDown
+    - int lastFlagVisited
+    - Position backup
+
+    - int getDamage()
+    - setDamage(int damage)
+    - Position getPosition()
+    - setPosition(Position position)
+    - setPowerDown(boolean inPowerDown)
+    - boolean isInPowerDown()
+
+BoardLoader
+    - Board loadBoard(String boardFile)
+
+Player
+    - Deck<ICard>
+    - int playerId //Both ID and name?
+    - string playerName
+    - List<ICard> program
+    - Robot robot //Might not be needed
+    - boolean willTakePowerdownNextTurn
+
+    - boolean isAlive()
+    - boolean getName()
+    - Robot getRobot() //Might not be needed
+    - setPowerDownNextTurn(boolean willTakePowerdown)
+
+IO
+    - Game
+
+    - List<IDrawableElement> getElementsToRender()
+    - ? HandleInput(?) ???

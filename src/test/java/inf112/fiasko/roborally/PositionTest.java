@@ -1,7 +1,6 @@
 package inf112.fiasko.roborally;
 
 import inf112.fiasko.roborally.game.Position;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 

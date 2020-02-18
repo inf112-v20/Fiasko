@@ -1,33 +1,36 @@
 package inf112.fiasko.roborally.game;
 
+/**
+ * This class represent a position on the board
+ */
 public class Position {
 
-    private int xPosition;
-    private int yPosition;
+    private int xCoordinate;
+    private int yCoordinate;
 
     /**
-     * initalises the x and y cooardinats.
-     * @param xPosition sets the x position.
-     * @param yPosition sets the y position.
+     * Initializes the position
+     * @param xCoordinate The x coordinate of the position
+     * @param yCoordinate The y coordinate of the position
      */
-    public Position(int xPosition, int yPosition) {
-        this.xPosition = xPosition;
-        this.yPosition = yPosition;
+    public Position(int xCoordinate, int yCoordinate) {
+        this.xCoordinate = xCoordinate;
+        this.yCoordinate = yCoordinate;
     }
 
     /**
-     * gets x coordinate of the position.
-     * @return the x coordinate of the position.
+     * Gets the x coordinate of the position
+     * @return The x coordinate of the position
      */
     public int getXCoordinate() {
-        return xPosition;
+        return xCoordinate;
     }
 
     /**
-     * gets y coordinate of the position.
-     * @return the y coordinate of the position.
+     * Gets the y coordinate of the position
+     * @return The y coordinate of the position
      */
     public int getYCoordinate() {
-        return yPosition;
+        return yCoordinate;
     }
 }

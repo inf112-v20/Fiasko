@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game;
+package inf112.fiasko.roborally.element_properties;
 
 /**
  * This class represent a position on the board

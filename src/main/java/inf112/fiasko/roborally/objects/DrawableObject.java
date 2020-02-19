@@ -1,12 +1,12 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.abstractions.GameTexture;
+import inf112.fiasko.roborally.element_properties.GameTexture;
 
 /**
  * This class represents an object that can be drawn using libgdx
  */
 public class DrawableObject implements IDrawableObject {
-    private GameTexture texture;
+    private final GameTexture texture;
     private int xPos;
     private int yPos;
     private int width = 64;

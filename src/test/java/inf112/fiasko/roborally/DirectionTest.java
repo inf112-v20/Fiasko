@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally;
 
-import inf112.fiasko.roborally.abstractions.Direction;
+import inf112.fiasko.roborally.element_properties.Direction;
 import org.junit.Test;
 
 import java.util.ArrayList;

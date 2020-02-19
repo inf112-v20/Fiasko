@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.abstractions;
+package inf112.fiasko.roborally.element_properties;
 
 /**
  * This enum represents all possible tile types

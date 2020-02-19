@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.abstractions.GameTexture;
+import inf112.fiasko.roborally.element_properties.GameTexture;
 
 /**
  * This interface describes an object drawable using libgdx

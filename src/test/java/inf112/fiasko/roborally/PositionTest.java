@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally;
 
-import inf112.fiasko.roborally.game.Position;
+import inf112.fiasko.roborally.element_properties.Position;
 import org.junit.Before;
 import org.junit.Test;
 

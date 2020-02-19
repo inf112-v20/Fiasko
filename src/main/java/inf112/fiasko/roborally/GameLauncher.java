@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.fiasko.roborally.abstractions.GameTexture;
+import inf112.fiasko.roborally.element_properties.GameTexture;
 import inf112.fiasko.roborally.game.Game;
 import inf112.fiasko.roborally.game.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;

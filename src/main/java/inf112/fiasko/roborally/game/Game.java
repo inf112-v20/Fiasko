@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.game;
 
-import inf112.fiasko.roborally.abstractions.GameTexture;
+import inf112.fiasko.roborally.element_properties.GameTexture;
 import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.objects.IDrawableObject;
 

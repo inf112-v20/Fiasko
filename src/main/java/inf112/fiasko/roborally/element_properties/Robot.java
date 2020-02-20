@@ -10,7 +10,7 @@ public class Robot {
     private int lastFlagVisited = 0;
     private Position backupPosition;
     private Position currentPosition;
-    
+
 
     public Robot (int playerId, Position spawnPosition){
         this.playerId=playerId;

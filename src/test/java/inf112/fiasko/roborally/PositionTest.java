@@ -13,11 +13,11 @@ public class PositionTest {
         testPosition = new Position(3, 4);
     }
     @Test
-    public void TestGetXPosition(){
+    public void testGetXPosition(){
         assertEquals(3,testPosition.getXCoordinate());
     }
     @Test
-    public void TestGetYPosition(){
+    public void testGetYPosition(){
         assertEquals(4,testPosition.getYCoordinate());
     }
 }

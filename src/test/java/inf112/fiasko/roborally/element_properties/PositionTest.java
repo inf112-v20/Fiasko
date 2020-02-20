@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.element_properties;
 
 import inf112.fiasko.roborally.element_properties.Position;
 import org.junit.Before;

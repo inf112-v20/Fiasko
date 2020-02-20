@@ -6,7 +6,7 @@ import inf112.fiasko.roborally.objects.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TileTest {
     private Tile tile;

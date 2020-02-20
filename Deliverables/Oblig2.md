@@ -1,6 +1,6 @@
 # Team Fiasko
 
-## Deloppgave 1:
+## Deloppgave 1
 
 *   Rollene har fungert greit fram til nå
 *   Samme som Oblig1
@@ -8,24 +8,21 @@
 *   Alle blir hørt og det er åpent for å komme med tilbakemeldinger på ting som kan bli bedre
 *   Kommunikasjonen fungerer bra
 
-
-## Deloppgave 2:
+## Deloppgave 2
 
 ### Brukerhistorier
 
 #### Posisjon
-##### Brukerhistorie 
+*Brukerhistorie* 
 *   Som robot trenger jeg posisjon for å ha kontroll på hvor jeg er og hvor jeg skal.
-##### Akseptansekrav
+
+*Akseptansekrav*
 *   Vi har en klasse som lagrer en posisjon for alle roboter på brettet.
 *   Posisjoner består av x og y koordinater.
-##### Arbeidsoppgaver
+
+*Arbeidsoppgaver*
 *   Lage en klasse som oppfyller akseptansekravene.
 
 #### Tile
-##### Brukerhistorie
+*Brukerhistorie*
 *   Som brett trenger jeg noe på meg som gir meg funksjonalitet
-
-#### Grid
-##### Brukerhistorie
-*   

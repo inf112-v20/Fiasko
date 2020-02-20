@@ -7,8 +7,8 @@ import inf112.fiasko.roborally.element_properties.GameTexture;
  */
 public class DrawableObject implements IDrawableObject {
     private final GameTexture texture;
-    private int xPos;
-    private int yPos;
+    private final int xPos;
+    private final int yPos;
     private int width = 64;
     private int height = 64;
     private int rotation = 0;

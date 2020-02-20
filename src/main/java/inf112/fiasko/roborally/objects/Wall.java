@@ -8,8 +8,8 @@ import inf112.fiasko.roborally.element_properties.WallType;
  */
 public class Wall {
 
-    private WallType wallType;
-    private Direction direction;
+    private final WallType wallType;
+    private final Direction direction;
 
     /**
      * Initializes a wall

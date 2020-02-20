@@ -5,8 +5,8 @@ package inf112.fiasko.roborally.element_properties;
  */
 public class Position {
 
-    private int xCoordinate;
-    private int yCoordinate;
+    private final int xCoordinate;
+    private final int yCoordinate;
 
     /**
      * Initializes the position

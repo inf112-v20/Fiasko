@@ -7,7 +7,7 @@ import inf112.fiasko.roborally.element_properties.Position;
  */
 public class Robot {
     private int robotDamageTaken = 0;
-    private int playerId; //might not be needed
+    private final int playerId; //might not be needed
     private boolean inPowerDown = false;
     private int lastFlagVisited = 0;
     private Position backupPosition;

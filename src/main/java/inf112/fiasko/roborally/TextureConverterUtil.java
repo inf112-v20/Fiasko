@@ -9,10 +9,10 @@ import inf112.fiasko.roborally.objects.Tile;
 /**
  * This class can convert an element to an appropriate texture
  */
-public class TextureConverter {
+public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
 
-    private TextureConverter() {}
+    private TextureConverterUtil() {}
 
     /**
      * Gets the texture representing the tile
@@ -92,7 +92,8 @@ public class TextureConverter {
      * @return The texture region containing the texture
      */
     private static TextureRegion getTextureOnSheet(int x, int y) {
-        final int tileTextureHeight = 300, tileTextureWidth = 300;
+        final int tileTextureHeight = 300;
+        final int tileTextureWidth = 300;
         return new TextureRegion(textureSheet, x*tileTextureWidth, y*tileTextureHeight,
                 tileTextureWidth, tileTextureHeight);
     }

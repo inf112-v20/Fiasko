@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.objects.Grid;

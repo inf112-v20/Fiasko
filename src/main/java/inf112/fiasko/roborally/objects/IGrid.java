@@ -2,36 +2,36 @@ package inf112.fiasko.roborally.objects;
 
 /**
  * This Interface describes a grid
- * @param <K> type of element
+ * @param <K> The type of element the grid is to store
  */
 public interface IGrid<K> {
 
     /**
-     * returns the width of the grid
-     * @return the width
+     * Gets the width of the grid
+     * @return The width of the grid
      */
     int getWidth();
 
     /**
-     * returns the height of the grid
-     * @return the height
+     * Gets height of the grid
+     * @return The height of the grid
      */
     int getHeight();
 
     /**
-     * returns the element in a given x and y coordinate
-     * @param x coordinate in the grid
-     * @param y coordinate in the grid
-     * @return element in the x and y coordinate
-     * @throws IllegalArgumentException throws exception if coordinates are not in the grid
+     * Gets the element in a given x and y coordinate
+     * @param x Coordinate in the grid
+     * @param y Coordinate in the grid
+     * @return Element in the x and y coordinate
+     * @throws IllegalArgumentException Throws an exception if the coordinates are outside of the grid
      */
     K getElement(int x,int y) throws IllegalArgumentException;
 
     /**
-     * places the element in the given x and y coordinate
-     * @param x coordinate
-     * @param y coordinate
-     * @param element that is being placed in the grid
+     * Places the element on the given x and y coordinate
+     * @param x Coordinate in the grid
+     * @param y Coordinate in the grid
+     * @param element The element to place in the grid
      */
-    void setElement(int x, int y, K element);
+    void setElement(int x, int y, K element) throws IllegalArgumentException;
 }

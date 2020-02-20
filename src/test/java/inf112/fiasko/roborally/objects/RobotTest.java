@@ -1,7 +1,7 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.Robot;
+import inf112.fiasko.roborally.objects.Robot;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 

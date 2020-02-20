@@ -1,7 +1,9 @@
-package inf112.fiasko.roborally.element_properties;
+package inf112.fiasko.roborally.objects;
+
+import inf112.fiasko.roborally.element_properties.Position;
 
 /**
- * this class represtents a robot
+ * this class represents a robot
  */
 public class Robot {
     private int robotDamageTaken = 0;

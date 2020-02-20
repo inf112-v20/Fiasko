@@ -1,8 +1,7 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.TileType;
-import inf112.fiasko.roborally.objects.Tile;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -37,5 +36,10 @@ public class TileTest {
     @Test
     public void getDirectionFromTile2() {
         assertEquals(Direction.SOUTH, tile2.getDirection());
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void invalidTileThrowsException() {
+        new Tile(TileType.TRANSPORT_BAND_FAST, Direction.NORTH_EAST);
     }
 }

@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.game;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

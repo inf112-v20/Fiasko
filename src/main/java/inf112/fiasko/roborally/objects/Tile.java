@@ -3,38 +3,38 @@ package inf112.fiasko.roborally.objects;
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.TileType;
 
+/**
+ * This class represents a simple tile
+ */
 public class Tile {
 
-    /**
-     * tileType stores the type of the specific tile.
-     */
     private TileType tileType;
-    /**
-     * direction stores the direction of the specific tile.
-     */
     private Direction direction;
 
     /**
-     *
-     * @param tileType sets the type of the tile.
-     * @param direction sets the direction the tile is facing.
+     * Instantiates a new tile
+     * @param tileType The type of the tile
+     * @param direction The direction of the tile
      */
     public Tile(TileType tileType, Direction direction) {
+        if (direction.getDirectionID() % 2 == 0) {
+            throw new IllegalArgumentException("Invalid direction for tile submitted");
+        }
         this.tileType = tileType;
         this.direction = direction;
     }
 
     /**
-     *
-     * @return the type of the specific tile.
+     * Gets the tile type of the tile
+     * @return The tile's tile type
      */
     public TileType getTileType() {
         return tileType;
     }
 
     /**
-     *
-     * @return the direction of the specific tile.
+     * Gets the direction of the tile
+     * @return The tile's direction
      */
     public Direction getDirection() {
         return direction;

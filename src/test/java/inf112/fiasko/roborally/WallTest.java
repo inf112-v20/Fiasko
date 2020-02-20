@@ -6,7 +6,7 @@ import inf112.fiasko.roborally.element_properties.WallType;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
-public class TestWall {
+public class WallTest {
     @Test
     public void testWallGetWallTypeNormal(){
         Wall testGetWall = new Wall(WallType.WALL_NORMAL, Direction.NORTH);

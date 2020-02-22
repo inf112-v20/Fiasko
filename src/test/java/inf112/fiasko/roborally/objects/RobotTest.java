@@ -3,6 +3,7 @@ package inf112.fiasko.roborally.objects;
 import inf112.fiasko.roborally.element_properties.Position;
 import static org.junit.Assert.assertEquals;
 
+import inf112.fiasko.roborally.element_properties.RobotID;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,7 +13,7 @@ public class RobotTest {
     @Before
     public void setUp(){
         robotPosition = new Position(3,6);
-        testRobot = new Robot(6, robotPosition);
+        testRobot = new Robot(RobotID.ROBOT_6, robotPosition);
     }
     @Test
     public void testRobotGetDamageOnInitializedRobot(){
@@ -20,7 +21,7 @@ public class RobotTest {
     }
     @Test
     public void testRobotGetPlayerId(){
-        assertEquals(6, testRobot.getPlayerId());
+        assertEquals(RobotID.ROBOT_6, testRobot.getRobotId());
     }
     @Test
     public void testRobotGetBackupOnInitializedRobot(){

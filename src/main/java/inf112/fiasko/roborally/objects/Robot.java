@@ -1,13 +1,14 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Position;
+import inf112.fiasko.roborally.element_properties.RobotID;
 
 /**
- * this class represents a robot
+ * This class represents a robot
  */
 public class Robot {
     private int robotDamageTaken = 0;
-    private final int playerId;
+    private final RobotID robotId;
     private boolean inPowerDown = false;
     private int lastFlagVisited = 0;
     private Position backupPosition;
@@ -15,11 +16,11 @@ public class Robot {
 
     /**
      * Instantiates a new robot
-     * @param playerId gives the robot a identifier that links it too the correct player
+     * @param robotId gives the robot a identifier that links it too the correct player
      * @param spawnPosition gives the robot its starting position on the map
      */
-    public Robot (int playerId, Position spawnPosition){
-        this.playerId=playerId;
+    public Robot (RobotID robotId, Position spawnPosition) {
+        this.robotId = robotId;
         this.backupPosition = spawnPosition;
         this.currentPosition = spawnPosition;
     }
@@ -33,7 +34,7 @@ public class Robot {
     }
 
     /**
-     *  Set the robot's damage too a given amount
+     * Sets the robot's damage to a given amount
      * @param damage the amount of damage the robot has received
      */
     public void setDamage (int damage){
@@ -78,8 +79,8 @@ public class Robot {
      * @param newBackupPosition the position of the flag
      */
     public void setLastFlagVisitedAndBackupPosition(int currentFlag, Position newBackupPosition){
-        this.lastFlagVisited=currentFlag;
-        this.backupPosition=newBackupPosition;
+        this.lastFlagVisited = currentFlag;
+        this.backupPosition = newBackupPosition;
     }
 
     /**
@@ -91,8 +92,8 @@ public class Robot {
     }
 
     /**
-     * Gets the robots backup position
-     * @return robots backup position
+     * Gets the robot's backup position
+     * @return The robot's backup position
      */
     public Position getBackupPosition(){
         return backupPosition;
@@ -102,8 +103,8 @@ public class Robot {
      * Gets the identifier of the players controlling the robot
      * @return player identifier
      */
-    public int getPlayerId(){
-        return playerId;
+    public RobotID getRobotId(){
+        return robotId;
     }
 
 }

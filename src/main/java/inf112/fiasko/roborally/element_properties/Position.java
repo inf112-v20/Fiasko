@@ -33,4 +33,16 @@ public class Position {
     public int getYCoordinate() {
         return yCoordinate;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() != Position.class) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        return this.xCoordinate == ((Position) obj).xCoordinate &&
+                this.yCoordinate == ((Position) obj).yCoordinate;
+    }
 }

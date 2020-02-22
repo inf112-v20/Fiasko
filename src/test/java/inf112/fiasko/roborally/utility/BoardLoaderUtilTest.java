@@ -6,10 +6,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.fail;
+
 public class BoardLoaderUtilTest {
     @Test
-    public void loadTestBoard() throws IOException {
+    public void loadTestBoard() {
         List<Robot> robotList = new ArrayList<>();
-        BoardLoaderUtil.loadBoard("boards/test_board.txt", robotList);
+        try {
+            BoardLoaderUtil.loadBoard("boards/test_board.txt", robotList);
+        } catch (IOException e) {
+            fail();
+        }
     }
 }

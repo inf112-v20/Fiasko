@@ -19,7 +19,7 @@ public class Board {
      * @param otherObjects a grid containing all the other Objects like flags and conveyor belts
      * @param aliveRobots a list of all the robots that are currently alive
      */
-    public void Board(Grid walls, Grid otherObjects, ArrayList aliveRobots){
+    public Board(Grid walls, Grid otherObjects, ArrayList aliveRobots){
         this.walls=walls;
         this.otherObjects=otherObjects;
         this.aliveRobots=aliveRobots;

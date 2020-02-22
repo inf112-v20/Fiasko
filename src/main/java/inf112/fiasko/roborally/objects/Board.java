@@ -3,6 +3,10 @@ package inf112.fiasko.roborally.objects;
 
 import java.util.ArrayList;
 
+/**
+ * This class represents a board
+ */
+
 public class Board {
     private Grid walls;
     private Grid otherObjects;

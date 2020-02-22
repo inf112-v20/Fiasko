@@ -18,4 +18,16 @@ public interface ICardWithOutSuit<S,T> {
      */
     T getSymbol();
 
+    /**
+     * Sets the value of the card
+     * @param value card value
+     */
+    void setValue(S value);
+
+    /**
+     * Sets the symbol of the card
+     * @param symbol card symbol
+     */
+    void setSymbol(T symbol);
+
 }

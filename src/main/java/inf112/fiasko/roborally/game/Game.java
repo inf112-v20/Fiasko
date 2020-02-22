@@ -1,9 +1,13 @@
 package inf112.fiasko.roborally.game;
 
 import inf112.fiasko.roborally.element_properties.GameTexture;
+import inf112.fiasko.roborally.objects.Board;
 import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.objects.Robot;
+import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,25 +16,32 @@ import java.util.List;
  */
 public class Game implements IDrawableGame {
     private final int TILE_SIZE = 64;
-    private final int TILE_NUMBER = 12;
-    private final int BOARD_WIDTH = TILE_SIZE * TILE_NUMBER;
-    private final int BOARD_HEIGHT = TILE_SIZE * TILE_NUMBER;
+    private Board gameBoard;
+
+    public Game() {
+        try {
+            List<Robot> robots = new ArrayList<>();
+            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public int getWidth() {
-        return BOARD_WIDTH;
+        return gameBoard.getBoardWidth() * TILE_SIZE;
     }
 
     @Override
     public int getHeight() {
-        return BOARD_HEIGHT;
+        return gameBoard.getBoardHeight() * TILE_SIZE;
     }
 
     @Override
     public List<IDrawableObject> getObjectsToDraw() {
         List<IDrawableObject> list = new ArrayList<>();
-        for (int i = 0; i < TILE_NUMBER; i++) {
-            for (int j = 0; j < TILE_NUMBER; j++) {
+        for (int i = 0; i < gameBoard.getBoardWidth(); i++) {
+            for (int j = 0; j < gameBoard.getBoardHeight(); j++) {
                 DrawableObject tile = new DrawableObject(GameTexture.TILE, i * TILE_SIZE, j * TILE_SIZE);
                 list.add(tile);
             }

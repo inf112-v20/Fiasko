@@ -19,6 +19,10 @@ public class RobotTest {
         assertEquals(0, testRobot.getDamage());
     }
     @Test
+    public void testRobotGetPlayerId(){
+        assertEquals(6, testRobot.getPlayerId());
+    }
+    @Test
     public void testRobotGetBackupOnInitializedRobot(){
         assertEquals(robotPosition, testRobot.getBackupPosition());
     }

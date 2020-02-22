@@ -98,4 +98,12 @@ public class Robot {
         return backupPosition;
     }
 
+    /**
+     * Gets the identifier of the players controlling the robot
+     * @return player identifier
+     */
+    public int getPlayerId(){
+        return playerId;
+    }
+
 }

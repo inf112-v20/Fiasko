@@ -1,7 +1,5 @@
-package inf112.fiasko.roborally.element_properties;
+package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.objects.Grid;
-import inf112.fiasko.roborally.objects.Robot;
 
 import java.util.ArrayList;
 
@@ -24,7 +22,7 @@ public class Board {
     }
 
     /**
-     * removes a dead robot from the board over to the dead robot list.
+     * Removes a dead robot from the board over to the dead robot list.
      * @param robot the dead robot
      */
     public void  removeDeadRobotFromBoard(Robot robot){

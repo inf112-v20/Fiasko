@@ -13,7 +13,11 @@ public class Robot {
     private Position backupPosition;
     private Position currentPosition;
 
-
+    /**
+     *
+     * @param playerId gives the robot a identifier that links it too the correct player
+     * @param spawnPosition
+     */
     public Robot (int playerId, Position spawnPosition){
         this.playerId=playerId;
         this.backupPosition = spawnPosition;

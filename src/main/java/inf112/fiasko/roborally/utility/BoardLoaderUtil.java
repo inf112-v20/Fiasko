@@ -1,7 +1,14 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.element_properties.*;
-import inf112.fiasko.roborally.objects.*;
+import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.element_properties.WallType;
+import inf112.fiasko.roborally.objects.Board;
+import inf112.fiasko.roborally.objects.IGrid;
+import inf112.fiasko.roborally.objects.Robot;
+import inf112.fiasko.roborally.objects.Tile;
+import inf112.fiasko.roborally.objects.Wall;
+import inf112.fiasko.roborally.objects.Grid;
 
 import java.io.*;
 import java.util.List;

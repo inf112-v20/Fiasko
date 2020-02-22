@@ -5,7 +5,7 @@ package inf112.fiasko.roborally.objects;
  * @param <S> the type for the card value
  * @param <T> the type for the symbol
  */
-public interface ICardWithOutSuit<S,T> {
+public interface ICardWithoutSuit<S,T> {
     /**
      * Gets the value of the card
      * @return card value

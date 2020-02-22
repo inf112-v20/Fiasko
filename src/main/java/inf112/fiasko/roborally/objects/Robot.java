@@ -82,4 +82,20 @@ public class Robot {
         this.backupPosition=newBackupPosition;
     }
 
+    /**
+     * Gets the correct flag the robot visited
+     * @return last visited flag
+     */
+    public int getLastFlagVisited(){
+        return lastFlagVisited;
+    }
+
+    /**
+     * Gets the robots backup position
+     * @return robots backup position
+     */
+    public Position getBackupPosition(){
+        return backupPosition;
+    }
+
 }

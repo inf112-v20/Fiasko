@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class Grid<K> implements IGrid<K> {
 
-    private int height;
-    private int width;
-    private List<ArrayList<K>> grid = new ArrayList<>();
+    private final int height;
+    private final int width;
+    private final List<ArrayList<K>> grid = new ArrayList<>();
 
     /**
      * Initializes an empty grid

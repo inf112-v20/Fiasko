@@ -1,6 +1,5 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.element_properties.GameTexture;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.utility;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

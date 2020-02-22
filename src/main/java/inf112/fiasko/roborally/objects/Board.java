@@ -93,16 +93,11 @@ public class Board {
         Position robotPosition = robot.getPosition();
         Position newPosition = getNewPosition(robotPosition, direction);
         //Robot tried to go outside of the map. Kill it.
-        if (newPosition.getXCoordinate() < 0
-                || newPosition.getXCoordinate() >= boardWidth
-                || newPosition.getYCoordinate() < 0
-                || newPosition.getYCoordinate() >= boardHeight) {
-            killRobot(robot);
+        if (killRobotIfGoesOutsideMap(robot, newPosition)) {
             return true;
         }
         //There is a wall blocking the robot. It can't proceed.
-        if (hasWallFacing(robotPosition, direction) ||
-                hasWallFacing(newPosition, Direction.getReverseDirection(direction))) {
+        if (robotMoveIsStoppedByWall(robotPosition, newPosition, direction)) {
             return false;
         }
         //If another robot is blocking this robot's path, try to shove it.
@@ -113,6 +108,49 @@ public class Board {
             }
         }
         //Some tiles may kill the robot if stepped on.
+        if (killRobotIfStepsOnDangerousTile(robot, newPosition)) {
+            return true;
+        }
+        robot.setPosition(newPosition);
+        return true;
+    }
+
+    /**
+     * Checks if a potential robot move would be blocked by a wall
+     * @param robotPosition The current position of the robot
+     * @param newPosition The position the robot is trying to move to
+     * @param direction The direction the robot is going
+     * @return True if a wall would stop its path
+     */
+    private boolean robotMoveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
+        return hasWallFacing(robotPosition, direction) ||
+                hasWallFacing(newPosition, Direction.getReverseDirection(direction));
+    }
+
+    /**
+     * Checks if the robot is about to step outside of the board, and kills it if it does
+     * @param robot The robot attempting to move
+     * @param newPosition The position the robot is attempting to move to
+     * @return True if the robot was killed for leaving the board
+     */
+    private boolean killRobotIfGoesOutsideMap(Robot robot, Position newPosition) {
+        if (newPosition.getXCoordinate() < 0
+                || newPosition.getXCoordinate() >= boardWidth
+                || newPosition.getYCoordinate() < 0
+                || newPosition.getYCoordinate() >= boardHeight) {
+            killRobot(robot);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Checks the tile the robot is about to step on and kills it if the tile is dangerous
+     * @param robot The robot attempting to move
+     * @param newPosition The position the robot is attempting to move to
+     * @return True if the robot was killed by the tile
+     */
+    private boolean killRobotIfStepsOnDangerousTile(Robot robot, Position newPosition) {
         Tile tileRobotStepsOn = tiles.getElement(newPosition.getXCoordinate(), newPosition.getYCoordinate());
         if (tileRobotStepsOn == null) {
             throw new IllegalArgumentException("The game board is missing a tile. This should not happen.");
@@ -122,8 +160,7 @@ public class Board {
             killRobot(robot);
             return true;
         }
-        robot.setPosition(newPosition);
-        return true;
+        return false;
     }
 
     /**
@@ -183,8 +220,9 @@ public class Board {
                 return direction == Direction.SOUTH || direction == Direction.WEST;
             case SOUTH_EAST:
                 return direction == Direction.SOUTH || direction == Direction.EAST;
+            default:
+                return wall.getDirection() == direction;
         }
-        return wall.getDirection() == direction;
     }
 
     /**

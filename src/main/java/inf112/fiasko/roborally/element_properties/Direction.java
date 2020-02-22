@@ -44,4 +44,32 @@ public enum Direction {
         }
         return null;
     }
+
+    /**
+     * Gets the reverse of a direction
+     * @param direction A direction
+     * @return The reverse direction
+     */
+    public static Direction getReverseDirection(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return SOUTH;
+            case SOUTH:
+                return NORTH;
+            case EAST:
+                return WEST;
+            case WEST:
+                return EAST;
+            case NORTH_EAST:
+                return SOUTH_WEST;
+            case NORTH_WEST:
+                return SOUTH_EAST;
+            case SOUTH_WEST:
+                return NORTH_EAST;
+            case SOUTH_EAST:
+                return NORTH_WEST;
+            default:
+                throw new IllegalArgumentException("Invalid input direction.");
+        }
+    }
 }

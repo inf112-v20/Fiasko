@@ -49,10 +49,12 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 
     @Override
     public void create() {
+        //Test runner doesn't need to create anything
     }
 
     @Override
     public void resume() {
+        //Pausing and resuming isn't needed for testing
     }
 
     @Override
@@ -67,14 +69,17 @@ public class GdxTestRunner extends BlockJUnit4ClassRunner implements Application
 
     @Override
     public void resize(int width, int height) {
+        //Resizing a headless application doesn't make sense
     }
 
     @Override
     public void pause() {
+        //Pausing and resuming isn't needed for testing
     }
 
     @Override
     public void dispose() {
+        //Nothing created means nothing to dispose
     }
 
     @Override

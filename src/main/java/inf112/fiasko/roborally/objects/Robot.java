@@ -1,5 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
+import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 
@@ -13,6 +14,7 @@ public class Robot {
     private int lastFlagVisited = 0;
     private Position backupPosition;
     private Position currentPosition;
+    private Direction facingDirection;
 
     /**
      * Instantiates a new robot
@@ -23,6 +25,7 @@ public class Robot {
         this.robotId = robotId;
         this.backupPosition = spawnPosition;
         this.currentPosition = spawnPosition;
+        this.facingDirection = Direction.NORTH;
     }
 
     /**
@@ -107,4 +110,22 @@ public class Robot {
         return robotId;
     }
 
+    /**
+     * Gets the direction the robot is currently facing
+     * @return The direction the robot is facing
+     */
+    public Direction getFacingDirection() {
+        return this.facingDirection;
+    }
+
+    /**
+     * Sets the direction the robot is currently facing
+     * @param newFacingDirection The new direction the robot should be facing
+     */
+    public void setFacingDirection(Direction newFacingDirection) {
+        if (newFacingDirection.getDirectionID() % 2 == 0) {
+            throw new IllegalArgumentException("A robot is unable to face that direction.");
+        }
+        this.facingDirection = newFacingDirection;
+    }
 }

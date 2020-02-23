@@ -83,6 +83,26 @@ public class Board {
     }
 
     /**
+     * Rotates a robot to the right
+     * @param robotID The id of the robot to rotate
+     */
+    public void rotateRobotLeft(RobotID robotID) {
+        Robot robot = robots.get(robotID);
+        Direction newDirection = Direction.getLeftRotatedDirection(robot.getFacingDirection());
+        robot.setFacingDirection(newDirection);
+    }
+
+    /**
+     * Rotates a robot to the left
+     * @param robotID The id of the robot to rotate
+     */
+    public void rotateRobotRight(RobotID robotID) {
+        Robot robot = robots.get(robotID);
+        Direction newDirection = Direction.getRightRotatedDirection(robot.getFacingDirection());
+        robot.setFacingDirection(newDirection);
+    }
+
+    /**
      * Moves a robot one unit in a specified direction
      * @param robotID ID of the robot to move
      * @param direction The direction to move the robot
@@ -211,17 +231,12 @@ public class Board {
         if (wall == null) {
             return false;
         }
-        switch (wall.getDirection()) {
-            case NORTH_EAST:
-                return direction == Direction.NORTH || direction == Direction.EAST;
-            case NORTH_WEST:
-                return direction == Direction.NORTH || direction == Direction.WEST;
-            case SOUTH_WEST:
-                return direction == Direction.SOUTH || direction == Direction.WEST;
-            case SOUTH_EAST:
-                return direction == Direction.SOUTH || direction == Direction.EAST;
-            default:
-                return wall.getDirection() == direction;
+        int wallDirectionId = wall.getDirection().getDirectionID();
+        if (wallDirectionId % 2 == 0) {
+            return (wallDirectionId % 8) + 1 == direction.getDirectionID()
+                    || (((wallDirectionId - 2) + 8) % 8) + 1 == direction.getDirectionID();
+        } else {
+            return wall.getDirection() == direction;
         }
     }
 

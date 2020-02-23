@@ -11,6 +11,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -28,6 +29,7 @@ public class BoardTest {
         someValidPosition = new Position(2, 2);
         robotList = new ArrayList<>();
         robotList.add(new Robot(RobotID.ROBOT_1, someValidPosition));
+        robotList.add(new Robot(RobotID.ROBOT_2, someValidPosition));
         wallGrid.setElement(2, 3, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
         wallGrid.setElement(2, 2, new Wall(WallType.WALL_NORMAL, Direction.EAST));
         wallGrid.setElement(1, 2, new Wall(WallType.WALL_CORNER, Direction.NORTH_EAST));
@@ -52,6 +54,32 @@ public class BoardTest {
     @Test
     public void robotIsStoppedByCornerWall() {
         assertFalse(board.moveRobot(RobotID.ROBOT_1, Direction.WEST));
+    }
+
+    @Test
+    public void robotCanBeRotatedLeft() {
+        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+        board.rotateRobotLeft(RobotID.ROBOT_1);
+        assertEquals(Direction.WEST, robotList.get(0).getFacingDirection());
+        board.rotateRobotLeft(RobotID.ROBOT_1);
+        assertEquals(Direction.SOUTH, robotList.get(0).getFacingDirection());
+        board.rotateRobotLeft(RobotID.ROBOT_1);
+        assertEquals(Direction.EAST, robotList.get(0).getFacingDirection());
+        board.rotateRobotLeft(RobotID.ROBOT_1);
+        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+    }
+
+    @Test
+    public void robotCanBeRotatedRight() {
+        assertEquals(Direction.NORTH, robotList.get(1).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_2);
+        assertEquals(Direction.EAST, robotList.get(1).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_2);
+        assertEquals(Direction.SOUTH, robotList.get(1).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_2);
+        assertEquals(Direction.WEST, robotList.get(1).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_2);
+        assertEquals(Direction.NORTH, robotList.get(1).getFacingDirection());
     }
 
     @Test (expected = IllegalArgumentException.class)

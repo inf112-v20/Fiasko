@@ -132,14 +132,13 @@ public class Board {
         if (hasRobotOnPosition(newPosition)) {
             RobotID otherRobotID = getRobotOnPosition(newPosition);
             if (otherRobotID != null && !moveRobot(otherRobotID, direction)) {
+                //The other robot can't be shoved. Give up.
                 return false;
             }
         }
-        //Some tiles may kill the robot if stepped on.
-        if (killRobotIfStepsOnDangerousTile(robot, newPosition)) {
-            return true;
-        }
         robot.setPosition(newPosition);
+        //Some tiles may kill the robot if stepped on.
+        killRobotIfStepsOnDangerousTile(robot, newPosition);
         return true;
     }
 
@@ -176,9 +175,8 @@ public class Board {
      * Checks the tile the robot is about to step on and kills it if the tile is dangerous
      * @param robot The robot attempting to move
      * @param newPosition The position the robot is attempting to move to
-     * @return True if the robot was killed by the tile
      */
-    private boolean killRobotIfStepsOnDangerousTile(Robot robot, Position newPosition) {
+    private void killRobotIfStepsOnDangerousTile(Robot robot, Position newPosition) {
         Tile tileRobotStepsOn = tiles.getElement(newPosition.getXCoordinate(), newPosition.getYCoordinate());
         if (tileRobotStepsOn == null) {
             throw new IllegalArgumentException("The game board is missing a tile. This should not happen.");
@@ -186,9 +184,7 @@ public class Board {
         TileType tileTypeRobotStepsOn = tileRobotStepsOn.getTileType();
         if (tileTypeRobotStepsOn == TileType.HOLE || tileTypeRobotStepsOn == TileType.DEATH_TILE) {
             killRobot(robot);
-            return true;
         }
-        return false;
     }
 
     /**

@@ -173,14 +173,14 @@ public final class TextureConverterUtil {
      * This class serves as a temporary container for texture region coordinates
      */
     private static class TextureConverterContainer {
-        private int xNorth;
-        private int yNorth;
-        private int xEast;
-        private int yEast;
-        private int xSouth;
-        private int ySouth;
-        private int xWest;
-        private int yWest;
+        private final int xNorth;
+        private final int yNorth;
+        private final int xEast;
+        private final int yEast;
+        private final int xSouth;
+        private final int ySouth;
+        private final int xWest;
+        private final int yWest;
 
         TextureConverterContainer(int xNorth, int yNorth, int xEast, int yEast, int xSouth, int ySouth,
                                   int xWest, int yWest) {

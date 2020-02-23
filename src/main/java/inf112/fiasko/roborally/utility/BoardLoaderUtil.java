@@ -27,12 +27,7 @@ public final class BoardLoaderUtil {
      * @throws IOException If the board file cannot be loaded
      */
     public static Board loadBoard(String boardFile, List<Robot> robotList) throws IOException {
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream fileStream = classloader.getResourceAsStream(boardFile);
-        if (fileStream == null) {
-            throw new IllegalArgumentException("Board file could not be loaded.");
-        }
-
+        InputStream fileStream = ResourceUtil.getResourceAsInputStream(boardFile);
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream));
         String infoLine = reader.readLine();
         String[] infoData = infoLine.split(" ");

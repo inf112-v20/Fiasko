@@ -74,6 +74,14 @@ public class Board {
     }
 
     /**
+     * Gets all alive robots from the board
+     * @return A list of alive robots
+     */
+    public List<Robot> getAliveRobots() {
+        return new ArrayList<>(robots.values());
+    }
+
+    /**
      * Removes a dead robot from the board over to the dead robot list
      * @param robot the dead robot
      */

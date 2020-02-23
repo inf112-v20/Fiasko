@@ -51,25 +51,30 @@ public enum Direction {
      * @return The reverse direction
      */
     public static Direction getReverseDirection(Direction direction) {
-        switch (direction) {
-            case NORTH:
-                return SOUTH;
-            case SOUTH:
-                return NORTH;
-            case EAST:
-                return WEST;
-            case WEST:
-                return EAST;
-            case NORTH_EAST:
-                return SOUTH_WEST;
-            case NORTH_WEST:
-                return SOUTH_EAST;
-            case SOUTH_WEST:
-                return NORTH_EAST;
-            case SOUTH_EAST:
-                return NORTH_WEST;
-            default:
-                throw new IllegalArgumentException("Invalid input direction.");
-        }
+        return getDirectionFromID((((direction.getDirectionID() + 3) % 8) + 1));
+    }
+
+    /**
+     * Gets the direction if something rotated to the left
+     *
+     * A rotation is assumed to be a ninety degrees rotation, so NORTH would become WEST and so on.
+     *
+     * @param direction A direction
+     * @return The left rotated direction
+     */
+    public static Direction getLeftRotatedDirection(Direction direction) {
+        return getDirectionFromID(((((direction.getDirectionID() - 3) + 8) % 8) + 1));
+    }
+
+    /**
+     * Gets the direction if something rotated to the right
+     *
+     * A rotation is assumed to be a ninety degrees rotation, so NORTH would become EAST and so on.
+     *
+     * @param direction A direction
+     * @return The left rotated direction
+     */
+    public static Direction getRightRotatedDirection(Direction direction) {
+        return getDirectionFromID((((direction.getDirectionID() + 1) % 8) + 1));
     }
 }

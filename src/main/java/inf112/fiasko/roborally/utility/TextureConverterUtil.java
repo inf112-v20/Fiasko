@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.element_properties.WallType;
+import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
+import inf112.fiasko.roborally.objects.Wall;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -20,8 +23,10 @@ import java.util.Map;
  */
 public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
+    private static final Texture robotTexture = new Texture(Gdx.files.internal("assets/Robot.png"));
     private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
     private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
+    private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
 
     private TextureConverterUtil() {}
 
@@ -47,6 +52,37 @@ public final class TextureConverterUtil {
                     converterContainer.getYWest());
         }
         throw new IllegalArgumentException("Invalid or unimplemented tile type encountered");
+    }
+
+    /**
+     * Gets the texture representing the tile
+     * @param wall The wall to draw
+     * @return The texture to draw
+     */
+    public static TextureRegion convertElement(Wall wall) {
+        if (tileSheetWallTextureMappings == null) {
+            try {
+                loadWallMappings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Direction direction = wall.getDirection();
+        TextureConverterContainer converterContainer = tileSheetWallTextureMappings.get(wall.getWallType());
+        if (converterContainer != null) {
+            return getDirectionalTextureRegion(direction, converterContainer.getXNorth(),
+                    converterContainer.getYNorth(), converterContainer.getXEast(), converterContainer.getYEast(),
+                    converterContainer.getXSouth(), converterContainer.getYSouth(), converterContainer.getXWest(),
+                    converterContainer.getYWest());
+        }
+        throw new IllegalArgumentException("Invalid or unimplemented tile type encountered");
+    }
+
+    public static TextureRegion convertElement(Robot robot) {
+        if (robot.getRobotId() == RobotID.ROBOT_1) {
+            return new TextureRegion(robotTexture, 0, 0, 64, 64);
+        }
+        throw new IllegalArgumentException("Robot has no drawable texture.");
     }
 
     /**
@@ -79,11 +115,7 @@ public final class TextureConverterUtil {
     private static synchronized void loadTileMappings() throws IOException {
         tileSheetTileTextureMappings = new HashMap<>();
         tileSheetTileHasRotatedTextureMappings = new HashMap<>();
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        InputStream fileStream = classloader.getResourceAsStream("texture_sheet_tile_mapping.txt");
-        if (fileStream == null) {
-            throw new FileNotFoundException("Unable to load texture sheet mapping file.");
-        }
+        InputStream fileStream = ResourceUtil.getResourceAsInputStream("texture_sheet_tile_mapping.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream));
         String line;
         while ((line = reader.readLine()) != null) {
@@ -91,6 +123,24 @@ public final class TextureConverterUtil {
             TileType type = TileType.valueOf(parameters[0]);
             storeTextMappingInMap(parameters, type, tileSheetTileTextureMappings,
                     tileSheetTileHasRotatedTextureMappings);
+        }
+    }
+
+    /**
+     * Loads mappings between a wall and texture
+     *
+     * @throws IOException If the mapping file can't be properly read
+     */
+    private static synchronized void loadWallMappings() throws IOException {
+        tileSheetWallTextureMappings = new HashMap<>();
+        InputStream fileStream = ResourceUtil.getResourceAsInputStream("texture_sheet_wall_mapping.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parameters = line.split(" ");
+            WallType type = WallType.valueOf(parameters[0]);
+            storeTextMappingInMap(parameters, type, tileSheetWallTextureMappings,
+                    null);
         }
     }
 
@@ -111,7 +161,9 @@ public final class TextureConverterUtil {
         if (parameters.length == 3) {
             container = new TextureConverterContainer(xNorth, yNorth, xNorth, yNorth,
                     xNorth, yNorth, xNorth, yNorth);
-            hasRotatedTextureMapping.put(mapKey, false);
+            if (hasRotatedTextureMapping != null) {
+                hasRotatedTextureMapping.put(mapKey, false);
+            }
         } else {
             int xEast = Integer.parseInt(parameters[3]);
             int yEast = Integer.parseInt(parameters[4]);
@@ -121,7 +173,9 @@ public final class TextureConverterUtil {
             int yWest = Integer.parseInt(parameters[8]);
             container = new TextureConverterContainer(xNorth, yNorth, xEast, yEast,
                     xSouth, ySouth, xWest, yWest);
-            hasRotatedTextureMapping.put(mapKey, true);
+            if (hasRotatedTextureMapping != null) {
+                hasRotatedTextureMapping.put(mapKey, true);
+            }
         }
         textureMapping.put(mapKey, container);
     }
@@ -144,12 +198,16 @@ public final class TextureConverterUtil {
         String INVALID_DIRECTION_MESSAGE = "Invalid direction for tile encountered";
         switch (direction) {
             case NORTH:
+            case NORTH_EAST:
                 return getTextureOnSheet(xNorth, yNorth);
             case EAST:
+            case SOUTH_EAST:
                 return getTextureOnSheet(xEast, yEast);
             case SOUTH:
+            case SOUTH_WEST:
                 return getTextureOnSheet(xSouth, ySouth);
             case WEST:
+            case NORTH_WEST:
                 return getTextureOnSheet(xWest, yWest);
             default:
                 throw new IllegalArgumentException(INVALID_DIRECTION_MESSAGE);

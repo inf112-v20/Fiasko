@@ -4,13 +4,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.objects.Tile;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class can convert an element to an appropriate texture
  */
 public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
+    private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
+    private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
 
     private TextureConverterUtil() {}
 
@@ -20,39 +31,99 @@ public final class TextureConverterUtil {
      * @return The texture to draw
      */
     public static TextureRegion convertElement(Tile tile) {
-        Direction direction = tile.getDirection();
-        switch (tile.getTileType()) {
-            case TILE:
-                return getTextureOnSheet(4, 0);
-            case HOLE:
-                return getTextureOnSheet(5, 0);
-            case COGWHEEL_RIGHT:
-                return getTextureOnSheet(5, 6);
-            case COGWHEEL_LEFT:
-                return getTextureOnSheet(4, 6);
-            case TRANSPORT_BAND_SLOW:
-                return getDirectionalTextureRegion(direction, 0, 6, 3, 6, 1, 6, 2, 6);
-            case TRANSPORT_BAND_SLOW_RIGHT:
-                return getDirectionalTextureRegion(direction, 2, 5, 2, 4, 3, 4, 3, 5);
-            case TRANSPORT_BAND_SLOW_LEFT:
-                return getDirectionalTextureRegion(direction, 1, 5, 0, 5, 0, 4, 1, 4);
-            case TRANSPORT_BAND_SLOW_SIDE_ENTRANCES:
-                return getDirectionalTextureRegion(direction, 4, 8, 0, 5, 0, 4, 1, 4);
-            case TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_RIGHT:
-                return getDirectionalTextureRegion(direction, 0, 8, 1, 8, 2, 8, 3, 8);
-            case TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_LEFT:
-                return getDirectionalTextureRegion(direction, 0, 7, 1, 7, 2, 7, 3, 7);
-            case TRANSPORT_BAND_FAST:
-                return getDirectionalTextureRegion(direction, 4, 1, 5, 1, 4, 2, 5, 2);
-            case TRANSPORT_BAND_FAST_RIGHT:
-                return getDirectionalTextureRegion(direction, 2, 3, 2, 2, 3, 2, 3, 3);
-            case TRANSPORT_BAND_FAST_LEFT:
-                return getDirectionalTextureRegion(direction, 1, 3, 0, 3, 0, 2, 1, 2);
-            case TRANSPORT_BAND_FAST_SIDE_ENTRANCES:
-                return getDirectionalTextureRegion(direction, 3, 10, 0, 10, 1, 10, 2, 10);
-            default:
-                throw new IllegalArgumentException("Invalid or unimplemented tile type encountered");
+        if (tileSheetTileTextureMappings == null) {
+            try {
+                loadTileMappings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+        Direction direction = tile.getDirection();
+        TextureConverterContainer converterContainer = tileSheetTileTextureMappings.get(tile.getTileType());
+        if (converterContainer != null) {
+            return getDirectionalTextureRegion(direction, converterContainer.getXNorth(),
+                    converterContainer.getYNorth(), converterContainer.getXEast(), converterContainer.getYEast(),
+                    converterContainer.getXSouth(), converterContainer.getYSouth(), converterContainer.getXWest(),
+                    converterContainer.getYWest());
+        }
+        throw new IllegalArgumentException("Invalid or unimplemented tile type encountered");
+    }
+
+    /**
+     * Checks whether a tile has textures for different rotations
+     *
+     * For a tile without a rotated texture, the texture needs to be rotated when rendering.
+     *
+     * @param tile The tile to check
+     * @return True if rotated versions of the texture exists. False otherwise
+     */
+    public static boolean hasRotatedTexture(Tile tile) {
+        if (tileSheetTileTextureMappings == null) {
+            try {
+                loadTileMappings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return tileSheetTileHasRotatedTextureMappings.get(tile.getTileType());
+    }
+
+    /**
+     * Loads mappings between a tile and texture
+     *
+     * Loads both information about mapping from a tile to a texture converter container and information about mapping
+     * from a tile to whether the tile has a rotated version of each texture
+     *
+     * @throws IOException If the mapping file can't be properly read
+     */
+    private static synchronized void loadTileMappings() throws IOException {
+        tileSheetTileTextureMappings = new HashMap<>();
+        tileSheetTileHasRotatedTextureMappings = new HashMap<>();
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        InputStream fileStream = classloader.getResourceAsStream("texture_sheet_tile_mapping.txt");
+        if (fileStream == null) {
+            throw new FileNotFoundException("Unable to load texture sheet mapping file.");
+        }
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parameters = line.split(" ");
+            TileType type = TileType.valueOf(parameters[0]);
+            storeTextMappingInMap(parameters, type, tileSheetTileTextureMappings,
+                    tileSheetTileHasRotatedTextureMappings);
+        }
+    }
+
+    /**
+     * Reads one line of texture mapping and puts it into the correct maps
+     * @param parameters The parameters describing the texture mapping of the element
+     * @param mapKey The key to store in the map
+     * @param textureMapping The map containing texture mappings
+     * @param hasRotatedTextureMapping The map containing whether an element has rotated textures or not
+     * @param <K> The type of element that will be used for map keys
+     */
+    private static synchronized <K> void storeTextMappingInMap(String[] parameters, K mapKey,
+                                                               Map<K,TextureConverterContainer> textureMapping,
+                                                               Map<K,Boolean> hasRotatedTextureMapping) {
+        TextureConverterContainer container;
+        int xNorth = Integer.parseInt(parameters[1]);
+        int yNorth = Integer.parseInt(parameters[2]);
+        if (parameters.length == 3) {
+            container = new TextureConverterContainer(xNorth, yNorth, xNorth, yNorth,
+                    xNorth, yNorth, xNorth, yNorth);
+            hasRotatedTextureMapping.put(mapKey, false);
+        } else {
+            int xEast = Integer.parseInt(parameters[3]);
+            int yEast = Integer.parseInt(parameters[4]);
+            int xSouth = Integer.parseInt(parameters[5]);
+            int ySouth = Integer.parseInt(parameters[6]);
+            int xWest = Integer.parseInt(parameters[7]);
+            int yWest = Integer.parseInt(parameters[8]);
+            container = new TextureConverterContainer(xNorth, yNorth, xEast, yEast,
+                    xSouth, ySouth, xWest, yWest);
+            hasRotatedTextureMapping.put(mapKey, true);
+        }
+        textureMapping.put(mapKey, container);
     }
 
     /**
@@ -99,42 +170,60 @@ public final class TextureConverterUtil {
     }
 
     /**
-     * Checks whether a tile has textures for different rotations
-     *
-     * For a tile without a rotation texture, the texture needs to be rotated when rendering.
-     *
-     * @param tile The tile to check
-     * @return True if rotated versions of the texture exists. False otherwise
+     * This class serves as a temporary container for texture region coordinates
      */
-    public static boolean hasRotatedTexture(Tile tile) {
-        switch (tile.getTileType()) {
-            case TILE:
-            case HOLE:
-            case COGWHEEL_RIGHT:
-            case COGWHEEL_LEFT:
-            case FLAG_1:
-            case FLAG_2:
-            case FLAG_3:
-            case FLAG_4:
-            case WRENCH:
-            case WRENCH_AND_HAMMER:
-            case DEATH_TILE:
-                return false;
-            case TRANSPORT_BAND_SLOW:
-            case TRANSPORT_BAND_SLOW_RIGHT:
-            case TRANSPORT_BAND_SLOW_LEFT:
-            case TRANSPORT_BAND_SLOW_SIDE_ENTRANCES:
-            case TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_LEFT:
-            case TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_RIGHT:
-            case TRANSPORT_BAND_FAST:
-            case TRANSPORT_BAND_FAST_RIGHT:
-            case TRANSPORT_BAND_FAST_LEFT:
-            case TRANSPORT_BAND_FAST_SIDE_ENTRANCES:
-            case TRANSPORT_BAND_FAST_SIDE_ENTRANCE_LEFT:
-            case TRANSPORT_BAND_FAST_SIDE_ENTRANCE_RIGHT:
-                return true;
-            default:
-                throw new IllegalArgumentException("Invalid tile type encountered");
+    private static class TextureConverterContainer {
+        private int xNorth;
+        private int yNorth;
+        private int xEast;
+        private int yEast;
+        private int xSouth;
+        private int ySouth;
+        private int xWest;
+        private int yWest;
+
+        TextureConverterContainer(int xNorth, int yNorth, int xEast, int yEast, int xSouth, int ySouth,
+                                  int xWest, int yWest) {
+            this.xNorth = xNorth;
+            this.yNorth = yNorth;
+            this.xEast = xEast;
+            this.yEast = yEast;
+            this.xSouth = xSouth;
+            this.ySouth = ySouth;
+            this.xWest = xWest;
+            this.yWest = yWest;
+        }
+
+        public int getXNorth() {
+            return xNorth;
+        }
+
+        public int getYNorth() {
+            return yNorth;
+        }
+
+        public int getXEast() {
+            return xEast;
+        }
+
+        public int getYEast() {
+            return yEast;
+        }
+
+        public int getXSouth() {
+            return xSouth;
+        }
+
+        public int getYSouth() {
+            return ySouth;
+        }
+
+        public int getXWest() {
+            return xWest;
+        }
+
+        public int getYWest() {
+            return yWest;
         }
     }
 }

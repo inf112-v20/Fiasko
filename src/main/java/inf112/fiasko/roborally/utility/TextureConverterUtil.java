@@ -23,7 +23,8 @@ import java.util.Map;
  */
 public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
-    private static final Texture robotTexture = new Texture(Gdx.files.internal("assets/Robot.png"));
+    private static final Texture robot1Texture = new Texture(Gdx.files.internal("assets/Robot.png"));
+    private static final Texture robot2Texture = new Texture(Gdx.files.internal("assets/Robot2.png"));
     private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
     private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
     private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
@@ -83,7 +84,9 @@ public final class TextureConverterUtil {
 
     public static TextureRegion convertElement(Robot robot) {
         if (robot.getRobotId() == RobotID.ROBOT_1) {
-            return new TextureRegion(robotTexture, 0, 0, 64, 64);
+            return new TextureRegion(robot1Texture, 0, 0, 64, 64);
+        } else if (robot.getRobotId() == RobotID.ROBOT_2) {
+            return new TextureRegion(robot2Texture, 0, 0, 64, 64);
         }
         throw new IllegalArgumentException("Robot has no drawable texture.");
     }

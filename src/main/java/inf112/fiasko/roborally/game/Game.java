@@ -24,6 +24,7 @@ public class Game implements IDrawableGame {
         try {
             List<Robot> robots = new ArrayList<>();
             robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
+            robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             new Thread(() -> {
                 try {
@@ -57,6 +58,14 @@ public class Game implements IDrawableGame {
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
         gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
     }
 
     @Override

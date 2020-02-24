@@ -49,17 +49,17 @@ public final class BoardLoaderUtil {
      */
     private static IGrid<Tile> loadTileGrid(BufferedReader reader, int gridWidth, int gridHeight) throws IOException {
         IGrid<Tile> tileGrid = new Grid<>(gridWidth, gridHeight);
-        for (int i = 0; i < gridHeight; i++) {
+        for (int y = 0; y < gridHeight; y++) {
             String gridLine = reader.readLine();
             String[] tilesOnLine = gridLine.split(" ");
-            for (int j = 0; j < gridWidth; j++) {
-                String[] tileData = tilesOnLine[j].split(";");
+            for (int x = 0; x < gridWidth; x++) {
+                String[] tileData = tilesOnLine[x].split(";");
                 TileType tileType = TileType.getTileTypeFromID(Integer.parseInt(tileData[0]));
                 Direction direction = Direction.getDirectionFromID(Integer.parseInt(tileData[1]));
                 if (direction == null) {
                     throw new IllegalArgumentException("Invalid direction for tile encountered when loading board file.");
                 }
-                tileGrid.setElement(i, j, new Tile(tileType, direction));
+                tileGrid.setElement(x, y, new Tile(tileType, direction));
             }
         }
         return tileGrid;
@@ -75,20 +75,20 @@ public final class BoardLoaderUtil {
      */
     private static IGrid<Wall> loadWallGrid(BufferedReader reader, int gridWidth, int gridHeight) throws IOException {
         IGrid<Wall> wallGrid = new Grid<>(gridWidth, gridHeight);
-        for (int i = 0; i < gridHeight; i++) {
+        for (int y = 0; y < gridHeight; y++) {
             String gridLine = reader.readLine();
             String[] wallsOnLine = gridLine.split(" ");
-            for (int j = 0; j < gridWidth; j++) {
-                if (wallsOnLine[j].equals("0")) {
+            for (int x = 0; x < gridWidth; x++) {
+                if (wallsOnLine[x].equals("0")) {
                     continue;
                 }
-                String[] wallData = wallsOnLine[j].split(";");
+                String[] wallData = wallsOnLine[x].split(";");
                 WallType wallType = WallType.getWallTypeFromID(Integer.parseInt(wallData[0]));
                 Direction direction = Direction.getDirectionFromID(Integer.parseInt(wallData[1]));
                 if (direction == null) {
                     throw new IllegalArgumentException("Invalid direction for tile encountered when loading board file.");
                 }
-                wallGrid.setElement(i, j, new Wall(wallType, direction));
+                wallGrid.setElement(x, y, new Wall(wallType, direction));
             }
         }
         return wallGrid;

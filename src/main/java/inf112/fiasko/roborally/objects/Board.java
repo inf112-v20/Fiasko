@@ -267,12 +267,11 @@ public class Board {
      * @return The new position of the element
      */
     private Position getNewPosition(Position oldPosition, Direction direction) {
-        //TODO: Make sure we're accounting for the flipped y axis in libgdx
         switch (direction) {
             case NORTH:
-                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() + 1);
-            case SOUTH:
                 return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);
+            case SOUTH:
+                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() + 1);
             case EAST:
                 return new Position(oldPosition.getXCoordinate() + 1, oldPosition.getYCoordinate());
             case WEST:
@@ -290,8 +289,8 @@ public class Board {
      */
     private <K> List<K> getAllElementsFromGrid(IGrid<K> grid) {
         List<K> elements = new ArrayList<>();
-        for (int x = grid.getWidth() - 1; x >= 0; x--) {
-            for (int y = 0; y < grid.getHeight(); y++) {
+        for (int y = grid.getHeight() - 1; y >= 0; y--) {
+            for (int x = 0; x < grid.getWidth(); x++) {
                 elements.add(grid.getElement(x, y));
             }
         }

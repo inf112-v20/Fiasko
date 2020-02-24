@@ -30,13 +30,21 @@ public class IOUtil {
         List<Robot> robotsToDraw = game.getRobotsToDraw();
         int gameWidth = game.getWidth();
         int gameHeight = game.getHeight();
-        drawableObjects.addAll(getDrawableObjectsFromElementList(tilesToDraw, gameWidth, gameHeight, tileWidth, tileHeight));
-        drawableObjects.addAll(getDrawableObjectsFromElementList(wallsToDraw, gameWidth, gameHeight, tileWidth, tileHeight));
-        drawableObjects.addAll(getDrawableRobots(robotsToDraw, gameWidth, gameHeight, tileWidth, tileHeight));
+        drawableObjects.addAll(getDrawableObjectsFromElementList(tilesToDraw, gameWidth, tileWidth, tileHeight));
+        drawableObjects.addAll(getDrawableObjectsFromElementList(wallsToDraw, gameWidth, tileWidth, tileHeight));
+        drawableObjects.addAll(getDrawableRobots(robotsToDraw, gameHeight, tileWidth, tileHeight));
         return drawableObjects;
     }
 
-    private static List<IDrawableObject> getDrawableRobots(List<Robot> robots, int gameWidth, int gameHeight, int tileWidth, int tileHeight) {
+    /**
+     * Gets a list of all drawable robots on the board
+     * @param robots A list of robots to draw
+     * @param gameHeight The height of the game
+     * @param tileWidth The width of a tile
+     * @param tileHeight The height of a tile
+     * @return A list of drawable robots
+     */
+    private static List<IDrawableObject> getDrawableRobots(List<Robot> robots, int gameHeight, int tileWidth, int tileHeight) {
         List<IDrawableObject> drawableObjects = new ArrayList<>();
         for (Robot robot : robots) {
             TextureRegion region = TextureConverterUtil.convertElement(robot);
@@ -53,41 +61,48 @@ public class IOUtil {
      * Gets a list of drawable objects with correct positions from a list of elements
      * @param elementsToDraw A list of elements to draw
      * @param gameWidth The width of the game board in tiles
-     * @param gameHeight The height of the game board in tiles
      * @param tileWidth The width of a tile
      * @param tileHeight The height of a tile
      * @param <K> Should be type Robot, Tile or Wall
      * @return A list of drawable objects
      */
-    private static <K> List<IDrawableObject> getDrawableObjectsFromElementList(List<K> elementsToDraw, int gameWidth,
-                                                                               int gameHeight, int tileWidth,
+    private static <K> List<IDrawableObject> getDrawableObjectsFromElementList(List<K> elementsToDraw, int gameWidth, int tileWidth,
                                                                                int tileHeight) {
         List<IDrawableObject> drawableObjects = new ArrayList<>();
-        for (int j = 0; j < gameHeight; j++) {
-            for (int i = j * gameWidth; i < (j + 1) * gameWidth; i++) {
-                K currentElement = elementsToDraw.get(i);
-                if (currentElement == null) {
-                    continue;
-                }
-                TextureRegion region;
-                if (currentElement.getClass().isAssignableFrom(Tile.class)) {
-                    Tile tile = (Tile) currentElement;
-                    region = TextureConverterUtil.convertElement(tile);
-                } else if (currentElement.getClass().isAssignableFrom(Wall.class)) {
-                    Wall wall = (Wall) currentElement;
-                    region = TextureConverterUtil.convertElement(wall);
-                } else {
-                    throw new IllegalArgumentException("Unknown element type passed to function.");
-                }
-                int rotation = getElementRotation(currentElement);
-                IDrawableObject drawableObject = new DrawableObject(region,
-                        (i % gameWidth) * tileWidth, j * tileHeight, tileWidth, tileHeight, rotation);
-                drawableObjects.add(drawableObject);
+        int y = 0;
+        for (int i = 0; i < elementsToDraw.size(); i++) {
+            K currentElement = elementsToDraw.get(i);
+            int x = i % gameWidth;
+            if (i > 0 && i % gameWidth == 0) {
+                y++;
             }
+            if (currentElement == null) {
+                continue;
+            }
+            TextureRegion region;
+            if (currentElement.getClass().isAssignableFrom(Tile.class)) {
+                Tile tile = (Tile) currentElement;
+                region = TextureConverterUtil.convertElement(tile);
+            } else if (currentElement.getClass().isAssignableFrom(Wall.class)) {
+                Wall wall = (Wall) currentElement;
+                region = TextureConverterUtil.convertElement(wall);
+            } else {
+                throw new IllegalArgumentException("Unknown element type passed to function.");
+            }
+            int rotation = getElementRotation(currentElement);
+            IDrawableObject drawableObject = new DrawableObject(region,
+                    x * tileWidth, y * tileHeight, tileWidth, tileHeight, rotation);
+            drawableObjects.add(drawableObject);
         }
         return drawableObjects;
     }
 
+    /**
+     * Gets the amount of degrees to rotate an element
+     * @param element The element to rotate
+     * @param <K> Should be of type Tile, Robot or Wall
+     * @return The amount of degrees the tile should be rotated to be properly displayed
+     */
     private static <K> int getElementRotation(K element) {
         boolean hasRotatedTexture;
         Direction direction;

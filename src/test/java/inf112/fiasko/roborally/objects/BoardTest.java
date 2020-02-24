@@ -30,7 +30,7 @@ public class BoardTest {
         robotList = new ArrayList<>();
         robotList.add(new Robot(RobotID.ROBOT_1, someValidPosition));
         robotList.add(new Robot(RobotID.ROBOT_2, someValidPosition));
-        wallGrid.setElement(2, 3, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
+        wallGrid.setElement(2, 1, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
         wallGrid.setElement(2, 2, new Wall(WallType.WALL_NORMAL, Direction.EAST));
         wallGrid.setElement(1, 2, new Wall(WallType.WALL_CORNER, Direction.NORTH_EAST));
         board = new Board(tileGrid, wallGrid, robotList);

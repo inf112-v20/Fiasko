@@ -55,9 +55,6 @@ public class GameLauncher extends ApplicationAdapter {
         List<IDrawableObject> elementsToDraw = IOUtil.getDrawableObjectsFromGame(game, tileDimensions, tileDimensions);
         for (IDrawableObject object : elementsToDraw) {
             TextureRegion objectTextureRegion = object.getTexture();
-            /*System.out.println(object.getTexture() + " " + object.getXPosition() + " " + object.getYPosition() + " " + object.getWidth() + " " +
-                    object.getHeight() + " " + object.getRotation() + " " + objectTextureRegion.getRegionX() + " " +
-                    objectTextureRegion.getRegionY() + " " + objectTextureRegion.getRegionWidth() + " " + objectTextureRegion.getRegionHeight());*/
             batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
                     (float)object.getWidth()/2, (float)object.getHeight()/2,
                     object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),

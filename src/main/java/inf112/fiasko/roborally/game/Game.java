@@ -37,17 +37,26 @@ public class Game implements IDrawableGame {
         }
     }
 
+    /**
+     * Does whatever the game wants to do
+     * @throws InterruptedException If interrupted while trying to sleep
+     */
     private void runGameLoop() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(10);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.NORTH);
+        TimeUnit.SECONDS.sleep(3);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_1);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_1);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.rotateRobotLeft(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
         gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.NORTH);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.WEST);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.WEST);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
     }
 
     @Override

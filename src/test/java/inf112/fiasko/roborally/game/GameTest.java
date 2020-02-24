@@ -1,10 +1,6 @@
 package inf112.fiasko.roborally.game;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
-import inf112.fiasko.roborally.game.Game;
-import inf112.fiasko.roborally.game.IDrawableGame;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,10 +30,5 @@ public class GameTest {
     @Test
     public void gameHeightIsMaximumFullHD() {
         assertTrue(game.getHeight() <= 1080);
-    }
-
-    @Test
-    public void getObjectsToDrawReturnsNonemptyList() {
-        assertFalse(game.getObjectsToDraw().isEmpty());
     }
 }

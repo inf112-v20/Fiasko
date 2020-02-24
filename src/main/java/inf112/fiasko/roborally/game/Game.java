@@ -1,53 +1,77 @@
 package inf112.fiasko.roborally.game;
 
-import inf112.fiasko.roborally.element_properties.GameTexture;
+import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.Position;
+import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.objects.Board;
-import inf112.fiasko.roborally.objects.DrawableObject;
-import inf112.fiasko.roborally.objects.IDrawableObject;
 import inf112.fiasko.roborally.objects.Robot;
+import inf112.fiasko.roborally.objects.Tile;
+import inf112.fiasko.roborally.objects.Wall;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class represent a game which is drawable using libgdx
  */
 public class Game implements IDrawableGame {
-    private final int TILE_SIZE = 64;
     private Board gameBoard;
 
     public Game() {
         try {
             List<Robot> robots = new ArrayList<>();
+            robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            new Thread(() -> {
+                try {
+                    runGameLoop();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private void runGameLoop() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(10);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.NORTH);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.NORTH);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.WEST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.WEST);
+    }
+
     @Override
     public int getWidth() {
-        return gameBoard.getBoardWidth() * TILE_SIZE;
+        return gameBoard.getBoardWidth();
     }
 
     @Override
     public int getHeight() {
-        return gameBoard.getBoardHeight() * TILE_SIZE;
+        return gameBoard.getBoardHeight();
     }
 
     @Override
-    public List<IDrawableObject> getObjectsToDraw() {
-        List<IDrawableObject> list = new ArrayList<>();
-        for (int i = 0; i < gameBoard.getBoardWidth(); i++) {
-            for (int j = 0; j < gameBoard.getBoardHeight(); j++) {
-                DrawableObject tile = new DrawableObject(GameTexture.TILE, i * TILE_SIZE, j * TILE_SIZE);
-                list.add(tile);
-            }
-        }
-        DrawableObject robot = new DrawableObject(GameTexture.ROBOT, TILE_SIZE, TILE_SIZE);
-        list.add(robot);
-        return list;
+    public List<Tile> getTilesToDraw() {
+        return gameBoard.getTiles();
+    }
+
+    @Override
+    public List<Wall> getWallsToDraw() {
+        return gameBoard.getWalls();
+    }
+
+    @Override
+    public List<Robot> getRobotsToDraw() {
+        return gameBoard.getAliveRobots();
     }
 }

@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.fiasko.roborally.element_properties.GameTexture;
 import inf112.fiasko.roborally.game.Game;
 import inf112.fiasko.roborally.game.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.utility.IOUtil;
+
+import java.util.List;
 
 /**
  * This class renders a game using libgdx
@@ -23,6 +25,8 @@ public class GameLauncher extends ApplicationAdapter {
     private Texture robotTexture;
     private Texture textureSheet;
 
+    private final int tileDimensions = 64;
+
     @Override
     public void create() {
         //Loads some textures
@@ -31,8 +35,11 @@ public class GameLauncher extends ApplicationAdapter {
 
         game = new Game();
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, game.getWidth(), game.getHeight());
+        camera.setToOrtho(false, game.getWidth() * tileDimensions,
+                game.getHeight() * tileDimensions);
         batch = new SpriteBatch();
+        /*MyTextInputListener listener = new MyTextInputListener();
+        Gdx.input.getTextInput(listener, "Input name", "", "Name");*/
     }
 
     /**
@@ -45,8 +52,12 @@ public class GameLauncher extends ApplicationAdapter {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         //Draws all elements the game wants to draw
-        for (IDrawableObject object : game.getObjectsToDraw()) {
-            TextureRegion objectTextureRegion = gameTextureToTextureRegion(object.getTexture());
+        List<IDrawableObject> elementsToDraw = IOUtil.getDrawableObjectsFromGame(game, tileDimensions, tileDimensions);
+        for (IDrawableObject object : elementsToDraw) {
+            TextureRegion objectTextureRegion = object.getTexture();
+            /*System.out.println(object.getTexture() + " " + object.getXPosition() + " " + object.getYPosition() + " " + object.getWidth() + " " +
+                    object.getHeight() + " " + object.getRotation() + " " + objectTextureRegion.getRegionX() + " " +
+                    objectTextureRegion.getRegionY() + " " + objectTextureRegion.getRegionWidth() + " " + objectTextureRegion.getRegionHeight());*/
             batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
                     (float)object.getWidth()/2, (float)object.getHeight()/2,
                     object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),
@@ -64,22 +75,14 @@ public class GameLauncher extends ApplicationAdapter {
         batch.dispose();
     }
 
-    /**
-     * Turns a GameTexture element into a TextureRegion element
-     *
-     * This is necessary to keep all libgdx logic in this class only. Otherwise, testing would be painful.
-     *
-     * @param gameTexture A GameTexture enum
-     * @return A Gdx TextureRegion
-     */
-    private TextureRegion gameTextureToTextureRegion(GameTexture gameTexture) {
-        switch (gameTexture) {
-            case ROBOT:
-                return new TextureRegion(robotTexture, 0, 0, 64, 64);
-            case TILE:
-                return new TextureRegion(textureSheet, 4*300, 0, 300, 300);
-            default:
-                throw new IllegalArgumentException("Non existing texture encountered.");
+    /*public static class MyTextInputListener implements Input.TextInputListener {
+        @Override
+        public void input (String text) {
+            System.out.println(text);
         }
-    }
+
+        @Override
+        public void canceled () {
+        }
+    }*/
 }

@@ -77,7 +77,7 @@ public class Grid<K> implements IGrid<K> {
      */
     private void makeSureCoordinatesAreWithinBounds(int x, int y) {
         if (x < 0 || x >= width || y < 0 || y >= height) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Coordinates are outside the bounds of the board.");
         }
     }
 }

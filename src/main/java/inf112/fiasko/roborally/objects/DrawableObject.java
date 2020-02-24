@@ -1,12 +1,12 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.GameTexture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * This class represents an object that can be drawn using libgdx
  */
 public class DrawableObject implements IDrawableObject {
-    private final GameTexture texture;
+    private final TextureRegion texture;
     private final int xPos;
     private final int yPos;
     private int width = 64;
@@ -26,7 +26,7 @@ public class DrawableObject implements IDrawableObject {
      * @param flipX Whether to flip/mirror the element over the x axis
      * @param flipY Whether to flip/mirror the element over the y axis
      */
-    public DrawableObject(GameTexture texture, int xPos, int yPos, int width, int height, int rotation, boolean flipX,
+    public DrawableObject(TextureRegion texture, int xPos, int yPos, int width, int height, int rotation, boolean flipX,
                           boolean flipY) {
         this.xPos = xPos;
         this.yPos = yPos;
@@ -39,19 +39,37 @@ public class DrawableObject implements IDrawableObject {
     }
 
     /**
+     * Initializes a drawable object
+     * @param texture The texture to use for drawing the element
+     * @param xPos The pixel to start drawing on for the x axis
+     * @param yPos The pixel to start drawing on for the y axis
+     * @param width The width of the element
+     * @param height The height of the element
+     * @param rotation The amount of degrees to rotate the element counterclockwise
+     */
+    public DrawableObject(TextureRegion texture, int xPos, int yPos, int width, int height, int rotation) {
+        this.xPos = xPos;
+        this.yPos = yPos;
+        this.rotation = rotation;
+        this.texture = texture;
+        this.width = width;
+        this.height = height;
+    }
+
+    /**
      * Initializes a new drawable object
      * @param texture The texture to use for drawing the element
      * @param xPos The pixel to start drawing on for the x axis
      * @param yPos The pixel to start drawing on for the y axis
      */
-    public DrawableObject(GameTexture texture, int xPos, int yPos) {
+    public DrawableObject(TextureRegion texture, int xPos, int yPos) {
         this.xPos = xPos;
         this.yPos = yPos;
         this.texture = texture;
     }
 
     @Override
-    public GameTexture getTexture() {
+    public TextureRegion getTexture() {
         return texture;
     }
 

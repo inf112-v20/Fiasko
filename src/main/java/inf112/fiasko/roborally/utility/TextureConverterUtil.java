@@ -67,6 +67,9 @@ public final class TextureConverterUtil {
                 e.printStackTrace();
             }
         }
+        if (wall == null) {
+            return null;
+        }
         Direction direction = wall.getDirection();
         TextureConverterContainer converterContainer = tileSheetWallTextureMappings.get(wall.getWallType());
         if (converterContainer != null) {
@@ -102,6 +105,24 @@ public final class TextureConverterUtil {
             }
         }
         return tileSheetTileHasRotatedTextureMappings.get(tile.getTileType());
+    }
+
+    /**
+     * Checks whether a wall has textures for different rotations
+     * @param wall The wall to check
+     * @return True if rotated versions of the texture exists. False otherwise
+     */
+    public static boolean hasRotatedTexture(Wall wall) {
+        return true;
+    }
+
+    /**
+     * Checks whether a robot has textures for different rotations
+     * @param robot The robot to check
+     * @return True if rotated versions of the texture exists. False otherwise
+     */
+    public static boolean hasRotatedTexture(Robot robot) {
+        return false;
     }
 
     /**

@@ -82,6 +82,22 @@ public class Board {
     }
 
     /**
+     * Gets all the tiles from the board
+     * @return A list of all tiles on the board
+     */
+    public List<Tile> getTiles() {
+        return getAllElementsFromGrid(tiles);
+    }
+
+    /**
+     * Gets all the walls from the board
+     * @return A list of all the walls on the board
+     */
+    public List<Wall> getWalls() {
+        return getAllElementsFromGrid(walls);
+    }
+
+    /**
      * Removes a dead robot from the board over to the dead robot list
      * @param robot the dead robot
      */
@@ -264,5 +280,21 @@ public class Board {
             default:
                 throw new IllegalArgumentException("It's not possible to move in that direction.");
         }
+    }
+
+    /**
+     * Gets all elements on a grid
+     * @param grid The grid to get elements from
+     * @param <K> The type of the elements int the grid
+     * @return A list containing all the elements in the grid
+     */
+    private <K> List<K> getAllElementsFromGrid(IGrid<K> grid) {
+        List<K> elements = new ArrayList<>();
+        for (int x = grid.getWidth() - 1; x >= 0; x--) {
+            for (int y = 0; y < grid.getHeight(); y++) {
+                elements.add(grid.getElement(x, y));
+            }
+        }
+        return elements;
     }
 }

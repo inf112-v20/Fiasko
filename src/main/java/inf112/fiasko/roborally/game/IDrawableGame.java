@@ -1,6 +1,8 @@
 package inf112.fiasko.roborally.game;
 
-import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.objects.Robot;
+import inf112.fiasko.roborally.objects.Tile;
+import inf112.fiasko.roborally.objects.Wall;
 
 import java.util.List;
 
@@ -10,21 +12,41 @@ import java.util.List;
 public interface IDrawableGame {
 
     /**
-     * Gets the screen width of the game
+     * Gets the number of tiles in the x direction
      * @return A positive integer
      */
     int getWidth();
 
     /**
-     * Gets the screen height of the game
+     * Gets the number of tiles in the y direction
      * @return A positive integer
      */
     int getHeight();
 
     /**
-     * Gets a list of objects which are to be drawn
-     * @return A list of drawable objects in the order they are to be drawn
+     * Gets a list of all the tiles to be drawn
+     *
+     * Should return a list readable from top-left to top-right and so on. In other words, the first getWidth() tiles
+     * should be drawn on the top row from left to right.
+     *
+     * @return A list of tiles
      */
-    List<IDrawableObject> getObjectsToDraw();
+    List<Tile> getTilesToDraw();
+
+    /**
+     * Gets a list of all the walls to be drawn
+     *
+     * Should return a list readable from top-left to top-right and so on. In other words, the first getWidth() walls
+     * should be drawn on the top row from left to right.
+     *
+     * @return A list of walls
+     */
+    List<Wall> getWallsToDraw();
+
+    /**
+     * Gets a list of all robots to draw
+     * @return A list of all robots to draw
+     */
+    List<Robot> getRobotsToDraw();
 
 }

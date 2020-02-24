@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.GameTexture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  * This interface describes an object drawable using libgdx
@@ -11,7 +11,7 @@ public interface IDrawableObject {
      * Gets the texture to use for drawing the object
      * @return The texture of the object
      */
-    GameTexture getTexture();
+    TextureRegion getTexture();
 
     /**
      * Gets the x position the object should be drawn on

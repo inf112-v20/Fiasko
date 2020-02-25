@@ -38,8 +38,6 @@ public class GameLauncher extends ApplicationAdapter {
         camera.setToOrtho(false, game.getWidth() * tileDimensions,
                 game.getHeight() * tileDimensions);
         batch = new SpriteBatch();
-        /*MyTextInputListener listener = new MyTextInputListener();
-        Gdx.input.getTextInput(listener, "Input name", "", "Name");*/
     }
 
     /**
@@ -71,15 +69,4 @@ public class GameLauncher extends ApplicationAdapter {
         textureSheet.dispose();
         batch.dispose();
     }
-
-    /*public static class MyTextInputListener implements Input.TextInputListener {
-        @Override
-        public void input (String text) {
-            System.out.println(text);
-        }
-
-        @Override
-        public void canceled () {
-        }
-    }*/
 }

@@ -1,6 +1,5 @@
 package inf112.fiasko.roborally.game;
 
-import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.objects.Board;
@@ -47,29 +46,40 @@ public class Game implements IDrawableGame {
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
         gameBoard.rotateRobotLeft(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
         TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
     }
 
     @Override

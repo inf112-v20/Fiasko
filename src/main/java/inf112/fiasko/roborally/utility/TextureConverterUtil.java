@@ -111,24 +111,6 @@ public final class TextureConverterUtil {
     }
 
     /**
-     * Checks whether a wall has textures for different rotations
-     * @param wall The wall to check
-     * @return True if rotated versions of the texture exists. False otherwise
-     */
-    public static boolean hasRotatedTexture(Wall wall) {
-        return true;
-    }
-
-    /**
-     * Checks whether a robot has textures for different rotations
-     * @param robot The robot to check
-     * @return True if rotated versions of the texture exists. False otherwise
-     */
-    public static boolean hasRotatedTexture(Robot robot) {
-        return false;
-    }
-
-    /**
      * Loads mappings between a tile and texture
      *
      * Loads both information about mapping from a tile to a texture converter container and information about mapping

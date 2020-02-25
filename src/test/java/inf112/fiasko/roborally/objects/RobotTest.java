@@ -10,7 +10,7 @@ import org.junit.Test;
 public class RobotTest {
     private Position robotPosition;
     private Robot testRobot;
-    private int nextFlag = 1;
+    private final int nextFlag = 1;
 
     @Before
     public void setUp() {

@@ -19,7 +19,6 @@ public class Board {
     private IGrid<Wall> walls;
     private IGrid<Tile> tiles;
     private Map<RobotID, Robot> robots;
-    private List<Robot> deadRobots;
 
     /**
      * Initializes the board
@@ -38,7 +37,6 @@ public class Board {
             }
             this.robots.put(robot.getRobotId(), robot);
         }
-        this.deadRobots = new ArrayList<>();
         this.boardWidth = tiles.getWidth();
         this.boardHeight = tiles.getHeight();
         this.walls = walls;
@@ -59,18 +57,6 @@ public class Board {
      */
     public int getBoardWidth() {
         return boardWidth;
-    }
-
-    /**
-     * Moves all dead robots to their backups and makes them part of the board again
-     */
-    public void respawnRobots() {
-        for (Robot robot : deadRobots) {
-            robot.setPosition(robot.getBackupPosition());
-            robot.setFacingDirection(Direction.NORTH);
-            robots.put(robot.getRobotId(), robot);
-        }
-        deadRobots = new ArrayList<>();
     }
 
     /**
@@ -103,7 +89,6 @@ public class Board {
      */
     public void removeDeadRobotFromBoard(Robot robot) {
         robots.remove(robot.getRobotId());
-        deadRobots.add(robot);
     }
 
     /**
@@ -124,6 +109,14 @@ public class Board {
         Robot robot = robots.get(robotID);
         Direction newDirection = Direction.getRightRotatedDirection(robot.getFacingDirection());
         robot.setFacingDirection(newDirection);
+    }
+
+    /**
+     * Moves a robot one unit forward according to the direction it's currently facing
+     * @param robotID The robot to move
+     */
+    public void moveRobotForward(RobotID robotID) {
+        moveRobot(robotID, robots.get(robotID).getFacingDirection());
     }
 
     /**

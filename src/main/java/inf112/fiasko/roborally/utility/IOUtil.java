@@ -108,7 +108,7 @@ public final class IOUtil {
         Direction direction;
         if (element.getClass().isAssignableFrom(Robot.class)) {
             Robot robot = (Robot) element;
-            hasRotatedTexture = TextureConverterUtil.hasRotatedTexture(robot);
+            hasRotatedTexture = false;
             direction = robot.getFacingDirection();
         } else if (element.getClass().isAssignableFrom(Tile.class)) {
             Tile tile = (Tile) element;
@@ -116,7 +116,7 @@ public final class IOUtil {
             direction = tile.getDirection();
         } else if (element.getClass().isAssignableFrom(Wall.class)) {
             Wall wall = (Wall) element;
-            hasRotatedTexture = TextureConverterUtil.hasRotatedTexture(wall);
+            hasRotatedTexture = true;
             direction = wall.getDirection();
         } else {
             throw new IllegalArgumentException("Unknown element type passed to function.");

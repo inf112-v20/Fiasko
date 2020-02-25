@@ -13,12 +13,16 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class BoardTest {
     private Grid<Tile> tileGrid;
     private Grid<Wall> wallGrid;
-    private Position someValidPosition;
+    private Position someValidPosition1;
+    private Position someValidPosition5;
+    private Position someValidPosition6;
+    private Position someValidPosition7;
     private List<Robot> robotList;
     private Board board;
 
@@ -26,14 +30,36 @@ public class BoardTest {
     public void setUp() {
         tileGrid = new Grid<>(5, 5, new Tile(TileType.TILE, Direction.NORTH));
         wallGrid = new Grid<>(5, 5);
-        someValidPosition = new Position(2, 2);
+        someValidPosition1 = new Position(2, 2);
+        Position someValidPosition2 = new Position(2, 1);
+        Position someValidPosition3 = new Position(2, 3);
+        Position someValidPosition4 = new Position(2, 4);
+        someValidPosition5 = new Position(3, 1);
+        someValidPosition6 = new Position(3, 2);
+        someValidPosition7 = new Position(3, 3);
+        Position someValidPosition8 = new Position(3, 4);
         robotList = new ArrayList<>();
-        robotList.add(new Robot(RobotID.ROBOT_1, someValidPosition));
-        robotList.add(new Robot(RobotID.ROBOT_2, someValidPosition));
+        robotList.add(new Robot(RobotID.ROBOT_1, someValidPosition1));
+        robotList.add(new Robot(RobotID.ROBOT_2, someValidPosition2));
+        robotList.add(new Robot(RobotID.ROBOT_3, someValidPosition3));
+        robotList.add(new Robot(RobotID.ROBOT_4, someValidPosition4));
+        robotList.add(new Robot(RobotID.ROBOT_5, someValidPosition5));
+        robotList.add(new Robot(RobotID.ROBOT_6, someValidPosition6));
+        robotList.add(new Robot(RobotID.ROBOT_7, someValidPosition7));
+        robotList.add(new Robot(RobotID.ROBOT_8, someValidPosition8));
         wallGrid.setElement(2, 1, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
         wallGrid.setElement(2, 2, new Wall(WallType.WALL_NORMAL, Direction.EAST));
         wallGrid.setElement(1, 2, new Wall(WallType.WALL_CORNER, Direction.NORTH_EAST));
         board = new Board(tileGrid, wallGrid, robotList);
+    }
+
+    @Test
+    public void robotCanPushRobots() {
+        board.moveRobot(RobotID.ROBOT_5, Direction.SOUTH);
+        assertNotEquals(someValidPosition5, robotList.get(4).getPosition());
+        assertNotEquals(someValidPosition6, robotList.get(5).getPosition());
+        assertNotEquals(someValidPosition7, robotList.get(6).getPosition());
+        assertFalse(board.getAliveRobots().contains(robotList.get(7)));
     }
 
     @Test
@@ -71,15 +97,15 @@ public class BoardTest {
 
     @Test
     public void robotCanBeRotatedRight() {
-        assertEquals(Direction.NORTH, robotList.get(1).getFacingDirection());
-        board.rotateRobotRight(RobotID.ROBOT_2);
-        assertEquals(Direction.EAST, robotList.get(1).getFacingDirection());
-        board.rotateRobotRight(RobotID.ROBOT_2);
-        assertEquals(Direction.SOUTH, robotList.get(1).getFacingDirection());
-        board.rotateRobotRight(RobotID.ROBOT_2);
-        assertEquals(Direction.WEST, robotList.get(1).getFacingDirection());
-        board.rotateRobotRight(RobotID.ROBOT_2);
-        assertEquals(Direction.NORTH, robotList.get(1).getFacingDirection());
+        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_1);
+        assertEquals(Direction.EAST, robotList.get(0).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_1);
+        assertEquals(Direction.SOUTH, robotList.get(0).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_1);
+        assertEquals(Direction.WEST, robotList.get(0).getFacingDirection());
+        board.rotateRobotRight(RobotID.ROBOT_1);
+        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -90,16 +116,17 @@ public class BoardTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void multipleRobotsWithSameIDThrowsError() {
-        Robot robot = new Robot(RobotID.ROBOT_1, someValidPosition);
+        Robot robot = new Robot(RobotID.ROBOT_1, someValidPosition1);
         robotList.add(robot);
         new Board(tileGrid, wallGrid, robotList);
     }
+
     @Test
-    public void killRobotReducesAmountOfLivesByOne () {
-        Robot robot = board.getAliveRobots().get(0);
-        for (int i = 0; i < 3; i++) {
-            board.moveRobot(robot.getRobotId(), Direction.SOUTH);
-        }
+    public void killRobotReducesAmountOfLivesByOne() {
+        Robot robot = board.getAliveRobots().get(1);
+        assertEquals(3, robot.getAmountOfLives());
+        robot.setPosition(new Position(0, 0));
+        board.moveRobot(robot.getRobotId(), Direction.NORTH);
         assertEquals(2, robot.getAmountOfLives());
     }
 }

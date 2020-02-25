@@ -1,33 +1,20 @@
 package inf112.fiasko.roborally.objects;
 
 /**
- * This Interface describes a card
- * @param <S> the type for the card value
- * @param <T> the type for the symbol
+ * This Interface describes a card without a card suit
+ * @param <S> The value type
+ * @param <T> The symbol type
  */
 public interface ICardWithoutSuit<S,T> {
     /**
      * Gets the value of the card
-     * @return card value
+     * @return The card value
      */
     S getValue();
 
     /**
      * Gets the symbol of the card
-     * @return card symbol
+     * @return The card symbol
      */
     T getSymbol();
-
-    /**
-     * Sets the value of the card
-     * @param value card value
-     */
-    void setValue(S value);
-
-    /**
-     * Sets the symbol of the card
-     * @param symbol card symbol
-     */
-    void setSymbol(T symbol);
-
 }

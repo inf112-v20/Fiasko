@@ -18,8 +18,8 @@ public class Robot {
 
     /**
      * Instantiates a new robot
-     * @param robotId gives the robot a identifier that links it too the correct player
-     * @param spawnPosition gives the robot its starting position on the map
+     * @param robotId The global identifier of the robot
+     * @param spawnPosition The starting position of the robot
      */
     public Robot (RobotID robotId, Position spawnPosition) {
         this.robotId = robotId;
@@ -30,67 +30,69 @@ public class Robot {
 
     /**
      * Gets the damage the robot has taken
-     * @return the amount of damage the robot has received
+     * @return The amount of damage the robot has received
      */
-    public int getDamage(){
+    public int getDamageTaken() {
         return robotDamageTaken;
     }
 
     /**
-     * Sets the robot's damage to a given amount
-     * @param damage the amount of damage the robot has received
+     * Sets the robot's taken damage to a given amount
+     * @param damage The amount of damage the robot has received
      */
-    public void setDamage (int damage){
+    public void setDamageTaken(int damage) {
         this.robotDamageTaken = damage;
     }
 
     /**
-     * Gets the robot's current position on the map
-     * @return the robot's current position
+     * Gets the robot's current position on the board
+     * @return The robot's current position
      */
-    public Position getPosition(){
+    public Position getPosition() {
         return currentPosition;
     }
 
     /**
-     * places the robot on a new position
-     * @param newPosition the new position for the robot
+     * Sets the robot's current position on the board
+     * @param newPosition The new position of the robot
      */
-    public void setPosition( Position newPosition ){
+    public void setPosition( Position newPosition ) {
         this.currentPosition = newPosition;
     }
 
     /**
-     * Places the status of the powerdown field
-     * @param powerDownStatus True if robot is going to go to powerdown. False otherwise
+     * Sets power-down status
+     * @param powerDownStatus Whether the robot is currently in power-down
      */
-    public void setPowerDown(Boolean powerDownStatus){
+    public void setPowerDown(Boolean powerDownStatus) {
         this.inPowerDown = powerDownStatus;
     }
 
     /**
-     * Gets the status of the robot's powerdown field
-     * @return robot's powerdown status
+     * Gets the robot's power-down status
+     * @return Whether the robot is currently in power-down
      */
     public Boolean isInPowerDown(){
         return inPowerDown;
     }
 
     /**
-     * Set the robot's last visited flag too the new flag and places its backup on the flags position
-     * @param currentFlag the flag the robot is standing on
-     * @param newBackupPosition the position of the flag
+     * Set the robot's last visited flag to the new flag and places its backup on the flag's position
+     * @param currentFlag The flag the robot is standing on
      */
-    public void setLastFlagVisitedAndBackupPosition(int currentFlag, Position newBackupPosition){
+    public void setLastFlagVisitedAndUpdateBackupPosition(int currentFlag) {
+        if (currentFlag - 1 != this.lastFlagVisited) {
+            throw new IllegalArgumentException("The robot has not yet visited the previous flag!");
+        }
         this.lastFlagVisited = currentFlag;
-        this.backupPosition = newBackupPosition;
+        this.backupPosition = currentPosition;
     }
 
     /**
-     * Gets the correct flag the robot visited
-     * @return last visited flag
+     * Gets the last flag the robot visited
+     * @return Last visited flag
      */
-    public int getLastFlagVisited(){
+    public int getLastFlagVisited() {
         return lastFlagVisited;
     }
 
@@ -98,15 +100,15 @@ public class Robot {
      * Gets the robot's backup position
      * @return The robot's backup position
      */
-    public Position getBackupPosition(){
+    public Position getBackupPosition() {
         return backupPosition;
     }
 
     /**
-     * Gets the identifier of the players controlling the robot
-     * @return player identifier
+     * Gets the robot ID
+     * @return Robot ID
      */
-    public RobotID getRobotId(){
+    public RobotID getRobotId() {
         return robotId;
     }
 

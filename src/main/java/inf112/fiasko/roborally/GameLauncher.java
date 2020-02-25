@@ -2,6 +2,7 @@ package inf112.fiasko.roborally;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -26,6 +27,9 @@ public class GameLauncher extends ApplicationAdapter {
     private Texture textureSheet;
 
     private final int tileDimensions = 64;
+    private float cameraZoom = 1;
+    private int cameraX = 0;
+    private int cameraY = 0;
 
     @Override
     public void create() {
@@ -51,6 +55,8 @@ public class GameLauncher extends ApplicationAdapter {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        camera.translate(cameraX, cameraY);
+        camera.zoom = cameraZoom;
         //Draws all elements the game wants to draw
         List<IDrawableObject> elementsToDraw = IOUtil.getDrawableObjectsFromGame(game, tileDimensions, tileDimensions);
         for (IDrawableObject object : elementsToDraw) {
@@ -63,6 +69,15 @@ public class GameLauncher extends ApplicationAdapter {
                     object.flipX(), object.flipY());
         }
         batch.end();
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.PLUS) && cameraZoom > 0) {
+            cameraZoom -= 0.1;
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.MINUS) && cameraZoom < 2) {
+            cameraZoom += 0.1;
+        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
+            cameraX += 1;
+        }
     }
 
     @Override

@@ -94,4 +94,12 @@ public class BoardTest {
         robotList.add(robot);
         new Board(tileGrid, wallGrid, robotList);
     }
+    @Test
+    public void killRobotReducesAmountOfLivesByOne () {
+        Robot robot = board.getAliveRobots().get(0);
+        for (int i = 0; i < 3; i++) {
+            board.moveRobot(robot.getRobotId(), Direction.SOUTH);
+        }
+        assertEquals(2, robot.getAmountOfLives());
+    }
 }

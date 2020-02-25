@@ -66,6 +66,10 @@ public class Game implements IDrawableGame {
         gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
         TimeUnit.SECONDS.sleep(1);
         gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
+        TimeUnit.SECONDS.sleep(1);
+        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
     }
 
     @Override

@@ -2,7 +2,7 @@ package inf112.fiasko.roborally.utility;
 
 import java.io.InputStream;
 
-public class ResourceUtil {
+public final class ResourceUtil {
     private ResourceUtil() {}
 
     /**

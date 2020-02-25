@@ -13,7 +13,7 @@ import inf112.fiasko.roborally.objects.Wall;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IOUtil {
+public final class IOUtil {
     private IOUtil() {}
 
     /**

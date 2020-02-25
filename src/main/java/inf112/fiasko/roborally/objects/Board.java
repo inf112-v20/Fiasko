@@ -65,9 +65,9 @@ public class Board {
      * Moves all dead robots to their backups and makes them part of the board again
      */
     public void respawnRobots() {
-        //TODO: Account for several robots re-spawning at same backup
         for (Robot robot : deadRobots) {
             robot.setPosition(robot.getBackupPosition());
+            robot.setFacingDirection(Direction.NORTH);
             robots.put(robot.getRobotId(), robot);
         }
         deadRobots = new ArrayList<>();
@@ -212,7 +212,7 @@ public class Board {
      * @param robot The robot to kill
      */
     private void killRobot(Robot robot) {
-        //TODO: Must remove a life from the robot/player
+        robot.setAmountOfLives(robot.getAmountOfLives() - 1);
         removeDeadRobotFromBoard(robot);
     }
 

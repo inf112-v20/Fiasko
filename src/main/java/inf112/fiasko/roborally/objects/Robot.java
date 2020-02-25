@@ -8,6 +8,7 @@ import inf112.fiasko.roborally.element_properties.RobotID;
  * This class represents a robot
  */
 public class Robot {
+    private int amountOfLives = 3;
     private int robotDamageTaken = 0;
     private final RobotID robotId;
     private boolean inPowerDown = false;
@@ -130,4 +131,18 @@ public class Robot {
         }
         this.facingDirection = newFacingDirection;
     }
+
+    /**
+     * Sets the amount if life the robot has left
+     * @param amountOfLives the new amount if lives the robot has left
+     */
+    public void setAmountOfLives(int amountOfLives) {
+        this.amountOfLives = amountOfLives;
+    }
+
+    /**
+     * Gets the amount of life a robot has left.
+     * @return amount of life left
+     */
+    public int getAmountOfLives() { return this.amountOfLives; }
 }

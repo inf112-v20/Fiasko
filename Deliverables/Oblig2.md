@@ -11,14 +11,14 @@
 ## Deloppgave 2
 
 ### Krav
-1.   En spiller som kan bevege seg på brettet.
-2.   Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser).
-3.   Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull.
-4.   Roboter må kunne dytte hverandre.
-5.   Roboten trenger å kunne ta skade.
-6.   En robot trenger liv.
-7.   En robot som er ødelagt vil komme tilbake i en backup position med to i skade.
-8.   Vise hendelser som skjer på skjermen med en forsinkelse slik at spilleren ser bevegelsene i spillet.
+1.  En spiller som kan bevege seg på brettet.
+2.  Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser).
+3.  Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull.
+4.  Roboter må kunne dytte hverandre.
+5.  Roboten trenger å kunne ta skade.
+6.  En robot trenger liv.
+7.  En robot som er ødelagt vil komme tilbake i en backup position med to i skade.
+8.  Vise hendelser som skjer på skjermen med en forsinkelse slik at spilleren ser bevegelsene i spillet.
 
 #### Brukerhistorier for krav 1
 *Brukerhistorie* 

@@ -1,6 +1,5 @@
 package inf112.fiasko.roborally.game;
 
-import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.objects.Board;
@@ -30,7 +29,7 @@ public class Game implements IDrawableGame {
                 try {
                     runGameLoop();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
             }).start();
         } catch (IOException e) {
@@ -43,29 +42,49 @@ public class Game implements IDrawableGame {
      * @throws InterruptedException If interrupted while trying to sleep
      */
     private void runGameLoop() throws InterruptedException {
+        long cycleDelay = 600;
         TimeUnit.SECONDS.sleep(3);
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
         gameBoard.rotateRobotLeft(RobotID.ROBOT_1);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.EAST);
-        TimeUnit.SECONDS.sleep(1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
         gameBoard.rotateRobotRight(RobotID.ROBOT_1);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_1, Direction.SOUTH);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.WEST);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
-        TimeUnit.SECONDS.sleep(1);
-        gameBoard.moveRobot(RobotID.ROBOT_2, Direction.EAST);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_1);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+        gameBoard.moveRobotForward(RobotID.ROBOT_2);
     }
 
     @Override

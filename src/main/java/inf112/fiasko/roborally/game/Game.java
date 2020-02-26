@@ -24,6 +24,7 @@ public class Game implements IDrawableGame {
             List<Robot> robots = new ArrayList<>();
             robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
             robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
+            robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             new Thread(() -> {
                 try {

@@ -42,6 +42,8 @@ public class GameLauncher extends ApplicationAdapter {
         camera.setToOrtho(false, game.getWidth() * tileDimensions,
                 game.getHeight() * tileDimensions);
         batch = new SpriteBatch();
+        /*MyTextInputListener listener = new MyTextInputListener();
+        Gdx.input.getTextInput(listener, "Input name", "", "Name");*/
     }
 
     /**
@@ -67,10 +69,10 @@ public class GameLauncher extends ApplicationAdapter {
                     object.flipX(), object.flipY());
         }
         batch.end();
-        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.PLUS) && cameraZoom > 0) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Input.Keys.PLUS) && cameraZoom > 0) {
             cameraZoom -= 0.1;
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyPressed(Input.Keys.MINUS) && cameraZoom < 2) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT) && Gdx.input.isKeyJustPressed(Input.Keys.MINUS) && cameraZoom < 2) {
             cameraZoom += 0.1;
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)) {
@@ -84,4 +86,15 @@ public class GameLauncher extends ApplicationAdapter {
         textureSheet.dispose();
         batch.dispose();
     }
+
+    /*public static class MyTextInputListener implements Input.TextInputListener {
+        @Override
+        public void input (String text) {
+            System.out.println(text);
+        }
+
+        @Override
+        public void canceled () {
+        }
+    }*/
 }

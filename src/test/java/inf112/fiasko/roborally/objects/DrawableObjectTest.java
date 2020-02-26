@@ -89,7 +89,6 @@ public class DrawableObjectTest {
         assertEquals(HEIGHT_MAX_ARG, drawableObjectMaximumArguments.getHeight());
     }
 
-
     @Test
     public void getRotationMinArg() {
         assertEquals(0, drawableObjectMinimumArguments.getRotation());

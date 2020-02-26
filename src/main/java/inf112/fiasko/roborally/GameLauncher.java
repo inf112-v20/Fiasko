@@ -160,16 +160,18 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     private int[] translateToDirection(float x, float y) {
         int outX = 0;
         int outY = 0;
-        if (Math.round(camera.up.x) == 0 && Math.round(camera.up.y) == 1) {
+        int upX = Math.round(camera.up.x);
+        int upY = Math.round(camera.up.y);
+        if (upX == 0 && Math.round(camera.up.y) == 1) {
             outX = (int)-x;
             outY = (int)y;
-        } else if (Math.round(camera.up.x) == 0 && Math.round(camera.up.y) == -1) {
+        } else if (upX == 0 && upY == -1) {
             outX = (int)x;
             outY = (int)-y;
-        } else if (Math.round(camera.up.x) == -1 && Math.round(camera.up.y) == 0) {
+        } else if (upX == -1 && upY == 0) {
             outX = (int)-y;
             outY = (int)-x;
-        } else if (Math.round(camera.up.x) == 1 && Math.round(camera.up.y) == 0) {
+        } else if (upX == 1 && upY == 0) {
             outX = (int)y;
             outY = (int)x;
         }

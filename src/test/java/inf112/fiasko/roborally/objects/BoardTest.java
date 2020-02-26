@@ -132,7 +132,8 @@ public class BoardTest {
 
     @Test
     public void respawnRobotAtBackupPosition() {
-        Robot robot = board.getAliveRobots().get(0);
+        Robot robot = robotList.get(0);
+        robot.setPosition(new Position(0, 0));
         board.moveRobot(robot.getRobotId(), Direction.NORTH);
         board.removeDeadRobotFromBoard(robot);
         board.respawnRobots();

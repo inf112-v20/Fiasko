@@ -19,6 +19,7 @@ public class Board {
     private IGrid<Wall> walls;
     private IGrid<Tile> tiles;
     private Map<RobotID, Robot> robots;
+    private List<Robot> deadRobots;
 
     /**
      * Initializes the board
@@ -41,6 +42,7 @@ public class Board {
         this.boardHeight = tiles.getHeight();
         this.walls = walls;
         this.tiles = tiles;
+        this.deadRobots = new ArrayList<>();
     }
 
     /**
@@ -207,6 +209,7 @@ public class Board {
     private void killRobot(Robot robot) {
         robot.setAmountOfLives(robot.getAmountOfLives() - 1);
         removeDeadRobotFromBoard(robot);
+        deadRobots.add(robot);
     }
 
     /**
@@ -289,4 +292,28 @@ public class Board {
         }
         return elements;
     }
+
+    /**
+     * Moves all dead robots to their backups and makes them part of the board again, and if a robot has no lives
+     * it will be removed from the game.
+     */
+    public void respawnRobots() {
+        for (Robot robot : deadRobots) {
+            if (robot.getAmountOfLives() > 0) {
+                robot.setPosition(robot.getBackupPosition());
+                robot.setFacingDirection(Direction.NORTH);
+                robots.put(robot.getRobotId(), robot);
+            }
+            else {
+                deadRobots.remove(robot);
+            }
+        }
+    }
+
+    /**
+     * Checks if a specific robot is currently alive on the board
+     * @param robot the ID of the robot you want to check
+     * @return True/False based on if the robot was found.
+     */
+    public boolean isRobotAlive(RobotID robot) { return robots.containsKey(robot); }
 }

@@ -304,10 +304,9 @@ public class Board {
                 robot.setFacingDirection(Direction.NORTH);
                 robots.put(robot.getRobotId(), robot);
             }
-            else {
-                deadRobots.remove(robot);
-            }
+            else {deadRobots.remove(robot); }
         }
+        deadRobots = new ArrayList<>();
     }
 
     /**

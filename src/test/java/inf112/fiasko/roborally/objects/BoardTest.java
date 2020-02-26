@@ -129,4 +129,23 @@ public class BoardTest {
         board.moveRobot(robot.getRobotId(), Direction.NORTH);
         assertEquals(2, robot.getAmountOfLives());
     }
+
+    @Test
+    public void respawnRobotAtBackupPosition() {
+        Robot robot = board.getAliveRobots().get(0);
+        board.moveRobot(robot.getRobotId(), Direction.NORTH);
+        board.removeDeadRobotFromBoard(robot);
+        board.respawnRobots();
+        assertEquals(robot.getBackupPosition(), someValidPosition1);
+    }
+
+    @Test
+    public void respawnRobotDoesNotRespawnARobotWithNoLives() {
+        Robot robot = board.getAliveRobots().get(0);
+        robot.setAmountOfLives(1);
+        board.moveRobot(robot.getRobotId(), Direction.NORTH);
+        board.removeDeadRobotFromBoard(robot);
+        board.respawnRobots();
+        assertFalse(board.isRobotAlive(robot.getRobotId()));
+    }
 }

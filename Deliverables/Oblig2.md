@@ -3,11 +3,40 @@
 ## Deloppgave 1
 
 *   Rollene har fungert greit fram til nå
-*   Samme som Oblig1
+### Tobias Kommunikasjonsleder
+#####   Har ansvar for å organisere gruppe møte og par programering møter.
+*   rollen innebærer å finn ut hvilken dagen folk kan møte og om vi burde møte i person eller har møte digitalt på discord.
+*   jeg får også beskjed om noen er syk slik at gruppen kan ta det i betraktning under møte.
+### Kristian Teamleder
+#####   Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid
+*   har holdet stry på projektboardet.
+*   har hatt kontroll over hvem som skal gjør hva av oppgavene på projektboardet.
+*   har kontroler kvaliteten på andre sitt arbeid
+### Steinar Møteorganisator
+#####   Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene.
+*   kommer med en liten plan for hva vi skal snakk om på møtene.
+*   kontrolere at møte holder se ginnenfor agendaen.
+### Gabriel Kundekontakt
+#####  Ansvarlig for å vite alle spilleregler
+*   må svare på spårsmål fra de andre på gruppen angående spill reglene.
+*   må ha kontroll over de forskjelige mekanikkene i spillet.
+### Torbjør Dokumentasjonsansvarlig
+#####  Dokumenterer møtene og sørger for at innleveringene er riktig
+
+
 *   Teamet fungerer fint og oppsettet vi har valgt fungerer fint for oss for tiden.
 *   Alle blir hørt og det er åpent for å komme med tilbakemeldinger på ting som kan bli bedre
 *   Kommunikasjonen fungerer bra
+*   kan bli bedre til å ta insiativet med å begynne på oppgaver
+*   Vi synes det var en god idea å planlegge klasse strukturne felles i et gruppe rom. det ga alle en god oversikt over
+hva de forskjellige klassen måtte inneholde.
 
+*   Vi har brukt parprogramering som som har gjordt at commitsene har blitt veldig forskjøve
+*   En del har blitt diskuter i gruppe der bare en har gjort alle notatene.
+
+### forbedringpunkter
+*   Jevnere commits fra alle på laget
+*   Bli bedre på brukerhistorier
 ## Deloppgave 2
 
 #### Krav
@@ -142,7 +171,11 @@ kan bli dyttet.
 *   legg til en forsinkelse mellom hver handling
 *   sørg for at forsinkelsen ikke kresjer spillet.
 
+### vidre med del 2
 
+*   vi har prioriter å lage spillet fra bunnen av og opp siden noen deler av spillet er avhenger andre.
+*   
+*   
 
 
 

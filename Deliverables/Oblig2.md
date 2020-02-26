@@ -4,28 +4,33 @@
 
 *   Rollene har fungert greit fram til nå.
 
-### Tobias Kommunikasjonsleder
+### Tobias 
+#### Kommunikasjonsleder
 ##### Har ansvar for å organisere gruppe møte og par programering møter
 *   Rollen innebærer å finn ut hvilken dager folk kan møte og om vi burde møte i person eller ha møte digitalt på discord.
 *   Jeg får også beskjed om noen er syk slik at gruppen kan ta det i betraktning under møte.
 
-### Kristian Teamleder
+### Kristian 
+#### Teamleder
 ##### Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid
 *   Har holdet stry på projektboardet.
 *   Har hatt kontroll over hvem som skal gjøre hvilken av oppgavene på prosjekttavlen.
 *   Har kontrolert kvaliteten på andres arbeid.
 
-### Steinar Møteorganisator
+### Steinar 
+#### Møteorganisator
 ##### Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene
 *   Kommer med en liten plan for hva vi skal snakke om på møtene.
 *   Kontrolerer at møte holdes innenfor agendaen.
 
-### Gabriel Kundekontakt
+### Gabriel 
+#### Kundekontakt
 ##### Ansvarlig for å vite alle spilleregler
 *   Må svare på spårsmål fra de andre på gruppen angående spillereglene.
 *   Må ha kontroll over de forskjellige mekanikkene i spillet.
 
-### Torbjørn Dokumentasjonsansvarlig
+### Torbjørn 
+#### Dokumentasjonsansvarlig
 ##### Dokumenterer møtene og sørger for at innleveringene er riktig
 *   Sørger for at referater blir skrevet i forbindelse med møter.
 *   Har ansvar for at dokumentasjon i og utenfor kode er god nok.

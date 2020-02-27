@@ -37,7 +37,6 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     private Vector2 lastTouch;
     private final int viewPortWidth = 12 * tileDimensions;
     private final int viewPortHeight = 12 * tileDimensions;
-    private boolean debugging = false;
 
     @Override
     public void create() {
@@ -116,6 +115,8 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
                 this.game = debugGame;
                 this.debugGame = temp;
                 return true;
+            default:
+                return false;
         }
         return false;
     }

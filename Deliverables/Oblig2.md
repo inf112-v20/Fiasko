@@ -7,7 +7,9 @@
 ### Tobias 
 #### Kommunikasjonsleder
 ##### Har ansvar for å organisere gruppemøter og parprogrameringsmøter
-*   Rollen innebærer å finne ut hvilke dager folk kan møte og om vi burde møte i person eller utføre møtee digitalt på discord
+*   Rollen innebærer å finne ut hvilke dager folk kan møte og om vi burde møte i person eller 
+    utføre møte digitalt på discord
+
 *   Jeg får også beskjed om noen er syke slik at gruppen kan ta det i betraktning under et møte.
 
 ### Kristian 
@@ -45,7 +47,8 @@
 
 *   Kan bli bedre til å ta initiativet med å begynne på oppgaver.
 
-*   Vi synes det var en god idea å planlegge klassestrukturene felles i et grupperom. Det gav alle en god oversikt over hva de forskjellige klassen måtte inneholde.
+*   Vi synes det var en god idea å planlegge klassestrukturene felles i et grupperom. Det gav alle en god oversikt over
+    hva de forskjellige klassen måtte inneholde.
 
 *   Vi har brukt parprogramering som har gjort at commits har blitt en del forskjøvet.
 
@@ -129,14 +132,16 @@
 
 *   Legge til en metode som fjerner en robot fra brettet.
 
-*   Legge til en metode som sjekker posisjonen til roboten for å se om den er gått i et hull eller om den har gått utenfor brettet.
+*   Legge til en metode som sjekker posisjonen til roboten for å se om den er gått i et hull eller om den har gått 
+    utenfor brettet.
 
 #### Brukerhistorier for krav 4
 *Brukerhistorie*
 *   Som robot må jeg kunne dytte en annen robot hvis det er lovlig å dytte roboten, for å kunne gjøre et gyldig trekk.
 
 *Akseptansekrav*
-*   Hvis en robot beveger seg til en posisjon hvor det er en annen robot, vil den andre roboten bli dyttet så lenge den kan bli dyttet.
+*   Hvis en robot beveger seg til en posisjon hvor det er en annen robot, vil den andre roboten bli dyttet så lenge 
+    den kan bli dyttet.
 
 *   Hvis den andre roboten blir blokkert av en vegg så kan den ikke bli dyttet og ingen av robotene flytter på seg.
 
@@ -211,7 +216,8 @@
 
 *Kjøredetaljer*
 *   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt en automatisk demo når main kjøres.
-*   Demoen demonstrerer at roboter kan skyve hverandre, bli stoppet av vegger, falle i hull og dø av å gå utenfor brettet.
+*   Demoen demonstrerer at roboter kan skyve hverandre, bli stoppet av vegger, falle i hull og dø av å gå 
+    utenfor brettet.
 
 ## UML
 ![UML](../Deliverables/Umls/UmlOblig2.png "UML Oblig 2")

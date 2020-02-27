@@ -10,12 +10,17 @@ public class PositionTest {
     private Position testPosition2;
     private Position testPosition3;
     private Position testPosition4;
+    private Position testPosition5;
+    private Position testPosition6;
+
     @Before
     public void setUp() {
         testPosition1 = new Position(3, 4);
         testPosition2 = new Position(2, 3);
         testPosition3 = new Position(3, 4);
         testPosition4 = new Position(3, 3);
+        testPosition5 = new Position(1, 4);
+        testPosition6 = new Position(3, 3);
     }
     @Test
     public void testGetXPosition(){
@@ -32,4 +37,10 @@ public class PositionTest {
 
     @Test
     public void testDifferentPositionsAreNotEqual() { assertNotEquals(testPosition2, testPosition4);}
+
+    @Test
+    public void equalXandDifferentYIsNotEqual() { assertNotEquals(testPosition1, testPosition6);}
+
+    @Test
+    public void equalYandDifferentYXIsNotEqual() { assertNotEquals(testPosition1, testPosition5);}
 }

@@ -2,51 +2,70 @@
 
 ## Deloppgave 1
 
-*   Rollene har fungert greit fram til nå
-### Tobias Kommunikasjonsleder
-#####   Har ansvar for å organisere gruppe møte og par programering møter.
-*   rollen innebærer å finn ut hvilken dagen folk kan møte og om vi burde møte i person eller har møte digitalt på discord.
-*   jeg får også beskjed om noen er syk slik at gruppen kan ta det i betraktning under møte.
-### Kristian Teamleder
-#####   Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid
-*   har holdet stry på projektboardet.
-*   har hatt kontroll over hvem som skal gjør hva av oppgavene på projektboardet.
-*   har kontroler kvaliteten på andre sitt arbeid
-### Steinar Møteorganisator
-#####   Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene.
-*   kommer med en liten plan for hva vi skal snakk om på møtene.
-*   kontrolere at møte holder se ginnenfor agendaen.
-### Gabriel Kundekontakt
-#####  Ansvarlig for å vite alle spilleregler
-*   må svare på spårsmål fra de andre på gruppen angående spill reglene.
-*   må ha kontroll over de forskjelige mekanikkene i spillet.
-### Torbjør Dokumentasjonsansvarlig
-#####  Dokumenterer møtene og sørger for at innleveringene er riktig
+*   Rollene har fungert greit fram til nå.
 
+### Tobias 
+#### Kommunikasjonsleder
+##### Har ansvar for å organisere gruppe møte og par programering møter
+*   Rollen innebærer å finn ut hvilken dager folk kan møte og om vi burde møte i person eller ha møte digitalt på discord.
+*   Jeg får også beskjed om noen er syk slik at gruppen kan ta det i betraktning under møte.
 
+### Kristian 
+#### Teamleder
+##### Ansvarlig for å vite hva alle gjør og burde gjøre til enhver tid
+*   Har holdet stry på projektboardet.
+*   Har hatt kontroll over hvem som skal gjøre hvilken av oppgavene på prosjekttavlen.
+*   Har kontrolert kvaliteten på andres arbeid.
+
+### Steinar 
+#### Møteorganisator
+##### Ansvarlig for å organisere hva som skal gjennomgås på de avtalte møtene
+*   Kommer med en liten plan for hva vi skal snakke om på møtene.
+*   Kontrolerer at møte holdes innenfor agendaen.
+
+### Gabriel 
+#### Kundekontakt
+##### Ansvarlig for å vite alle spilleregler
+*   Må svare på spårsmål fra de andre på gruppen angående spillereglene.
+*   Må ha kontroll over de forskjellige mekanikkene i spillet.
+
+### Torbjørn 
+#### Dokumentasjonsansvarlig
+##### Dokumenterer møtene og sørger for at innleveringene er riktig
+*   Sørger for at referater blir skrevet i forbindelse med møter.
+*   Har ansvar for at dokumentasjon i og utenfor kode er god nok.
+*   Ser over rettskrivning og fikser markdown issues.
+
+### Videre med deloppgave 1
 *   Teamet fungerer fint og oppsettet vi har valgt fungerer fint for oss for tiden.
-*   Alle blir hørt og det er åpent for å komme med tilbakemeldinger på ting som kan bli bedre
-*   Kommunikasjonen fungerer bra
-*   kan bli bedre til å ta insiativet med å begynne på oppgaver
-*   Vi synes det var en god idea å planlegge klasse strukturne felles i et gruppe rom. det ga alle en god oversikt over
+
+*   Alle blir hørt og det er åpent for å komme med tilbakemeldinger på ting som kan bli bedre.
+
+*   Kommunikasjonen fungerer bra.
+
+*   Kan bli bedre til å ta initiativet med å begynne på oppgaver.
+
+*   Vi synes det var en god idea å planlegge klasse strukturne felles i et gruppe rom. Det gav alle en god oversikt over
 hva de forskjellige klassen måtte inneholde.
 
-*   Vi har brukt parprogramering som som har gjordt at commitsene har blitt veldig forskjøve
+*   Vi har brukt parprogramering som har gjordt at commitsene har blitt veldig forskjøvet.
+
 *   En del har blitt diskuter i gruppe der bare en har gjort alle notatene.
 
 ### forbedringpunkter
 *   Jevnere commits fra alle på laget
 *   Bli bedre på brukerhistorier
+
 ## Deloppgave 2
 
 ### Krav
 1.  En spiller som kan bevege seg på brettet.
 2.  Forskjellige funksjonelle objekter/ruter på kartet (eks. vegg, laser).
-3.  Roboter dør hvis de går utenfor spillbrettet eller faller i ett hull.
+3.  Roboter dør hvis de går utenfor spillbrettet eller faller i et hull.
 4.  Roboter må kunne dytte hverandre.
 5.  Roboten trenger å kunne ta skade.
 6.  En robot trenger liv.
-7.  En robot som er ødelagt vil komme tilbake i en backup position med to i skade.
+7.  En robot som er ødelagt vil komme tilbake i en backupposisjon med to i skade.
 8.  Vise hendelser som skjer på skjermen med en forsinkelse slik at spilleren ser bevegelsene i spillet.
 
 #### Brukerhistorier for krav 1
@@ -56,7 +75,7 @@ hva de forskjellige klassen måtte inneholde.
 *Akseptansekrav*
 *   Vi har en klasse som lagrer en posisjon for alle roboter på brettet.
 *   Posisjoner består av x og y koordinater.
-*   Roboten lagrer en instanse av positions classen.
+*   Roboten lagrer en instanse av positions klassen.
 
 *Brukerhistorie*
 *   Som spiller trenger jeg en robot for å kunne spille spillet.
@@ -79,22 +98,23 @@ hva de forskjellige klassen måtte inneholde.
 *   Brette må kunne vite hvilken tile som er på en bestemt position.
 
 *Brukerhistorie*
-*   Som vegg må jeg stoppe en robot fra å gå gjennom meg for hindre dem å gjøre et ugyldig trekk.
+*   Som vegg må jeg kunne stoppe en robot fra å gå gjennom meg for å hindre den i å gjøre et ugyldig trekk.
+
 *   Som vegg må jeg kunne bli plassert i forskjellige retninger for 
 å kunne bestemme den funksjonelle retningen til veggen.
 
 *Akseptansekrav*
 *   En robot som prøver å gå gjennom en vegg blir stoppet.
-*   Kunne plasere vegger i forskjelige retninger.
+*   Kunne plassere vegger i forskjelige retninger.
 
 *Arbeidsoppgaver*
 *   Lag en representasjon av en vegg.
-*   Endre bevegelses metoden til roboten slik at den følger funksjonaliteten til vegger.
-*   Kunne plasere veggen i forskjellige retninger.
-*   Leg til en represntation av et hull.
+*   Endre bevegelsesmetoden til roboten slik at den følger funksjonaliteten til vegger.
+*   Kunne plassere veggen i forskjellige retninger.
+*   Legg til en representasjon av et hull.
 *   Lag en representasjon av en tile.
-*   Legg til en metode i brettet som forteler oss hvilken tile som er i en bestemt position.
-*   Legg til en måte får å kunne lage et brett med forskjelige tiles i spesifikke positioner.
+*   Legg til en metode i brettet som forteller oss hvilken tile som er i en bestemt posisjon.
+*   Legg til en måte for å kunne lage et brett med forskjellige tiles i spesifikke posisjoner.
 
 #### Brukerhistorier for krav 3
 
@@ -118,7 +138,7 @@ utenfor brettet.
 *   Som robot må jeg kunne dytte en annen robot hvis det er lovlig å dytte roboten, for å kunne gjøre et gyldig trekk.
 
 *Akseptansekrav*
-*   Hvis en robot beveger seg til en position hvor det er en annen robot blir den andre roboten bli dytte så lenge den 
+*   Hvis en robot beveger seg til en position hvor det er en annen robot vil den andre roboten bli dyttet så lenge den 
 kan bli dyttet.
 
 *   Hvis den andre roboten blir blokkert av en vegg så kan den ikke bli dyttet og ingen av robotene flytter på seg.
@@ -135,10 +155,10 @@ kan bli dyttet.
 *   Som spiller må roboten min kunne ta skade, for å håntere påvirkning fra objekter som avgir skade til roboter.
 
 *Akseptansekrav*
-*   Roboten sin skade verdi blir økt hvis den tar skade.
+*   Roboten sin skadeverdi blir økt hvis den tar skade.
 
 *Arbeidsoppgaver*
-*   Legg til en skade verdi i roboten som holder styr på mengden skade roboten har.
+*   Legg til en skadeverdi i roboten som holder styr på mengden skade roboten har.
 *   Legg til en metode for å sette skaden til roboten.
 *   Legg til en metode for å hente ut skaden til roboten.
 
@@ -150,18 +170,18 @@ kan bli dyttet.
 *   Roboten har en verdi som reprensenterer mengden liv den har.
 
 *Arbeidsoppgaver*
-*   Legg til en liv verdi i robot klassen.
+*   Legg til en livverdi i robot klassen.
 
 #### Brukerhistorier for krav 7
 *Brukerhistorie*
 *   Som spiller må roboten min kunne gjennopstå om den har flere liv, for å kunne spille videre.
 
 *Akseptansekrav*
-*   En dø robot respawner i en backup position om den har flere liv.
-*   Roboten har 2 i skade etter den respawner.
+*   En dø robot gjennoppstår i en backup posisjon om den har flere liv.
+*   Roboten har 2 i skade etter den gjennoppstår.
 
 *Arbeidsoppgaver*
-*   Lag en metode som respawner en robot i en backup position og som setter skaden til roboten til 2.
+*   Lag en metode som respawner en robot i en backup posisjon og som setter skaden til roboten til 2.
 
 #### Brukerhistorier for krav 8
 *Brukerhistorie*
@@ -171,11 +191,9 @@ kan bli dyttet.
 *   Det er en forsinkelse mellom hver handlig som skjer i spillet slik at vi kan følge med på hva som skjer.
 
 *Arbeidsoppgaver*
-*   legg til en forsinkelse mellom hver handling
-*   sørg for at forsinkelsen ikke kresjer spillet.
+*   Legg til en forsinkelse mellom hver handling
+*   Sørg for at forsinkelsen ikke kræsjer spillet.
 
-### vidre med del 2
+### Vidre med del 2
 
-*   vi har prioriter å lage spillet fra bunnen av og opp siden noen deler av spillet er avhenger andre.
-*   
-*   
+*   Vi har prioritert å lage spillet fra bunnen av og opp siden noen deler av spillet er avhenger andre.

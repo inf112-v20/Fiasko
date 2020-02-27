@@ -86,14 +86,6 @@ public class Board {
     }
 
     /**
-     * Removes a dead robot from the board over to the dead robot list
-     * @param robot the dead robot
-     */
-    public void removeDeadRobotFromBoard(Robot robot) {
-        robots.remove(robot.getRobotId());
-    }
-
-    /**
      * Rotates a robot to the right
      * @param robotID The id of the robot to rotate
      */
@@ -208,7 +200,7 @@ public class Board {
      */
     private void killRobot(Robot robot) {
         robot.setAmountOfLives(robot.getAmountOfLives() - 1);
-        removeDeadRobotFromBoard(robot);
+        robots.remove(robot.getRobotId());
         deadRobots.add(robot);
     }
 
@@ -304,7 +296,6 @@ public class Board {
                 robot.setFacingDirection(Direction.NORTH);
                 robots.put(robot.getRobotId(), robot);
             }
-            else {deadRobots.remove(robot); }
         }
         deadRobots = new ArrayList<>();
     }

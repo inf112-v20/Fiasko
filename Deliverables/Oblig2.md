@@ -213,6 +213,10 @@ spilleropplevelsen.
 
 *   Vi vet ikke om noen bugs i koden. Alle kjente bugs har blitt fikset underveis.
 
+*Kjøredetaljer*
+*   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt et automatisk demo når main kjøres.
+*   Demoet demonstrerer funskjonalitet ved flytting av roboter.
+
 ## UML
 ![UML](../Deliverables/Umls/UmlOblig2.png "UML Oblig 2")
 ![UML](../Deliverables/Umls/UmlOblig2WithoutDependencies.png "UML Oblig 2 uten avhengigheter")

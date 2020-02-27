@@ -197,3 +197,21 @@ kan bli dyttet.
 ### Vidre med del 2
 
 *   Vi har prioritert å lage spillet fra bunnen av og opp siden noen deler av spillet er avhenger andre.
+
+*Hovedkrav til MVP*
+
+*   Alle de syv første kravene føler vi er en del av MVP, mens krav 8: Vise hendelser som skjer på skjermen med en
+forsinkelse slik at spilleren ser bevegelsene i spillet, ikke er nødvendig for at spillet skal fungere.
+ 
+*   Vi har fulgt prioritering av kravene i MVP, men også implementert noen "nice to have" som vi synes er viktig for
+spilleropplevelsen.
+
+*   Siden sist har vi jobbet mer på brett og spilleren og jobbet med krav 1-7.
+
+*   For å se spesifike oppgaver som er gjort, sjekk prosjekttavlen på github.
+
+*   Vi vet ikke om noen bugs i koden. Alle kjente bugs har blitt fikset underveis.
+
+## UML
+![UML](../Deliverables/Umls/UmlOblig2.png "UML Oblig 2")
+![UML](../Deliverables/Umls/UmlOblig2WithoutDependencies.png "UML Oblig 2 uten avhengigheter")

@@ -5,6 +5,22 @@ vil vi gå over til en fase der målet blir å implementere ting som er gøy, me
 
 Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, Inc.
 
-## Forkrav for å kunne kompilere og kjøre koden
+## Bygging og kompilering
+
+### Forkrav for å kunne kompilere og kjøre koden
+-   [java](https://www.java.com/en/download/)
 -   [git](https://git-scm.com/)
 -   [maven](https://maven.apache.org/)
+
+### Byggeprosedyre
+```
+git clone https://github.com/inf112-v20/Fiasko.git
+cd Fiasko
+mvn clean install
+```
+### Kjøreprosedyre
+```
+cd target
+java -jar roborally-0.1-alpha-jar-with-dependencies.jar
+```
+Den produserte .jar filen kan alternativt flyttes til en annen mappe og dobbeltklikkes for å kjøres.

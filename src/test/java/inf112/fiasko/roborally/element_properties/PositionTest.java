@@ -42,5 +42,5 @@ public class PositionTest {
     public void equalXandDifferentYIsNotEqual() { assertNotEquals(testPosition1, testPosition6);}
 
     @Test
-    public void equalYandDifferentYXIsNotEqual() { assertNotEquals(testPosition1, testPosition5);}
+    public void equalYandDifferentXIsNotEqual() { assertNotEquals(testPosition1, testPosition5);}
 }

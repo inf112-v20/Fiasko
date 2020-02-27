@@ -37,6 +37,31 @@ public class Game implements IDrawableGame {
         }
     }
 
+    @Override
+    public int getWidth() {
+        return gameBoard.getBoardWidth();
+    }
+
+    @Override
+    public int getHeight() {
+        return gameBoard.getBoardHeight();
+    }
+
+    @Override
+    public List<Tile> getTilesToDraw() {
+        return gameBoard.getTiles();
+    }
+
+    @Override
+    public List<Wall> getWallsToDraw() {
+        return gameBoard.getWalls();
+    }
+
+    @Override
+    public List<Robot> getRobotsToDraw() {
+        return gameBoard.getAliveRobots();
+    }
+
     /**
      * Does whatever the game wants to do
      * @throws InterruptedException If interrupted while trying to sleep
@@ -85,30 +110,5 @@ public class Game implements IDrawableGame {
         gameBoard.moveRobotForward(RobotID.ROBOT_2);
         TimeUnit.MILLISECONDS.sleep(cycleDelay);
         gameBoard.moveRobotForward(RobotID.ROBOT_2);
-    }
-
-    @Override
-    public int getWidth() {
-        return gameBoard.getBoardWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return gameBoard.getBoardHeight();
-    }
-
-    @Override
-    public List<Tile> getTilesToDraw() {
-        return gameBoard.getTiles();
-    }
-
-    @Override
-    public List<Wall> getWallsToDraw() {
-        return gameBoard.getWalls();
-    }
-
-    @Override
-    public List<Robot> getRobotsToDraw() {
-        return gameBoard.getAliveRobots();
     }
 }

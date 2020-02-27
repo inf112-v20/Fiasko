@@ -6,7 +6,7 @@ vil vi gå over til en fase der målet blir å implementere ting som er gøy, me
 Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, Inc.
 
 ## Spillstatus
-Ved kjøring av main blir det kjørt en demo, uten mulighet for bruker å bevege robot.
+Ved kjøring av .jar filen blir det kjørt en demo, uten mulighet for bruker å bevege robot.
 
 ## Bygging og kompilering
 
@@ -25,6 +25,6 @@ Dette vil også kjøre alle tester i koden
 ### Kjøreprosedyre
 ```shell script
 cd target
-java -jar roborally-0.1-alpha-jar-with-dependencies.jar
+java -jar roborally-0.2-alpha-jar-with-dependencies.jar
 ```
 Den produserte .jar filen kan alternativt flyttes til en annen mappe og dobbeltklikkes for å kjøres.

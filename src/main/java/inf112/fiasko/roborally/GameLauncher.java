@@ -145,9 +145,9 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
         Vector2 newTouch = new Vector2(screenX, screenY);
         Vector2 diff = newTouch.cpy().sub(lastTouch);
         lastTouch = newTouch;
-        int[] change = translateToDirection(diff.x, diff.y);
-        cameraX = change[0];
-        cameraY = change[1];
+        int[] positionChange = translateCoordinateAccountingForCameraRotation(diff.x, diff.y);
+        cameraX = positionChange[0];
+        cameraY = positionChange[1];
         return true;
     }
 
@@ -157,21 +157,21 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
      * @param y The y coordinate to translate
      * @return A list containing the translated coordinates of x and y
      */
-    private int[] translateToDirection(float x, float y) {
+    private int[] translateCoordinateAccountingForCameraRotation(float x, float y) {
         int outX = 0;
         int outY = 0;
-        int upX = Math.round(camera.up.x);
-        int upY = Math.round(camera.up.y);
-        if (upX == 0 && Math.round(camera.up.y) == 1) {
+        int cameraUpX = Math.round(camera.up.x);
+        int cameraUpY = Math.round(camera.up.y);
+        if (cameraUpX == 0 && Math.round(camera.up.y) == 1) {
             outX = (int)-x;
             outY = (int)y;
-        } else if (upX == 0 && upY == -1) {
+        } else if (cameraUpX == 0 && cameraUpY == -1) {
             outX = (int)x;
             outY = (int)-y;
-        } else if (upX == -1 && upY == 0) {
+        } else if (cameraUpX == -1 && cameraUpY == 0) {
             outX = (int)-y;
             outY = (int)-x;
-        } else if (upX == 1 && upY == 0) {
+        } else if (cameraUpX == 1 && cameraUpY == 0) {
             outX = (int)y;
             outY = (int)x;
         }

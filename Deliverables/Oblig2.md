@@ -206,6 +206,7 @@ forsinkelse slik at spilleren ser bevegelsene i spillet, ikke er nødvendig for 
 *   Vi har fulgt prioritering av kravene i MVP, men også implementert noen "nice to have" som vi synes er viktig for
 spilleropplevelsen.
 
+
 *   Siden sist har vi jobbet mer på brett og spilleren og jobbet med krav 1-7.
 
 *   For å se spesifike oppgaver som er gjort, sjekk prosjekttavlen på github.

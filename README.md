@@ -13,13 +13,14 @@ Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, 
 -   [maven](https://maven.apache.org/)
 
 ### Byggeprosedyre
-```
+```shell script
 git clone https://github.com/inf112-v20/Fiasko.git
 cd Fiasko
 mvn clean install
 ```
+Dette vil også kjøre alle tester i koden
 ### Kjøreprosedyre
-```
+```shell script
 cd target
 java -jar roborally-0.1-alpha-jar-with-dependencies.jar
 ```

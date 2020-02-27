@@ -46,7 +46,7 @@
 *   Kan bli bedre til å ta initiativet med å begynne på oppgaver.
 
 *   Vi synes det var en god idea å planlegge klasse strukturne felles i et gruppe rom. Det gav alle en god oversikt over
-hva de forskjellige klassen måtte inneholde.
+    hva de forskjellige klassen måtte inneholde.
 
 *   Vi har brukt parprogramering som har gjordt at commitsene har blitt veldig forskjøvet.
 
@@ -101,7 +101,7 @@ hva de forskjellige klassen måtte inneholde.
 *   Som vegg må jeg kunne stoppe en robot fra å gå gjennom meg for å hindre den i å gjøre et ugyldig trekk.
 
 *   Som vegg må jeg kunne bli plassert i forskjellige retninger for 
-å kunne bestemme den funksjonelle retningen til veggen.
+    å kunne bestemme den funksjonelle retningen til veggen.
 
 *Akseptansekrav*
 *   En robot som prøver å gå gjennom en vegg blir stoppet.
@@ -131,7 +131,7 @@ hva de forskjellige klassen måtte inneholde.
 *   Legg til en metode som fjerner en robot fra brettet.
 
 *   Legg til en metode som sjekker positionen til roboten for å se om den er gått i et hull eller om den har gått 
-utenfor brettet.
+    utenfor brettet.
 
 #### Brukerhistorier for krav 4
 *Brukerhistorie*
@@ -139,7 +139,7 @@ utenfor brettet.
 
 *Akseptansekrav*
 *   Hvis en robot beveger seg til en position hvor det er en annen robot vil den andre roboten bli dyttet så lenge den 
-kan bli dyttet.
+    kan bli dyttet.
 
 *   Hvis den andre roboten blir blokkert av en vegg så kan den ikke bli dyttet og ingen av robotene flytter på seg.
 
@@ -201,11 +201,10 @@ kan bli dyttet.
 *Hovedkrav til MVP*
 
 *   Alle de syv første kravene føler vi er en del av MVP, mens krav 8: Vise hendelser som skjer på skjermen med en
-forsinkelse slik at spilleren ser bevegelsene i spillet, ikke er nødvendig for at spillet skal fungere.
+    forsinkelse slik at spilleren ser bevegelsene i spillet, ikke er nødvendig for at spillet skal fungere.
  
 *   Vi har fulgt prioritering av kravene i MVP, men også implementert noen "nice to have" som vi synes er viktig for
-spilleropplevelsen.
-
+    spilleropplevelsen.
 
 *   Siden sist har vi jobbet mer på brett og spilleren og jobbet med krav 1-7.
 
@@ -214,8 +213,8 @@ spilleropplevelsen.
 *   Vi vet ikke om noen bugs i koden. Alle kjente bugs har blitt fikset underveis.
 
 *Kjøredetaljer*
-*   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt et automatisk demo når main kjøres.
-*   Demoet demonstrerer funskjonalitet ved flytting av roboter.
+*   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt en automatisk demo når main kjøres.
+*   Demoen demonstrerer funskjonalitet ved flytting av roboter.
 
 ## UML
 ![UML](../Deliverables/Umls/UmlOblig2.png "UML Oblig 2")

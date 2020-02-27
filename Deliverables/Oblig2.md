@@ -26,7 +26,7 @@
 ### Gabriel 
 #### Kundekontakt
 ##### Ansvarlig for å vite alle spilleregler
-*   Må svare på spårsmål fra de andre på gruppen angående spillereglene.
+*   Må svare på spørsmål fra de andre på gruppen angående spillereglene.
 *   Må ha kontroll over de forskjellige mekanikkene i spillet.
 
 ### Torbjørn 
@@ -191,7 +191,7 @@
 *   Legge til en forsinkelse mellom hver handling
 *   Sørge for at forsinkelsen ikke kræsjer spillet.
 
-### Vidre med del 2
+### Videre med del 2
 
 *    Vi har prioritert å lage spillet fra bunnen av og opp siden noen deler av spillet avhenger andre.
 

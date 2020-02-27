@@ -131,13 +131,13 @@ public class BoardTest {
     }
 
     @Test
-    public void respawnRobotAtBackupPosition() {
-        Robot robot = robotList.get(0);
-        robot.setPosition(new Position(0, 0));
-        board.moveRobot(robot.getRobotId(), Direction.NORTH);
-        board.removeDeadRobotFromBoard(robot);
-        board.respawnRobots();
-        assertEquals(robot.getBackupPosition(), someValidPosition1);
+        public void respawnRobotAtBackupPosition() {
+            Robot robot = robotList.get(0);
+            robot.setPosition(new Position(0, 0));
+            board.moveRobot(robot.getRobotId(), Direction.NORTH);
+            board.removeDeadRobotFromBoard(robot);
+            board.respawnRobots();
+            assertEquals(robot.getBackupPosition(), someValidPosition1);
     }
 
     @Test

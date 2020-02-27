@@ -146,6 +146,30 @@ public class Board {
     }
 
     /**
+     * Moves all dead robots to their backups and makes them part of the board again, and if a robot has no lives
+     * it will be removed from the game.
+     */
+    public void respawnRobots() {
+        for (Robot robot : deadRobots) {
+            if (robot.getAmountOfLives() > 0) {
+                robot.setPosition(robot.getBackupPosition());
+                robot.setFacingDirection(Direction.NORTH);
+                robots.put(robot.getRobotId(), robot);
+            }
+        }
+        deadRobots = new ArrayList<>();
+    }
+
+    /**
+     * Checks if a specific robot is currently alive on the board
+     * @param robot the ID of the robot you want to check
+     * @return True/False based on if the robot was found.
+     */
+    public boolean isRobotAlive(RobotID robot) {
+        return robots.containsKey(robot);
+    }
+
+    /**
      * Checks if a potential robot move would be blocked by a wall
      * @param robotPosition The current position of the robot
      * @param newPosition The position the robot is trying to move to
@@ -284,26 +308,4 @@ public class Board {
         }
         return elements;
     }
-
-    /**
-     * Moves all dead robots to their backups and makes them part of the board again, and if a robot has no lives
-     * it will be removed from the game.
-     */
-    public void respawnRobots() {
-        for (Robot robot : deadRobots) {
-            if (robot.getAmountOfLives() > 0) {
-                robot.setPosition(robot.getBackupPosition());
-                robot.setFacingDirection(Direction.NORTH);
-                robots.put(robot.getRobotId(), robot);
-            }
-        }
-        deadRobots = new ArrayList<>();
-    }
-
-    /**
-     * Checks if a specific robot is currently alive on the board
-     * @param robot the ID of the robot you want to check
-     * @return True/False based on if the robot was found.
-     */
-    public boolean isRobotAlive(RobotID robot) { return robots.containsKey(robot); }
 }

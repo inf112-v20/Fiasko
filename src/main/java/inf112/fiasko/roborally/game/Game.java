@@ -19,7 +19,28 @@ import java.util.concurrent.TimeUnit;
 public class Game implements IDrawableGame {
     private Board gameBoard;
 
+    public Game(boolean debug) {
+        if (debug) {
+            initializeDebugMode();
+        } else {
+            initializeGame();
+        }
+    }
+
     public Game() {
+        initializeGame();
+    }
+
+    private void initializeDebugMode() {
+        List<Robot> robots = new ArrayList<>();
+        try {
+            gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initializeGame() {
         try {
             List<Robot> robots = new ArrayList<>();
             robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));

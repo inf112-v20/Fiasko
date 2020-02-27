@@ -25,6 +25,7 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private IDrawableGame game;
+    private IDrawableGame debugGame;
 
     private Texture robotTexture;
     private Texture textureSheet;
@@ -36,6 +37,7 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     private Vector2 lastTouch;
     private final int viewPortWidth = 12 * tileDimensions;
     private final int viewPortHeight = 12 * tileDimensions;
+    private boolean debugging = false;
 
     @Override
     public void create() {
@@ -43,7 +45,8 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
         robotTexture = new Texture(Gdx.files.internal("assets/Robot.png"));
         textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
 
-        game = new Game();
+        debugGame = new Game(true);
+        game = new Game(false);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);
         camera.position.set(viewPortWidth/2f, viewPortHeight/2f, 0);
@@ -101,11 +104,18 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
                     cameraZoom -= 0.1;
                     return true;
                 }
+                break;
             case Input.Keys.MINUS:
                 if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
                     cameraZoom += 0.1;
                     return true;
                 }
+                break;
+            case Input.Keys.HOME:
+                IDrawableGame temp = game;
+                this.game = debugGame;
+                this.debugGame = temp;
+                return true;
         }
         return false;
     }

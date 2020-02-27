@@ -74,7 +74,7 @@
 *Akseptansekrav*
 *   Vi har en klasse som lagrer en posisjon for en robot på brettet..
 *   Posisjoner består av x og y koordinater.
-*    Roboten lagrer en instans av positions klassen.
+*   Roboten lagrer en instans av positions klassen.
 
 *Brukerhistorie*
 *   Som spiller trenger jeg en robot for å kunne spille spillet.
@@ -140,7 +140,7 @@
 
 *   Hvis den andre roboten blir blokkert av en vegg så kan den ikke bli dyttet og ingen av robotene flytter på seg.
 
-*    Hvis det er flere roboter på rekke, gitt at det ikke er noen vegg som stopper de, blir alle robotene flyttet.
+*   Hvis det er flere roboter på rekke, gitt at det ikke er noen vegg som stopper de, blir alle robotene flyttet.
 
 *Arbeidsoppgaver*
 *   Legge til funksjonalitet for å sjekke om det er en annen robot i veien.
@@ -164,7 +164,7 @@
 *   Som spiller trenger roboten min liv for å kunne tape.
 
 *Akseptansekrav*
-*    Roboten har en verdi som representerer mengden liv den har.
+*   Roboten har en verdi som representerer mengden liv den har.
 
 *Arbeidsoppgaver*
 *   Legge til en liv-verdi i robot klassen.
@@ -193,13 +193,13 @@
 
 ### Vidre med del 2
 
-*    Vi har prioritert å lage spillet fra bunnen av og opp siden noen deler av spillet avhenger andre.
+*   Vi har prioritert å lage spillet fra bunnen av og opp siden noen deler av spillet avhenger andre.
 
 *Hovedkrav til MVP*
 
 *   Vi føler at alle de syv første kravene er en del av MVP, mens krav 8: Vise hendelser som skjer på skjermen med en
     forsinkelse slik at spilleren ser bevegelsene i spillet, ikke er nødvendig for at spillet skal fungere.
- 
+
 *   Vi har fulgt prioritering av kravene i MVP, men også implementert noen "nice to have" som vi synes er viktig for
     spilleropplevelsen.
 

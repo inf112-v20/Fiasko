@@ -1,6 +1,5 @@
 package inf112.fiasko.roborally.element_properties;
 
-import inf112.fiasko.roborally.element_properties.TileType;
 import org.junit.Test;
 
 import java.util.ArrayList;

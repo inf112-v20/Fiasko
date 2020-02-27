@@ -216,6 +216,7 @@
 
 *Kjøredetaljer*
 *   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt en automatisk demo når main kjøres.
+
 *   Demoen demonstrerer at roboter kan skyve hverandre, bli stoppet av vegger, falle i hull og dø av å gå 
     utenfor brettet.
 

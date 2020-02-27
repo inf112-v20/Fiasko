@@ -35,6 +35,11 @@ public class Position {
     }
 
     @Override
+    public String toString() {
+        return String.format("X: %d, Y: %d", xCoordinate, yCoordinate);
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj.getClass() != Position.class) {
             return false;

@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.element_properties.WallType;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,25 +20,35 @@ import static org.junit.Assert.assertTrue;
 public class BoardTest {
     private Grid<Tile> tileGrid;
     private Grid<Wall> wallGrid;
-    private Position someValidPosition1;
-    private Position someValidPosition5;
-    private Position someValidPosition6;
-    private Position someValidPosition7;
+    private static Position zeroPosition;
+    private static Position someValidPosition1;
+    private static Position someValidPosition2;
+    private static Position someValidPosition3;
+    private static Position someValidPosition4;
+    private static Position someValidPosition5;
+    private static Position someValidPosition6;
+    private static Position someValidPosition7;
+    private static Position someValidPosition8;
     private List<Robot> robotList;
     private Board board;
+
+    @BeforeClass
+    public static void globalSetUp() {
+        zeroPosition = new Position(0, 0);
+        someValidPosition1 = new Position(2, 2);
+        someValidPosition2 = new Position(2, 1);
+        someValidPosition3 = new Position(2, 3);
+        someValidPosition4 = new Position(2, 4);
+        someValidPosition5 = new Position(3, 1);
+        someValidPosition6 = new Position(3, 2);
+        someValidPosition7 = new Position(3, 3);
+        someValidPosition8 = new Position(3, 4);
+    }
 
     @Before
     public void setUp() {
         tileGrid = new Grid<>(5, 5, new Tile(TileType.TILE, Direction.NORTH));
         wallGrid = new Grid<>(5, 5);
-        someValidPosition1 = new Position(2, 2);
-        Position someValidPosition2 = new Position(2, 1);
-        Position someValidPosition3 = new Position(2, 3);
-        Position someValidPosition4 = new Position(2, 4);
-        someValidPosition5 = new Position(3, 1);
-        someValidPosition6 = new Position(3, 2);
-        someValidPosition7 = new Position(3, 3);
-        Position someValidPosition8 = new Position(3, 4);
         robotList = new ArrayList<>();
         robotList.add(new Robot(RobotID.ROBOT_1, someValidPosition1));
         robotList.add(new Robot(RobotID.ROBOT_2, someValidPosition2));
@@ -84,28 +95,30 @@ public class BoardTest {
 
     @Test
     public void robotCanBeRotatedLeft() {
-        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+        Robot robot = robotList.get(0);
+        assertEquals(Direction.NORTH, robot.getFacingDirection());
         board.rotateRobotLeft(RobotID.ROBOT_1);
-        assertEquals(Direction.WEST, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.WEST, robot.getFacingDirection());
         board.rotateRobotLeft(RobotID.ROBOT_1);
-        assertEquals(Direction.SOUTH, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.SOUTH, robot.getFacingDirection());
         board.rotateRobotLeft(RobotID.ROBOT_1);
-        assertEquals(Direction.EAST, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.EAST, robot.getFacingDirection());
         board.rotateRobotLeft(RobotID.ROBOT_1);
-        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.NORTH, robot.getFacingDirection());
     }
 
     @Test
     public void robotCanBeRotatedRight() {
-        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+        Robot robot = robotList.get(0);
+        assertEquals(Direction.NORTH, robot.getFacingDirection());
         board.rotateRobotRight(RobotID.ROBOT_1);
-        assertEquals(Direction.EAST, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.EAST, robot.getFacingDirection());
         board.rotateRobotRight(RobotID.ROBOT_1);
-        assertEquals(Direction.SOUTH, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.SOUTH, robot.getFacingDirection());
         board.rotateRobotRight(RobotID.ROBOT_1);
-        assertEquals(Direction.WEST, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.WEST, robot.getFacingDirection());
         board.rotateRobotRight(RobotID.ROBOT_1);
-        assertEquals(Direction.NORTH, robotList.get(0).getFacingDirection());
+        assertEquals(Direction.NORTH, robot.getFacingDirection());
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -123,9 +136,9 @@ public class BoardTest {
 
     @Test
     public void killRobotReducesAmountOfLivesByOne() {
-        Robot robot = board.getAliveRobots().get(1);
+        Robot robot = robotList.get(1);
         assertEquals(3, robot.getAmountOfLives());
-        robot.setPosition(new Position(0, 0));
+        robot.setPosition(zeroPosition);
         board.moveRobot(robot.getRobotId(), Direction.NORTH);
         assertEquals(2, robot.getAmountOfLives());
     }
@@ -133,19 +146,18 @@ public class BoardTest {
     @Test
     public void respawnRobotAtBackupPosition() {
         Robot robot = robotList.get(0);
-        robot.setPosition(new Position(0, 0));
+        robot.setPosition(zeroPosition);
         board.moveRobot(robot.getRobotId(), Direction.NORTH);
-        board.removeDeadRobotFromBoard(robot);
         board.respawnRobots();
-        assertEquals(robot.getBackupPosition(), someValidPosition1);
+        assertEquals(robot.getBackupPosition(), robot.getPosition());
     }
 
     @Test
     public void respawnRobotDoesNotRespawnARobotWithNoLives() {
-        Robot robot = board.getAliveRobots().get(0);
+        Robot robot = robotList.get(0);
+        robot.setPosition(zeroPosition);
         robot.setAmountOfLives(1);
         board.moveRobot(robot.getRobotId(), Direction.NORTH);
-        board.removeDeadRobotFromBoard(robot);
         board.respawnRobots();
         assertFalse(board.isRobotAlive(robot.getRobotId()));
     }

@@ -213,8 +213,8 @@
 *   Vi vet ikke om noen bugs i koden. Alle kjente bugs har blitt fikset underveis.
 
 *Kjøredetaljer*
-*   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt et automatisk demo når main kjøres.
-*   Demoet demonstrerer funskjonalitet ved flytting av roboter.
+*   Siden vi ikke er ferdig med spillet, blir det nå i stedet kjørt en automatisk demo når main kjøres.
+*   Demoen demonstrerer funskjonalitet ved flytting av roboter.
 
 ## UML
 ![UML](../Deliverables/Umls/UmlOblig2.png "UML Oblig 2")

@@ -10,6 +10,7 @@ public class Main {
         cfg.title = "Game Board";
         cfg.width = 900;
         cfg.height = 900;
+        cfg.samples = 3;
 
         new LwjglApplication(new GameLauncher(), cfg);
     }

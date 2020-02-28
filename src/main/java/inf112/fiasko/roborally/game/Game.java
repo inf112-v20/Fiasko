@@ -31,34 +31,6 @@ public class Game implements IDrawableGame {
         initializeGame();
     }
 
-    private void initializeDebugMode() {
-        List<Robot> robots = new ArrayList<>();
-        try {
-            gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initializeGame() {
-        try {
-            List<Robot> robots = new ArrayList<>();
-            robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
-            robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
-            robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
-            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
-            new Thread(() -> {
-                try {
-                    runGameLoop();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }).start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     public int getWidth() {
         return gameBoard.getBoardWidth();
@@ -82,6 +54,40 @@ public class Game implements IDrawableGame {
     @Override
     public List<Robot> getRobotsToDraw() {
         return gameBoard.getAliveRobots();
+    }
+
+    /**
+     * Initializes the game with a debugging board
+     */
+    private void initializeDebugMode() {
+        List<Robot> robots = new ArrayList<>();
+        try {
+            gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Initializes the game with a playable board
+     */
+    private void initializeGame() {
+        try {
+            List<Robot> robots = new ArrayList<>();
+            robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
+            robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
+            robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
+            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            new Thread(() -> {
+                try {
+                    runGameLoop();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

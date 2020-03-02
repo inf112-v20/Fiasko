@@ -160,8 +160,8 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
         Vector2 diff = newTouch.cpy().sub(lastTouch);
         lastTouch = newTouch;
         int[] positionChange = translateCoordinateAccountingForCameraRotation(diff.x, diff.y);
-        cameraX = positionChange[0];
-        cameraY = positionChange[1];
+        cameraX = (int)(positionChange[0] * cameraZoom);
+        cameraY = (int)(positionChange[1] * cameraZoom);
         return true;
     }
 

@@ -1,9 +1,7 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.objects;
 
 import static org.junit.Assert.assertTrue;
 
-import inf112.fiasko.roborally.objects.IDrawableGame;
-import inf112.fiasko.roborally.objects.RoboRallyGame;
 import org.junit.Before;
 import org.junit.Test;
 

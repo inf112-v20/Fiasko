@@ -1,15 +1,18 @@
-package inf112.fiasko.roborally.game;
+package inf112.fiasko.roborally.game_wrapper;
 
 import static org.junit.Assert.assertTrue;
+
+import inf112.fiasko.roborally.objects.IDrawableGame;
+import inf112.fiasko.roborally.objects.RoboRallyGame;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GameTest {
+public class RoboRallyGameTest {
     private IDrawableGame game;
 
     @Before
     public void setUp() {
-        game = new Game();
+        game = new RoboRallyGame();
     }
 
     @Test

@@ -1,11 +1,7 @@
-package inf112.fiasko.roborally.game;
+package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.objects.Board;
-import inf112.fiasko.roborally.objects.Robot;
-import inf112.fiasko.roborally.objects.Tile;
-import inf112.fiasko.roborally.objects.Wall;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
@@ -16,10 +12,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class represent a game which is drawable using libgdx
  */
-public class Game implements IDrawableGame {
+public class RoboRallyGame implements IDrawableGame {
     private Board gameBoard;
 
-    public Game(boolean debug) {
+    public RoboRallyGame(boolean debug) {
         if (debug) {
             initializeDebugMode();
         } else {
@@ -27,7 +23,7 @@ public class Game implements IDrawableGame {
         }
     }
 
-    public Game() {
+    public RoboRallyGame() {
         initializeGame();
     }
 

@@ -1,8 +1,4 @@
-package inf112.fiasko.roborally.game;
-
-import inf112.fiasko.roborally.objects.Robot;
-import inf112.fiasko.roborally.objects.Tile;
-import inf112.fiasko.roborally.objects.Wall;
+package inf112.fiasko.roborally.objects;
 
 import java.util.List;
 

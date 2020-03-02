@@ -9,24 +9,24 @@ public class ScreenManager {
 
     /**
      * Gets an instance of the main menu screen
-     * @param roboRallyLauncher The robo rally launcher instance to use
+     * @param roboRallyWrapper The robo rally launcher instance to use
      * @return A main menu screen instance
      */
-    public synchronized MainMenuScreen getMainMenuScreen(RoboRallyLauncher roboRallyLauncher) {
+    public synchronized MainMenuScreen getMainMenuScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.mainMenuScreen == null) {
-            this.mainMenuScreen = new MainMenuScreen(roboRallyLauncher);
+            this.mainMenuScreen = new MainMenuScreen(roboRallyWrapper);
         }
         return mainMenuScreen;
     }
 
     /**
      * Gets an instance of the board active screen
-     * @param roboRallyLauncher The robo rally launcher instance to use
+     * @param roboRallyWrapper The robo rally launcher instance to use
      * @return A board active screen instance
      */
-    public synchronized BoardActiveScreen getBoardActiveScreen(RoboRallyLauncher roboRallyLauncher) {
+    public synchronized BoardActiveScreen getBoardActiveScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.boardActiveScreen == null) {
-            this.boardActiveScreen = new BoardActiveScreen(roboRallyLauncher);
+            this.boardActiveScreen = new BoardActiveScreen(roboRallyWrapper);
         }
         return boardActiveScreen;
     }

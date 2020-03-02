@@ -22,7 +22,7 @@ import inf112.fiasko.roborally.utility.TextureConverterUtil;
 import java.util.List;
 
 public class BoardActiveScreen implements Screen, InputProcessor {
-    private final RoboRallyLauncher roboRallyLauncher;
+    private final RoboRallyWrapper roboRallyWrapper;
     private final OrthographicCamera camera;
     private IDrawableGame debugGame;
 
@@ -35,9 +35,9 @@ public class BoardActiveScreen implements Screen, InputProcessor {
     private final int viewPortHeight = 12 * tileDimensions;
     private final Viewport viewport;
 
-    public BoardActiveScreen(final RoboRallyLauncher roboRallyLauncher) {
-        this.roboRallyLauncher = roboRallyLauncher;
-        roboRallyLauncher.roboRallyGame = new RoboRallyGame();
+    public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
+        this.roboRallyWrapper = roboRallyWrapper;
+        roboRallyWrapper.roboRallyGame = new RoboRallyGame();
         debugGame = new RoboRallyGame(true);
 
         camera = new OrthographicCamera();
@@ -80,10 +80,10 @@ public class BoardActiveScreen implements Screen, InputProcessor {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         updateCamera();
-        roboRallyLauncher.batch.setProjectionMatrix(camera.combined);
-        roboRallyLauncher.batch.begin();
-        drawBoard(roboRallyLauncher.batch);
-        roboRallyLauncher.batch.end();
+        roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
+        roboRallyWrapper.batch.begin();
+        drawBoard(roboRallyWrapper.batch);
+        roboRallyWrapper.batch.end();
     }
 
     @Override
@@ -101,8 +101,8 @@ public class BoardActiveScreen implements Screen, InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if (keycode == Input.Keys.HOME) {
-            IDrawableGame temp = roboRallyLauncher.roboRallyGame;
-            roboRallyLauncher.roboRallyGame = debugGame;
+            IDrawableGame temp = roboRallyWrapper.roboRallyGame;
+            roboRallyWrapper.roboRallyGame = debugGame;
             this.debugGame = temp;
             return true;
         }
@@ -175,7 +175,7 @@ public class BoardActiveScreen implements Screen, InputProcessor {
      */
     private void drawBoard(SpriteBatch batch) {
         List<IDrawableObject> elementsToDraw =
-                IOUtil.getDrawableObjectsFromGame(roboRallyLauncher.roboRallyGame, tileDimensions, tileDimensions);
+                IOUtil.getDrawableObjectsFromGame(roboRallyWrapper.roboRallyGame, tileDimensions, tileDimensions);
         for (IDrawableObject object : elementsToDraw) {
             TextureRegion objectTextureRegion = object.getTexture();
             batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),

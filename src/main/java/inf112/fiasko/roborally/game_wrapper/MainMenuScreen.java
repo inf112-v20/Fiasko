@@ -8,13 +8,13 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenuScreen implements Screen {
-    private final RoboRallyLauncher roboRallyLauncher;
+    private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
-    public MainMenuScreen(final RoboRallyLauncher roboRallyLauncher) {
-        this.roboRallyLauncher = roboRallyLauncher;
+    public MainMenuScreen(final RoboRallyWrapper roboRallyWrapper) {
+        this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 400);
         viewport = new ExtendViewport(400, 400, camera);
@@ -30,16 +30,16 @@ public class MainMenuScreen implements Screen {
         Gdx.gl.glClearColor(0.2f, 1f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
-        roboRallyLauncher.batch.setProjectionMatrix(camera.combined);
+        roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
-        roboRallyLauncher.batch.begin();
-        roboRallyLauncher.font.draw(roboRallyLauncher.batch, "Robo Rally", 0, 250,
+        roboRallyWrapper.batch.begin();
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Robo Rally", 0, 250,
                 200, 0, false);
-        roboRallyLauncher.font.draw(roboRallyLauncher.batch, "Click anywhere to run the demo", 70, 200);
-        roboRallyLauncher.batch.end();
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click anywhere to run the demo", 70, 200);
+        roboRallyWrapper.batch.end();
 
         if (Gdx.input.isTouched()) {
-            roboRallyLauncher.setScreen(roboRallyLauncher.screenManager.getBoardActiveScreen(this.roboRallyLauncher));
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
             dispose();
         }
     }

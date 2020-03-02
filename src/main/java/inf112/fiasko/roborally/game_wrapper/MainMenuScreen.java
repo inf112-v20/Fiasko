@@ -8,10 +8,10 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class MainMenuScreen implements Screen {
-    final RoboRallyLauncher roboRallyLauncher;
+    private final RoboRallyLauncher roboRallyLauncher;
 
-    final OrthographicCamera camera;
-    final Viewport viewport;
+    private final OrthographicCamera camera;
+    private final Viewport viewport;
 
     public MainMenuScreen(final RoboRallyLauncher roboRallyLauncher) {
         this.roboRallyLauncher = roboRallyLauncher;

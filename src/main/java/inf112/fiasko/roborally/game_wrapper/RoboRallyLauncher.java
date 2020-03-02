@@ -6,10 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.fiasko.roborally.objects.IDrawableGame;
 
 public class RoboRallyLauncher extends Game {
-    SpriteBatch batch;
-    BitmapFont font;
-    ScreenManager screenManager;
-    IDrawableGame roboRallyGame;
+    public SpriteBatch batch;
+    public BitmapFont font;
+    public ScreenManager screenManager;
+    public IDrawableGame roboRallyGame;
 
     @Override
     public void create() {

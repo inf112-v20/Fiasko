@@ -22,7 +22,7 @@ import inf112.fiasko.roborally.utility.TextureConverterUtil;
 import java.util.List;
 
 public class BoardActiveScreen implements Screen, InputProcessor {
-    final RoboRallyLauncher roboRallyLauncher;
+    private final RoboRallyLauncher roboRallyLauncher;
     private final OrthographicCamera camera;
     private IDrawableGame debugGame;
 

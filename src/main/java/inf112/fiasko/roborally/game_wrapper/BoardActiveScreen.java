@@ -1,9 +1,9 @@
-package inf112.fiasko.roborally;
+package inf112.fiasko.roborally.game_wrapper;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,21 +13,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.fiasko.roborally.game.Game;
-import inf112.fiasko.roborally.game.IDrawableGame;
+import inf112.fiasko.roborally.objects.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.objects.RoboRallyGame;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
 import java.util.List;
 
-/**
- * This class renders a game using libgdx
- */
-public class GameLauncher extends ApplicationAdapter implements InputProcessor {
-    private OrthographicCamera camera;
-    private SpriteBatch batch;
-    private IDrawableGame game;
+public class BoardActiveScreen implements Screen, InputProcessor {
+    final RoboRallyLauncher roboRallyLauncher;
+    private final OrthographicCamera camera;
     private IDrawableGame debugGame;
 
     private final int tileDimensions = 64;
@@ -37,12 +33,12 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     private Vector2 lastTouch;
     private final int viewPortWidth = 12 * tileDimensions;
     private final int viewPortHeight = 12 * tileDimensions;
-    private Viewport viewport;
+    private final Viewport viewport;
 
-    @Override
-    public void create() {
-        debugGame = new Game(true);
-        game = new Game(false);
+    public BoardActiveScreen(final RoboRallyLauncher roboRallyLauncher) {
+        this.roboRallyLauncher = roboRallyLauncher;
+        roboRallyLauncher.roboRallyGame = new RoboRallyGame();
+        debugGame = new RoboRallyGame(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);
@@ -50,8 +46,12 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
         viewport = new ExtendViewport(viewPortWidth, viewPortHeight, camera);
 
         Gdx.input.setInputProcessor(this);
-        batch = new SpriteBatch();
         lastTouch = new Vector2();
+    }
+
+    @Override
+    public void show() {
+        resetCamera();
     }
 
     @Override
@@ -59,51 +59,35 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
         viewport.update(width, height);
     }
 
-    /**
-     * Renders all textures necessary to display a game
-     */
-    public void render() {
+    @Override
+    public void pause() {
+        //Nothing to do
+    }
+
+    @Override
+    public void resume() {
+        //Nothing to do
+    }
+
+    @Override
+    public void hide() {
+        //Nothing to do
+    }
+
+    @Override
+    public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
                 (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
         updateCamera();
-        batch.setProjectionMatrix(camera.combined);
-        batch.begin();
-        drawBoard(batch);
-        batch.end();
-    }
-
-    /**
-     * Renders all drawable objects on the board
-     * @param batch The sprite batch to use for drawing
-     */
-    private void drawBoard(SpriteBatch batch) {
-        List<IDrawableObject> elementsToDraw = IOUtil.getDrawableObjectsFromGame(game, tileDimensions, tileDimensions);
-        for (IDrawableObject object : elementsToDraw) {
-            TextureRegion objectTextureRegion = object.getTexture();
-            batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
-                    (float)object.getWidth()/2, (float)object.getHeight()/2,
-                    object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),
-                    objectTextureRegion.getRegionX(), objectTextureRegion.getRegionY(),
-                    objectTextureRegion.getRegionWidth(), objectTextureRegion.getRegionHeight(),
-                    object.flipX(), object.flipY());
-        }
-    }
-
-    /**
-     * Updates the camera according to any user input
-     */
-    private void updateCamera() {
-        camera.translate(cameraX, cameraY);
-        cameraX = 0;
-        cameraY = 0;
-        camera.zoom = cameraZoom;
-        camera.update();
+        roboRallyLauncher.batch.setProjectionMatrix(camera.combined);
+        roboRallyLauncher.batch.begin();
+        drawBoard(roboRallyLauncher.batch);
+        roboRallyLauncher.batch.end();
     }
 
     @Override
     public void dispose() {
-        batch.dispose();
         for (Disposable disposable : TextureConverterUtil.getDisposableElements()) {
             disposable.dispose();
         }
@@ -117,8 +101,8 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     @Override
     public boolean keyUp(int keycode) {
         if (keycode == Input.Keys.HOME) {
-            IDrawableGame temp = game;
-            this.game = debugGame;
+            IDrawableGame temp = roboRallyLauncher.roboRallyGame;
+            roboRallyLauncher.roboRallyGame = debugGame;
             this.debugGame = temp;
             return true;
         }
@@ -134,10 +118,7 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
                     new Vector3(0, 0, 1), 90);
             return true;
         } else if (character == 'q') {
-            camera.up.x = 0;
-            camera.up.y = 1;
-            cameraZoom = 1;
-            camera.position.set(viewPortWidth/2f, viewPortHeight/2f, 0);
+            resetCamera();
         }
         return false;
     }
@@ -165,6 +146,58 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
         return true;
     }
 
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        if (amount < 0 && cameraZoom > 0.3 || amount > 0 && cameraZoom < 3) {
+            cameraZoom += 0.2 * amount;
+        }
+        return true;
+    }
+
+    /**
+     * Resets the camera to its initial position
+     */
+    private void resetCamera() {
+        camera.up.x = 0;
+        camera.up.y = 1;
+        cameraZoom = 1;
+        camera.position.set(viewPortWidth/2f, viewPortHeight/2f, 0);
+    }
+
+    /**
+     * Renders all drawable objects on the board
+     * @param batch The sprite batch to use for drawing
+     */
+    private void drawBoard(SpriteBatch batch) {
+        List<IDrawableObject> elementsToDraw =
+                IOUtil.getDrawableObjectsFromGame(roboRallyLauncher.roboRallyGame, tileDimensions, tileDimensions);
+        for (IDrawableObject object : elementsToDraw) {
+            TextureRegion objectTextureRegion = object.getTexture();
+            batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
+                    (float)object.getWidth()/2, (float)object.getHeight()/2,
+                    object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),
+                    objectTextureRegion.getRegionX(), objectTextureRegion.getRegionY(),
+                    objectTextureRegion.getRegionWidth(), objectTextureRegion.getRegionHeight(),
+                    object.flipX(), object.flipY());
+        }
+    }
+
+    /**
+     * Updates the camera according to any user input
+     */
+    private void updateCamera() {
+        camera.translate(cameraX, cameraY);
+        cameraX = 0;
+        cameraY = 0;
+        camera.zoom = cameraZoom;
+        camera.update();
+    }
+
     /**
      * Translates x and y coordinates according to the camera's direction
      * @param x The x coordinate to translate
@@ -190,18 +223,5 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
             outY = (int)x;
         }
         return new int[]{outX, outY};
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        if (amount < 0 && cameraZoom > 0.3 || amount > 0 && cameraZoom < 3) {
-            cameraZoom += 0.2 * amount;
-        }
-        return true;
     }
 }

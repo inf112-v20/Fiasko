@@ -17,6 +17,9 @@ public class Wall {
      * @param direction The direction of the wall
      */
     public Wall (WallType wallType, Direction direction) {
+        if (direction.getDirectionID() % 2 == 0 && wallType != WallType.WALL_CORNER) {
+            throw new IllegalArgumentException("Invalid direction for wall type submitted");
+        }
         this.wallType = wallType;
         this.direction = direction;
     }

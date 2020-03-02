@@ -10,12 +10,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.game.Game;
 import inf112.fiasko.roborally.game.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;
 import inf112.fiasko.roborally.utility.IOUtil;
+import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
 import java.util.List;
 
@@ -102,6 +104,9 @@ public class GameLauncher extends ApplicationAdapter implements InputProcessor {
     @Override
     public void dispose() {
         batch.dispose();
+        for (Disposable disposable : TextureConverterUtil.getDisposableElements()) {
+            disposable.dispose();
+        }
     }
 
     @Override

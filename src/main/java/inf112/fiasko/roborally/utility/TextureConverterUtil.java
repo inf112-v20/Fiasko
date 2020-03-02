@@ -3,6 +3,7 @@ package inf112.fiasko.roborally.utility;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Disposable;
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
@@ -15,7 +16,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,19 @@ public final class TextureConverterUtil {
     private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
 
     private TextureConverterUtil() {}
+
+    /**
+     * Gets a list of all disposable elements which should be disposed when the software closes
+     * @return A list of disposable elements
+     */
+    public static List<Disposable> getDisposableElements() {
+        List<Disposable> disposables = new ArrayList<>();
+        disposables.add(textureSheet);
+        disposables.add(robot1Texture);
+        disposables.add(robot2Texture);
+        disposables.add(robot3Texture);
+        return disposables;
+    }
 
     /**
      * Gets the texture representing the tile

@@ -8,13 +8,13 @@ import java.util.Random;
  * This class represents a deck of cards
  */
 public abstract class Deck<T> implements IDeck<T> {
-    private final ArrayList<T> cardList;
+    private final List<T> cardList;
 
     /**
      * Initializes the deck with cards
      * @param cardList list of cards
      */
-    public Deck (ArrayList<T> cardList) {
+    public Deck (List<T> cardList) {
         this.cardList = new ArrayList<>(cardList);
     }
 
@@ -67,6 +67,15 @@ public abstract class Deck<T> implements IDeck<T> {
     @Override
     public List<T> getCards() {
         return new ArrayList<>(cardList);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (T card : cardList) {
+            builder.append(card.toString()).append("\n");
+        }
+        return builder.toString();
     }
 }
 

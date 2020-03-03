@@ -19,13 +19,13 @@ public class ProgrammingCardTest {
     }
     @Test
     public void testGetProgrammingCardAction(){
-        assertEquals(Action.MOVE_1,programmingCard1.getSymbol());
-        assertEquals(Action.ROTATE_LEFT,programmingCard2.getSymbol());
+        assertEquals(Action.MOVE_1, programmingCard1.getSymbol());
+        assertEquals(Action.ROTATE_LEFT, programmingCard2.getSymbol());
     }
     @Test
     public void testGetProgrammingCardValue(){
-        assertEquals((Integer) 5,programmingCard1.getValue());
-        assertEquals((Integer) 234,programmingCard2.getValue());
-        assertEquals((Integer) 2334,programmingCard3.getValue());
+        assertEquals(5, programmingCard1.getValue());
+        assertEquals(234, programmingCard2.getValue());
+        assertEquals(2334, programmingCard3.getValue());
     }
 }

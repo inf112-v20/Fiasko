@@ -7,22 +7,19 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProgrammingCardDeckTest {
-    private ProgrammingCardDeck fullDeck;
-    private final ProgrammingCard programmingCard1 = new ProgrammingCard(5, Action.MOVE_1);
-    private final ProgrammingCard programmingCard2 = new ProgrammingCard(6, Action.MOVE_2);
-    private final ProgrammingCard programmingCard3 = new ProgrammingCard(7, Action.MOVE_3);
-    private final ProgrammingCard programmingCard4 = new ProgrammingCard(55, Action.MOVE_1);
-    private final ProgrammingCard programmingCard5 = new ProgrammingCard(66, Action.MOVE_2);
-    private final ProgrammingCard programmingCard6 = new ProgrammingCard(756, Action.MOVE_3);
-    private final ArrayList<ProgrammingCard> cardlist = new ArrayList<>();
-    private final ArrayList<ProgrammingCard> cardlist2 = new ArrayList<>();
-    private ProgrammingCardDeck testDeck;
-    private ProgrammingCardDeck testDeck2;
+    private ProgrammingCard programmingCard1;
+    private ProgrammingCard programmingCard3;
+    private IDeck<ProgrammingCard> testDeck;
+    private IDeck<ProgrammingCard> testDeck2;
+    private IDeck<ProgrammingCard> fullDeck;
+
     @Before
     public void setUp() {
         try {
@@ -30,21 +27,24 @@ public class ProgrammingCardDeckTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        cardlist.add(programmingCard1);
-        cardlist.add(programmingCard2);
-        cardlist.add(programmingCard3);
-        cardlist2.add(programmingCard4);
-        cardlist2.add(programmingCard5);
-        cardlist2.add(programmingCard6);
-        testDeck = new ProgrammingCardDeck(cardlist);
-        testDeck2 = new ProgrammingCardDeck(cardlist2);
+        ArrayList<ProgrammingCard> cardList = new ArrayList<>();
+        programmingCard1 = new ProgrammingCard(5, Action.MOVE_1);
+        ProgrammingCard programmingCard2 = new ProgrammingCard(6, Action.MOVE_2);
+        programmingCard3 = new ProgrammingCard(7, Action.MOVE_3);
+        cardList.add(programmingCard1);
+        cardList.add(programmingCard2);
+        cardList.add(programmingCard3);
+        testDeck = new ProgrammingCardDeck(cardList);
+        testDeck2 = new ProgrammingCardDeck(cardList);
     }
+
     @Test
     public void testSize() {
         assertEquals(3,testDeck.size());
         testDeck.emptyInto(testDeck2);
         assertEquals(0,testDeck.size());
     }
+
     @Test
     public void testDrawCard() {
         assertEquals(3,testDeck.size());
@@ -53,6 +53,7 @@ public class ProgrammingCardDeckTest {
         assertEquals(4,testDeck.size());
         assertEquals(2,testDeck2.size());
     }
+
     @Test
     public void testDrawMultipleCards() {
         assertEquals(3, testDeck.size());
@@ -61,6 +62,7 @@ public class ProgrammingCardDeckTest {
         assertEquals(6, testDeck.size());
         assertEquals(0, testDeck2.size());
     }
+
     @Test
     public void testEmptyInto() {
         assertEquals(3, testDeck.size());
@@ -69,6 +71,7 @@ public class ProgrammingCardDeckTest {
         assertEquals(0, testDeck.size());
         assertEquals(6, testDeck2.size());
     }
+
     @Test
     public void testIsEmpty() {
         assertFalse(testDeck.isEmpty());
@@ -81,33 +84,33 @@ public class ProgrammingCardDeckTest {
         testDeck2.emptyInto(testDeck);
         assertEquals(programmingCard1, testDeck.getCards().get(0));
         assertEquals(programmingCard3, testDeck.getCards().get(2));
-        assertEquals(programmingCard6, testDeck.getCards().get(5));
+        assertEquals(programmingCard3, testDeck.getCards().get(5));
     }
 
     @Test
     public void testShuffle() {
-        Boolean atLeastOneShuffle = false;
-        ArrayList<Boolean> resultList = new ArrayList<>();
-        ArrayList<ProgrammingCard> beforeShuffle = (ArrayList<ProgrammingCard>)testDeck.getCards();
-
-        for (int i = 0; i < 10; i++){ //Saves result of ten shuffles
+        List<ProgrammingCard> beforeShuffle = testDeck.getCards();
+        for (int i = 0; i < 10; i++) {
             testDeck.shuffle();
-            ArrayList<ProgrammingCard> afterShuffle = (ArrayList<ProgrammingCard>)testDeck.getCards();
+            List<ProgrammingCard> afterShuffle = testDeck.getCards();
             if (beforeShuffle != afterShuffle) {
-                resultList.add(true);
+                return;
             }
-            else {
-                resultList.add(false);
-            }
-
         }
-        //Looks to see if at least one shuffle is different from before
-        for (int i = 0; i < resultList.size(); i++) {
-            if (resultList.get(i)==true) {
-                atLeastOneShuffle = true;
-            }
+        fail();
+    }
 
+    @Test
+    public void testShuffleIntegrity() {
+        //Checks that no cards disappear or are duplicated during shuffle
+        List<ProgrammingCard> cards = fullDeck.getCards();
+        fullDeck.shuffle();
+        assertEquals(cards.size(), fullDeck.size());
+        for (ProgrammingCard card : fullDeck.getCards()) {
+            assertTrue(cards.contains(card));
         }
-        assertTrue(atLeastOneShuffle);
+        for (ProgrammingCard card : cards) {
+            assertTrue(fullDeck.getCards().contains(card));
+        }
     }
 }

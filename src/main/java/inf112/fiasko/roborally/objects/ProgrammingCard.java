@@ -5,9 +5,9 @@ import inf112.fiasko.roborally.element_properties.Action;
 /**
  * This class represents a programming card
  */
-public class ProgrammingCard implements ICardWithoutSuit<Integer, Action> {
+public class ProgrammingCard {
 
-    private final Integer cardValue;
+    private final int cardValue;
     private final Action cardAction;
 
     /**
@@ -20,12 +20,18 @@ public class ProgrammingCard implements ICardWithoutSuit<Integer, Action> {
         this.cardAction = cardAction;
     }
 
-    @Override
-    public Integer getValue() {
+    /**
+     * Gets the value of the programming card
+     * @return The programming card value
+     */
+    public int getValue() {
         return cardValue;
     }
 
-    @Override
+    /**
+     * Gets the symbol of the programming card
+     * @return The programming card symbol
+     */
     public Action getSymbol() {
         return cardAction;
     }

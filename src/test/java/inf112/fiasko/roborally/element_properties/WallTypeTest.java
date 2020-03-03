@@ -1,5 +1,6 @@
 package inf112.fiasko.roborally.element_properties;
 
+import inf112.fiasko.roborally.objects.Wall;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -42,6 +43,11 @@ public class WallTypeTest {
     @Test
     public void invalidWallTypeIDReturnsNull() {
         assertNull(TileType.getTileTypeFromID(-1));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void invalidWallDirectionThrowsError() {
+        new Wall(WallType.WALL_NORMAL, Direction.NORTH_EAST);
     }
 
     @Test

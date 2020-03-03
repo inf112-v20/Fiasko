@@ -2,6 +2,7 @@ package inf112.fiasko.roborally;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 
 
 public class Main {
@@ -10,7 +11,8 @@ public class Main {
         cfg.title = "Game Board";
         cfg.width = 900;
         cfg.height = 900;
+        cfg.samples = 3;
 
-        new LwjglApplication(new GameLauncher(), cfg);
+        new LwjglApplication(new RoboRallyWrapper(), cfg);
     }
 }

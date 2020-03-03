@@ -86,7 +86,7 @@ public final class BoardLoaderUtil {
                 WallType wallType = WallType.getWallTypeFromID(Integer.parseInt(wallData[0]));
                 Direction direction = Direction.getDirectionFromID(Integer.parseInt(wallData[1]));
                 if (direction == null) {
-                    throw new IllegalArgumentException("Invalid direction for tile encountered when loading board file.");
+                    throw new IllegalArgumentException("Invalid direction for wall encountered when loading board file.");
                 }
                 wallGrid.setElement(x, y, new Wall(wallType, direction));
             }

@@ -3,7 +3,7 @@ package inf112.fiasko.roborally.utility;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.game.IDrawableGame;
+import inf112.fiasko.roborally.objects.IDrawableGame;
 import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.objects.IDrawableObject;
 import inf112.fiasko.roborally.objects.Robot;

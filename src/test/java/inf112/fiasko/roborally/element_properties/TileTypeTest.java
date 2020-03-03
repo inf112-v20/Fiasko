@@ -1,5 +1,6 @@
 package inf112.fiasko.roborally.element_properties;
 
+import inf112.fiasko.roborally.objects.Tile;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -42,6 +43,11 @@ public class TileTypeTest {
     @Test
     public void invalidTileTypeIDReturnsNull() {
         assertNull(TileType.getTileTypeFromID(-1));
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void invalidTileDirectionThrowsError() {
+        new Tile(TileType.TILE, Direction.NORTH_EAST);
     }
 
     @Test

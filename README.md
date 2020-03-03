@@ -8,6 +8,16 @@ Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, 
 ## Spillstatus
 Ved kjøring av .jar filen blir det kjørt en demo, uten mulighet for bruker å bevege robot.
 
+## Knapper og kontrollmekanismer
+### Knapper
+-   Q: Tilbakestiller kamera og kamerarotasjon
+-   R: Roterer kameraet
+-   HOME: Bytter til en debug instans av spillet som lar en sjekke at alle teksturer vises riktig
+
+### Andre egenskaper ved brukergrensesnittet
+-   Rullehjulet vil forstørre og forminske spillbrettet
+-   Spillbrettet kan flyttes ved å holde inne venstre musetast og bevege musen i en retning
+
 ## Bygging og kompilering
 
 ### Forkrav for å kunne kompilere og kjøre koden
@@ -22,6 +32,7 @@ cd Fiasko
 mvn clean install
 ```
 Dette vil også kjøre alle tester i koden
+
 ### Kjøreprosedyre
 ```shell script
 cd target

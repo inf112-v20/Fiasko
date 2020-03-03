@@ -3,9 +3,12 @@ package inf112.fiasko.roborally.objects;
 import inf112.fiasko.roborally.element_properties.Action;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
+
 
 public class TestPlayerDeck {
     private ProgrammingCard programmingCard1 = new ProgrammingCard(5, Action.MOVE_1);
@@ -75,35 +78,32 @@ public class TestPlayerDeck {
     }
 
     @Test
-    public void testshuffle(){
-        ProgrammingCard card1 =(ProgrammingCard)  testDeck.getCards().get(0);
-        int noe = card1.getValue();
-        ProgrammingCard card2 =(ProgrammingCard)  testDeck.getCards().get(1);
-        int noe2 = card2.getValue();
-        ProgrammingCard card3 =(ProgrammingCard)  testDeck.getCards().get(2);
-        int noe3 = card3.getValue();
+    public void testShuffle(){
+        Boolean atLeastOneShuffle = false;
+        ArrayList<Boolean> resultList = new ArrayList<>();
+        ArrayList<ProgrammingCard> beforeShuffle = (ArrayList<ProgrammingCard>)testDeck.getCards();
 
-        System.out.println(noe);
-        System.out.println(noe2);
-        System.out.println(noe3);
+        for (int i = 0; i < 10; i++){ //Saves result of ten shuffles
+            testDeck.shuffle();
+            ArrayList<ProgrammingCard> afterShuffle = (ArrayList<ProgrammingCard>)testDeck.getCards();
+            if (beforeShuffle != afterShuffle) {
+                resultList.add(true);
+            }
+            else {
+                resultList.add(false);
+            }
 
-        testDeck.shuffle();
+        }
+        //Looks to see if at least one shuffle is different from before
+        for (int i = 0; i < resultList.size(); i++) {
+            if (resultList.get(i)==true) {
+                atLeastOneShuffle = true;
+            }
 
-        ProgrammingCard scard1 =(ProgrammingCard)  testDeck.getCards().get(0);
-        int snoe = scard1.getValue();
-        ProgrammingCard scard2 =(ProgrammingCard)  testDeck.getCards().get(1);
-        int snoe2 = scard2.getValue();
-        ProgrammingCard scard3 =(ProgrammingCard)  testDeck.getCards().get(2);
-        int snoe3 = scard3.getValue();
-
-        System.out.println(snoe);
-        System.out.println(snoe2);
-        System.out.println(snoe3);
-
-
+        }
+        assertTrue(atLeastOneShuffle);
 
     }
-
 
 
 }

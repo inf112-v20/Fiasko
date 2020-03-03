@@ -18,14 +18,14 @@ public class ProgrammingCardTest {
         programmingCard3 = new ProgrammingCard(2334, Action.ROTATE_LEFT);
     }
     @Test
-    public void testGetProgrammingCardAction(){
-        assertEquals(Action.MOVE_1, programmingCard1.getSymbol());
-        assertEquals(Action.ROTATE_LEFT, programmingCard2.getSymbol());
+    public void testGetProgrammingCardAction() {
+        assertEquals(Action.MOVE_1, programmingCard1.getAction());
+        assertEquals(Action.ROTATE_LEFT, programmingCard2.getAction());
     }
     @Test
-    public void testGetProgrammingCardValue(){
-        assertEquals(5, programmingCard1.getValue());
-        assertEquals(234, programmingCard2.getValue());
-        assertEquals(2334, programmingCard3.getValue());
+    public void testGetProgrammingCardValue() {
+        assertEquals(5, programmingCard1.getPriority());
+        assertEquals(234, programmingCard2.getPriority());
+        assertEquals(2334, programmingCard3.getPriority());
     }
 }

@@ -5,39 +5,44 @@ import inf112.fiasko.roborally.element_properties.Action;
 /**
  * This class represents a programming card
  */
-public class ProgrammingCard {
+public class ProgrammingCard implements Comparable<ProgrammingCard> {
 
-    private final int cardValue;
+    private final int cardPriority;
     private final Action cardAction;
 
     /**
-     * Initializes the value and the action of the card
-     * @param cardValue the value of the card
+     * Initializes the priority and the action of the card
+     * @param cardPriority the priority of the card
      * @param cardAction the action of the card
      */
-    public ProgrammingCard(int cardValue, Action cardAction){
-        this.cardValue = cardValue;
+    public ProgrammingCard(int cardPriority, Action cardAction) {
+        this.cardPriority = cardPriority;
         this.cardAction = cardAction;
     }
 
     /**
-     * Gets the value of the programming card
-     * @return The programming card value
+     * Gets the priority of the programming card
+     * @return The programming card priority
      */
-    public int getValue() {
-        return cardValue;
+    public int getPriority() {
+        return cardPriority;
     }
 
     /**
-     * Gets the symbol of the programming card
-     * @return The programming card symbol
+     * Gets the action of the programming card
+     * @return The programming card action
      */
-    public Action getSymbol() {
+    public Action getAction() {
         return cardAction;
     }
 
     @Override
     public String toString() {
-        return this.getValue() + " " + this.cardAction.toString();
+        return this.getPriority() + " " + this.cardAction.toString();
+    }
+
+    @Override
+    public int compareTo(ProgrammingCard programmingCard) {
+        return this.cardPriority - programmingCard.cardPriority;
     }
 }

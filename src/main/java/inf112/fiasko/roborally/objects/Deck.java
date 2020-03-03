@@ -108,7 +108,13 @@ public abstract class Deck<T> implements IDeck<T> {
      */
     @Override
     public List<T> getCards() {
-        return cardDeck;
+
+        ArrayList<T> returnDeck = new ArrayList<>();
+        for (T card:cardDeck){
+            returnDeck.add(card);
+        }
+        return returnDeck;
+
     }
 
 

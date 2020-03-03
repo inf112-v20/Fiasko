@@ -86,8 +86,28 @@ public class ProgrammingCardDeckTest {
 
     @Test
     public void testShuffle() {
-        System.out.print(fullDeck.toString());
-        fullDeck.shuffle();
-        System.out.print(fullDeck.toString());
+        Boolean atLeastOneShuffle = false;
+        ArrayList<Boolean> resultList = new ArrayList<>();
+        ArrayList<ProgrammingCard> beforeShuffle = (ArrayList<ProgrammingCard>)testDeck.getCards();
+
+        for (int i = 0; i < 10; i++){ //Saves result of ten shuffles
+            testDeck.shuffle();
+            ArrayList<ProgrammingCard> afterShuffle = (ArrayList<ProgrammingCard>)testDeck.getCards();
+            if (beforeShuffle != afterShuffle) {
+                resultList.add(true);
+            }
+            else {
+                resultList.add(false);
+            }
+
+        }
+        //Looks to see if at least one shuffle is different from before
+        for (int i = 0; i < resultList.size(); i++) {
+            if (resultList.get(i)==true) {
+                atLeastOneShuffle = true;
+            }
+
+        }
+        assertTrue(atLeastOneShuffle);
     }
 }

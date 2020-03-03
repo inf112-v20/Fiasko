@@ -29,12 +29,12 @@ public abstract class Deck<T> implements IDeck<T> {
         Random randomNumber = new Random();
 
         for (int i = cardDeck.size() - 1; i > 0; i--) {
-            int index = randomNumber.nextInt(i);
+            int randomIndex = randomNumber.nextInt(i);
 
-            T CardIndex = cardDeck.get(index);
-            cardDeck.add(index, cardDeck.get(i));
-            cardDeck.remove(index+1);
-            cardDeck.add(i, CardIndex);
+            T CardRandomIndex = cardDeck.get(randomIndex);
+            cardDeck.add(randomIndex, cardDeck.get(i));
+            cardDeck.remove(randomIndex+1);
+            cardDeck.add(i, CardRandomIndex);
             cardDeck.remove(i+1);
 
         }
@@ -77,7 +77,8 @@ public abstract class Deck<T> implements IDeck<T> {
     @Override
     public void emptyInto(IDeck<T> other) {
         Deck<T> otherDeck = (Deck) other;
-        for (int i=0; i<otherDeck.size();i++){
+        int size = otherDeck.size();
+        for (int i=0; i<size;i++){
             otherDeck.draw(this);
         }
 
@@ -107,11 +108,7 @@ public abstract class Deck<T> implements IDeck<T> {
      */
     @Override
     public List<T> getCards() {
-        ArrayList<T> returnDeck = new ArrayList();
-        for (int i=0;i<cardDeck.size();i++){
-            returnDeck.add(cardDeck.get(i));
-        }
-        return returnDeck;
+        return cardDeck;
     }
 
 

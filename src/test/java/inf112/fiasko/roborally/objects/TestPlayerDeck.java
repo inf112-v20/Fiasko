@@ -30,6 +30,12 @@ public class TestPlayerDeck {
         testDeck2 = new PlayerDeck(cardlist2);
     }
     @Test
+    public void testSize(){
+        assertEquals(3,testDeck.size());
+        testDeck.emptyInto(testDeck2);
+        assertEquals(0,testDeck.size());
+    }
+    @Test
     public void testDrawCard(){
         assertEquals(3,testDeck.size());
         assertEquals(3,testDeck2.size());
@@ -37,6 +43,67 @@ public class TestPlayerDeck {
         assertEquals(4,testDeck.size());
         assertEquals(2,testDeck2.size());
     }
+    @Test
+    public void testDrawMultipulCards(){
+        assertEquals(3,testDeck.size());
+        assertEquals(3,testDeck2.size());
+        testDeck.draw(testDeck2, 3);
+        assertEquals(6,testDeck.size());
+        assertEquals(0,testDeck2.size());
+    }
+    @Test
+    public void testEmptyInto(){
+        assertEquals(3,testDeck.size());
+        assertEquals(3,testDeck2.size());
+        testDeck.emptyInto(testDeck2);
+        assertEquals(0,testDeck.size());
+        assertEquals(6,testDeck2.size());
+    }
+    @Test
+    public void testIsEmpty(){
+        assertEquals(false,testDeck.isEmpty());
+        testDeck.emptyInto(testDeck2);
+        assertEquals(true,testDeck.isEmpty());
+    }
+
+    @Test
+    public void testGetCards(){
+        testDeck2.emptyInto(testDeck);
+        assertEquals(programmingCard1,testDeck.getCards().get(0));
+        assertEquals(programmingCard3,testDeck.getCards().get(2));
+        assertEquals(programmingCard6,testDeck.getCards().get(5));
+    }
+
+    @Test
+    public void testshuffle(){
+        ProgrammingCard card1 =(ProgrammingCard)  testDeck.getCards().get(0);
+        int noe = card1.getValue();
+        ProgrammingCard card2 =(ProgrammingCard)  testDeck.getCards().get(1);
+        int noe2 = card2.getValue();
+        ProgrammingCard card3 =(ProgrammingCard)  testDeck.getCards().get(2);
+        int noe3 = card3.getValue();
+
+        System.out.println(noe);
+        System.out.println(noe2);
+        System.out.println(noe3);
+
+        testDeck.shuffle();
+
+        ProgrammingCard scard1 =(ProgrammingCard)  testDeck.getCards().get(0);
+        int snoe = scard1.getValue();
+        ProgrammingCard scard2 =(ProgrammingCard)  testDeck.getCards().get(1);
+        int snoe2 = scard2.getValue();
+        ProgrammingCard scard3 =(ProgrammingCard)  testDeck.getCards().get(2);
+        int snoe3 = scard3.getValue();
+
+        System.out.println(snoe);
+        System.out.println(snoe2);
+        System.out.println(snoe3);
+
+
+
+    }
+
 
 
 }

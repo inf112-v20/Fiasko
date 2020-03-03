@@ -93,7 +93,7 @@ public class ProgrammingCardDeckTest {
         for (int i = 0; i < 10; i++) {
             testDeck.shuffle();
             List<ProgrammingCard> afterShuffle = testDeck.getCards();
-            if (beforeShuffle != afterShuffle) {
+            if (!beforeShuffle.equals(afterShuffle)) {
                 return;
             }
         }

@@ -1,31 +1,37 @@
 package inf112.fiasko.roborally.objects;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
  * This class represents a deck of cards
  */
-public class Deck {
-    private ArrayList<ProgrammingCard> cardDeck;
+public abstract class Deck<T> implements IDeck<T> {
+    private ArrayList<T> cardDeck;
+
 
     /**
-     * Initalizes the card deck.
-     * @param cardDeck a list of starting cards.
+     * Initilazes the deck with cards
+     * @param cardList list of cards
      */
-    public Deck(ArrayList<ProgrammingCard> cardDeck){
-        this.cardDeck=cardDeck;
+    public Deck (ArrayList<T> cardList){
+        this.cardDeck = cardList;
     }
+
 
     /**
      * This method shuffles the cards in the deck so that they are in a random order
      */
+
+    @Override
     public void shuffle() {
         Random randomNumber = new Random();
+
         for (int i = cardDeck.size() - 1; i > 0; i--) {
             int index = randomNumber.nextInt(i);
 
-            ProgrammingCard CardIndex = cardDeck.get(index);
+            T CardIndex = cardDeck.get(index);
             cardDeck.add(index, cardDeck.get(i));
             cardDeck.remove(index+1);
             cardDeck.add(i, CardIndex);
@@ -35,78 +41,79 @@ public class Deck {
     }
 
     /**
-     * draws the first card in the card deck
-     * @return first card in the card deck list
+     * draws a card form the other deck and adds it to the current deck
+     * @param other The deck to draw the card from
      */
-    public ProgrammingCard drawCard(){
-        ProgrammingCard draw = cardDeck.get(0);
-        cardDeck.remove(0);
-        return draw;
+    @Override
+    public void draw(IDeck<T> other){
+        Deck<T> otherDeck = (Deck) other;
+        cardDeck.add(otherDeck.cardDeck.get(0));
+        otherDeck.cardDeck.remove(0);
     }
 
     /**
-     * draws n cards for another card deck and adds it to this card deck
-     * @param n number of cards you want to draw from the other deck
-     * @param otherDeck the other card deck
+     * draws n cards from the other deck and adds them to the current deck
+     * @param other The other deck to draw from
+     * @param n The number of cards to draw
      */
-    public void drawNCardsFromOtherDeck(int n, Deck otherDeck){
-        if (n<1 || n>otherDeck.getCard().size()){
-            throw new IllegalArgumentException("cant draw negativ cards or more cards then are in the other deck");
+    @Override
+    public void draw(IDeck<T> other, int n) {
+        Deck<T> otherDeck = (Deck) other;
+        if(n<1||n>otherDeck.size()){
+            throw new IllegalArgumentException("n cant be below 1 or over the size of the other card deck");
         }
-        else{
-            for (int i=0;i<n;i++){
-                cardDeck.add(otherDeck.drawCard());
+        else {
+            for (int i=0; i<n;i++){
+                cardDeck.add(otherDeck.cardDeck.get(0));
+                otherDeck.cardDeck.remove(0);
             }
         }
     }
 
     /**
-     * draws the first card from the other deck and adds it to this deck
-     * @param otherCardDeck the other card deck
+     * emptys the current deck of cards and adds the cards into the other card deck
+     * @param other The deck to move this deck's cards into
      */
-    public void drawCardOtherDeck(Deck otherCardDeck){
-        cardDeck.add(otherCardDeck.drawCard());
-    }
-
-    /**
-     * draws all the cards from this card deck
-     * @return returns a list of all the cards from this deck
-     */
-    public ArrayList<ProgrammingCard> drawAllCard(){
-        ArrayList<ProgrammingCard> allCards= new ArrayList<>();
-        int cardDeckSize = cardDeck.size();
-        for (int i=0;i<cardDeckSize;i++){
-            allCards.add(cardDeck.get((cardDeckSize-1)-i));
+    @Override
+    public void emptyInto(IDeck<T> other) {
+        Deck<T> otherDeck = (Deck) other;
+        for (int i=0; i<otherDeck.size();i++){
+            otherDeck.draw(this);
         }
-        for (int i=0; i<cardDeckSize;i++){
-            cardDeck.remove(0);
-        }
-        return allCards;
+
     }
 
     /**
-     * gives a list of all the cards inn this deck
-     * @return a list of all the cards inn this deck
+     * checks if the deck is empty
+     * @return true if deck is empty false otherwise
      */
-    public ArrayList<ProgrammingCard> getCard(){
-            return cardDeck;
-    }
-
-    /**
-     * checks if this deck is empty
-     * @return true if empty false otherwise
-     */
-    public Boolean isEmpty(){
+    @Override
+    public boolean isEmpty() {
         return cardDeck.isEmpty();
     }
 
     /**
-     * gets the size of this deck
+     * gets the size of the current deck
      * @return size of the deck
      */
-    public int size(){
+    @Override
+    public int size() {
         return cardDeck.size();
     }
+
+    /**
+     * gets the list of cards inn this deck
+     * @return list of cards inn the deck
+     */
+    @Override
+    public List<T> getCards() {
+        ArrayList<T> returnDeck = new ArrayList();
+        for (int i=0;i<cardDeck.size();i++){
+            returnDeck.add(cardDeck.get(i));
+        }
+        return returnDeck;
+    }
+
 
 }
 

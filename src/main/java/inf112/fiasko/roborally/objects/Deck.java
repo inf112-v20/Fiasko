@@ -15,7 +15,7 @@ public abstract class Deck<T> implements IDeck<T> {
      * @param cardList list of cards
      */
     public Deck (ArrayList<T> cardList) {
-        this.cardList = cardList;
+        this.cardList = new ArrayList<>(cardList);
     }
 
     @Override

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Describes a deck
  */
-public interface IDeck {
+public interface IDeck <T> {
 
     /**
      * Shuffles the order of the cards in the deck
@@ -16,20 +16,20 @@ public interface IDeck {
      * Draws one card from the top of another deck
      * @param other The deck to draw the card from
      */
-    void draw(IDeck other);
+    void draw(IDeck<T> other);
 
     /**
      * Draws n cards from the top of another deck
      * @param other The other deck to draw from
      * @param n The number of cards to draw
      */
-    void draw(IDeck other, int n);
+    void draw(IDeck<T> other, int n);
 
     /**
      * Moves all cards in this deck into another deck
      * @param other The deck to move this deck's cards into
      */
-    void emptyInto(IDeck other);
+    void emptyInto(IDeck<T> other);
 
     /**
      * Whether this deck is empty
@@ -51,5 +51,5 @@ public interface IDeck {
      *
      * @return A list of all cards in this deck
      */
-    List<ICardWithoutSuit<Class<?>, Class<?>>> getCards();
+    List<T> getCards();
 }

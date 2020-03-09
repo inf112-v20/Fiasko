@@ -145,4 +145,19 @@ public class Robot {
      * @return amount of life left
      */
     public int getAmountOfLives() { return this.amountOfLives; }
+
+    /**
+     * Makes a copy of this robot with the same properties as this robot
+     * @return A copy of this robot
+     */
+    public Robot copy() {
+        Robot copy = new Robot(this.robotId, this.currentPosition);
+        copy.facingDirection = this.facingDirection;
+        copy.lastFlagVisited = this.lastFlagVisited;
+        copy.amountOfLives = this.amountOfLives;
+        copy.backupPosition = this.backupPosition;
+        copy.inPowerDown = this.inPowerDown;
+        copy.robotDamageTaken = this.robotDamageTaken;
+        return copy;
+    }
 }

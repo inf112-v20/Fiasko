@@ -66,7 +66,9 @@ public class Board {
      * @return A list of alive robots
      */
     public List<Robot> getAliveRobots() {
-        return new ArrayList<>(robots.values());
+        List<Robot> robotsCopy = new ArrayList<>(robots.values());
+        robotsCopy.replaceAll(Robot::copy);
+        return robotsCopy;
     }
 
     /**

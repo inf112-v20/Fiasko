@@ -77,5 +77,15 @@ public abstract class Deck<T> implements IDeck<T> {
         }
         return builder.toString();
     }
+
+    @Override
+    public T peekTop() {
+        return cardList.get(0);
+    }
+
+    @Override
+    public T peekBottom() {
+        return cardList.get(size()-1);
+    }
 }
 

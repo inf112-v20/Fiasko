@@ -113,4 +113,14 @@ public class ProgrammingCardDeckTest {
             assertTrue(fullDeck.getCards().contains(card));
         }
     }
+
+    @Test
+    public void peekTop() {
+        assertEquals(programmingCard1, testDeck.peekTop());
+    }
+
+    @Test
+    public void peekBottom() {
+        assertEquals(programmingCard3, testDeck.peekBottom());
+    }
 }

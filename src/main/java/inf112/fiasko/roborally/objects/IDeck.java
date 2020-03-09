@@ -4,6 +4,9 @@ import java.util.List;
 
 /**
  * Describes a deck
+ *
+ * Any card stored in the deck is assumed to be immutable. If it's not, the integrity of the deck cannot be
+ * guaranteed.
  */
 public interface IDeck <T> {
 
@@ -44,10 +47,21 @@ public interface IDeck <T> {
     int size();
 
     /**
+     * Takes a peek at the card currently at the top of the deck
+     * @return The card at the top of the deck
+     */
+    T peekTop();
+
+    /**
+     * Takes a peek at the card currently at the bottom of the deck
+     * @return The card at the bottom of the deck
+     */
+    T peekBottom();
+
+    /**
      * Gets a list of all cards in this deck
      *
-     * The list should have the correct order according to the actual order within the deck. As an ICardWithoutSuit is
-     * immutable, the object reference can be returned directly.
+     * The list should have the correct order according to the actual order within the deck.
      *
      * @return A list of all cards in this deck
      */

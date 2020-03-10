@@ -165,6 +165,8 @@ public class RoboRallyGame implements IDrawableGame {
             case BACK_UP:
                 gameBoard.reverseRobot(robotID);
                 break;
+            default:
+                throw new IllegalArgumentException("Not a recognized action.");
         }
     }
 

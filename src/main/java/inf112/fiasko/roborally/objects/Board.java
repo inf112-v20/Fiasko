@@ -133,13 +133,13 @@ public class Board {
         Robot robot = robots.get(robotID);
         Position robotPosition = robot.getPosition();
         Position newPosition = getNewPosition(robotPosition, direction);
-        //Robot tried to go outside of the map. Kill it.
-        if (killRobotIfGoesOutsideMap(robot, newPosition)) {
-            return true;
-        }
         //There is a wall blocking the robot. It can't proceed.
         if (robotMoveIsStoppedByWall(robotPosition, newPosition, direction)) {
             return false;
+        }
+        //Robot tried to go outside of the map. Kill it.
+        if (killRobotIfGoesOutsideMap(robot, newPosition)) {
+            return true;
         }
         //If another robot is blocking this robot's path, try to shove it.
         if (hasRobotOnPosition(newPosition)) {
@@ -187,8 +187,14 @@ public class Board {
      * @return True if a wall would stop its path
      */
     private boolean robotMoveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
-        return hasWallFacing(robotPosition, direction) ||
-                hasWallFacing(newPosition, Direction.getReverseDirection(direction));
+        try {
+            return hasWallFacing(robotPosition, direction) ||
+                    hasWallFacing(newPosition, Direction.getReverseDirection(direction));
+        }
+        catch (IllegalArgumentException e) {
+            return false;
+        }
+
     }
 
     /**

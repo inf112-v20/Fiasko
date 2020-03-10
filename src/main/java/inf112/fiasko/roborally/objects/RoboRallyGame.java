@@ -105,46 +105,27 @@ public class RoboRallyGame implements IDrawableGame {
     private void runGameLoop() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
         makeMove(RobotID.ROBOT_1, Action.MOVE_1);
-        
         makeMove(RobotID.ROBOT_1, Action.MOVE_2);
-        
         makeMove(RobotID.ROBOT_1, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_1, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_1, Action.MOVE_3);
-        
         makeMove(RobotID.ROBOT_1, Action.ROTATE_LEFT);
-        
         makeMove(RobotID.ROBOT_1, Action.U_TURN);
-        
         makeMove(RobotID.ROBOT_1, Action.ROTATE_RIGHT);
-        
         makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
-        
         makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        
         makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        
         makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_2, Action.U_TURN);
-        
         makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        
         makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        
         makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
-        
         makeMove(RobotID.ROBOT_2, Action.U_TURN);
+        makeMove(RobotID.ROBOT_2, Action.MOVE_1);
     }
 
     /**

@@ -187,14 +187,20 @@ public class Board {
      * @return True if a wall would stop its path
      */
     private boolean robotMoveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
-        try {
-            return hasWallFacing(robotPosition, direction) ||
-                    hasWallFacing(newPosition, Direction.getReverseDirection(direction));
-        }
-        catch (IllegalArgumentException e) {
-            return false;
-        }
+            return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
+                    hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
+    }
 
+    /**
+     * Checks whether a given position is valid
+     * @param position The position to test
+     * @return True if the position is valid. False otherwise
+     */
+    private boolean isValidPosition(Position position) {
+        return position.getXCoordinate() >= 0
+                && position.getXCoordinate() < boardWidth
+                && position.getYCoordinate() >= 0
+                && position.getYCoordinate() < boardHeight;
     }
 
     /**
@@ -204,10 +210,7 @@ public class Board {
      * @return True if the robot was killed for leaving the board
      */
     private boolean killRobotIfGoesOutsideMap(Robot robot, Position newPosition) {
-        if (newPosition.getXCoordinate() < 0
-                || newPosition.getXCoordinate() >= boardWidth
-                || newPosition.getYCoordinate() < 0
-                || newPosition.getYCoordinate() >= boardHeight) {
+        if (!isValidPosition(newPosition)) {
             killRobot(robot);
             return true;
         }

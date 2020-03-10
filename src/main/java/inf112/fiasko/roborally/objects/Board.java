@@ -116,6 +116,14 @@ public class Board {
     }
 
     /**
+     * Moves a robot one unit backwards according to the direction it's currently facing
+     * @param robotID The robot to move
+     */
+    public void reverseRobot(RobotID robotID) {
+        moveRobot(robotID, Direction.getReverseDirection(robots.get(robotID).getFacingDirection()));
+    }
+
+    /**
      * Moves a robot one unit in a specified direction
      * @param robotID ID of the robot to move
      * @param direction The direction to move the robot

@@ -20,6 +20,13 @@
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
+  <repositories>
+    <repository>
+      <id>clojars</id>
+      <url>http://clojars.org/repo/</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <!-- https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx -->
     <dependency>
@@ -51,6 +58,12 @@
       <artifactId>gdx-platform</artifactId>
       <version>1.9.9</version>
       <classifier>natives-desktop</classifier>
+    </dependency>
+
+    <dependency>
+      <groupId>kryonet</groupId>
+      <artifactId>kryonet</artifactId>
+      <version>2.21</version>
     </dependency>
 
     <dependency>

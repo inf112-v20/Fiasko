@@ -115,6 +115,14 @@ public class Board {
     }
 
     /**
+     * Moves a robot one unit backwards according to the direction it's currently facing
+     * @param robotID The robot to move
+     */
+    public void reverseRobot(RobotID robotID) {
+        moveRobot(robotID, Direction.getReverseDirection(robots.get(robotID).getFacingDirection()));
+    }
+
+    /**
      * Moves a robot one unit in a specified direction
      * @param robotID ID of the robot to move
      * @param direction The direction to move the robot
@@ -124,13 +132,13 @@ public class Board {
         Robot robot = robots.get(robotID);
         Position robotPosition = robot.getPosition();
         Position newPosition = getNewPosition(robotPosition, direction);
-        //Robot tried to go outside of the map. Kill it.
-        if (killRobotIfGoesOutsideMap(robot, newPosition)) {
-            return true;
-        }
         //There is a wall blocking the robot. It can't proceed.
         if (robotMoveIsStoppedByWall(robotPosition, newPosition, direction)) {
             return false;
+        }
+        //Robot tried to go outside of the map. Kill it.
+        if (killRobotIfGoesOutsideMap(robot, newPosition)) {
+            return true;
         }
         //If another robot is blocking this robot's path, try to shove it.
         if (hasRobotOnPosition(newPosition)) {
@@ -178,8 +186,20 @@ public class Board {
      * @return True if a wall would stop its path
      */
     private boolean robotMoveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
-        return hasWallFacing(robotPosition, direction) ||
-                hasWallFacing(newPosition, Direction.getReverseDirection(direction));
+            return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
+                    hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
+    }
+
+    /**
+     * Checks whether a given position is valid
+     * @param position The position to test
+     * @return True if the position is valid. False otherwise
+     */
+    private boolean isValidPosition(Position position) {
+        return position.getXCoordinate() >= 0
+                && position.getXCoordinate() < boardWidth
+                && position.getYCoordinate() >= 0
+                && position.getYCoordinate() < boardHeight;
     }
 
     /**
@@ -189,10 +209,7 @@ public class Board {
      * @return True if the robot was killed for leaving the board
      */
     private boolean killRobotIfGoesOutsideMap(Robot robot, Position newPosition) {
-        if (newPosition.getXCoordinate() < 0
-                || newPosition.getXCoordinate() >= boardWidth
-                || newPosition.getYCoordinate() < 0
-                || newPosition.getYCoordinate() >= boardHeight) {
+        if (!isValidPosition(newPosition)) {
             killRobot(robot);
             return true;
         }

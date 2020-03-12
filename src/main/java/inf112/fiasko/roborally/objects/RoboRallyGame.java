@@ -1,5 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
+import inf112.fiasko.roborally.element_properties.Action;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
@@ -53,6 +54,14 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
+     * Makes the game thread wait a given time amount before continuing.
+     * @throws InterruptedException If interrupted while trying to sleep.
+     */
+    private void sleep() throws InterruptedException {
+        long cycleDelay = 600;
+        TimeUnit.MILLISECONDS.sleep(cycleDelay);
+    }
+    /**
      * Initializes the game with a debugging board
      */
     private void initializeDebugMode() {
@@ -94,48 +103,83 @@ public class RoboRallyGame implements IDrawableGame {
      * @throws InterruptedException If interrupted while trying to sleep
      */
     private void runGameLoop() throws InterruptedException {
-        long cycleDelay = 600;
         TimeUnit.SECONDS.sleep(3);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotLeft(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_1);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.rotateRobotRight(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_2);
-        TimeUnit.MILLISECONDS.sleep(cycleDelay);
-        gameBoard.moveRobotForward(RobotID.ROBOT_2);
+        makeMove(RobotID.ROBOT_1, Action.MOVE_1);
+        makeMove(RobotID.ROBOT_1, Action.MOVE_2);
+        makeMove(RobotID.ROBOT_1, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_1, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_1, Action.MOVE_3);
+        makeMove(RobotID.ROBOT_1, Action.ROTATE_LEFT);
+        makeMove(RobotID.ROBOT_1, Action.U_TURN);
+        makeMove(RobotID.ROBOT_1, Action.ROTATE_RIGHT);
+        makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
+        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
+        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
+        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_2, Action.U_TURN);
+        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
+        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
+        makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
+        makeMove(RobotID.ROBOT_2, Action.U_TURN);
+        makeMove(RobotID.ROBOT_2, Action.MOVE_1);
+    }
+
+    /**
+     * Makes the given robot move according to to the action input.
+     * @param robotID The ID of the robot to move.
+     * @param action The specific movement the robot is to take.
+     * @throws InterruptedException If interrupted wile trying to sleep.
+     */
+    private void makeMove(RobotID robotID, Action action) throws InterruptedException {
+        if (!gameBoard.isRobotAlive(robotID)) {
+            return;
+        }
+        sleep();
+        switch (action) {
+            case MOVE_1:
+                moveForward(robotID);
+                break;
+            case MOVE_2:
+                moveForward(robotID);
+                moveForward(robotID);
+                break;
+            case MOVE_3:
+                moveForward(robotID);
+                moveForward(robotID);
+                moveForward(robotID);
+                break;
+            case ROTATE_RIGHT:
+                gameBoard.rotateRobotRight(robotID);
+                break;
+            case ROTATE_LEFT:
+                gameBoard.rotateRobotLeft(robotID);
+                break;
+            case U_TURN:
+                gameBoard.rotateRobotLeft(robotID);
+                gameBoard.rotateRobotLeft(robotID);
+                break;
+            case BACK_UP:
+                gameBoard.reverseRobot(robotID);
+                break;
+            default:
+                throw new IllegalArgumentException("Not a recognized action.");
+        }
+    }
+
+    /**
+     * Helper method for makeMove. Takes care of movement forward of given robot.
+     * @param robotID ID of the given robot.
+     * @throws InterruptedException If interrupted wile sleeping.
+     */
+    private void moveForward(RobotID robotID) throws InterruptedException {
+        if (!gameBoard.isRobotAlive(robotID)) {
+            return;
+        }
+        sleep();
+        gameBoard.moveRobotForward(robotID);
     }
 }

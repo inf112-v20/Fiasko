@@ -310,14 +310,40 @@ public class Board {
         return elements;
     }
 
-    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType tile) {
-        return makeTileList(tile, tiles);
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
+     * @param tiles The tiles you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
+        List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
+        for (TileType tile : tiles) {
+            combinedList.addAll(makeTileList(tile, this.tiles));
+        }
+        return combinedList;
     }
 
-    public List<BoardElementContainer<Wall>> getPositionsOfTileOnBoard(WallType tile) {
-        return makeTileList(tile, walls);
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
+     * @param walls The walls you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Wall>> getPositionsOfTileOnBoard(WallType ... walls) {
+        List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
+        for (WallType wall : walls) {
+            combinedList.addAll(makeTileList(wall, this.walls));
+        }
+        return combinedList;
     }
 
+    /**
+     * Finds all position of an obj and makes a list of BoardElementContainers
+     * @param type Type of obj
+     * @param grid Grid to search
+     * @param <K> Type of type
+     * @param <T> Type of grid
+     * @return List of BoardElementContainers
+     */
     private <K,T> List<BoardElementContainer<T>> makeTileList(K type, IGrid<T> grid) {
         List<BoardElementContainer<T>> objList = new ArrayList<>();
 

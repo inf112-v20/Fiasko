@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RoboRallyGame implements IDrawableGame {
     private Board gameBoard;
+    List<BoardElementContainer<Tile>> cogwheels;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -87,6 +88,8 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
             robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
+                    TileType.COGWHEEL_LEFT);
             new Thread(() -> {
                 try {
                     runGameLoop();
@@ -189,22 +192,16 @@ public class RoboRallyGame implements IDrawableGame {
      * @throws InterruptedException If interrupted while sleeping.
      */
     private void rotateCogwheels() throws InterruptedException {
-        List<BoardElementContainer<Tile>> cogWheelsLeft = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT);
-        List<BoardElementContainer<Tile>> cogWheelsRight = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT);
-
-        for (BoardElementContainer<Tile> cogLeft : cogWheelsLeft) {
-            if (!gameBoard.hasRobotOnPosition(cogLeft.getPosition())) {
-                return;
+        for (BoardElementContainer<Tile> cogwheel : cogwheels) {
+            if (!gameBoard.hasRobotOnPosition(cogwheel.getPosition())) {
+                continue;
             }
             sleep();
-            makeMove(gameBoard.getRobotOnPosition(cogLeft.getPosition()), Action.ROTATE_LEFT);
-        }
-        for (BoardElementContainer<Tile> cogRight : cogWheelsRight) {
-            if (!gameBoard.hasRobotOnPosition(cogRight.getPosition())) {
-                return;
+            if (cogwheel.obj.getTileType() == TileType.COGWHEEL_RIGHT) {
+                gameBoard.rotateRobotRight(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+            } else {
+                gameBoard.rotateRobotLeft(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
             }
-            sleep();
-            makeMove(gameBoard.getRobotOnPosition(cogRight.getPosition()), Action.ROTATE_RIGHT);
         }
     }
 }

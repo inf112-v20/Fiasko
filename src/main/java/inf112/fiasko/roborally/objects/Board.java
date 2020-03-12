@@ -1,10 +1,9 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.element_properties.*;
+import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -326,5 +325,63 @@ public class Board {
             }
         }
         return elements;
+    }
+
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
+     * @param tiles The tiles you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
+        List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
+        for (TileType tile : tiles) {
+            combinedList.addAll(makeTileList(tile, this.tiles));
+        }
+        return combinedList;
+    }
+
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
+     * @param walls The walls you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Wall>> getPositionsOfTileOnBoard(WallType ... walls) {
+        List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
+        for (WallType wall : walls) {
+            combinedList.addAll(makeTileList(wall, this.walls));
+        }
+        return combinedList;
+    }
+
+    /**
+     * Finds all position of an obj and makes a list of BoardElementContainers
+     * @param type Type of obj
+     * @param grid Grid to search
+     * @param <K> Type of type
+     * @param <T> Type of grid
+     * @return List of BoardElementContainers
+     */
+    private <K,T> List<BoardElementContainer<T>> makeTileList(K type, IGrid<T> grid) {
+        List<BoardElementContainer<T>> objList = new ArrayList<>();
+
+        for (int y = grid.getHeight() - 1; y >= 0; y--) {
+            for (int x = 0; x < grid.getWidth(); x++) {
+                T gridElement = grid.getElement(x, y);
+                if (gridElement.getClass().isAssignableFrom(Tile.class)) {
+                    Tile tile = (Tile) gridElement;
+                    if (tile.getTileType() == type) {
+                        objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                    }
+                } else if (gridElement.getClass().isAssignableFrom(Wall.class)) {
+                    Wall wall = (Wall) gridElement;
+                    if (wall.getWallType() == type) {
+                        objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                    }
+                } else {
+                    throw new IllegalArgumentException("Grid has unknown type.");
+                }
+            }
+        }
+        return objList;
     }
 }

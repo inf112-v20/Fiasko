@@ -14,23 +14,16 @@ public class Player {
     private final String name;
     private boolean powerDownNextRound = false;
     private ProgrammingCardDeck playerDeck;
-    private List <ProgrammingCard> program = new ArrayList();
+    private List <ProgrammingCard> program;
 
     /**
      * Instantiates a new player
      * @param robotID the global identifier of the robot
      * @param name the unique name of the player
-     * @param playerDeck the hand of cards dealt to the player
      */
-    public Player(RobotID robotID, String name, ProgrammingCardDeck playerDeck) {
+    public Player(RobotID robotID, String name) {
         this.robotID = robotID;
         this.name = name;
-        this.playerDeck = playerDeck;
-        program.add(0, null); //sets the initial values in program to null
-        program.add(1, null);
-        program.add(2, null);
-        program.add(3, null);
-        program.add(4, null);
     }
 
     /**
@@ -38,6 +31,14 @@ public class Player {
      * @return An RobotID
      */
     public RobotID getRobotID(){return robotID;}
+
+    /**
+     * Set the players deck to the given deck
+     * @param playerDeck a deck of cards given to the player
+     */
+    public void setPlayerDeck(ProgrammingCardDeck playerDeck){
+        this.playerDeck=playerDeck;
+    }
 
     /**
      * Gives you the Name of the player
@@ -70,32 +71,23 @@ public class Player {
     public void setPowerDownNextRound(boolean powerDownStatus) { this.powerDownNextRound = powerDownStatus;}
 
     /**
-     * Places a card in to the player program
-     * @param card the card that is placed in to the player program
+     * Gets the program from the player
+     * @return List of programing cards
      */
-    public void setCardInProgram(ProgrammingCard card) {
-        for (int i = 0; i < 5; i++) {
-            if (program.get(i) == null) {
-                program.add(i, card);
-                return;
-            }
-        }
-        throw new IllegalArgumentException("Program deck is full,tried to add to many cards");
+    public List <ProgrammingCard> getProgramFromPlayer(){
+        return program;
     }
 
     /**
-     * Removes a card by the given index from the player program and returns it.
-     * @param cardNr the index of the card that is being removed
-     * @return the card that was removed from the program
+     * Sets the Players program to the given list of programing cards
+     * @param cardList list the size of 5 with programing cards
      */
-    public ProgrammingCard removeProgramCard(int cardNr) {
-        if(cardNr<5 && cardNr>-1) {
-            program.add(cardNr, null);
-            return program.remove(cardNr + 1);
+    public void setInProgram(List <ProgrammingCard> cardList){
+        if(cardList.size() != 5){
+            throw new IllegalArgumentException("list must contain 5 programing cards");
         }
-        else{
-            throw new IllegalArgumentException("cant remove more then index 4 or remove negatives");
-
+        else {
+            program = new ArrayList<>(cardList);
         }
     }
 

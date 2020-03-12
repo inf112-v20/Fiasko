@@ -3,6 +3,7 @@ package inf112.fiasko.roborally.objects;
 import inf112.fiasko.roborally.element_properties.Action;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
@@ -141,14 +142,14 @@ public class RoboRallyGame implements IDrawableGame {
         sleep();
         switch (action) {
             case MOVE_1:
-                moveForward(robotID);
+                gameBoard.moveRobotForward(robotID);
                 break;
             case MOVE_2:
-                moveForward(robotID);
+                gameBoard.moveRobotForward(robotID);
                 moveForward(robotID);
                 break;
             case MOVE_3:
-                moveForward(robotID);
+                gameBoard.moveRobotForward(robotID);
                 moveForward(robotID);
                 moveForward(robotID);
                 break;
@@ -181,5 +182,29 @@ public class RoboRallyGame implements IDrawableGame {
         }
         sleep();
         gameBoard.moveRobotForward(robotID);
+    }
+
+    /**
+     * Rotates all robots that are standing on cogWheel tiles on the board.
+     * @throws InterruptedException If interrupted while sleeping.
+     */
+    private void rotateCogwheels() throws InterruptedException {
+        List<BoardElementContainer<Tile>> cogWheelsLeft = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT);
+        List<BoardElementContainer<Tile>> cogWheelsRight = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT);
+
+        for (BoardElementContainer<Tile> cogLeft : cogWheelsLeft) {
+            if (!gameBoard.hasRobotOnPosition(cogLeft.getPosition())) {
+                return;
+            }
+            sleep();
+            makeMove(gameBoard.getRobotOnPosition(cogLeft.getPosition()), Action.ROTATE_LEFT);
+        }
+        for (BoardElementContainer<Tile> cogRight : cogWheelsRight) {
+            if (!gameBoard.hasRobotOnPosition(cogRight.getPosition())) {
+                return;
+            }
+            sleep();
+            makeMove(gameBoard.getRobotOnPosition(cogRight.getPosition()), Action.ROTATE_RIGHT);
+        }
     }
 }

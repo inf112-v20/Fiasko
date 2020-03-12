@@ -3,6 +3,7 @@ package inf112.fiasko.roborally.objects;
 import inf112.fiasko.roborally.element_properties.Action;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class RoboRallyGame implements IDrawableGame {
     private Board gameBoard;
+    List<BoardElementContainer<Tile>> cogwheels;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -86,6 +88,8 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
             robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
+                    TileType.COGWHEEL_LEFT);
             new Thread(() -> {
                 try {
                     runGameLoop();
@@ -181,5 +185,23 @@ public class RoboRallyGame implements IDrawableGame {
         }
         sleep();
         gameBoard.moveRobotForward(robotID);
+    }
+
+    /**
+     * Rotates all robots that are standing on cogWheel tiles on the board.
+     * @throws InterruptedException If interrupted while sleeping.
+     */
+    private void rotateCogwheels() throws InterruptedException {
+        for (BoardElementContainer<Tile> cogwheel : cogwheels) {
+            if (!gameBoard.hasRobotOnPosition(cogwheel.getPosition())) {
+                continue;
+            }
+            sleep();
+            if (cogwheel.obj.getTileType() == TileType.COGWHEEL_RIGHT) {
+                gameBoard.rotateRobotRight(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+            } else {
+                gameBoard.rotateRobotLeft(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+            }
+        }
     }
 }

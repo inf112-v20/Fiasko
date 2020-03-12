@@ -251,7 +251,7 @@ public class Board {
      * @param position The position to check
      * @return The robot id of the robot on the position or null if there is no robot there
      */
-    private RobotID getRobotOnPosition(Position position) {
+    RobotID getRobotOnPosition(Position position) {
         for (RobotID robotID : robots.keySet()) {
             Robot robot = robots.get(robotID);
             if (position.equals(robot.getPosition())) {
@@ -266,7 +266,7 @@ public class Board {
      * @param position The position to check
      * @return True if there is a robot on the specified position
      */
-    private boolean hasRobotOnPosition(Position position) {
+    boolean hasRobotOnPosition(Position position) {
         return getRobotOnPosition(position) != null;
     }
 

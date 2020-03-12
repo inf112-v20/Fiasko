@@ -142,14 +142,14 @@ public class RoboRallyGame implements IDrawableGame {
         sleep();
         switch (action) {
             case MOVE_1:
-                moveForward(robotID);
+                gameBoard.moveRobotForward(robotID);
                 break;
             case MOVE_2:
-                moveForward(robotID);
+                gameBoard.moveRobotForward(robotID);
                 moveForward(robotID);
                 break;
             case MOVE_3:
-                moveForward(robotID);
+                gameBoard.moveRobotForward(robotID);
                 moveForward(robotID);
                 moveForward(robotID);
                 break;

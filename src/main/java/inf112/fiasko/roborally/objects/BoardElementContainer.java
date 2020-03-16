@@ -8,7 +8,7 @@ import inf112.fiasko.roborally.element_properties.Position;
  */
 public class BoardElementContainer <K>{
     K obj;
-    Position pos;
+    private Position pos;
 
     /**
      * Initializes the BoardElementContainer

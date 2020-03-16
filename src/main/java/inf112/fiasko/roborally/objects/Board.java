@@ -179,6 +179,19 @@ public class Board {
     }
 
     /**
+     * Updates the flag of the robot if it stands on the correct flag.
+     * @param robotID The RobotID of a robot
+     * @param flagID TileType of the flag we check
+     */
+    public void updateFlagOnRobot(RobotID robotID, TileType flagID) {
+        Robot robot = robots.get(robotID);
+        int flagNr = flagID.getTileTypeID() % 16;
+        if (flagNr - 1 == robot.getLastFlagVisited()) {
+            robot.setLastFlagVisitedAndUpdateBackupPosition(flagNr);
+        }
+    }
+
+    /**
      * Checks if a potential robot move would be blocked by a wall
      * @param robotPosition The current position of the robot
      * @param newPosition The position the robot is trying to move to

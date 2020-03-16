@@ -14,8 +14,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class RoboRallyGame implements IDrawableGame {
     private Board gameBoard;
-    List<BoardElementContainer<Tile>> cogwheels;
-    List<BoardElementContainer<Tile>> conveyorBelts;
+    private List<BoardElementContainer<Tile>> cogwheels;
+    private List<BoardElementContainer<Tile>> conveyorBelts;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {

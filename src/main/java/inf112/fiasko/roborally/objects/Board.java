@@ -311,7 +311,7 @@ public class Board {
      * @param direction The direction to move the element
      * @return The new position of the element
      */
-    Position getNewPosition(Position oldPosition, Direction direction) {
+    public Position getNewPosition(Position oldPosition, Direction direction) {
         switch (direction) {
             case NORTH:
                 return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);

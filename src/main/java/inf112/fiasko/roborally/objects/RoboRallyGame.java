@@ -263,21 +263,33 @@ public class RoboRallyGame implements IDrawableGame {
             Tile nextTile = gameBoard.getTileOnPosition(newPosition);
 
             Direction currentDirection = conveyorBeltTile.getDirection();
-            Direction nextDirection = nextTile.getDirection();
             RobotID robot = gameBoard.getRobotOnPosition(conveyorBeltPosition);
 
             //TODO: Check whether the robot is able to move before moving. Alternatively: Save position and direction
             // of each robot and revert if a collision is found.
-            sleep();
-            gameBoard.moveRobot(robot, currentDirection);
-            if (testPredicate(conveyorBelts, (container) -> container.getObject() == nextTile)) {
-                if (Direction.getRightRotatedDirection(nextDirection) == currentDirection) {
-                    sleep();
-                    gameBoard.rotateRobotLeft(robot);
-                } else if (Direction.getLeftRotatedDirection(nextDirection) == currentDirection) {
-                    sleep();
-                    gameBoard.rotateRobotRight(robot);
-                }
+            doConveyorBeltMovement(robot, currentDirection, nextTile);
+        }
+    }
+
+    /**
+     * Moves a robot standing on a conveyor belt
+     * @param robot The id of the robot to move
+     * @param currentDirection The direction of the conveyor belt the robot is standing on
+     * @param nextTile The tile the robot is moving to
+     * @throws InterruptedException If disturbed during sleep
+     */
+    private void doConveyorBeltMovement(RobotID robot, Direction currentDirection, Tile nextTile)
+            throws InterruptedException {
+        Direction nextDirection = nextTile.getDirection();
+        sleep();
+        gameBoard.moveRobot(robot, currentDirection);
+        if (testPredicate(conveyorBelts, (container) -> container.getObject() == nextTile)) {
+            if (Direction.getRightRotatedDirection(nextDirection) == currentDirection) {
+                sleep();
+                gameBoard.rotateRobotLeft(robot);
+            } else if (Direction.getLeftRotatedDirection(nextDirection) == currentDirection) {
+                sleep();
+                gameBoard.rotateRobotRight(robot);
             }
         }
     }

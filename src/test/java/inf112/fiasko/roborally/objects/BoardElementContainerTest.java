@@ -14,7 +14,7 @@ public class BoardElementContainerTest {
         Position pos = new Position(1,2);
         Tile tile = new Tile(TileType.TILE, Direction.NORTH);
         BoardElementContainer<Tile> element = new BoardElementContainer<>(tile, pos);
-        assertEquals(tile, element.getObject());
+        assertEquals(tile, element.getElement());
     }
 
     @Test

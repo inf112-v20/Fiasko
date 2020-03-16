@@ -1,6 +1,11 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.*;
+import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.Position;
+import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.element_properties.WallType;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -167,6 +172,21 @@ public class Board {
     }
 
     /**
+     * Returns a robot id for a robot on a specific position if such a robot exists
+     * @param position The position to check
+     * @return The robot id of the robot on the position or null if there is no robot there
+     */
+    public RobotID getRobotOnPosition(Position position) {
+        for (RobotID robotID : robots.keySet()) {
+            Robot robot = robots.get(robotID);
+            if (position.equals(robot.getPosition())) {
+                return robotID;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Checks if a specific robot is currently alive on the board
      * @param robot the ID of the robot you want to check
      * @return True/False based on if the robot was found.
@@ -257,26 +277,11 @@ public class Board {
     }
 
     /**
-     * Returns a robot id for a robot on a specific position if such a robot exists
-     * @param position The position to check
-     * @return The robot id of the robot on the position or null if there is no robot there
-     */
-    RobotID getRobotOnPosition(Position position) {
-        for (RobotID robotID : robots.keySet()) {
-            Robot robot = robots.get(robotID);
-            if (position.equals(robot.getPosition())) {
-                return robotID;
-            }
-        }
-        return null;
-    }
-
-    /**
      * Checks whether there exists a robot on a specific position
      * @param position The position to check
      * @return True if there is a robot on the specified position
      */
-    boolean hasRobotOnPosition(Position position) {
+    public boolean hasRobotOnPosition(Position position) {
         return getRobotOnPosition(position) != null;
     }
 
@@ -362,7 +367,7 @@ public class Board {
      * @param walls The walls you want all positions for
      * @return A list of BoardElementContainers
      */
-    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType ... walls) {
+    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType... walls) {
         List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
         for (WallType wall : walls) {
             combinedList.addAll(makeTileList(wall, this.walls));

@@ -35,8 +35,8 @@ public class BoardTest {
     private List<Robot> robotList;
     private Board board;
     private Board boardWithDifferentAmountOfAllTypes;
-    private Map<WallType,Integer> wallTypeNumberMap = new HashMap<>();
-    private Map<TileType,Integer> tileTypeNumberMap = new HashMap<>();
+    private final Map<WallType,Integer> wallTypeNumberMap = new HashMap<>();
+    private final Map<TileType,Integer> tileTypeNumberMap = new HashMap<>();
 
     @BeforeClass
     public static void globalSetUp() {
@@ -223,7 +223,7 @@ public class BoardTest {
         List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT);
 
         for (BoardElementContainer<Tile> elem : boardElemList) {
-            assertEquals(elem.getObject().getTileType(), TileType.COGWHEEL_LEFT);
+            assertEquals(elem.getElement().getTileType(), TileType.COGWHEEL_LEFT);
         }
     }
 
@@ -238,7 +238,7 @@ public class BoardTest {
         List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.TILE);
 
         for (BoardElementContainer<Tile> elem : boardElemList) {
-            assertEquals(elem.getObject().getTileType(), TileType.TILE);
+            assertEquals(elem.getElement().getTileType(), TileType.TILE);
         }
     }
 
@@ -253,7 +253,7 @@ public class BoardTest {
         List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_NORMAL);
 
         for (BoardElementContainer<Wall> elem : boardElemList) {
-            assertEquals(elem.getObject().getWallType(), WallType.WALL_NORMAL);
+            assertEquals(elem.getElement().getWallType(), WallType.WALL_NORMAL);
         }
     }
 
@@ -268,14 +268,14 @@ public class BoardTest {
         List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_CORNER);
 
         for (BoardElementContainer<Wall> elem : boardElemList) {
-            assertEquals(elem.getObject().getWallType(), WallType.WALL_CORNER);
+            assertEquals(elem.getElement().getWallType(), WallType.WALL_CORNER);
         }
     }
 
     @Test
     public void getPositionsOfWallOnBoardHasCorrect() {
         List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_CORNER);
-        Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getObject().getWallType() == WallType.WALL_CORNER;
+        Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getElement().getWallType() == WallType.WALL_CORNER;
         boardElemList.removeIf(pred);
         assertEquals(0, boardElemList.size());
     }

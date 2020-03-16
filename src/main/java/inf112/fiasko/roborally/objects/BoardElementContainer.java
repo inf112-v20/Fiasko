@@ -3,36 +3,36 @@ package inf112.fiasko.roborally.objects;
 import inf112.fiasko.roborally.element_properties.Position;
 
 /**
- * This class represents a type of object and its position
- * @param <K> The type of object
+ * This class represents a board element and its position
+ * @param <K> The type of element
  */
-public class BoardElementContainer <K>{
-    K obj;
-    private Position pos;
+public class BoardElementContainer <K> {
+    private final K element;
+    private final Position position;
 
     /**
      * Initializes the BoardElementContainer
-     * @param obj The object
-     * @param pos The position
+     * @param element The element
+     * @param position The position
      */
-    BoardElementContainer(K obj, Position pos) {
-        this.obj = obj;
-        this.pos = pos;
+    BoardElementContainer(K element, Position position) {
+        this.element = element;
+        this.position = position;
     }
 
     /**
-     * Gets the object
-     * @return object
+     * Gets the element
+     * @return The element
      */
-    public K getObject() {
-        return obj;
+    public K getElement() {
+        return element;
     }
 
     /**
      * Gets the position
-     * @return position
+     * @return The position
      */
     public Position getPosition() {
-        return pos;
+        return position;
     }
 }

@@ -16,8 +16,8 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
-    private CardRectangle cardRectangle;
-    private ShapeRenderer shapeRenderer;
+    private final CardRectangle cardRectangle;
+    private final ShapeRenderer shapeRenderer;
 
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
@@ -28,7 +28,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         card1.y = 1200/2;
         card1.width = 100;
         card1.height = 100;
-        cardRectangle = new CardRectangle(card1, false);
+        cardRectangle = new CardRectangle(card1);
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         Gdx.input.setInputProcessor(this);
@@ -36,7 +36,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-
+        //Nothing to do
     }
 
     @Override
@@ -61,27 +61,27 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
+        //Nothing to do
     }
 
     @Override
     public void pause() {
-
+        //Nothing to do
     }
 
     @Override
     public void resume() {
-
+        //Nothing to do
     }
 
     @Override
     public void hide() {
-
+        //Nothing to do
     }
 
     @Override
     public void dispose() {
-
+        //Nothing to do
     }
 
     @Override
@@ -99,11 +99,10 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 }
 
 class CardRectangle {
-    Rectangle rectangle;
-    boolean selected;
+    protected final Rectangle rectangle;
+    protected boolean selected = false;
 
-    CardRectangle(Rectangle rectangle, boolean selected) {
+    CardRectangle(Rectangle rectangle) {
         this.rectangle = rectangle;
-        this.selected = selected;
     }
 }

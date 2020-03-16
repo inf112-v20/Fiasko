@@ -211,7 +211,7 @@ public class RoboRallyGame implements IDrawableGame {
                 continue;
             }
             sleep();
-            if (cogwheel.obj.getTileType() == TileType.COGWHEEL_RIGHT) {
+            if (cogwheel.getElement().getTileType() == TileType.COGWHEEL_RIGHT) {
                 gameBoard.rotateRobotRight(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
             } else {
                 gameBoard.rotateRobotLeft(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
@@ -258,7 +258,7 @@ public class RoboRallyGame implements IDrawableGame {
                 continue;
             }
             Position conveyorBeltPosition = conveyorBelt.getPosition();
-            Tile conveyorBeltTile = conveyorBelt.getObject();
+            Tile conveyorBeltTile = conveyorBelt.getElement();
             Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltTile.getDirection());
             Tile nextTile = gameBoard.getTileOnPosition(newPosition);
 
@@ -283,7 +283,7 @@ public class RoboRallyGame implements IDrawableGame {
         Direction nextDirection = nextTile.getDirection();
         sleep();
         gameBoard.moveRobot(robot, currentDirection);
-        if (testPredicate(conveyorBelts, (container) -> container.getObject() == nextTile)) {
+        if (testPredicate(conveyorBelts, (container) -> container.getElement() == nextTile)) {
             if (Direction.getRightRotatedDirection(nextDirection) == currentDirection) {
                 sleep();
                 gameBoard.rotateRobotLeft(robot);
@@ -304,7 +304,7 @@ public class RoboRallyGame implements IDrawableGame {
             Position flagPosition = flag.getPosition();
             if (gameBoard.hasRobotOnPosition(flagPosition)) {
                 RobotID robot = gameBoard.getRobotOnPosition(flagPosition);
-                gameBoard.updateFlagOnRobot(robot, flag.getObject().getTileType());
+                gameBoard.updateFlagOnRobot(robot, flag.getElement().getTileType());
             }
         }
     }

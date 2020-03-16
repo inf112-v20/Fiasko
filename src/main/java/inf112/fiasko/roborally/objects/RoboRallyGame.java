@@ -2,7 +2,6 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.*;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
-import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.util.ArrayList;

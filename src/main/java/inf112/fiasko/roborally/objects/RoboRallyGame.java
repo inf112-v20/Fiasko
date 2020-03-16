@@ -5,6 +5,7 @@ import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
+import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -201,6 +202,21 @@ public class RoboRallyGame implements IDrawableGame {
                 gameBoard.rotateRobotRight(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
             } else {
                 gameBoard.rotateRobotLeft(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+            }
+        }
+    }
+
+    /**
+     * Checks all flags for robots. Tries to update the flag of the robot.
+     */
+    private void checkAllFlags() {
+        List<BoardElementContainer<Tile>> listOfFlags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
+                TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
+        for (BoardElementContainer<Tile> flag:listOfFlags) {
+            Position flagPosition = flag.getPosition();
+            if (gameBoard.hasRobotOnPosition(flagPosition)) {
+                RobotID robot = gameBoard.getRobotOnPosition(flagPosition);
+                gameBoard.updateFlagOnRobot(robot, flag.getObject().getTileType());
             }
         }
     }

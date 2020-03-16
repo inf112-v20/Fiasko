@@ -106,12 +106,8 @@ public class ProgrammingCardDeckTest {
         List<ProgrammingCard> cards = fullDeck.getCards();
         fullDeck.shuffle();
         assertEquals(cards.size(), fullDeck.size());
-        for (ProgrammingCard card : fullDeck.getCards()) {
-            assertTrue(cards.contains(card));
-        }
-        for (ProgrammingCard card : cards) {
-            assertTrue(fullDeck.getCards().contains(card));
-        }
+        assertTrue(cards.containsAll(fullDeck.getCards()));
+        assertTrue(fullDeck.getCards().containsAll(cards));
     }
 
     @Test

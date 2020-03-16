@@ -16,7 +16,7 @@ public class RoboRallyWrapper extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont();
         this.screenManager = new ScreenManager();
-        this.setScreen(screenManager.getCardChoiceScreen(this));
+        this.setScreen(screenManager.getMainMenuScreen(this));
     }
 
     public void dispose() {

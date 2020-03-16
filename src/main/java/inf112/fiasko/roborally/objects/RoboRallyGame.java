@@ -1,9 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Action;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.element_properties.TileType;
+
+import inf112.fiasko.roborally.element_properties.*;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
@@ -16,7 +14,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class RoboRallyGame implements IDrawableGame {
     private Board gameBoard;
-    List<BoardElementContainer<Tile>> cogwheels;
+    private List<BoardElementContainer<Tile>> cogwheels;
+    private List<BoardElementContainer<Tile>> conveyorBelts;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -90,6 +89,13 @@ public class RoboRallyGame implements IDrawableGame {
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
+            conveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.TRANSPORT_BAND_FAST,
+                    TileType.TRANSPORT_BAND_SLOW, TileType.TRANSPORT_BAND_FAST_SIDE_ENTRANCE_RIGHT,
+                    TileType.TRANSPORT_BAND_FAST_RIGHT, TileType.TRANSPORT_BAND_SLOW_RIGHT,
+                    TileType.TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_RIGHT, TileType.TRANSPORT_BAND_FAST_SIDE_ENTRANCE_LEFT,
+                    TileType.TRANSPORT_BAND_FAST_LEFT, TileType.TRANSPORT_BAND_SLOW_LEFT,
+                    TileType.TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_LEFT);
+
             new Thread(() -> {
                 try {
                     runGameLoop();
@@ -201,6 +207,106 @@ public class RoboRallyGame implements IDrawableGame {
                 gameBoard.rotateRobotRight(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
             } else {
                 gameBoard.rotateRobotLeft(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+            }
+        }
+    }
+
+    private Boolean listContainsTile(Tile tile) {
+        boolean containsTile = false;
+        for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
+            if (conveyorBelt.getObject() == tile) {
+                containsTile = true;
+                break;
+            }
+        }
+        return containsTile;
+    }
+
+    /**
+     * Moves robots standing on conveyor belts in the direction of the conveyor belt.
+     * Rotates robots being moved to a turn on the conveyor belt.
+     * @throws InterruptedException If disturbed during sleep.
+     */
+    private void moveConveyorBelts() throws InterruptedException {
+        for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
+            if (!gameBoard.hasRobotOnPosition(conveyorBelt.getPosition())) {
+                continue;
+            }
+            Position newPosition = gameBoard.getNewPosition(conveyorBelt.getPosition(),
+                    conveyorBelt.getObject().getDirection());
+            Tile nextTile = gameBoard.getTileOnPosition(newPosition);
+            Direction currentDirection = conveyorBelt.getObject().getDirection();
+            Direction nextDirection = nextTile.getDirection();
+            RobotID robot = gameBoard.getRobotOnPosition(conveyorBelt.getPosition());
+            if (listContainsTile(nextTile) && currentDirection != nextDirection) {
+                if (currentDirection.equals(Direction.NORTH)) {
+                    if (nextDirection.equals(Direction.WEST)) {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotLeft(robot);
+                    } else {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotRight(robot);
+                    }
+                } else if (currentDirection.equals(Direction.WEST)) {
+                    if (nextDirection.equals(Direction.SOUTH)) {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotLeft(robot);
+                    } else {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotLeft(robot);
+                    }
+                } else if (currentDirection.equals(Direction.SOUTH)) {
+                    if (nextDirection.equals(Direction.EAST)) {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotLeft(robot);
+                    } else {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotRight(robot);
+                    }
+                } else if (currentDirection.equals(Direction.EAST)) {
+                    if (nextDirection.equals(Direction.NORTH)) {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotLeft(robot);
+                    } else {
+                        sleep();
+                        gameBoard.moveRobot(robot, currentDirection);
+                        sleep();
+                        gameBoard.rotateRobotRight(robot);
+                    }
+                }
+            } else {
+                sleep();
+                gameBoard.moveRobot(gameBoard.getRobotOnPosition(conveyorBelt.getPosition()),
+                        conveyorBelt.getObject().getDirection());
+            }
+        }
+    }
+
+    /**
+     * Checks all flags for robots. Tries to update the flag of the robot.
+     */
+    private void checkAllFlags() {
+        List<BoardElementContainer<Tile>> listOfFlags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
+                TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
+        for (BoardElementContainer<Tile> flag:listOfFlags) {
+            Position flagPosition = flag.getPosition();
+            if (gameBoard.hasRobotOnPosition(flagPosition)) {
+                RobotID robot = gameBoard.getRobotOnPosition(flagPosition);
+                gameBoard.updateFlagOnRobot(robot, flag.getObject().getTileType());
             }
         }
     }

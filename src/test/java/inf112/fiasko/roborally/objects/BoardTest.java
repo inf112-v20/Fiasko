@@ -61,7 +61,26 @@ public class BoardTest {
         wallGrid.setElement(2, 1, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
         wallGrid.setElement(2, 2, new Wall(WallType.WALL_NORMAL, Direction.EAST));
         wallGrid.setElement(1, 2, new Wall(WallType.WALL_CORNER, Direction.NORTH_EAST));
+        tileGrid.setElement(3,3, new Tile(TileType.FLAG_1, Direction.NORTH));
+        tileGrid.setElement(2,2, new Tile(TileType.FLAG_2, Direction.NORTH));
         board = new Board(tileGrid, wallGrid, robotList);
+
+    }
+
+    @Test
+    public void flagGetsUpdatedOnRobotWithCorrectLastVisitedFlag() {
+        Robot testRobot = robotList.get(6);
+        assertEquals(0,testRobot.getLastFlagVisited());
+        board.updateFlagOnRobot(RobotID.ROBOT_7, TileType.FLAG_1);
+        assertEquals(1,testRobot.getLastFlagVisited());
+    }
+
+    @Test
+    public void flagDoesNotUpdatedOnRobotWithWringLastVisitedFlag() {
+        Robot testRobot = robotList.get(6);
+        assertEquals(0,testRobot.getLastFlagVisited());
+        board.updateFlagOnRobot(RobotID.ROBOT_7, TileType.FLAG_2);
+        assertEquals(0,testRobot.getLastFlagVisited());
     }
 
     @Test

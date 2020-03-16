@@ -2,6 +2,7 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.*;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
+import javafx.geometry.Pos;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -280,6 +281,21 @@ public class RoboRallyGame implements IDrawableGame {
                 sleep();
                 gameBoard.moveRobot(gameBoard.getRobotOnPosition(conveyorBelt.getPosition()),
                         conveyorBelt.getObject().getDirection());
+            }
+        }
+    }
+
+    /**
+     * Checks all flags for robots. Tries to update the flag of the robot.
+     */
+    private void checkAllFlags() {
+        List<BoardElementContainer<Tile>> listOfFlags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
+                TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
+        for (BoardElementContainer<Tile> flag:listOfFlags) {
+            Position flagPosition = flag.getPosition();
+            if (gameBoard.hasRobotOnPosition(flagPosition)) {
+                RobotID robot = gameBoard.getRobotOnPosition(flagPosition);
+                gameBoard.updateFlagOnRobot(robot, flag.getObject().getTileType());
             }
         }
     }

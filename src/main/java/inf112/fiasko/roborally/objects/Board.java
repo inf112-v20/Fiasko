@@ -176,6 +176,19 @@ public class Board {
     }
 
     /**
+     * Updates the flag of the robot if it stands on the correct flag.
+     * @param robotID The RobotID of a robot
+     * @param flagID TileType of the flag we check
+     */
+    public void updateFlagOnRobot(RobotID robotID, TileType flagID) {
+        Robot robot = robots.get(robotID);
+        int flagNr = flagID.getTileTypeID() % 16;
+        if (flagNr - 1 == robot.getLastFlagVisited()) {
+            robot.setLastFlagVisitedAndUpdateBackupPosition(flagNr);
+        }
+    }
+
+    /**
      * Checks if a potential robot move would be blocked by a wall
      * @param robotPosition The current position of the robot
      * @param newPosition The position the robot is trying to move to
@@ -349,7 +362,7 @@ public class Board {
      * @param walls The walls you want all positions for
      * @return A list of BoardElementContainers
      */
-    public List<BoardElementContainer<Wall>> getPositionsOfTileOnBoard(WallType ... walls) {
+    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType ... walls) {
         List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
         for (WallType wall : walls) {
             combinedList.addAll(makeTileList(wall, this.walls));
@@ -371,18 +384,20 @@ public class Board {
         for (int y = grid.getHeight() - 1; y >= 0; y--) {
             for (int x = 0; x < grid.getWidth(); x++) {
                 T gridElement = grid.getElement(x, y);
-                if (gridElement.getClass().isAssignableFrom(Tile.class)) {
-                    Tile tile = (Tile) gridElement;
-                    if (tile.getTileType() == type) {
-                        objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                if (gridElement != null) {
+                    if (gridElement.getClass().isAssignableFrom(Tile.class)) {
+                        Tile tile = (Tile) gridElement;
+                        if (tile.getTileType() == type) {
+                            objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                        }
+                    } else if (gridElement.getClass().isAssignableFrom(Wall.class)) {
+                        Wall wall = (Wall) gridElement;
+                        if (wall.getWallType() == type) {
+                            objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                        }
+                    } else {
+                        throw new IllegalArgumentException("Grid has unknown type.");
                     }
-                } else if (gridElement.getClass().isAssignableFrom(Wall.class)) {
-                    Wall wall = (Wall) gridElement;
-                    if (wall.getWallType() == type) {
-                        objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
-                    }
-                } else {
-                    throw new IllegalArgumentException("Grid has unknown type.");
                 }
             }
         }

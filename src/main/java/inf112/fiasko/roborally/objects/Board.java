@@ -1,9 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.*;
-import inf112.fiasko.roborally.utility.TextureConverterUtil;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -296,7 +293,7 @@ public class Board {
      * @param direction The direction to move the element
      * @return The new position of the element
      */
-    private Position getNewPosition(Position oldPosition, Direction direction) {
+    Position getNewPosition(Position oldPosition, Direction direction) {
         switch (direction) {
             case NORTH:
                 return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);
@@ -325,6 +322,13 @@ public class Board {
             }
         }
         return elements;
+    }
+
+    public Tile getTileOnPosition(Position position) {
+        if (!isValidPosition(position)) {
+            throw new IllegalArgumentException("Position is not on the board!");
+        }
+        return tiles.getElement(position.getXCoordinate(), position.getYCoordinate());
     }
 
     /**

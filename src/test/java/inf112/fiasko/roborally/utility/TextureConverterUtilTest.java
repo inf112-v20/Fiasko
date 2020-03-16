@@ -26,7 +26,7 @@ public class TextureConverterUtilTest {
     public void setUp() {
         tileNorth = new Tile(TileType.TILE, Direction.NORTH);
         holeNorth = new Tile(TileType.HOLE, Direction.NORTH);
-        transportBandSlowEast = new Tile(TileType.TRANSPORT_BAND_SLOW, Direction.EAST);
+        transportBandSlowEast = new Tile(TileType.CONVEYOR_BELT_SLOW, Direction.EAST);
         tileTextureRegion = TextureConverterUtil.convertElement(tileNorth);
         holeTextureRegion = TextureConverterUtil.convertElement(holeNorth);
         transportBandSlowEastTextureRegion = TextureConverterUtil.convertElement(transportBandSlowEast);

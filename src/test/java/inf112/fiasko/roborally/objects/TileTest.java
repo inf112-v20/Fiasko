@@ -40,6 +40,6 @@ public class TileTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void invalidTileThrowsException() {
-        new Tile(TileType.TRANSPORT_BAND_FAST, Direction.NORTH_EAST);
+        new Tile(TileType.CONVEYOR_BELT_FAST, Direction.NORTH_EAST);
     }
 }

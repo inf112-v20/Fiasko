@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 
 /**
  * This class represent a game which is drawable using libgdx
@@ -16,6 +17,7 @@ public class RoboRallyGame implements IDrawableGame {
     private Board gameBoard;
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
+    private List<BoardElementContainer<Tile>> fastConveyorBelts;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -89,12 +91,18 @@ public class RoboRallyGame implements IDrawableGame {
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
-            conveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.TRANSPORT_BAND_FAST,
-                    TileType.TRANSPORT_BAND_SLOW, TileType.TRANSPORT_BAND_FAST_SIDE_ENTRANCE_RIGHT,
-                    TileType.TRANSPORT_BAND_FAST_RIGHT, TileType.TRANSPORT_BAND_SLOW_RIGHT,
-                    TileType.TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_RIGHT, TileType.TRANSPORT_BAND_FAST_SIDE_ENTRANCE_LEFT,
-                    TileType.TRANSPORT_BAND_FAST_LEFT, TileType.TRANSPORT_BAND_SLOW_LEFT,
-                    TileType.TRANSPORT_BAND_SLOW_SIDE_ENTRANCE_LEFT);
+            fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
+                    TileType.CONVEYOR_BELT_FAST_RIGHT, TileType.CONVEYOR_BELT_FAST_LEFT,
+                    TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT,
+                    TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT,
+                    TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCES);
+            conveyorBelts = new ArrayList<>();
+            conveyorBelts.addAll(fastConveyorBelts);
+            conveyorBelts.addAll(gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_SLOW,
+                    TileType.CONVEYOR_BELT_SLOW_RIGHT, TileType.CONVEYOR_BELT_SLOW_LEFT,
+                    TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT,
+                    TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT,
+                    TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
 
             new Thread(() -> {
                 try {
@@ -211,87 +219,65 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
-    private Boolean listContainsTile(Tile tile) {
-        boolean containsTile = false;
-        for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
-            if (conveyorBelt.getObject() == tile) {
-                containsTile = true;
-                break;
+    /**
+     * Checks whether a given list has at least one element as defined by the predicate
+     * @param list The list to check
+     * @param predicate The predicate to test
+     * @param <T> The type of the list
+     * @return True if the list has at least one element passing the test of the predicate
+     */
+    private static <T> boolean testPredicate(List<T> list, Predicate<T> predicate) {
+        for (T object : list) {
+            if (predicate.test(object)) {
+                return true;
             }
         }
-        return containsTile;
+        return false;
     }
 
     /**
-     * Moves robots standing on conveyor belts in the direction of the conveyor belt.
-     * Rotates robots being moved to a turn on the conveyor belt.
-     * @throws InterruptedException If disturbed during sleep.
+     * Moves robots standing on conveyor belts in the direction of the conveyor belt
+     *
+     * In addition, the function rotates appropriately when arriving at any non-straight conveyor belt
+     *
+     * @throws InterruptedException If disturbed during sleep
      */
-    private void moveConveyorBelts() throws InterruptedException {
+    private void moveAllConveyorBelts() throws InterruptedException {
+        moveConveyorBelts(fastConveyorBelts);
+        moveConveyorBelts(conveyorBelts);
+    }
+
+    /**
+     * Moves all conveyor belts in the input list
+     * @param conveyorBelts A list of conveyor belts to move
+     * @throws InterruptedException If disturbed during sleep
+     */
+    private void moveConveyorBelts(List<BoardElementContainer<Tile>> conveyorBelts) throws InterruptedException {
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
             if (!gameBoard.hasRobotOnPosition(conveyorBelt.getPosition())) {
                 continue;
             }
-            Position newPosition = gameBoard.getNewPosition(conveyorBelt.getPosition(),
-                    conveyorBelt.getObject().getDirection());
+            Position conveyorBeltPosition = conveyorBelt.getPosition();
+            Tile conveyorBeltTile = conveyorBelt.getObject();
+            Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltTile.getDirection());
             Tile nextTile = gameBoard.getTileOnPosition(newPosition);
-            Direction currentDirection = conveyorBelt.getObject().getDirection();
+
+            Direction currentDirection = conveyorBeltTile.getDirection();
             Direction nextDirection = nextTile.getDirection();
-            RobotID robot = gameBoard.getRobotOnPosition(conveyorBelt.getPosition());
-            if (listContainsTile(nextTile) && currentDirection != nextDirection) {
-                if (currentDirection.equals(Direction.NORTH)) {
-                    if (nextDirection.equals(Direction.WEST)) {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotLeft(robot);
-                    } else {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotRight(robot);
-                    }
-                } else if (currentDirection.equals(Direction.WEST)) {
-                    if (nextDirection.equals(Direction.SOUTH)) {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotLeft(robot);
-                    } else {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotLeft(robot);
-                    }
-                } else if (currentDirection.equals(Direction.SOUTH)) {
-                    if (nextDirection.equals(Direction.EAST)) {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotLeft(robot);
-                    } else {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotRight(robot);
-                    }
-                } else if (currentDirection.equals(Direction.EAST)) {
-                    if (nextDirection.equals(Direction.NORTH)) {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotLeft(robot);
-                    } else {
-                        sleep();
-                        gameBoard.moveRobot(robot, currentDirection);
-                        sleep();
-                        gameBoard.rotateRobotRight(robot);
-                    }
+            RobotID robot = gameBoard.getRobotOnPosition(conveyorBeltPosition);
+
+            //TODO: Check whether the robot is able to move before moving. Alternatively: Save position and direction
+            // of each robot and revert if a collision is found.
+            sleep();
+            gameBoard.moveRobot(robot, currentDirection);
+            if (testPredicate(conveyorBelts, (container) -> container.getObject() == nextTile)) {
+                if (Direction.getRightRotatedDirection(nextDirection) == currentDirection) {
+                    sleep();
+                    gameBoard.rotateRobotLeft(robot);
+                } else if (Direction.getLeftRotatedDirection(nextDirection) == currentDirection) {
+                    sleep();
+                    gameBoard.rotateRobotRight(robot);
                 }
-            } else {
-                sleep();
-                gameBoard.moveRobot(gameBoard.getRobotOnPosition(conveyorBelt.getPosition()),
-                        conveyorBelt.getObject().getDirection());
             }
         }
     }

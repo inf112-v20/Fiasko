@@ -1,5 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
+
 import inf112.fiasko.roborally.element_properties.*;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
@@ -210,6 +211,17 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
+    private Boolean listContainsTile(Tile tile) {
+        boolean containsTile = false;
+        for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
+            if (conveyorBelt.getObject() == tile) {
+                containsTile = true;
+                break;
+            }
+        }
+        return containsTile;
+    }
+
     /**
      * Moves robots standing on conveyor belts in the direction of the conveyor belt.
      * Rotates robots being moved to a turn on the conveyor belt.
@@ -226,7 +238,7 @@ public class RoboRallyGame implements IDrawableGame {
             Direction currentDirection = conveyorBelt.getObject().getDirection();
             Direction nextDirection = nextTile.getDirection();
             RobotID robot = gameBoard.getRobotOnPosition(conveyorBelt.getPosition());
-            if (conveyorBelts.contains(nextTile) && currentDirection != nextDirection) {
+            if (listContainsTile(nextTile) && currentDirection != nextDirection) {
                 if (currentDirection.equals(Direction.NORTH)) {
                     if (nextDirection.equals(Direction.WEST)) {
                         sleep();

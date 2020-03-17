@@ -1,10 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Action;
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.element_properties.*;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
@@ -310,5 +306,9 @@ public class RoboRallyGame implements IDrawableGame {
                 gameBoard.updateFlagOnRobot(robot, flag.getElement().getTileType());
             }
         }
+    }
+
+    private void fireAllLasers(){
+        gameBoard.fireAllLasers();
     }
 }

@@ -5,6 +5,7 @@ import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.element_properties.WallType;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -37,6 +38,10 @@ public class BoardTest {
     private Board boardWithDifferentAmountOfAllTypes;
     private final Map<WallType,Integer> wallTypeNumberMap = new HashMap<>();
     private final Map<TileType,Integer> tileTypeNumberMap = new HashMap<>();
+    private Grid<Tile> tileGridforlaser;
+    private Grid<Wall> wallGridforlaser;
+    private List<Robot> robotListforlaser;
+    private Board boardforlaser;
 
     @BeforeClass
     public static void globalSetUp() {
@@ -53,6 +58,25 @@ public class BoardTest {
 
     @Before
     public void setUp() {
+
+        tileGridforlaser = new Grid<>(8, 8, new Tile(TileType.TILE, Direction.NORTH));
+        wallGridforlaser = new Grid<>(8, 8);
+        robotListforlaser = new ArrayList<>();
+        robotListforlaser.add(new Robot(RobotID.ROBOT_1, new Position(2,1)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_2, new Position(4,0)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_3, new Position(4,1)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_4, new Position(0,3)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_5, new Position(0,4)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_6, new Position(0,5)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_7, new Position(7,0)));
+        robotListforlaser.add(new Robot(RobotID.ROBOT_8, new Position(1,1)));
+        wallGridforlaser.setElement(2, 2, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
+        wallGridforlaser.setElement(1, 3, new Wall(WallType.WALL_LASER_SINGLE, Direction.SOUTH));
+        wallGridforlaser.setElement(7, 4, new Wall(WallType.WALL_LASER_DOUBLE, Direction.SOUTH));
+        wallGridforlaser.setElement(2, 3, new Wall(WallType.WALL_LASER_SINGLE, Direction.SOUTH));
+        wallGridforlaser.setElement(4, 3, new Wall(WallType.WALL_LASER_SINGLE, Direction.SOUTH));
+        boardforlaser = new Board(tileGridforlaser, wallGridforlaser, robotListforlaser);
+
         tileGrid = new Grid<>(5, 5, new Tile(TileType.TILE, Direction.NORTH));
         wallGrid = new Grid<>(5, 5);
         robotList = new ArrayList<>();
@@ -64,6 +88,8 @@ public class BoardTest {
         robotList.add(new Robot(RobotID.ROBOT_6, someValidPosition6));
         robotList.add(new Robot(RobotID.ROBOT_7, someValidPosition7));
         robotList.add(new Robot(RobotID.ROBOT_8, someValidPosition8));
+        wallGrid.setElement(4, 4, new Wall(WallType.WALL_LASER_SINGLE, Direction.WEST));
+        wallGrid.setElement(1, 4, new Wall(WallType.WALL_LASER_SINGLE, Direction.EAST));
         wallGrid.setElement(2, 1, new Wall(WallType.WALL_NORMAL, Direction.SOUTH));
         wallGrid.setElement(2, 2, new Wall(WallType.WALL_NORMAL, Direction.EAST));
         wallGrid.setElement(1, 2, new Wall(WallType.WALL_CORNER, Direction.NORTH_EAST));
@@ -97,6 +123,42 @@ public class BoardTest {
         boardWithDifferentAmountOfAllTypes = new Board(tileGridAllTypes,wallGridAllTypes,emptyRobotList);
 
     }
+
+    @Test
+    public void robotHitByLaserGetsDamaged(){
+        Robot testRobot = robotListforlaser.get(7);
+        assertEquals(0, testRobot.getDamageTaken());
+        boardforlaser.fireAllLasers();
+        assertNotEquals(0,testRobot.getDamageTaken());
+    }
+    @Test
+    public void laserBlockedByWallDoesNotDamageRobot(){
+        Robot testRobot = robotListforlaser.get(0);
+        assertEquals(0, testRobot.getDamageTaken());
+        boardforlaser.fireAllLasers();
+        assertEquals(0,testRobot.getDamageTaken());
+    }
+    @Test
+    public void laserBlockedByRobotDoesNotDamageOtherRobot(){
+        Robot testRobot1 = robotListforlaser.get(1);
+        Robot testRobot2 = robotListforlaser.get(2);
+        testRobot2.setFacingDirection(Direction.EAST);
+        assertEquals(0, testRobot1.getDamageTaken());
+        assertEquals(0, testRobot2.getDamageTaken());
+        boardforlaser.fireAllLasers();
+        assertEquals(0,testRobot1.getDamageTaken());
+        assertNotEquals(0,testRobot2.getDamageTaken());
+    }
+    @Test
+    public void doubleLaserDamage(){
+        Robot testRobot = robotListforlaser.get(6);
+        assertEquals(0, testRobot.getDamageTaken());
+        boardforlaser.fireAllLasers();
+        assertEquals(2,testRobot.getDamageTaken());
+
+    }
+
+
 
     @Test
     public void flagGetsUpdatedOnRobotWithCorrectLastVisitedFlag() {

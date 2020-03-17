@@ -47,6 +47,21 @@ public class Board {
     }
 
     /**
+     * Fires all lasers on the board and kills any robot that has taken to much damage after all lasers have fired.
+     */
+    public void fireAllLasers(){
+        List<BoardElementContainer<Wall>> listOfWallLasers = getPositionsOfWallOnBoard(WallType.WALL_LASER_SINGLE,
+                WallType.WALL_LASER_DOUBLE);
+        for (Robot robot:robots.values()) {
+            fireOneRobotLaser(robot.getPosition(),robot.getFacingDirection());
+        }
+        for (BoardElementContainer<Wall> laser:listOfWallLasers) {
+            fireOneWallLaser(laser);
+        }
+        killAllDeadRobot();
+    }
+
+    /**
      * Gets the height of the board
      * @return The height of the board
      */
@@ -408,4 +423,74 @@ public class Board {
         }
         return objList;
     }
+
+    /**
+     * Kills all robots that has taken too much damage
+     */
+    private void killAllDeadRobot(){
+        for (Robot robot:robots.values()) {
+            if(robot.getDamageTaken()>=10){
+                killRobot(robot);
+            }
+        }
+    }
+
+    /**
+     * Fires one wall laser
+     * @param laser the wall laser that is being fired
+     */
+    private void fireOneWallLaser(BoardElementContainer<Wall> laser){
+        Position hitPosition = lineForTheLaser(Direction.getReverseDirection(laser.getElement().getDirection()),laser.getPosition());
+        if(getRobotOnPosition(hitPosition)!=null){
+            laserDamage(laser.getElement().getWallType(),robots.get(getRobotOnPosition(hitPosition)));
+        }
+    }
+
+    /**
+     * fires on robot laser
+     * @param robotPosition the position of the robot firing the laser
+     * @param robotDirection the direction the robot is facing
+     */
+    private void fireOneRobotLaser(Position robotPosition, Direction robotDirection){
+        Position positionInFront = getNewPosition(robotPosition,robotDirection);
+
+        if(!isValidPosition(positionInFront)||robotMoveIsStoppedByWall(robotPosition,positionInFront,robotDirection)){
+            return;
+        }
+        Position hitPosition = lineForTheLaser(robotDirection,positionInFront);
+        if(getRobotOnPosition(hitPosition)!=null){
+            laserDamage(WallType.WALL_LASER_SINGLE,robots.get(getRobotOnPosition(hitPosition)));
+        }
+    }
+
+    /**
+     * Applies the damage form the laser to the robot the laser hit
+     * @param laserType the type of laser that hit the robot
+     * @param robot the robot getting hit by the robot
+     */
+    private void laserDamage(WallType laserType, Robot robot){
+        robot.setDamageTaken(robot.getDamageTaken()+laserType.getWallTypeID()-2);
+    }
+
+    /**
+     * Gets the Position of where the laser hits something
+     * @param direction the direction of the laser
+     * @param startPosition the start positon of the laser
+     * @return the position of the element that stopped the laser
+     */
+    private Position lineForTheLaser(Direction direction, Position startPosition){
+        Position newPosition = getNewPosition(startPosition,direction);
+        if(!isValidPosition(newPosition) || robotMoveIsStoppedByWall(startPosition,newPosition,direction)){
+            return startPosition;
+        }
+        else if(getRobotOnPosition(newPosition)!=null){
+            return newPosition;
+        }
+        else{
+            return lineForTheLaser(direction,newPosition);
+        }
+    }
+
+
+
 }

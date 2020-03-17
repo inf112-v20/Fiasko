@@ -459,7 +459,7 @@ public class Board {
     private void fireOneRobotLaser(Position robotPosition, Direction robotDirection){
         Position positionInFront = getNewPosition(robotPosition,robotDirection);
 
-        if(!isValidPosition(positionInFront)||robotMoveIsStoppedByWall(robotPosition,positionInFront,robotDirection)){
+        if(!isValidPosition(positionInFront)||moveIsStoppedByWall(robotPosition,positionInFront,robotDirection)){
             return;
         }
         Position hitPosition = lineForTheLaser(robotDirection,positionInFront);
@@ -485,7 +485,7 @@ public class Board {
      */
     private Position lineForTheLaser(Direction direction, Position startPosition){
         Position newPosition = getNewPosition(startPosition,direction);
-        if(!isValidPosition(newPosition) || robotMoveIsStoppedByWall(startPosition,newPosition,direction)){
+        if(!isValidPosition(newPosition) || moveIsStoppedByWall(startPosition,newPosition,direction)){
             return startPosition;
         }
         else if(getRobotOnPosition(newPosition)!=null){

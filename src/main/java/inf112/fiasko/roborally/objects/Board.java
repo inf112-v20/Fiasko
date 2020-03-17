@@ -209,6 +209,77 @@ public class Board {
     }
 
     /**
+     * Gets the position 1 unit in a specific direction from another position
+     * @param oldPosition The old/current position of the element
+     * @param direction The direction to move the element
+     * @return The new position of the element
+     */
+    public Position getNewPosition(Position oldPosition, Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);
+            case SOUTH:
+                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() + 1);
+            case EAST:
+                return new Position(oldPosition.getXCoordinate() + 1, oldPosition.getYCoordinate());
+            case WEST:
+                return new Position(oldPosition.getXCoordinate() - 1, oldPosition.getYCoordinate());
+            default:
+                throw new IllegalArgumentException("It's not possible to move in that direction.");
+        }
+    }
+
+    /**
+     * Gets the tile on a specific position
+     * @param position The position to get a tile from
+     * @return The tile on the given position
+     */
+    public Tile getTileOnPosition(Position position) {
+        if (!isValidPosition(position)) {
+            throw new IllegalArgumentException("Position is not on the board!");
+        }
+        return tiles.getElement(position.getXCoordinate(), position.getYCoordinate());
+    }
+
+    /**
+     * Gets the wall on a specific position
+     * @param position The position to get a wall from
+     * @return The wall on the given position
+     */
+    public Wall getWallOnPosition(Position position) {
+        if (!isValidPosition(position)) {
+            throw new IllegalArgumentException("Position is not on the board!");
+        }
+        return walls.getElement(position.getXCoordinate(), position.getYCoordinate());
+    }
+
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
+     * @param tiles The tiles you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
+        List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
+        for (TileType tile : tiles) {
+            combinedList.addAll(makeTileList(tile, this.tiles));
+        }
+        return combinedList;
+    }
+
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
+     * @param walls The walls you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType... walls) {
+        List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
+        for (WallType wall : walls) {
+            combinedList.addAll(makeTileList(wall, this.walls));
+        }
+        return combinedList;
+    }
+
+    /**
      * Checks if a potential robot move would be blocked by a wall
      * @param robotPosition The current position of the robot
      * @param newPosition The position the robot is trying to move to
@@ -306,27 +377,6 @@ public class Board {
     }
 
     /**
-     * Gets the position 1 unit in a specific direction from another position
-     * @param oldPosition The old/current position of the element
-     * @param direction The direction to move the element
-     * @return The new position of the element
-     */
-    public Position getNewPosition(Position oldPosition, Direction direction) {
-        switch (direction) {
-            case NORTH:
-                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);
-            case SOUTH:
-                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() + 1);
-            case EAST:
-                return new Position(oldPosition.getXCoordinate() + 1, oldPosition.getYCoordinate());
-            case WEST:
-                return new Position(oldPosition.getXCoordinate() - 1, oldPosition.getYCoordinate());
-            default:
-                throw new IllegalArgumentException("It's not possible to move in that direction.");
-        }
-    }
-
-    /**
      * Gets all elements on a grid
      * @param grid The grid to get elements from
      * @param <K> The type of the elements int the grid
@@ -340,39 +390,6 @@ public class Board {
             }
         }
         return elements;
-    }
-
-    public Tile getTileOnPosition(Position position) {
-        if (!isValidPosition(position)) {
-            throw new IllegalArgumentException("Position is not on the board!");
-        }
-        return tiles.getElement(position.getXCoordinate(), position.getYCoordinate());
-    }
-
-    /**
-     * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
-     * @param tiles The tiles you want all positions for
-     * @return A list of BoardElementContainers
-     */
-    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
-        List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
-        for (TileType tile : tiles) {
-            combinedList.addAll(makeTileList(tile, this.tiles));
-        }
-        return combinedList;
-    }
-
-    /**
-     * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
-     * @param walls The walls you want all positions for
-     * @return A list of BoardElementContainers
-     */
-    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType... walls) {
-        List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
-        for (WallType wall : walls) {
-            combinedList.addAll(makeTileList(wall, this.walls));
-        }
-        return combinedList;
     }
 
     /**

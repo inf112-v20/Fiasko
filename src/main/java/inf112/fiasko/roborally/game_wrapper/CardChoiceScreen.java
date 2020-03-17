@@ -6,6 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.awt.*;
 
@@ -18,14 +21,18 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final OrthographicCamera camera;
     private final CardRectangle cardRectangle;
     private final ShapeRenderer shapeRenderer;
+    private final Viewport viewport;
 
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
-        camera.setToOrtho(true, 1200, 1200);
+        int applicationWidth = 600;
+        int applicationHeight = 800;
+        camera.setToOrtho(true, applicationWidth, applicationHeight);
+        viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         Rectangle card1 = new Rectangle();
-        card1.x = 1200/2;
-        card1.y = 1200/2;
+        card1.x = 10;
+        card1.y = 10;
         card1.width = 100;
         card1.height = 100;
         cardRectangle = new CardRectangle(card1);
@@ -60,8 +67,8 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     }
 
     @Override
-    public void resize(int i, int i1) {
-        //Nothing to do
+    public void resize(int width, int height) {
+        viewport.update(width, height);
     }
 
     @Override
@@ -86,12 +93,9 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println(screenX + " " + screenY);
-        System.out.println(cardRectangle.rectangle.x + " " + cardRectangle.rectangle.y + " " +
-                cardRectangle.rectangle.width + " " + cardRectangle.rectangle.height);
-        if (cardRectangle.rectangle.contains(screenX, screenY)) {
-            cardRectangle.selected = true;
-            System.out.println("Card touched");
+        Vector3 transformed = viewport.unproject(new Vector3(screenX, screenY, 0));
+        if (cardRectangle.rectangle.contains(transformed.x, transformed.y)) {
+            cardRectangle.selected = !cardRectangle.selected;
             return true;
         }
         return false;

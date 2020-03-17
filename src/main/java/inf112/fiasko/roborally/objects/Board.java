@@ -135,7 +135,7 @@ public class Board {
         Position robotPosition = robot.getPosition();
         Position newPosition = getNewPosition(robotPosition, direction);
         //There is a wall blocking the robot. It can't proceed.
-        if (robotMoveIsStoppedByWall(robotPosition, newPosition, direction)) {
+        if (moveIsStoppedByWall(robotPosition, newPosition, direction)) {
             return false;
         }
         //Robot tried to go outside of the map. Kill it.
@@ -209,13 +209,72 @@ public class Board {
     }
 
     /**
-     * Checks if a potential robot move would be blocked by a wall
-     * @param robotPosition The current position of the robot
-     * @param newPosition The position the robot is trying to move to
-     * @param direction The direction the robot is going
+     * Gets the position 1 unit in a specific direction from another position
+     * @param oldPosition The old/current position of the element
+     * @param direction The direction to move the element
+     * @return The new position of the element
+     */
+    public Position getNewPosition(Position oldPosition, Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);
+            case SOUTH:
+                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() + 1);
+            case EAST:
+                return new Position(oldPosition.getXCoordinate() + 1, oldPosition.getYCoordinate());
+            case WEST:
+                return new Position(oldPosition.getXCoordinate() - 1, oldPosition.getYCoordinate());
+            default:
+                throw new IllegalArgumentException("It's not possible to move in that direction.");
+        }
+    }
+
+    /**
+     * Gets the tile on a specific position
+     * @param position The position to get a tile from
+     * @return The tile on the given position
+     */
+    public Tile getTileOnPosition(Position position) {
+        if (!isValidPosition(position)) {
+            throw new IllegalArgumentException("Position is not on the board!");
+        }
+        return tiles.getElement(position.getXCoordinate(), position.getYCoordinate());
+    }
+
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
+     * @param tiles The tiles you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
+        List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
+        for (TileType tile : tiles) {
+            combinedList.addAll(makeTileList(tile, this.tiles));
+        }
+        return combinedList;
+    }
+
+    /**
+     * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
+     * @param walls The walls you want all positions for
+     * @return A list of BoardElementContainers
+     */
+    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType... walls) {
+        List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
+        for (WallType wall : walls) {
+            combinedList.addAll(makeTileList(wall, this.walls));
+        }
+        return combinedList;
+    }
+
+    /**
+     * Checks if a potential move would be blocked by a wall
+     * @param robotPosition The current position of whatever is trying to move
+     * @param newPosition The position something is trying to move to
+     * @param direction The direction something is going
      * @return True if a wall would stop its path
      */
-    private boolean robotMoveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
+    public boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
             return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
                     hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
     }
@@ -306,27 +365,6 @@ public class Board {
     }
 
     /**
-     * Gets the position 1 unit in a specific direction from another position
-     * @param oldPosition The old/current position of the element
-     * @param direction The direction to move the element
-     * @return The new position of the element
-     */
-    public Position getNewPosition(Position oldPosition, Direction direction) {
-        switch (direction) {
-            case NORTH:
-                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() - 1);
-            case SOUTH:
-                return new Position(oldPosition.getXCoordinate(), oldPosition.getYCoordinate() + 1);
-            case EAST:
-                return new Position(oldPosition.getXCoordinate() + 1, oldPosition.getYCoordinate());
-            case WEST:
-                return new Position(oldPosition.getXCoordinate() - 1, oldPosition.getYCoordinate());
-            default:
-                throw new IllegalArgumentException("It's not possible to move in that direction.");
-        }
-    }
-
-    /**
      * Gets all elements on a grid
      * @param grid The grid to get elements from
      * @param <K> The type of the elements int the grid
@@ -340,39 +378,6 @@ public class Board {
             }
         }
         return elements;
-    }
-
-    public Tile getTileOnPosition(Position position) {
-        if (!isValidPosition(position)) {
-            throw new IllegalArgumentException("Position is not on the board!");
-        }
-        return tiles.getElement(position.getXCoordinate(), position.getYCoordinate());
-    }
-
-    /**
-     * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
-     * @param tiles The tiles you want all positions for
-     * @return A list of BoardElementContainers
-     */
-    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
-        List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
-        for (TileType tile : tiles) {
-            combinedList.addAll(makeTileList(tile, this.tiles));
-        }
-        return combinedList;
-    }
-
-    /**
-     * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
-     * @param walls The walls you want all positions for
-     * @return A list of BoardElementContainers
-     */
-    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType... walls) {
-        List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
-        for (WallType wall : walls) {
-            combinedList.addAll(makeTileList(wall, this.walls));
-        }
-        return combinedList;
     }
 
     /**

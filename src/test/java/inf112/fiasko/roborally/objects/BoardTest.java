@@ -283,10 +283,7 @@ public class BoardTest {
     @Test
     public void getPositionsOfTileOnBoardHasTypeCogwheelLeft() {
         List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT);
-
-        for (BoardElementContainer<Tile> elem : boardElemList) {
-            assertEquals(elem.getElement().getTileType(), TileType.COGWHEEL_LEFT);
-        }
+        assertTrue(checkIfAllElementsAreOfSpecificTileType(boardElemList, TileType.COGWHEEL_LEFT));
     }
 
     @Test
@@ -298,10 +295,7 @@ public class BoardTest {
     @Test
     public void getPositionsOfTileOnBoardHasTypeTile() {
         List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.TILE);
-
-        for (BoardElementContainer<Tile> elem : boardElemList) {
-            assertEquals(elem.getElement().getTileType(), TileType.TILE);
-        }
+        assertTrue(checkIfAllElementsAreOfSpecificTileType(boardElemList, TileType.TILE));
     }
 
     @Test
@@ -313,10 +307,7 @@ public class BoardTest {
     @Test
     public void getPositionsOfWallOnBoardHasTypeWallNormal() {
         List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_NORMAL);
-
-        for (BoardElementContainer<Wall> elem : boardElemList) {
-            assertEquals(elem.getElement().getWallType(), WallType.WALL_NORMAL);
-        }
+        assertTrue(checkIfAllElementsAreOfSpecificWallType(boardElemList, WallType.WALL_NORMAL));
     }
 
     @Test
@@ -328,17 +319,32 @@ public class BoardTest {
     @Test
     public void getPositionsOfWallOnBoardHasTypeWallCorner() {
         List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_CORNER);
-
-        for (BoardElementContainer<Wall> elem : boardElemList) {
-            assertEquals(elem.getElement().getWallType(), WallType.WALL_CORNER);
-        }
+        assertTrue(checkIfAllElementsAreOfSpecificWallType(boardElemList, WallType.WALL_CORNER));
     }
 
     @Test
-    public void getPositionsOfWallOnBoardHasCorrect() {
-        List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_CORNER);
-        Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getElement().getWallType() == WallType.WALL_CORNER;
-        boardElemList.removeIf(pred);
-        assertEquals(0, boardElemList.size());
+    public void getPositionsOfWallOnBoardHasCorrectTypesWithMultipleParameters() {
+        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT, TileType.COGWHEEL_RIGHT);
+        List<TileType> tileTypeList = new ArrayList<>();
+        List<TileType> tileTypeListResult = new ArrayList<>();
+        tileTypeList.add(TileType.COGWHEEL_LEFT);
+        tileTypeList.add(TileType.COGWHEEL_RIGHT);
+
+        for (BoardElementContainer<Tile> elem : boardElemList) {
+            tileTypeListResult.add(elem.getElement().getTileType());
+        }
+
+        assertTrue(tileTypeList.containsAll(tileTypeListResult) && tileTypeListResult.containsAll(tileTypeList));
+    }
+
+    public <K> boolean checkIfAllElementsAreOfSpecificWallType(List<BoardElementContainer<Wall>> elemList, K WallType) {
+        Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getElement().getWallType() == WallType;
+        elemList.removeIf(pred);
+        return 0 == elemList.size();
+    }
+    public <K> boolean checkIfAllElementsAreOfSpecificTileType(List<BoardElementContainer<Tile>> elemList, K TileType) {
+        Predicate<BoardElementContainer<Tile>> pred = (element) -> element.getElement().getTileType() == TileType;
+        elemList.removeIf(pred);
+        return 0 == elemList.size();
     }
 }

@@ -135,7 +135,7 @@ public class Board {
         Position robotPosition = robot.getPosition();
         Position newPosition = getNewPosition(robotPosition, direction);
         //There is a wall blocking the robot. It can't proceed.
-        if (robotMoveIsStoppedByWall(robotPosition, newPosition, direction)) {
+        if (moveIsStoppedByWall(robotPosition, newPosition, direction)) {
             return false;
         }
         //Robot tried to go outside of the map. Kill it.
@@ -242,18 +242,6 @@ public class Board {
     }
 
     /**
-     * Gets the wall on a specific position
-     * @param position The position to get a wall from
-     * @return The wall on the given position
-     */
-    public Wall getWallOnPosition(Position position) {
-        if (!isValidPosition(position)) {
-            throw new IllegalArgumentException("Position is not on the board!");
-        }
-        return walls.getElement(position.getXCoordinate(), position.getYCoordinate());
-    }
-
-    /**
      * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
      * @param tiles The tiles you want all positions for
      * @return A list of BoardElementContainers
@@ -280,13 +268,13 @@ public class Board {
     }
 
     /**
-     * Checks if a potential robot move would be blocked by a wall
-     * @param robotPosition The current position of the robot
-     * @param newPosition The position the robot is trying to move to
-     * @param direction The direction the robot is going
+     * Checks if a potential move would be blocked by a wall
+     * @param robotPosition The current position of whatever is trying to move
+     * @param newPosition The position something is trying to move to
+     * @param direction The direction something is going
      * @return True if a wall would stop its path
      */
-    private boolean robotMoveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
+    public boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
             return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
                     hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
     }

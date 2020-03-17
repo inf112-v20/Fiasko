@@ -71,6 +71,11 @@ public class RoboRallyGame implements IDrawableGame {
         robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 16)));
         robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 16)));
         robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 16)));
+        robots.add(new Robot(RobotID.ROBOT_4, new Position(3, 16)));
+        robots.add(new Robot(RobotID.ROBOT_5, new Position(4, 16)));
+        robots.add(new Robot(RobotID.ROBOT_6, new Position(5, 16)));
+        robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 16)));
+        robots.add(new Robot(RobotID.ROBOT_8, new Position(7, 16)));
         try {
             gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
         } catch (IOException e) {
@@ -87,6 +92,11 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
             robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
             robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
+            robots.add(new Robot(RobotID.ROBOT_4, new Position(4, 8)));
+            robots.add(new Robot(RobotID.ROBOT_5, new Position(6, 6)));
+            robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
+            robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
+            robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
@@ -143,6 +153,8 @@ public class RoboRallyGame implements IDrawableGame {
         makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
         makeMove(RobotID.ROBOT_2, Action.U_TURN);
         makeMove(RobotID.ROBOT_2, Action.MOVE_1);
+        moveAllConveyorBelts();
+        makeMove(RobotID.ROBOT_7, Action.MOVE_1);
     }
 
     /**
@@ -242,16 +254,17 @@ public class RoboRallyGame implements IDrawableGame {
      * @throws InterruptedException If disturbed during sleep
      */
     private void moveAllConveyorBelts() throws InterruptedException {
+        sleep();
         moveConveyorBelts(fastConveyorBelts);
+        sleep();
         moveConveyorBelts(conveyorBelts);
     }
 
     /**
      * Moves all conveyor belts in the input list
      * @param conveyorBelts A list of conveyor belts to move
-     * @throws InterruptedException If disturbed during sleep
      */
-    private void moveConveyorBelts(List<BoardElementContainer<Tile>> conveyorBelts) throws InterruptedException {
+    private void moveConveyorBelts(List<BoardElementContainer<Tile>> conveyorBelts) {
         List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsThatShouldMove =
                 conveyorBeltsThatCanMoveWithoutConflict(conveyorBelts);
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBeltsWithRobotsThatShouldMove) {
@@ -321,19 +334,14 @@ public class RoboRallyGame implements IDrawableGame {
      * @param robot The id of the robot to move
      * @param currentDirection The direction of the conveyor belt the robot is standing on
      * @param nextTile The tile the robot is moving to
-     * @throws InterruptedException If disturbed during sleep
      */
-    private void doConveyorBeltMovement(RobotID robot, Direction currentDirection, Tile nextTile)
-            throws InterruptedException {
+    private void doConveyorBeltMovement(RobotID robot, Direction currentDirection, Tile nextTile) {
         Direction nextDirection = nextTile.getDirection();
-        sleep();
         gameBoard.moveRobot(robot, currentDirection);
         if (testPredicate(conveyorBelts, (container) -> container.getElement() == nextTile)) {
             if (Direction.getRightRotatedDirection(nextDirection) == currentDirection) {
-                sleep();
                 gameBoard.rotateRobotLeft(robot);
             } else if (Direction.getLeftRotatedDirection(nextDirection) == currentDirection) {
-                sleep();
                 gameBoard.rotateRobotRight(robot);
             }
         }

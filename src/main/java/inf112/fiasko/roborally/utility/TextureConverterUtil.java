@@ -26,9 +26,7 @@ import java.util.Map;
  */
 public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
-    private static final Texture robot1Texture = new Texture(Gdx.files.internal("assets/Robot.png"));
-    private static final Texture robot2Texture = new Texture(Gdx.files.internal("assets/Robot2.png"));
-    private static final Texture robot3Texture = new Texture(Gdx.files.internal("assets/Robot3.png"));
+    private static final Texture robotsTexture = new Texture(Gdx.files.internal("assets/robots.png"));
     private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
     private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
     private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
@@ -42,9 +40,7 @@ public final class TextureConverterUtil {
     public static List<Disposable> getDisposableElements() {
         List<Disposable> disposables = new ArrayList<>();
         disposables.add(textureSheet);
-        disposables.add(robot1Texture);
-        disposables.add(robot2Texture);
-        disposables.add(robot3Texture);
+        disposables.add(robotsTexture);
         return disposables;
     }
 
@@ -100,12 +96,23 @@ public final class TextureConverterUtil {
     }
 
     public static TextureRegion convertElement(Robot robot) {
+
         if (robot.getRobotId() == RobotID.ROBOT_1) {
-            return new TextureRegion(robot1Texture, 0, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 0, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_2) {
-            return new TextureRegion(robot2Texture, 0, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_3) {
-            return new TextureRegion(robot3Texture, 0, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 2*64, 0, 64, 64);
+        } else if (robot.getRobotId() == RobotID.ROBOT_4) {
+            return new TextureRegion(robotsTexture, 3*64, 0, 64, 64);
+        } else if (robot.getRobotId() == RobotID.ROBOT_5) {
+            return new TextureRegion(robotsTexture, 4*64, 0, 64, 64);
+        } else if (robot.getRobotId() == RobotID.ROBOT_6) {
+            return new TextureRegion(robotsTexture, 5*64, 0, 64, 64);
+        } else if (robot.getRobotId() == RobotID.ROBOT_7) {
+            return new TextureRegion(robotsTexture, 6*64, 0, 64, 64);
+        } else if (robot.getRobotId() == RobotID.ROBOT_8) {
+            return new TextureRegion(robotsTexture, 7*64, 0, 64, 64);
         }
         throw new IllegalArgumentException("Robot has no drawable texture.");
     }

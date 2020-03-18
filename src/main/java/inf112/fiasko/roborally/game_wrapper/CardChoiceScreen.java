@@ -5,40 +5,77 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.objects.IDeck;
+import inf112.fiasko.roborally.objects.ProgrammingCard;
+import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
 import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.badlogic.gdx.graphics.Color.GREEN;
 import static com.badlogic.gdx.graphics.Color.RED;
+import static com.badlogic.gdx.graphics.Color.WHITE;
 
 public class CardChoiceScreen extends InputAdapter implements Screen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
-    private final CardRectangle cardRectangle;
+    private final List<CardRectangle> cardRectangles;
     private final ShapeRenderer shapeRenderer;
     private final Viewport viewport;
+    private List<CardRectangle> chosenCards;
+    private final int maxCards;
 
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
         int applicationWidth = 600;
         int applicationHeight = 800;
-        camera.setToOrtho(true, applicationWidth, applicationHeight);
+        camera.setToOrtho(false, applicationWidth, applicationHeight);
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        Rectangle card1 = new Rectangle();
-        card1.x = 10;
-        card1.y = 10;
-        card1.width = 100;
-        card1.height = 100;
-        cardRectangle = new CardRectangle(card1);
+        cardRectangles = new ArrayList<>();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
         Gdx.input.setInputProcessor(this);
+        try {
+            generateCards();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        this.chosenCards = new ArrayList<>();
+        this.maxCards = 5;
+    }
+
+    /**
+     * Generates some placeholder cards for testing
+     * @throws IOException If programming cards cannot be loaded
+     */
+    private void generateCards() throws IOException {
+        IDeck<ProgrammingCard> deck = DeckLoaderUtil.loadProgrammingCardsDeck();
+        deck.shuffle();
+        //Get 16 programming cards
+        List<ProgrammingCard> cardList = deck.getCards().subList(0, 9);
+        float cardWidth = viewport.getWorldWidth() / 3;
+        float cardHeight = viewport.getWorldHeight() / 3;
+        for (int i = 0; i < 9; i++) {
+            int x = (int)(((i % 3)*cardWidth) + 10);
+            int y = (int)(((i / 3) * cardHeight + 10));
+            Rectangle card = new Rectangle();
+            card.x = x;
+            card.y = y;
+            card.width = (int)cardWidth - 20;
+            card.height = (int)cardHeight - 20;
+            ProgrammingCard programmingCard = cardList.get(i);
+            CardRectangle cardRectangle = new CardRectangle(card, programmingCard);
+            cardRectangles.add(cardRectangle);
+        }
     }
 
     @Override
@@ -55,15 +92,65 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         shapeRenderer.setProjectionMatrix(camera.combined);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        if (cardRectangle.selected) {
-            shapeRenderer.setColor(RED);
-            shapeRenderer.rect(cardRectangle.rectangle.x - 5, cardRectangle.rectangle.y - 5,
-                    cardRectangle.rectangle.width + 10, cardRectangle.rectangle.height + 10);
+        for (CardRectangle cardRectangle : cardRectangles) {
+            if (cardRectangle.selected) {
+                shapeRenderer.setColor(RED);
+                shapeRenderer.rect(cardRectangle.rectangle.x - 10, cardRectangle.rectangle.y - 10,
+                        cardRectangle.rectangle.width + 20, cardRectangle.rectangle.height + 20);
+            }
+            shapeRenderer.setColor(GREEN);
+            shapeRenderer.rect(cardRectangle.rectangle.x, cardRectangle.rectangle.y,
+                    cardRectangle.rectangle.width, cardRectangle.rectangle.height);
         }
-        shapeRenderer.setColor(GREEN);
-        shapeRenderer.rect(cardRectangle.rectangle.x, cardRectangle.rectangle.y,
-                cardRectangle.rectangle.width, cardRectangle.rectangle.height);
         shapeRenderer.end();
+        roboRallyWrapper.batch.begin();
+        for (CardRectangle cardRectangle : cardRectangles) {
+            GlyphLayout layout = new GlyphLayout(roboRallyWrapper.font, Integer.toString(cardRectangle.card.getPriority()));
+            float fontX = (int)(cardRectangle.rectangle.x + (cardRectangle.rectangle.width - layout.width) / 2.0);
+            float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 30;
+            roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
+            drawCardSymbol(cardRectangle);
+        }
+        roboRallyWrapper.batch.end();
+    }
+
+    /**
+     * Draws the symbol on a card
+     * @param cardRectangle The card rectangle to draw
+     */
+    private void drawCardSymbol(CardRectangle cardRectangle) {
+        String text;
+        switch (cardRectangle.card.getAction()) {
+            case MOVE_1:
+                text = "Move 1 forward";
+                break;
+            case MOVE_2:
+                text = "Move 2 forward";
+                break;
+            case MOVE_3:
+                text = "Move 3 forward";
+                break;
+            case BACK_UP:
+                text = "Back up";
+                break;
+            case ROTATE_LEFT:
+                text = "Rotate left";
+                break;
+            case ROTATE_RIGHT:
+                text = "Rotate right";
+                break;
+            case U_TURN:
+                text = "U Turn";
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid action on CardRectangle.");
+        }
+        GlyphLayout layout = new GlyphLayout();
+        layout.setText(roboRallyWrapper.font, text, WHITE, cardRectangle.rectangle.width - 20,
+                1, true);
+        float fontX = cardRectangle.rectangle.x;
+        float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 80;
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
     }
 
     @Override
@@ -94,19 +181,37 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector3 transformed = viewport.unproject(new Vector3(screenX, screenY, 0));
-        if (cardRectangle.rectangle.contains(transformed.x, transformed.y)) {
-            cardRectangle.selected = !cardRectangle.selected;
-            return true;
+        for (CardRectangle cardRectangle : cardRectangles) {
+            if (cardRectangle.rectangle.contains(transformed.x, transformed.y)) {
+                if (!cardRectangle.selected && chosenCards.size() < maxCards) {
+                    chosenCards.add(cardRectangle);
+                    cardRectangle.selected = true;
+                } else if (cardRectangle.selected) {
+                    chosenCards.remove(cardRectangle);
+                    cardRectangle.selected = false;
+                }
+                return true;
+            }
         }
         return false;
     }
 }
 
+/**
+ * A helper class for keeping track of card information and a rectangle
+ */
 class CardRectangle {
     protected final Rectangle rectangle;
     protected boolean selected = false;
+    protected final ProgrammingCard card;
 
-    CardRectangle(Rectangle rectangle) {
+    CardRectangle(Rectangle rectangle, ProgrammingCard card) {
         this.rectangle = rectangle;
+        this.card = card;
+    }
+
+    @Override
+    public String toString() {
+        return card.toString();
     }
 }

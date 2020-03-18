@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.game_wrapper;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.fiasko.roborally.objects.IDrawableGame;
@@ -14,9 +15,9 @@ public class RoboRallyWrapper extends Game {
     @Override
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("assets/Montserrat-Regular.fnt"));
         this.screenManager = new ScreenManager();
-        this.setScreen(screenManager.getMainMenuScreen(this));
+        this.setScreen(screenManager.getBoardActiveScreen(this));
     }
 
     public void dispose() {

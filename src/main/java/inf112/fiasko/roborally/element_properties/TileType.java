@@ -26,15 +26,19 @@ public enum TileType {
     FLAG_4 (20),
     WRENCH (21),
     WRENCH_AND_HAMMER (22),
-    DEATH_TILE (23),
-    ROBOT_SPAWN_1 (24),
-    ROBOT_SPAWN_2 (25),
-    ROBOT_SPAWN_3 (26),
-    ROBOT_SPAWN_4 (27),
-    ROBOT_SPAWN_5 (28),
-    ROBOT_SPAWN_6 (29),
-    ROBOT_SPAWN_7 (30),
-    ROBOT_SPAWN_8 (31);
+    ROBOT_SPAWN_1 (23),
+    ROBOT_SPAWN_2 (24),
+    ROBOT_SPAWN_3 (25),
+    ROBOT_SPAWN_4 (26),
+    ROBOT_SPAWN_5 (27),
+    ROBOT_SPAWN_6 (28),
+    ROBOT_SPAWN_7 (29),
+    ROBOT_SPAWN_8 (30),
+    PIT_EMPTY (31),
+    PIT_FULL (32),
+    PIT_NORMAL (33),
+    PIT_CORNER (34),
+    PIT_U (35);
 
     private final int tileTypeID;
 

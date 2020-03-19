@@ -28,6 +28,9 @@ class RoboRallyClientListener extends Listener {
         if (object instanceof SomeResponse) {
             SomeResponse response = (SomeResponse)object;
             System.out.println("Client received: " + response.text);
+        } else if (object instanceof ErrorResponse) {
+            ErrorResponse errorResponse = (ErrorResponse) object;
+            System.out.println(errorResponse.getErrorMessage());
         }
     }
 }

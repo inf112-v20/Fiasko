@@ -68,14 +68,14 @@ public class RoboRallyGame implements IDrawableGame {
      */
     private void initializeDebugMode() {
         List<Robot> robots = new ArrayList<>();
-        robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 16)));
-        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 16)));
-        robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 16)));
-        robots.add(new Robot(RobotID.ROBOT_4, new Position(3, 16)));
-        robots.add(new Robot(RobotID.ROBOT_5, new Position(4, 16)));
-        robots.add(new Robot(RobotID.ROBOT_6, new Position(5, 16)));
-        robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 16)));
-        robots.add(new Robot(RobotID.ROBOT_8, new Position(7, 16)));
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 18)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 18)));
+        robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 18)));
+        robots.add(new Robot(RobotID.ROBOT_4, new Position(3, 18)));
+        robots.add(new Robot(RobotID.ROBOT_5, new Position(4, 18)));
+        robots.add(new Robot(RobotID.ROBOT_6, new Position(5, 18)));
+        robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 18)));
+        robots.add(new Robot(RobotID.ROBOT_8, new Position(7, 18)));
         try {
             gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
         } catch (IOException e) {

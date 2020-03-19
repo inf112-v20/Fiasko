@@ -331,7 +331,14 @@ public class Board {
             throw new IllegalArgumentException("The game board is missing a tile. This should not happen.");
         }
         TileType tileTypeRobotStepsOn = tileRobotStepsOn.getTileType();
-        if (tileTypeRobotStepsOn == TileType.HOLE || tileTypeRobotStepsOn == TileType.DEATH_TILE) {
+        List<TileType> dangerousTiles = new ArrayList<>();
+        dangerousTiles.add(TileType.HOLE);
+        dangerousTiles.add(TileType.PIT_CORNER);
+        dangerousTiles.add(TileType.PIT_EMPTY);
+        dangerousTiles.add(TileType.PIT_FULL);
+        dangerousTiles.add(TileType.PIT_NORMAL);
+        dangerousTiles.add(TileType.PIT_U);
+        if (dangerousTiles.contains(tileTypeRobotStepsOn)) {
             killRobot(robot);
         }
     }

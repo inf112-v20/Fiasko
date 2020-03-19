@@ -445,7 +445,8 @@ public class Board {
      * @param laser the wall laser that is being fired
      */
     private void fireOneWallLaser(BoardElementContainer<Wall> laser){
-        Position hitPosition = lineForTheLaser(Direction.getReverseDirection(laser.getElement().getDirection()),laser.getPosition());
+        Position hitPosition = lineForTheLaser(Direction.getReverseDirection(laser.getElement().getDirection()),
+                laser.getPosition());
         if(getRobotOnPosition(hitPosition)!=null){
             laserDamage(laser.getElement().getWallType(),robots.get(getRobotOnPosition(hitPosition)));
         }
@@ -485,7 +486,8 @@ public class Board {
      */
     private Position lineForTheLaser(Direction direction, Position startPosition){
         Position newPosition = getNewPosition(startPosition,direction);
-        if(!isValidPosition(newPosition) || moveIsStoppedByWall(startPosition,newPosition,direction)){
+        if(!isValidPosition(newPosition) || moveIsStoppedByWall(startPosition,newPosition,direction) ||
+                getRobotOnPosition(startPosition)!= null){
             return startPosition;
         }
         else if(getRobotOnPosition(newPosition)!=null){

@@ -47,21 +47,6 @@ public class Board {
     }
 
     /**
-     * Fires all lasers on the board and kills any robot that has taken to much damage after all lasers have fired.
-     */
-    public void fireAllLasers(){
-        List<BoardElementContainer<Wall>> listOfWallLasers = getPositionsOfWallOnBoard(WallType.WALL_LASER_SINGLE,
-                WallType.WALL_LASER_DOUBLE);
-        for (Robot robot:robots.values()) {
-            fireOneRobotLaser(robot.getPosition(),robot.getFacingDirection());
-        }
-        for (BoardElementContainer<Wall> laser:listOfWallLasers) {
-            fireOneWallLaser(laser);
-        }
-        killAllDeadRobot();
-    }
-
-    /**
      * Gets the height of the board
      * @return The height of the board
      */
@@ -245,6 +230,21 @@ public class Board {
     }
 
     /**
+     * Fires all lasers on the board and kills any robot that has taken to much damage after all lasers have fired.
+     */
+    public void fireAllLasers() {
+        List<BoardElementContainer<Wall>> listOfWallLasers = getPositionsOfWallOnBoard(WallType.WALL_LASER_SINGLE,
+                WallType.WALL_LASER_DOUBLE);
+        for (Robot robot:robots.values()) {
+            fireRobotLaser(robot.getPosition(),robot.getFacingDirection());
+        }
+        for (BoardElementContainer<Wall> laser : listOfWallLasers) {
+            fireWallLaser(laser);
+        }
+        killAllHeavilyDamagedRobots();
+    }
+
+    /**
      * Gets the tile on a specific position
      * @param position The position to get a tile from
      * @return The tile on the given position
@@ -283,13 +283,22 @@ public class Board {
     }
 
     /**
+     * Checks whether there exists a robot on a specific position
+     * @param position The position to check
+     * @return True if there is a robot on the specified position
+     */
+    public boolean hasRobotOnPosition(Position position) {
+        return getRobotOnPosition(position) != null;
+    }
+
+    /**
      * Checks if a potential move would be blocked by a wall
      * @param robotPosition The current position of whatever is trying to move
      * @param newPosition The position something is trying to move to
      * @param direction The direction something is going
      * @return True if a wall would stop its path
      */
-    public boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
+    private boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
             return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
                     hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
     }
@@ -358,15 +367,6 @@ public class Board {
     }
 
     /**
-     * Checks whether there exists a robot on a specific position
-     * @param position The position to check
-     * @return True if there is a robot on the specified position
-     */
-    public boolean hasRobotOnPosition(Position position) {
-        return getRobotOnPosition(position) != null;
-    }
-
-    /**
      * Checks whether a position has a wall facing a specific direction
      * @param position The position to check
      * @param direction The direction of the wall to check for
@@ -403,11 +403,11 @@ public class Board {
     }
 
     /**
-     * Finds all position of an obj and makes a list of BoardElementContainers
-     * @param type Type of obj
-     * @param grid Grid to search
-     * @param <K> Type of type
-     * @param <T> Type of grid
+     * Finds all tiles/walls with a certain type
+     * @param type The type of tile/wall to look for
+     * @param grid The grid to look through
+     * @param <K> Type of the type to look for
+     * @param <T> Type of the grid
      * @return List of BoardElementContainers
      */
     private <K,T> List<BoardElementContainer<T>> makeTileList(K type, IGrid<T> grid) {
@@ -420,12 +420,12 @@ public class Board {
                     if (gridElement.getClass().isAssignableFrom(Tile.class)) {
                         Tile tile = (Tile) gridElement;
                         if (tile.getTileType() == type) {
-                            objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                            objList.add(new BoardElementContainer<>(gridElement, new Position(x, y)));
                         }
                     } else if (gridElement.getClass().isAssignableFrom(Wall.class)) {
                         Wall wall = (Wall) gridElement;
                         if (wall.getWallType() == type) {
-                            objList.add(new BoardElementContainer<>(gridElement, new Position(x,y)));
+                            objList.add(new BoardElementContainer<>(gridElement, new Position(x, y)));
                         }
                     } else {
                         throw new IllegalArgumentException("Grid has unknown type.");
@@ -437,11 +437,11 @@ public class Board {
     }
 
     /**
-     * Kills all robots that has taken too much damage
+     * Kills all robots that have taken too much damage
      */
-    private void killAllDeadRobot(){
+    private void killAllHeavilyDamagedRobots() {
         for (Robot robot:robots.values()) {
-            if(robot.getDamageTaken()>=10){
+            if (robot.getDamageTaken() >= 10) {
                 killRobot(robot);
             }
         }
@@ -449,62 +449,57 @@ public class Board {
 
     /**
      * Fires one wall laser
-     * @param laser the wall laser that is being fired
+     * @param wallLaser The wall laser being fired
      */
-    private void fireOneWallLaser(BoardElementContainer<Wall> laser){
-        Position hitPosition = lineForTheLaser(Direction.getReverseDirection(laser.getElement().getDirection()),
-                laser.getPosition());
-        if(getRobotOnPosition(hitPosition)!=null){
-            laserDamage(laser.getElement().getWallType(),robots.get(getRobotOnPosition(hitPosition)));
+    private void fireWallLaser(BoardElementContainer<Wall> wallLaser) {
+        Position hitPosition = getLaserTarget(Direction.getReverseDirection(wallLaser.getElement().getDirection()),
+                wallLaser.getPosition());
+        if (getRobotOnPosition(hitPosition) != null) {
+            applyLaserDamage(wallLaser.getElement().getWallType(), robots.get(getRobotOnPosition(hitPosition)));
         }
     }
 
     /**
-     * fires on robot laser
-     * @param robotPosition the position of the robot firing the laser
-     * @param robotDirection the direction the robot is facing
+     * Fires one robot laser
+     * @param robotPosition The position of the robot firing the laser
+     * @param robotDirection The direction the robot is facing
      */
-    private void fireOneRobotLaser(Position robotPosition, Direction robotDirection){
+    private void fireRobotLaser(Position robotPosition, Direction robotDirection){
         Position positionInFront = getNewPosition(robotPosition,robotDirection);
-
-        if(!isValidPosition(positionInFront)||moveIsStoppedByWall(robotPosition,positionInFront,robotDirection)){
+        if (!isValidPosition(positionInFront) || moveIsStoppedByWall(robotPosition, positionInFront, robotDirection)) {
             return;
         }
-        Position hitPosition = lineForTheLaser(robotDirection,positionInFront);
-        if(getRobotOnPosition(hitPosition)!=null){
-            laserDamage(WallType.WALL_LASER_SINGLE,robots.get(getRobotOnPosition(hitPosition)));
+        Position hitPosition = getLaserTarget(robotDirection, positionInFront);
+        if (getRobotOnPosition(hitPosition) != null) {
+            applyLaserDamage(WallType.WALL_LASER_SINGLE, robots.get(getRobotOnPosition(hitPosition)));
         }
     }
 
     /**
      * Applies the damage form the laser to the robot the laser hit
-     * @param laserType the type of laser that hit the robot
-     * @param robot the robot getting hit by the robot
+     * @param laserType The type of laser that hit the robot
+     * @param robot The robot getting hit by the robot
      */
-    private void laserDamage(WallType laserType, Robot robot){
-        robot.setDamageTaken(robot.getDamageTaken()+laserType.getWallTypeID()-2);
+    private void applyLaserDamage(WallType laserType, Robot robot) {
+        robot.setDamageTaken(robot.getDamageTaken() + laserType.getWallTypeID() - 2);
     }
 
     /**
-     * Gets the Position of where the laser hits something
-     * @param direction the direction of the laser
-     * @param startPosition the start positon of the laser
-     * @return the position of the element that stopped the laser
+     * Gets the position of the tile the laser stops at
+     * @param direction The direction of the laser
+     * @param startPosition The start position of the laser
+     * @return The position the laser stopped at
      */
-    private Position lineForTheLaser(Direction direction, Position startPosition){
-        Position newPosition = getNewPosition(startPosition,direction);
-        if(!isValidPosition(newPosition) || moveIsStoppedByWall(startPosition,newPosition,direction) ||
-                getRobotOnPosition(startPosition)!= null){
+    private Position getLaserTarget(Direction direction, Position startPosition) {
+        Position newPosition = getNewPosition(startPosition, direction);
+        if (!isValidPosition(newPosition) || moveIsStoppedByWall(startPosition, newPosition, direction) ||
+                getRobotOnPosition(startPosition) != null) {
             return startPosition;
-        }
-        else if(getRobotOnPosition(newPosition)!=null){
+        } else if (getRobotOnPosition(newPosition) != null) {
             return newPosition;
-        }
-        else{
-            return lineForTheLaser(direction,newPosition);
+        } else {
+            return getLaserTarget(direction, newPosition);
         }
     }
-
-
 
 }

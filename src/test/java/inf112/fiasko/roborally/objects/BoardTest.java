@@ -5,7 +5,6 @@ import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.element_properties.WallType;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,8 +37,6 @@ public class BoardTest {
     private Board boardWithDifferentAmountOfAllTypes;
     private final Map<WallType,Integer> wallTypeNumberMap = new HashMap<>();
     private final Map<TileType,Integer> tileTypeNumberMap = new HashMap<>();
-    private Grid<Tile> tileGridforlaser;
-    private Grid<Wall> wallGridforlaser;
     private List<Robot> robotListforlaser;
     private Board boardforlaser;
 
@@ -59,8 +56,8 @@ public class BoardTest {
     @Before
     public void setUp() {
 
-        tileGridforlaser = new Grid<>(8, 8, new Tile(TileType.TILE, Direction.NORTH));
-        wallGridforlaser = new Grid<>(8, 8);
+        Grid<Tile> tileGridforlaser = new Grid<>(8, 8, new Tile(TileType.TILE, Direction.NORTH));
+        Grid<Wall> wallGridforlaser = new Grid<>(8, 8);
         robotListforlaser = new ArrayList<>();
         robotListforlaser.add(new Robot(RobotID.ROBOT_1, new Position(2,1)));
         robotListforlaser.add(new Robot(RobotID.ROBOT_2, new Position(4,0)));

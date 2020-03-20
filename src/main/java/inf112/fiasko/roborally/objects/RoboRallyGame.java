@@ -154,7 +154,10 @@ public class RoboRallyGame implements IDrawableGame {
         makeMove(RobotID.ROBOT_2, Action.U_TURN);
         makeMove(RobotID.ROBOT_2, Action.MOVE_1);
         moveAllConveyorBelts();
+        checkAllFlags();
+        rotateCogwheels();
         makeMove(RobotID.ROBOT_7, Action.MOVE_1);
+        fireAllLasers();
     }
 
     /**
@@ -362,7 +365,7 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
-    private void fireAllLasers(){
+    private void fireAllLasers() {
         gameBoard.fireAllLasers();
     }
 }

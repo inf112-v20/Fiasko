@@ -33,9 +33,10 @@ public class MainMenuScreen implements Screen {
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Robo Rally", 0, 250,
-                200, 0, false);
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click anywhere to run the demo", 70, 200);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Robo Rally", 10, 250,
+                380, 1, true);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click anywhere to run the demo", 10, 200,
+                380, 1, true);
         roboRallyWrapper.batch.end();
 
         if (Gdx.input.isTouched()) {

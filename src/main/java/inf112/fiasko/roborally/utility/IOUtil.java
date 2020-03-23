@@ -33,8 +33,8 @@ public final class IOUtil {
         int gameWidth = game.getWidth();
         int gameHeight = game.getHeight();
         drawableObjects.addAll(getDrawableObjectsFromElementList(tilesToDraw, gameWidth, tileWidth, tileHeight));
-        drawableObjects.addAll(getDrawableObjectsFromElementList(wallsToDraw, gameWidth, tileWidth, tileHeight));
         drawableObjects.addAll(getDrawableObjectsFromElementList(particlesToDraw, gameWidth, tileWidth, tileHeight));
+        drawableObjects.addAll(getDrawableObjectsFromElementList(wallsToDraw, gameWidth, tileWidth, tileHeight));
         drawableObjects.addAll(getDrawableRobots(robotsToDraw, gameHeight, tileWidth, tileHeight));
         return drawableObjects;
     }

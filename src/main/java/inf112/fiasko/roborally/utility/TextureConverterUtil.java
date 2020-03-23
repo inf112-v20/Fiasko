@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Disposable;
 import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.ParticleType;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.element_properties.WallType;
+import inf112.fiasko.roborally.objects.Particle;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.Wall;
@@ -29,6 +31,8 @@ public final class TextureConverterUtil {
     private static final Texture robotsTexture = new Texture(Gdx.files.internal("assets/robots.png"));
     private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
     private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
+    private static Map<ParticleType, TextureConverterContainer> tileSheetParticleTextureMappings;
+    private static Map<ParticleType, Boolean> tileSheetParticleHasRotatedTextureMappings;
     private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
 
     private TextureConverterUtil() {}
@@ -69,6 +73,30 @@ public final class TextureConverterUtil {
     }
 
     /**
+     * Gets the texture representing the particle
+     * @param particle The particle to draw
+     * @return The texture to draw
+     */
+    public static TextureRegion convertElement(Particle particle) {
+        if (tileSheetParticleTextureMappings == null) {
+            try {
+                loadParticleMappings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        Direction direction = particle.getDirection();
+        TextureConverterContainer converterContainer = tileSheetParticleTextureMappings.get(particle.getParticleType());
+        if (converterContainer != null) {
+            return getDirectionalTextureRegion(direction, converterContainer.getXNorth(),
+                    converterContainer.getYNorth(), converterContainer.getXEast(), converterContainer.getYEast(),
+                    converterContainer.getXSouth(), converterContainer.getYSouth(), converterContainer.getXWest(),
+                    converterContainer.getYWest());
+        }
+        throw new IllegalArgumentException("Invalid or unimplemented particle type encountered");
+    }
+
+    /**
      * Gets the texture representing the tile
      * @param wall The wall to draw
      * @return The texture to draw
@@ -95,8 +123,12 @@ public final class TextureConverterUtil {
         throw new IllegalArgumentException("Invalid or unimplemented tile type encountered");
     }
 
+    /**
+     * Gets the texture representing the robot
+     * @param robot The robot to draw
+     * @return The texture to draw
+     */
     public static TextureRegion convertElement(Robot robot) {
-
         if (robot.getRobotId() == RobotID.ROBOT_1) {
             return new TextureRegion(robotsTexture, 0, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_2) {
@@ -137,6 +169,25 @@ public final class TextureConverterUtil {
     }
 
     /**
+     * Checks whether a particle has textures for different rotations
+     *
+     * For a particle without a rotated texture, the texture needs to be rotated when rendering.
+     *
+     * @param particle The particle to check
+     * @return True if rotated versions of the texture exists. False otherwise
+     */
+    public static boolean hasRotatedTexture(Particle particle) {
+        if (tileSheetTileTextureMappings == null) {
+            try {
+                loadParticleMappings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return tileSheetParticleHasRotatedTextureMappings.get(particle.getParticleType());
+    }
+
+    /**
      * Loads mappings between a tile and texture
      *
      * Loads both information about mapping from a tile to a texture converter container and information about mapping
@@ -155,6 +206,28 @@ public final class TextureConverterUtil {
             TileType type = TileType.valueOf(parameters[0]);
             storeTextMappingInMap(parameters, type, tileSheetTileTextureMappings,
                     tileSheetTileHasRotatedTextureMappings);
+        }
+    }
+
+    /**
+     * Loads mappings between a particle and a texture
+     *
+     * Loads both information about mapping from a particle to a texture converter container and information about
+     * mapping from a particle to whether the particle has a rotated version of each texture
+     *
+     * @throws IOException If the mapping file can't be properly read
+     */
+    private static synchronized void loadParticleMappings() throws IOException {
+        tileSheetParticleTextureMappings = new HashMap<>();
+        tileSheetParticleHasRotatedTextureMappings = new HashMap<>();
+        InputStream fileStream = ResourceUtil.getResourceAsInputStream("texture_sheet_particle_mapping.txt");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            String[] parameters = line.split(" ");
+            ParticleType type = ParticleType.valueOf(parameters[0]);
+            storeTextMappingInMap(parameters, type, tileSheetParticleTextureMappings,
+                    tileSheetParticleHasRotatedTextureMappings);
         }
     }
 

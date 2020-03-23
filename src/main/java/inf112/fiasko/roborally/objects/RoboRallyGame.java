@@ -51,6 +51,11 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     @Override
+    public List<Particle> getParticlesToDraw() {
+        return gameBoard.getParticles();
+    }
+
+    @Override
     public List<Robot> getRobotsToDraw() {
         return gameBoard.getAliveRobots();
     }
@@ -68,14 +73,14 @@ public class RoboRallyGame implements IDrawableGame {
      */
     private void initializeDebugMode() {
         List<Robot> robots = new ArrayList<>();
-        robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 16)));
-        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 16)));
-        robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 16)));
-        robots.add(new Robot(RobotID.ROBOT_4, new Position(3, 16)));
-        robots.add(new Robot(RobotID.ROBOT_5, new Position(4, 16)));
-        robots.add(new Robot(RobotID.ROBOT_6, new Position(5, 16)));
-        robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 16)));
-        robots.add(new Robot(RobotID.ROBOT_8, new Position(7, 16)));
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 18)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 18)));
+        robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 18)));
+        robots.add(new Robot(RobotID.ROBOT_4, new Position(3, 18)));
+        robots.add(new Robot(RobotID.ROBOT_5, new Position(4, 18)));
+        robots.add(new Robot(RobotID.ROBOT_6, new Position(5, 18)));
+        robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 18)));
+        robots.add(new Robot(RobotID.ROBOT_8, new Position(7, 18)));
         try {
             gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
         } catch (IOException e) {
@@ -97,7 +102,7 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
-            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            gameBoard = BoardLoaderUtil.loadBoard("boards/Dizzy_Dash.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
             fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
@@ -133,6 +138,7 @@ public class RoboRallyGame implements IDrawableGame {
         TimeUnit.SECONDS.sleep(3);
         makeMove(RobotID.ROBOT_1, Action.MOVE_1);
         makeMove(RobotID.ROBOT_1, Action.MOVE_2);
+        fireAllLasers();
         makeMove(RobotID.ROBOT_1, Action.BACK_UP);
         makeMove(RobotID.ROBOT_1, Action.BACK_UP);
         makeMove(RobotID.ROBOT_1, Action.MOVE_3);
@@ -154,6 +160,8 @@ public class RoboRallyGame implements IDrawableGame {
         makeMove(RobotID.ROBOT_2, Action.U_TURN);
         makeMove(RobotID.ROBOT_2, Action.MOVE_1);
         moveAllConveyorBelts();
+        checkAllFlags();
+        rotateCogwheels();
         makeMove(RobotID.ROBOT_7, Action.MOVE_1);
     }
 
@@ -362,7 +370,12 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
-    private void fireAllLasers(){
+    /**
+     * Fires all lasers on the game board
+     */
+    private void fireAllLasers() throws InterruptedException {
         gameBoard.fireAllLasers();
+        sleep();
+        gameBoard.doLaserCleanup();
     }
 }

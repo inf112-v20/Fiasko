@@ -17,7 +17,7 @@ public class RoboRallyWrapper extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("assets/Montserrat-Regular.fnt"));
         this.screenManager = new ScreenManager();
-        this.setScreen(screenManager.getBoardActiveScreen(this));
+        this.setScreen(screenManager.getMainMenuScreen(this));
     }
 
     public void dispose() {

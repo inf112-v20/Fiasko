@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class TileTest {
     private Tile tile;
@@ -38,8 +39,13 @@ public class TileTest {
         assertEquals(Direction.SOUTH, tile2.getDirection());
     }
 
+    @Test
+    public void invalidTileTypeIDReturnsNull() {
+        assertNull(TileType.getTileTypeFromID(-1));
+    }
+
     @Test (expected = IllegalArgumentException.class)
-    public void invalidTileThrowsException() {
-        new Tile(TileType.CONVEYOR_BELT_FAST, Direction.NORTH_EAST);
+    public void invalidTileDirectionThrowsError() {
+        new Tile(TileType.TILE, Direction.NORTH_EAST);
     }
 }

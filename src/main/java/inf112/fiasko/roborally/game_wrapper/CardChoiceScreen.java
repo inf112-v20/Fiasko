@@ -30,7 +30,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final List<CardRectangle> cardRectangles;
     private final ShapeRenderer shapeRenderer;
     private final Viewport viewport;
-    private List<CardRectangle> chosenCards;
+    private final List<CardRectangle> chosenCards;
     private final int maxCards;
 
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {

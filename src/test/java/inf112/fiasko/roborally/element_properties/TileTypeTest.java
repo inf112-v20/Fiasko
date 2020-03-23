@@ -41,16 +41,6 @@ public class TileTypeTest {
     }
 
     @Test
-    public void invalidTileTypeIDReturnsNull() {
-        assertNull(TileType.getTileTypeFromID(-1));
-    }
-
-    @Test (expected = IllegalArgumentException.class)
-    public void invalidTileDirectionThrowsError() {
-        new Tile(TileType.TILE, Direction.NORTH_EAST);
-    }
-
-    @Test
     public void allTilesHaveUniqueId() {
         /* This test is also done implicitly by the allTileTypesIDConversionToIDAndBack test, but that test may fail
            even if this test passes, so this test is needed for clarity. */

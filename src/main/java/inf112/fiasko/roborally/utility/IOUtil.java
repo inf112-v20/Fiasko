@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.objects.IDrawableGame;
 import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.objects.Particle;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.Wall;
@@ -27,11 +28,13 @@ public final class IOUtil {
         List<IDrawableObject> drawableObjects = new ArrayList<>();
         List<Tile> tilesToDraw = game.getTilesToDraw();
         List<Wall> wallsToDraw = game.getWallsToDraw();
+        List<Particle> particlesToDraw = game.getParticlesToDraw();
         List<Robot> robotsToDraw = game.getRobotsToDraw();
         int gameWidth = game.getWidth();
         int gameHeight = game.getHeight();
         drawableObjects.addAll(getDrawableObjectsFromElementList(tilesToDraw, gameWidth, tileWidth, tileHeight));
         drawableObjects.addAll(getDrawableObjectsFromElementList(wallsToDraw, gameWidth, tileWidth, tileHeight));
+        drawableObjects.addAll(getDrawableObjectsFromElementList(particlesToDraw, gameWidth, tileWidth, tileHeight));
         drawableObjects.addAll(getDrawableRobots(robotsToDraw, gameHeight, tileWidth, tileHeight));
         return drawableObjects;
     }
@@ -86,6 +89,9 @@ public final class IOUtil {
             } else if (currentElement.getClass().isAssignableFrom(Wall.class)) {
                 Wall wall = (Wall) currentElement;
                 region = TextureConverterUtil.convertElement(wall);
+            } else if (currentElement.getClass().isAssignableFrom(Particle.class)) {
+                Particle particle = (Particle) currentElement;
+                region = TextureConverterUtil.convertElement(particle);
             } else {
                 throw new IllegalArgumentException("Unknown element type passed to function.");
             }
@@ -118,6 +124,10 @@ public final class IOUtil {
             Wall wall = (Wall) element;
             hasRotatedTexture = true;
             direction = wall.getDirection();
+        } else if (element.getClass().isAssignableFrom(Particle.class)) {
+            Particle particle = (Particle) element;
+            hasRotatedTexture = true;
+            direction = particle.getDirection();
         } else {
             throw new IllegalArgumentException("Unknown element type passed to function.");
         }

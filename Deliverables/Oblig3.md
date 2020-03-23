@@ -43,55 +43,57 @@ Implementere fase og alt av funksjoner en fase kommer til trenge.
 
 ### Brukerhistorier og akseptansekrav
 
-- Som spiller må jeg ha en kortstokk for å oppbevare kortene mine.
-    - Spilleren har en funksjonell kortstokk.
+*   Som spiller må jeg ha en kortstokk for å oppbevare kortene mine.
+    *   Spilleren har en funksjonell kortstokk.
 
-- Som spiller trenger jeg programmeringskort for å programmere roboten min.
-    - Programmeringskort har en handling og en prioritet.
+*   Som spiller trenger jeg programmeringskort for å programmere roboten min.
+    *   Programmeringskort har en handling og en prioritet.
 
-- Som spiller trenger jeg et program for å fortelle roboten min hva den skal gjøre iløpet av en runde.
-    - Spilleren har et funksjonellt program.
-    - Skal kunne hente ut programmet fra en spiller.
+*   Som spiller trenger jeg et program for å fortelle roboten min hva den skal gjøre iløpet av en runde.
+    *   Spilleren har et funksjonellt program.
+    *   Skal kunne hente ut programmet fra en spiller.
 
-- Som fase trenger jeg å kunne aktivere andre objekter for å progresere spillet.
-    - En fase kan gjennomføres.
-    - Aktiverte objekter gjør sin funksjon.
+*   Som fase trenger jeg å kunne aktivere andre objekter for å progresere spillet.
+    *   En fase kan gjennomføres.
+    *   Aktiverte objekter gjør sin funksjon.
 
-- Som transportbånd trenger jeg å kunne flytte roboter for å gjøre min funksjon.
-    - Transportbånd flytter robot i gitt retning.
-    - Transportbånd kan rotere roboter i spesefikke scenario.
+*   Som transportbånd trenger jeg å kunne flytte roboter for å gjøre min funksjon.
+    *   Transportbånd flytter robot i gitt retning.
+    *   Transportbånd kan rotere roboter i spesefikke scenario.
 
-- Som fase trenger jeg å kunne kjøre programmeringskort etter høyest verdi for å bestemme 
+*   Som fase trenger jeg å kunne kjøre programmeringskort etter høyest verdi for å bestemme 
     rekkefølgen på trekkene til robotene.
-    - Programmeringskort er sorterbare.
-    - Programmeringskort kan hentes og gis videre.
     
-- Som tannhjul trenger jeg å kunen snu roboter for gjennomføre min funksjon.
-    - Tannhjul vrir roboter som står på de 90 grader i retningen tannhjulet har.
+    *   Programmeringskort er sorterbare.
+    *   Programmeringskort kan hentes og gis videre.
+    
+*   Som tannhjul trenger jeg å kunen snu roboter for gjennomføre min funksjon.
+    *   Tannhjul vrir roboter som står på de 90 grader i retningen tannhjulet har.
 
-- Som laser trenger jeg å kunne avfyre laseren min for å gjøre skade på roboter.
-    - Laser skyter i en rett linje i den rettningen laseren har.
-    - Laseren blir stoppet av vegger og andre roboter.
-    - Laseren gjør skade på roboten den treffer.
+*   Som laser trenger jeg å kunne avfyre laseren min for å gjøre skade på roboter.
+    *   Laser skyter i en rett linje i den rettningen laseren har.
+    *   Laseren blir stoppet av vegger og andre roboter.
+    *   Laseren gjør skade på roboten den treffer.
 
-- Som spiller trenger jeg å kunne registrere flagg for å kunne vinne spillet.
-    - Ved slutten av en fase vil roboter som står på et flagg få oppdatert currentflagg verdien sin,
-     gitt at den har besøkt det forige flagget.
-    - Spilleren vinner når alle flagg er besøkt i rett rekkefølge.
+*   Som spiller trenger jeg å kunne registrere flagg for å kunne vinne spillet.
+    *   Ved slutten av en fase vil roboter som står på et flagg få oppdatert currentflagg verdien sin,
+        gitt at den har besøkt det forige flagget.
+        
+    *   Spilleren vinner når alle flagg er besøkt i rett rekkefølge.
 
 ### Arbeidsoppgaver
 #### Spiller
-- Lag en klasse som representerer en kortstokk.
-- Legg til en kortstokk i spillerklassen.
-- Lag en representasjon av registere.
-- Legg til en representasjon av programmeringskort.
+*   Lag en klasse som representerer en kortstokk.
+*   Legg til en kortstokk i spillerklassen.
+*   Lag en representasjon av registere.
+*   Legg til en representasjon av programmeringskort.
 
 #### Fase
-- Legg til funksjon for å sortere programmeringskort utifra høyest verdi.
-- Legg til funksjon for å aktivere tannhjul.
-- Lage en funksjon for å fyre av en laser i en retning.
-- Legg til en funksjon for å sjekke om en robot står på et flagg.
-- Legg til en funksjon for å sjekke om roboten har besøkt forige flagg.
-- Legg til en funksjon som sjekker flagstatus til en robot.
-- Legge til funksjon for å aktivere transportbånd.
-- Legg til en fase i robotrallygame som aktiverer alle objekter som skal bli aktivert i en fase.
+*   Legg til funksjon for å sortere programmeringskort utifra høyest verdi.
+*   Legg til funksjon for å aktivere tannhjul.
+*   Lage en funksjon for å fyre av en laser i en retning.
+*   Legg til en funksjon for å sjekke om en robot står på et flagg.
+*   Legg til en funksjon for å sjekke om roboten har besøkt forige flagg.
+*   Legg til en funksjon som sjekker flagstatus til en robot.
+*   Legge til funksjon for å aktivere transportbånd.
+*   Legg til en fase i robotrallygame som aktiverer alle objekter som skal bli aktivert i en fase.

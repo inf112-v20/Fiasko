@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.ParticleType;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
@@ -19,6 +20,7 @@ public class Board {
     private int boardWidth;
     private IGrid<Wall> walls;
     private IGrid<Tile> tiles;
+    private IGrid<Particle> particles;
     private Map<RobotID, Robot> robots;
     private List<Robot> deadRobots;
 
@@ -43,6 +45,7 @@ public class Board {
         this.boardHeight = tiles.getHeight();
         this.walls = walls;
         this.tiles = tiles;
+        this.particles = new Grid<>(tiles.getWidth(), tiles.getHeight());
         this.deadRobots = new ArrayList<>();
     }
 
@@ -86,6 +89,14 @@ public class Board {
      */
     public List<Wall> getWalls() {
         return getAllElementsFromGrid(walls);
+    }
+
+    /**
+     * Gets all the particles from the board
+     * @return A list of all the particles on the board
+     */
+    public List<Particle> getParticles() {
+        return getAllElementsFromGrid(particles);
     }
 
     /**
@@ -241,6 +252,13 @@ public class Board {
         for (BoardElementContainer<Wall> laser : listOfWallLasers) {
             fireWallLaser(laser);
         }
+    }
+
+    /**
+     * Does necessary cleanup after lasers have been fired
+     */
+    public void doLaserCleanup() {
+        this.particles = new Grid<>(tiles.getWidth(), tiles.getHeight());
         killAllHeavilyDamagedRobots();
     }
 
@@ -452,10 +470,14 @@ public class Board {
      * @param wallLaser The wall laser being fired
      */
     private void fireWallLaser(BoardElementContainer<Wall> wallLaser) {
-        Position hitPosition = getLaserTarget(Direction.getReverseDirection(wallLaser.getElement().getDirection()),
-                wallLaser.getPosition());
+        Direction laserDirection = Direction.getReverseDirection(wallLaser.getElement().getDirection());
+        List<Position> laserTargets = new ArrayList<>();
+        getLaserTarget(laserDirection, wallLaser.getPosition(), laserTargets);
+        Position hitPosition = laserTargets.get(laserTargets.size()-1);
+        WallType laserType = wallLaser.getElement().getWallType();
+        updateLaserDisplay(laserTargets, laserDirection, laserType);
         if (getRobotOnPosition(hitPosition) != null) {
-            applyLaserDamage(wallLaser.getElement().getWallType(), robots.get(getRobotOnPosition(hitPosition)));
+            applyLaserDamage(laserType, robots.get(getRobotOnPosition(hitPosition)));
         }
     }
 
@@ -464,14 +486,18 @@ public class Board {
      * @param robotPosition The position of the robot firing the laser
      * @param robotDirection The direction the robot is facing
      */
-    private void fireRobotLaser(Position robotPosition, Direction robotDirection){
+    private void fireRobotLaser(Position robotPosition, Direction robotDirection) {
         Position positionInFront = getNewPosition(robotPosition,robotDirection);
         if (!isValidPosition(positionInFront) || moveIsStoppedByWall(robotPosition, positionInFront, robotDirection)) {
             return;
         }
-        Position hitPosition = getLaserTarget(robotDirection, positionInFront);
+        List<Position> laserTargets = new ArrayList<>();
+        getLaserTarget(robotDirection, positionInFront, laserTargets);
+        Position hitPosition = laserTargets.get(laserTargets.size()-1);
+        WallType laserType = WallType.WALL_LASER_SINGLE;
+        updateLaserDisplay(laserTargets, robotDirection, laserType);
         if (getRobotOnPosition(hitPosition) != null) {
-            applyLaserDamage(WallType.WALL_LASER_SINGLE, robots.get(getRobotOnPosition(hitPosition)));
+            applyLaserDamage(laserType, robots.get(getRobotOnPosition(hitPosition)));
         }
     }
 
@@ -485,21 +511,68 @@ public class Board {
     }
 
     /**
-     * Gets the position of the tile the laser stops at
+     * Gets all the positions the laser fires at
      * @param direction The direction of the laser
      * @param startPosition The start position of the laser
-     * @return The position the laser stopped at
+     * @param targets The list to update with target positions
      */
-    private Position getLaserTarget(Direction direction, Position startPosition) {
+    private void getLaserTarget(Direction direction, Position startPosition, List<Position> targets) {
         Position newPosition = getNewPosition(startPosition, direction);
+        targets.add(startPosition);
         if (!isValidPosition(newPosition) || moveIsStoppedByWall(startPosition, newPosition, direction) ||
                 getRobotOnPosition(startPosition) != null) {
-            return startPosition;
-        } else if (getRobotOnPosition(newPosition) != null) {
-            return newPosition;
-        } else {
-            return getLaserTarget(direction, newPosition);
+            return;
         }
+        if (getRobotOnPosition(newPosition) != null) {
+            targets.add(newPosition);
+        } else {
+            getLaserTarget(direction, newPosition, targets);
+        }
+    }
+
+    /**
+     * Adds any lasers in the targets list to the grid displaying lasers
+     * @param laserTargets The tiles the laser will hit
+     * @param laserDirection The direction of the laser
+     * @param laserType The type of the laser
+     */
+    private void updateLaserDisplay(List<Position> laserTargets, Direction laserDirection, WallType laserType) {
+        for (Position laserTarget : laserTargets) {
+            System.out.println(laserTarget);
+            updateLaserBeamOnParticleGrid(laserTarget, laserDirection, laserType);
+        }
+    }
+
+    /**
+     * Updates a laser beam on the particle grid
+     * @param addPosition The position of the beam
+     * @param laserDirection The direction of the beam
+     * @param laserType The type of the laser shooting
+     */
+    private void updateLaserBeamOnParticleGrid(Position addPosition, Direction laserDirection, WallType laserType) {
+        int positionX = addPosition.getXCoordinate();
+        int positionY = addPosition.getYCoordinate();
+        int numberOfLasers;
+        switch (laserType) {
+            case WALL_LASER_SINGLE:
+                numberOfLasers = 1;
+                break;
+            case WALL_LASER_DOUBLE:
+                numberOfLasers = 2;
+                break;
+            default:
+                throw new IllegalArgumentException("Laser type submitted is not a laser.");
+        }
+        ParticleType type;
+        Particle particleAtPosition = particles.getElement(positionX, positionY);
+        if (particleAtPosition != null && Direction.arePerpendicular(particleAtPosition.getDirection(),
+                laserDirection)) {
+            type = numberOfLasers == 1 ? ParticleType.LASER_BEAM_SINGLE_CROSS :
+                    ParticleType.LASER_BEAM_DOUBLE_CROSS;
+        } else {
+            type = numberOfLasers == 1 ? ParticleType.LASER_BEAM_SINGLE : ParticleType.LASER_BEAM_DOUBLE;
+        }
+        particles.setElement(positionX, positionY, new Particle(type, laserDirection));
     }
 
 }

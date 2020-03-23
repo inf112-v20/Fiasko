@@ -51,6 +51,11 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     @Override
+    public List<Particle> getParticlesToDraw() {
+        return gameBoard.getParticles();
+    }
+
+    @Override
     public List<Robot> getRobotsToDraw() {
         return gameBoard.getAliveRobots();
     }
@@ -97,7 +102,7 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
-            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            gameBoard = BoardLoaderUtil.loadBoard("boards/Dizzy_Dash.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
             fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
@@ -133,6 +138,7 @@ public class RoboRallyGame implements IDrawableGame {
         TimeUnit.SECONDS.sleep(3);
         makeMove(RobotID.ROBOT_1, Action.MOVE_1);
         makeMove(RobotID.ROBOT_1, Action.MOVE_2);
+        fireAllLasers();
         makeMove(RobotID.ROBOT_1, Action.BACK_UP);
         makeMove(RobotID.ROBOT_1, Action.BACK_UP);
         makeMove(RobotID.ROBOT_1, Action.MOVE_3);
@@ -157,7 +163,6 @@ public class RoboRallyGame implements IDrawableGame {
         checkAllFlags();
         rotateCogwheels();
         makeMove(RobotID.ROBOT_7, Action.MOVE_1);
-        fireAllLasers();
     }
 
     /**
@@ -365,6 +370,9 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
+    /**
+     * Fires all lasers on the game board
+     */
     private void fireAllLasers() {
         gameBoard.fireAllLasers();
     }

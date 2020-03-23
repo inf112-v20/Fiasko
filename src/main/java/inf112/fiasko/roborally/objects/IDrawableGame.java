@@ -40,6 +40,16 @@ public interface IDrawableGame {
     List<Wall> getWallsToDraw();
 
     /**
+     * Gets a list of all the particles to be drawn
+     *
+     * Should return a list readable from top-left to top-right and so on. In other words, the first getWidth()
+     * particles should be drawn on the top row from left to right.
+     *
+     * @return A list of particles
+     */
+    List<Particle> getParticlesToDraw();
+
+    /**
      * Gets a list of all robots to draw
      * @return A list of all robots to draw
      */

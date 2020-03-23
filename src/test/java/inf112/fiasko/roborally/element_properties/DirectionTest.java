@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 public class DirectionTest {
 
@@ -175,5 +177,35 @@ public class DirectionTest {
     @Test
     public void getLeftRotatedDirectionFromSouthWest() {
         assertEquals(Direction.SOUTH_EAST, Direction.getLeftRotatedDirection(Direction.SOUTH_WEST));
+    }
+
+    @Test
+    public void eastAndWestArePerpendicular() {
+        assertFalse(Direction.arePerpendicular(Direction.EAST, Direction.WEST));
+    }
+
+    @Test
+    public void eastAndNorthArePerpendicular() {
+        assertTrue(Direction.arePerpendicular(Direction.EAST, Direction.NORTH));
+    }
+
+    @Test
+    public void eastAndSouthArePerpendicular() {
+        assertTrue(Direction.arePerpendicular(Direction.EAST, Direction.SOUTH));
+    }
+
+    @Test
+    public void northAndSouthArePerpendicular() {
+        assertFalse(Direction.arePerpendicular(Direction.NORTH, Direction.SOUTH));
+    }
+
+    @Test
+    public void northAndWestArePerpendicular() {
+        assertTrue(Direction.arePerpendicular(Direction.NORTH, Direction.WEST));
+    }
+
+    @Test
+    public void southAndWestArePerpendicular() {
+        assertTrue(Direction.arePerpendicular(Direction.SOUTH, Direction.WEST));
     }
 }

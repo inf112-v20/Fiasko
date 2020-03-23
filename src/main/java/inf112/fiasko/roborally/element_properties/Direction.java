@@ -46,6 +46,17 @@ public enum Direction {
     }
 
     /**
+     * Checks whether two directions are perpendicular
+     * @param direction1 The first direction
+     * @param direction2 The second direction
+     * @return True if the directions are perpendicular
+     */
+    public static boolean arePerpendicular(Direction direction1, Direction direction2) {
+        return direction1.equals(getLeftRotatedDirection(direction2)) ||
+                direction1.equals(getRightRotatedDirection(direction2));
+    }
+
+    /**
      * Gets the reverse of a direction
      * @param direction A direction
      * @return The reverse direction

@@ -373,7 +373,9 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Fires all lasers on the game board
      */
-    private void fireAllLasers() {
+    private void fireAllLasers() throws InterruptedException {
         gameBoard.fireAllLasers();
+        sleep();
+        gameBoard.doLaserCleanup();
     }
 }

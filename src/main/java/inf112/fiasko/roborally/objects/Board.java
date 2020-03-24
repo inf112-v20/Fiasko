@@ -538,7 +538,6 @@ public class Board {
      */
     private void updateLaserDisplay(List<Position> laserTargets, Direction laserDirection, WallType laserType) {
         for (Position laserTarget : laserTargets) {
-            System.out.println(laserTarget);
             updateLaserBeamOnParticleGrid(laserTarget, laserDirection, laserType);
         }
     }

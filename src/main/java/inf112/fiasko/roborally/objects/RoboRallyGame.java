@@ -24,6 +24,8 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<Player> playerList;
+    private List<BoardElementContainer<Tile>> blacklistedTiles = new ArrayList<>();
+    private List<BoardElementContainer<Tile>> whitelistedTiles = new ArrayList<>();
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -306,10 +308,6 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
-
-    private List<BoardElementContainer<Tile>> blacklistedTiles = new ArrayList<>();
-    private List<BoardElementContainer<Tile>> whitelistedTiles = new ArrayList<>();
-
     /**
      * Finds conveyor belts that can move without conflict
      * @param conveyorBelts that should be checked
@@ -328,6 +326,7 @@ public class RoboRallyGame implements IDrawableGame {
             }
         }
 
+        List<BoardElementContainer<Tile>> listOfRow = new ArrayList<>();
         for (BoardElementContainer<Tile> conveyorBeltWithRobot : conveyorBeltsWithRobotsOn) {
             if (blacklistedTiles.contains(conveyorBeltWithRobot) ||
                     whitelistedTiles.contains((conveyorBeltWithRobot))) {
@@ -335,7 +334,7 @@ public class RoboRallyGame implements IDrawableGame {
             }
 
             BoardElementContainer<Tile> lastInRow = findLastRobotInRow (conveyorBeltWithRobot, conveyorBeltsWithRobotsOn);
-            List<BoardElementContainer<Tile>> listOfRow = new ArrayList<>();
+
             List<BoardElementContainer<Tile>> results = findFirstRobotInRow(lastInRow, conveyorBeltsWithRobotsOn,
                     listOfRow);
 

@@ -8,6 +8,20 @@ Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, 
 ## Spillstatus
 Ved kjøring av .jar filen blir det kjørt en demo, uten mulighet for bruker å bevege robot.
 
+## Manuell testing
+Demoen er definert i RoboRallyGame sin metode runGameLoop(). Metodene som kan brukes for testing er:
+- makeMove(Robot id, Korthandling) //Utfører en handling på en robot
+- fireAllLasers() //Fyrer av alle lasere inkludert robotlasere
+- moveAllConveyorBelts() //Flytter alle transportbånd
+- checkAllFlags() //Oppdaterer roboter som besøker flagg
+- rotateCogwheels() //Roterer tannhjul
+
+Robot id blir representert ved enumen RobotID
+Korthandling blir representert ved enumen Action
+
+Ved å bruke metodene over kan alt i en eller flere faser testes og simuleres. Den store forskjellen fra MVP er at all
+bruker-input blir hardkodet før programmet kjører.
+
 ## Knapper og kontrollmekanismer
 ### Knapper
 -   Q: Tilbakestiller kamera og kamerarotasjon

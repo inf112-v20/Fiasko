@@ -310,6 +310,11 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> blacklistedTiles = new ArrayList<>();
     private List<BoardElementContainer<Tile>> whitelistedTiles = new ArrayList<>();
 
+    /**
+     * Finds conveyor belts that can move without conflict
+     * @param conveyorBelts that should be checked
+     * @return List of conveyor belts that can move robots without conflict
+     */
     private List<BoardElementContainer<Tile>> conveyorBeltsThatCanMoveWithoutConflict(
             List<BoardElementContainer<Tile>> conveyorBelts) {
 
@@ -329,13 +334,6 @@ public class RoboRallyGame implements IDrawableGame {
                 continue;
             }
 
-            Position conveyorBeltPosition = conveyorBeltWithRobot.getPosition();
-            Tile conveyorBeltTile = conveyorBeltWithRobot.getElement();
-
-            Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltTile.getDirection());
-            Tile nextTile = gameBoard.getTileOnPosition(newPosition);
-            BoardElementContainer<Tile> nextConveyorBelt = new BoardElementContainer<>(nextTile, newPosition);
-
             BoardElementContainer<Tile> lastInRow = findLastRobotInRow (conveyorBeltWithRobot, conveyorBeltsWithRobotsOn);
             List<BoardElementContainer<Tile>> listOfRow = new ArrayList<>();
             List<BoardElementContainer<Tile>> results = findFirstRobotInRow(lastInRow, conveyorBeltsWithRobotsOn,
@@ -350,6 +348,13 @@ public class RoboRallyGame implements IDrawableGame {
         return whitelistedTiles;
     }
 
+    /**
+     * Recursive function to find all robots in a row that should move, and blacklists those that should not
+     * @param currentConveyorBelt The current conveyor belt
+     * @param conveyorBeltsWithRobotsOn List of conveyor belts that have robots on them
+     * @param listOfRow List of conveyor belts in a row with robots on them
+     * @return listOfRow
+     */
     private List<BoardElementContainer<Tile>> findFirstRobotInRow(BoardElementContainer<Tile> currentConveyorBelt,
                                      List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn,
                                      List<BoardElementContainer<Tile>> listOfRow) {
@@ -388,6 +393,12 @@ public class RoboRallyGame implements IDrawableGame {
         return listOfRow;
     }
 
+    /**
+     * Recursive function that finds the last robot in a row with conveyor belts without conflicts
+     * @param currentConveyorBelt The current conveyor belt
+     * @param conveyorBeltsWithRobotsOn List with conveyor belts that have robots on them
+     * @return The last conveyor belt with a robot without conflict in a row
+     */
     private BoardElementContainer<Tile> findLastRobotInRow(BoardElementContainer<Tile> currentConveyorBelt,
                                     List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn) {
         List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile =
@@ -404,6 +415,13 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
+    /**
+     * Finds all neighbouring conveyor belt tiles with robots that are pointing on the current tile
+     * @param forward True if looking forward, false otherwise
+     * @param currentTile The current tile
+     * @param conveyorBeltsWithRobots List with conveyor belts that have robots on them
+     * @return A list of the neighbouring conveyor belt tiles with robots that are pointing on the current tile
+     */
     private List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile(Boolean forward,
                                                                              BoardElementContainer<Tile> currentTile,
                                                             List<BoardElementContainer<Tile>> conveyorBeltsWithRobots) {

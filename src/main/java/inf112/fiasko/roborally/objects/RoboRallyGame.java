@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
+import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
+    private List<Player> playerList;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -107,6 +109,26 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
+            playerList = new ArrayList<>();
+            playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
+            playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
+            playerList.add(new Player(RobotID.ROBOT_3, "Player3"));
+            playerList.add(new Player(RobotID.ROBOT_4, "Player4"));
+            playerList.add(new Player(RobotID.ROBOT_5, "Player5"));
+            playerList.add(new Player(RobotID.ROBOT_6, "Player6"));
+            playerList.add(new Player(RobotID.ROBOT_7, "Player7"));
+            playerList.add(new Player(RobotID.ROBOT_8, "Player8"));
+            Deck<ProgrammingCard> cards =  DeckLoaderUtil.loadProgrammingCardsDeck();
+            for (Player player : playerList) {
+                cards.shuffle();
+                List<ProgrammingCard> testProgram = new ArrayList<>();
+                for (int i = 0; i < 5; i++) {
+                    cards.shuffle();
+                    testProgram.add(cards.peekTop());
+                }
+                player.setInProgram(testProgram);
+            }
+
             gameBoard = BoardLoaderUtil.loadBoard("boards/Dizzy_Dash.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
@@ -141,33 +163,26 @@ public class RoboRallyGame implements IDrawableGame {
      */
     private void runGameLoop() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
-        makeMove(RobotID.ROBOT_1, Action.MOVE_1);
-        makeMove(RobotID.ROBOT_1, Action.MOVE_2);
-        fireAllLasers();
-        makeMove(RobotID.ROBOT_1, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_1, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_1, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_1, Action.ROTATE_LEFT);
-        makeMove(RobotID.ROBOT_1, Action.U_TURN);
-        makeMove(RobotID.ROBOT_1, Action.ROTATE_RIGHT);
-        makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.U_TURN);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
-        makeMove(RobotID.ROBOT_2, Action.U_TURN);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_1);
+        runPhase(1);
+        runPhase(2);
+        runPhase(3);
+        runPhase(4);
+        runPhase(5);
+    }
+
+    /**
+     * Runs one phase as defined in the Robo Rally rulebook
+     * @param phaseNumber The number of the phase to run
+     * @throws InterruptedException If interrupted wile trying to sleep
+     */
+    private void runPhase(int phaseNumber) throws InterruptedException {
+        runProgramCards(phaseNumber);
+
         moveAllConveyorBelts();
-        checkAllFlags();
         rotateCogwheels();
-        makeMove(RobotID.ROBOT_7, Action.MOVE_1);
+
+        fireAllLasers();
+        checkAllFlags();
     }
 
     /**
@@ -400,11 +415,11 @@ public class RoboRallyGame implements IDrawableGame {
         Tile conveyorBeltTile = currentTile.getElement();
         Position currentPosition = currentTile.getPosition();
         Direction currentDirection;
-        
+
         if (forward) {
             currentDirection = conveyorBeltTile.getDirection();
         } else currentDirection = Direction.getReverseDirection(conveyorBeltTile.getDirection());
-        
+
         Position nextPositionStraight = gameBoard.getNewPosition(currentPosition, currentDirection);
         Tile nextTileStraight = gameBoard.getTileOnPosition(nextPositionStraight);
         Position nextPositionLeft = gameBoard.getNewPosition(currentPosition,
@@ -417,7 +432,7 @@ public class RoboRallyGame implements IDrawableGame {
         BoardElementContainer<Tile> rightOfCurrent = new BoardElementContainer<>(nextTileRight, nextPositionRight);
         BoardElementContainer<Tile> leftOfCurrent = new BoardElementContainer<>(nextTileLeft, nextPositionLeft);
         BoardElementContainer<Tile> inFrontOfCurrent = new BoardElementContainer<>(nextTileStraight, nextPositionStraight);
-        
+
         if (currentDirection == Direction.getReverseDirection(
                 nextTileStraight.getDirection()) && conveyorBeltsWithRobots.contains(inFrontOfCurrent)) {
             possibleConflictConveyorBelts.add(inFrontOfCurrent);
@@ -473,5 +488,31 @@ public class RoboRallyGame implements IDrawableGame {
         gameBoard.fireAllLasers();
         sleep();
         gameBoard.doLaserCleanup();
+    }
+
+    /**
+     * Runs all programming cards for a phase
+     * @param phase The number of the phase to run cards for
+     * @throws InterruptedException If it gets interrupted while trying to sleep
+     */
+    private void runProgramCards(int phase) throws InterruptedException {
+        List<RobotID> robotsToDoAction = new ArrayList<>();
+        List<ProgrammingCard> programToBeRun = new ArrayList<>();
+        List<Integer> originalPriority = new ArrayList<>();
+        for (Player player : playerList) {
+            List<ProgrammingCard> playerProgram = player.getProgram();
+            if (!playerProgram.isEmpty()) {
+                ProgrammingCard programmingCard = playerProgram.get(phase);
+                originalPriority.add(programmingCard.getPriority());
+                robotsToDoAction.add(player.getRobotID());
+                programToBeRun.add(programmingCard);
+            }
+        }
+        Collections.sort(programToBeRun);
+        for (ProgrammingCard card : programToBeRun) {
+            int i = originalPriority.indexOf(card.getPriority());
+            RobotID robot = robotsToDoAction.get(i);
+            makeMove(robot, card.getAction());
+        }
     }
 }

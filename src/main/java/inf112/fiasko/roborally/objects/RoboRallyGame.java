@@ -9,6 +9,7 @@ import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
@@ -280,6 +281,9 @@ public class RoboRallyGame implements IDrawableGame {
         List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsThatShouldMove =
                 conveyorBeltsThatCanMoveWithoutConflict(conveyorBelts);
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBeltsWithRobotsThatShouldMove) {
+            System.out.println(gameBoard.getTileOnPosition(conveyorBelt.getPosition()).getTileType().toString());
+            System.out.println(conveyorBelt.getPosition().toString());
+            System.out.println(gameBoard.getRobotOnPosition(conveyorBelt.getPosition()));
             Direction currentDirection = conveyorBelt.getElement().getDirection();
             RobotID robot = gameBoard.getRobotOnPosition(conveyorBelt.getPosition());
             Position newPosition = gameBoard.getNewPosition(conveyorBelt.getPosition(), currentDirection);
@@ -289,56 +293,144 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
+
+    private List<BoardElementContainer<Tile>> blacklistedTiles = new ArrayList<>();
+    private List<BoardElementContainer<Tile>> whitelistedTiles = new ArrayList<>();
+
     private List<BoardElementContainer<Tile>> conveyorBeltsThatCanMoveWithoutConflict(
             List<BoardElementContainer<Tile>> conveyorBelts) {
 
-        List<BoardElementContainer<Tile>> nonConflictConveyorBelts = new ArrayList<>();
+        List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn = new ArrayList<>();
+        whitelistedTiles.clear();
+        blacklistedTiles.clear();
+
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
             if (gameBoard.hasRobotOnPosition(conveyorBelt.getPosition())) {
-                nonConflictConveyorBelts.add(conveyorBelt);
+                conveyorBeltsWithRobotsOn.add(conveyorBelt);
             }
         }
-        for (BoardElementContainer<Tile> conveyorBeltWithRobot : nonConflictConveyorBelts) {
+
+        for (BoardElementContainer<Tile> conveyorBeltWithRobot : conveyorBeltsWithRobotsOn) {
+            if (blacklistedTiles.contains(conveyorBeltWithRobot) ||
+                    whitelistedTiles.contains((conveyorBeltWithRobot))) {
+                continue;
+            }
+
             Position conveyorBeltPosition = conveyorBeltWithRobot.getPosition();
             Tile conveyorBeltTile = conveyorBeltWithRobot.getElement();
 
             Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltTile.getDirection());
             Tile nextTile = gameBoard.getTileOnPosition(newPosition);
+            BoardElementContainer<Tile> nextConveyorBelt = new BoardElementContainer<>(nextTile, newPosition);
 
-            Position beyondNextPositionStraight = gameBoard.getNewPosition(newPosition, conveyorBeltTile.getDirection());
-            Tile beyondNextTileStraight = gameBoard.getTileOnPosition(beyondNextPositionStraight);
+            BoardElementContainer<Tile> lastInRow = findLastRobotInRow (nextConveyorBelt, conveyorBeltsWithRobotsOn);
+            List<BoardElementContainer<Tile>> listOfRow = new ArrayList<>();
+            List<BoardElementContainer<Tile>> results = findFirstRobotInRow(lastInRow, conveyorBeltsWithRobotsOn,
+                    listOfRow);
 
-            Position beyondNextPositionLeft = gameBoard.getNewPosition(newPosition,
-                    Direction.getLeftRotatedDirection(conveyorBeltTile.getDirection()));
-            Tile beyondNextTileLeft = gameBoard.getTileOnPosition(beyondNextPositionLeft);
-
-            Position beyondNextPositionRight = gameBoard.getNewPosition(newPosition,
-                    Direction.getRightRotatedDirection(conveyorBeltTile.getDirection()));
-            Tile beyondNextTileRight = gameBoard.getTileOnPosition(beyondNextPositionRight);
-
-
-
-            if (conveyorBeltTile.getDirection() == Direction.getReverseDirection(nextTile.getDirection()) &&
-                nonConflictConveyorBelts.contains(new BoardElementContainer<>(nextTile, newPosition))) {
-                nonConflictConveyorBelts.remove(conveyorBeltWithRobot);
-            }
-            else if (conveyorBeltTile.getDirection() == Direction.getReverseDirection(
-                    beyondNextTileStraight.getDirection()) && nonConflictConveyorBelts.contains(
-                            new BoardElementContainer<>(beyondNextTileStraight, beyondNextPositionStraight))) {
-                nonConflictConveyorBelts.remove(conveyorBeltWithRobot);
-            }
-            else if (conveyorBeltTile.getDirection() == Direction.getLeftRotatedDirection(
-                    beyondNextTileLeft.getDirection()) && nonConflictConveyorBelts.contains(
-                    new BoardElementContainer<>(beyondNextTileLeft, beyondNextPositionLeft))) {
-                nonConflictConveyorBelts.remove(conveyorBeltWithRobot);
-            }
-            else if (conveyorBeltTile.getDirection() == Direction.getRightRotatedDirection(
-                    beyondNextTileRight.getDirection()) && nonConflictConveyorBelts.contains(
-                    new BoardElementContainer<>(beyondNextTileRight, beyondNextPositionRight))) {
-                nonConflictConveyorBelts.remove(conveyorBeltWithRobot);
+            for (BoardElementContainer<Tile> result : results) {
+                if (!whitelistedTiles.contains(result)) {
+                    whitelistedTiles.add(0, result);
+                }
             }
         }
-        return nonConflictConveyorBelts;
+        return whitelistedTiles;
+    }
+
+    private List<BoardElementContainer<Tile>> findFirstRobotInRow(BoardElementContainer<Tile> currentConveyorBelt,
+                                     List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn,
+                                     List<BoardElementContainer<Tile>> listOfRow) {
+        Position nextPosition = gameBoard.getNewPosition(currentConveyorBelt.getPosition(),
+                currentConveyorBelt.getElement().getDirection());
+        Direction nextDirection = gameBoard.getTileOnPosition(nextPosition).getDirection();
+        Tile nextTile = gameBoard.getTileOnPosition(nextPosition);
+        BoardElementContainer<Tile> nextElementContainer = new BoardElementContainer<>(nextTile, nextPosition);
+        List<BoardElementContainer<Tile>> pointingNeighbours = listOfConveyorBeltsWithRobotPointingAtTile(true,
+                nextElementContainer, conveyorBeltsWithRobotsOn);
+
+        listOfRow.add(currentConveyorBelt);
+
+        if (blacklistedTiles.contains(nextElementContainer)) {
+            blacklistedTiles.addAll(listOfRow);
+            listOfRow.clear();
+        } else if (currentConveyorBelt.getElement().getDirection() == Direction.getReverseDirection(nextDirection) &&
+                conveyorBeltsWithRobotsOn.contains(nextElementContainer)) {
+            blacklistedTiles.addAll(listOfRow);
+            blacklistedTiles.add(nextElementContainer);
+            listOfRow.clear();
+        } else if ((!conveyorBelts.contains(nextElementContainer)) && gameBoard.hasRobotOnPosition(nextPosition)) {
+            blacklistedTiles.addAll(listOfRow);
+            listOfRow.clear();
+        } else if (gameBoard.moveIsStoppedByWall(currentConveyorBelt.getPosition(), nextPosition,
+                currentConveyorBelt.getElement().getDirection())) {
+            blacklistedTiles.addAll(listOfRow);
+            listOfRow.clear();
+        } else if (pointingNeighbours.size() > 0) {
+            blacklistedTiles.addAll(pointingNeighbours);
+            blacklistedTiles.addAll(listOfRow);
+            listOfRow.clear();
+        } else if ((conveyorBeltsWithRobotsOn.contains(nextElementContainer))) {
+            listOfRow = findFirstRobotInRow(nextElementContainer, conveyorBeltsWithRobotsOn, listOfRow);
+        }
+        return listOfRow;
+    }
+
+    private BoardElementContainer<Tile> findLastRobotInRow(BoardElementContainer<Tile> currentConveyorBelt,
+                                    List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn) {
+        List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile =
+                listOfConveyorBeltsWithRobotPointingAtTile(false, currentConveyorBelt,
+                        conveyorBeltsWithRobotsOn);
+        int sizeOfPointingList = listOfConveyorBeltsWithRobotPointingAtTile.size();
+        if (sizeOfPointingList == 0) {
+            return currentConveyorBelt;
+        } else if (sizeOfPointingList == 1) {
+            return findLastRobotInRow(listOfConveyorBeltsWithRobotPointingAtTile.get(0), conveyorBeltsWithRobotsOn);
+        } else {
+            blacklistedTiles.addAll(listOfConveyorBeltsWithRobotPointingAtTile);
+            return currentConveyorBelt;
+        }
+    }
+
+
+
+    private List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile(Boolean forward,
+                                                                             BoardElementContainer<Tile> currentTile,
+                                                            List<BoardElementContainer<Tile>> conveyorBeltsWithRobots) {
+        List<BoardElementContainer<Tile>> possibleConflictConveyorBelts = new ArrayList<>();
+        Tile conveyorBeltTile = currentTile.getElement();
+        Position currentPosition = currentTile.getPosition();
+        Direction currentDirection;
+        
+        if (forward) {
+            currentDirection = conveyorBeltTile.getDirection();
+        } else currentDirection = Direction.getReverseDirection(conveyorBeltTile.getDirection());
+        
+        Position nextPositionStraight = gameBoard.getNewPosition(currentPosition, currentDirection);
+        Tile nextTileStraight = gameBoard.getTileOnPosition(nextPositionStraight);
+        Position nextPositionLeft = gameBoard.getNewPosition(currentPosition,
+                Direction.getLeftRotatedDirection(currentDirection));
+        Tile nextTileLeft = gameBoard.getTileOnPosition(nextPositionLeft);
+        Position nextPositionRight = gameBoard.getNewPosition(currentPosition,
+                Direction.getRightRotatedDirection(currentDirection));
+        Tile nextTileRight = gameBoard.getTileOnPosition(nextPositionRight);
+
+        BoardElementContainer<Tile> rightOfCurrent = new BoardElementContainer<>(nextTileRight, nextPositionRight);
+        BoardElementContainer<Tile> leftOfCurrent = new BoardElementContainer<>(nextTileLeft, nextPositionLeft);
+        BoardElementContainer<Tile> inFrontOfCurrent = new BoardElementContainer<>(nextTileStraight, nextPositionStraight);
+        
+        if (currentDirection == Direction.getReverseDirection(
+                nextTileStraight.getDirection()) && conveyorBeltsWithRobots.contains(inFrontOfCurrent)) {
+            possibleConflictConveyorBelts.add(inFrontOfCurrent);
+        }
+        if (currentDirection == Direction.getLeftRotatedDirection(
+                nextTileLeft.getDirection()) && conveyorBeltsWithRobots.contains(leftOfCurrent)) {
+            possibleConflictConveyorBelts.add(leftOfCurrent);
+        }
+        if (currentDirection == Direction.getRightRotatedDirection(
+                nextTileRight.getDirection()) && conveyorBeltsWithRobots.contains(rightOfCurrent)) {
+            possibleConflictConveyorBelts.add(rightOfCurrent);
+        }
+        return possibleConflictConveyorBelts;
     }
 
     /**

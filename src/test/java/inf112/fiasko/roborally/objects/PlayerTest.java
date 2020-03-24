@@ -42,10 +42,10 @@ public class PlayerTest {
     @Test
     public void testSetInProgram() {
         playerTest.setInProgram(cards);
-        assertEquals(Action.MOVE_1, playerTest.getProgramFromPlayer().get(0).getAction());
-        assertEquals(Action.MOVE_2, playerTest.getProgramFromPlayer().get(1).getAction());
-        assertEquals(Action.MOVE_3, playerTest.getProgramFromPlayer().get(2).getAction());
-        assertEquals(Action.BACK_UP, playerTest.getProgramFromPlayer().get(3).getAction());
+        assertEquals(Action.MOVE_1, playerTest.getProgram().get(0).getAction());
+        assertEquals(Action.MOVE_2, playerTest.getProgram().get(1).getAction());
+        assertEquals(Action.MOVE_3, playerTest.getProgram().get(2).getAction());
+        assertEquals(Action.BACK_UP, playerTest.getProgram().get(3).getAction());
     }
 
     @Test (expected = IllegalArgumentException.class)

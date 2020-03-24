@@ -126,7 +126,7 @@ public final class IOUtil {
             direction = wall.getDirection();
         } else if (element.getClass().isAssignableFrom(Particle.class)) {
             Particle particle = (Particle) element;
-            hasRotatedTexture = true;
+            hasRotatedTexture = TextureConverterUtil.hasRotatedTexture(particle);
             direction = particle.getDirection();
         } else {
             throw new IllegalArgumentException("Unknown element type passed to function.");

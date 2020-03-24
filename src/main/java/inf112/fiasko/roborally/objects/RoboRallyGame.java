@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
+import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -115,6 +116,17 @@ public class RoboRallyGame implements IDrawableGame {
             playerList.add(new Player(RobotID.ROBOT_6, "Player6"));
             playerList.add(new Player(RobotID.ROBOT_7, "Player7"));
             playerList.add(new Player(RobotID.ROBOT_8, "Player8"));
+            Deck<ProgrammingCard> cards =  DeckLoaderUtil.loadProgrammingCardsDeck();
+            for (Player player : playerList) {
+                cards.shuffle();
+                List<ProgrammingCard> testProgram = new ArrayList<>();
+                for (int i = 0; i < 5; i++) {
+                    cards.shuffle();
+                    testProgram.add(cards.peekTop());
+                }
+                player.setInProgram(testProgram);
+            }
+
             gameBoard = BoardLoaderUtil.loadBoard("boards/Dizzy_Dash.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
@@ -149,33 +161,11 @@ public class RoboRallyGame implements IDrawableGame {
      */
     private void runGameLoop() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
-        makeMove(RobotID.ROBOT_1, Action.MOVE_1);
-        makeMove(RobotID.ROBOT_1, Action.MOVE_2);
-        fireAllLasers();
-        makeMove(RobotID.ROBOT_1, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_1, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_1, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_1, Action.ROTATE_LEFT);
-        makeMove(RobotID.ROBOT_1, Action.U_TURN);
-        makeMove(RobotID.ROBOT_1, Action.ROTATE_RIGHT);
-        makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.U_TURN);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_3);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.BACK_UP);
-        makeMove(RobotID.ROBOT_2, Action.ROTATE_LEFT);
-        makeMove(RobotID.ROBOT_2, Action.U_TURN);
-        makeMove(RobotID.ROBOT_2, Action.MOVE_1);
-        moveAllConveyorBelts();
-        checkAllFlags();
-        rotateCogwheels();
-        makeMove(RobotID.ROBOT_7, Action.MOVE_1);
+        runPhase(1);
+        runPhase(2);
+        runPhase(3);
+        runPhase(4);
+        runPhase(5);
     }
 
     /**
@@ -408,20 +398,20 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     private void runProgramCards(int phase) throws InterruptedException {
-
         List<RobotID> robotsToDoAction = new ArrayList<>();
         List<ProgrammingCard> programToBeRun = new ArrayList<>();
         List<Integer> originalPriority = new ArrayList<>();
-        for (Player player:playerList) {
+        for (Player player : playerList) {
             List<ProgrammingCard> playerProgram = player.getProgram();
             if (!playerProgram.isEmpty()) {
-                originalPriority.add(playerProgram.get(phase).getPriority());
+                ProgrammingCard programmingCard = playerProgram.get(phase);
+                originalPriority.add(programmingCard.getPriority());
                 robotsToDoAction.add(player.getRobotID());
-                programToBeRun.add(playerProgram.get(phase));
+                programToBeRun.add(programmingCard);
             }
         }
         Collections.sort(programToBeRun);
-        for (ProgrammingCard card:programToBeRun) {
+        for (ProgrammingCard card : programToBeRun) {
             int i = originalPriority.indexOf(card.getPriority());
             RobotID robot = robotsToDoAction.get(i);
             makeMove(robot, card.getAction());

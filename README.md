@@ -10,11 +10,11 @@ Ved kjøring av .jar filen blir det kjørt en demo, uten mulighet for bruker å 
 
 ## Manuell testing
 Demoen er definert i RoboRallyGame sin metode runGameLoop(). Metodene som kan brukes for testing er:
-- makeMove(Robot id, Korthandling) //Utfører en handling på en robot
-- fireAllLasers() //Fyrer av alle lasere inkludert robotlasere
-- moveAllConveyorBelts() //Flytter alle transportbånd
-- checkAllFlags() //Oppdaterer roboter som besøker flagg
-- rotateCogwheels() //Roterer tannhjul
+-   makeMove(Robot id, Korthandling) //Utfører en handling på en robot
+-   fireAllLasers() //Fyrer av alle lasere inkludert robotlasere
+-   moveAllConveyorBelts() //Flytter alle transportbånd
+-   checkAllFlags() //Oppdaterer roboter som besøker flagg
+-   rotateCogwheels() //Roterer tannhjul
 
 Robot id blir representert ved enumen RobotID
 Korthandling blir representert ved enumen Action

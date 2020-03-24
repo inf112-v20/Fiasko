@@ -2,12 +2,18 @@ package inf112.fiasko.roborally.game_wrapper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.objects.IDeck;
@@ -23,6 +29,9 @@ import static com.badlogic.gdx.graphics.Color.GREEN;
 import static com.badlogic.gdx.graphics.Color.RED;
 import static com.badlogic.gdx.graphics.Color.WHITE;
 
+/**
+ * This screen is used to let the user choose their program
+ */
 public class CardChoiceScreen extends InputAdapter implements Screen {
     private final RoboRallyWrapper roboRallyWrapper;
 
@@ -32,7 +41,13 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final Viewport viewport;
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
+    private final Stage stage;
+    final TextButton confirmCards;
 
+    /**
+     * Initializes a new card choice screen
+     * @param roboRallyWrapper The robo rally wrapper which is its parent
+     */
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
@@ -43,7 +58,10 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         cardRectangles = new ArrayList<>();
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
-        Gdx.input.setInputProcessor(this);
+
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(this);
+
         try {
             generateCards();
         } catch (IOException e) {
@@ -51,6 +69,26 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         }
         this.chosenCards = new ArrayList<>();
         this.maxCards = 5;
+        stage = new Stage();
+        inputMultiplexer.addProcessor(stage);
+
+        confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
+        stage.addActor(confirmCards);
+        confirmCards.setY(viewport.getWorldHeight() + 60);
+        confirmCards.setX(15);
+        confirmCards.setTouchable(Touchable.enabled);
+        confirmCards.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                System.out.println(chosenCards.size());
+                System.out.println(maxCards);
+                if (chosenCards.size() == maxCards) {
+                    System.out.println("Lock cards!");
+                }
+                return false;
+            }
+        });
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     /**
@@ -60,10 +98,10 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private void generateCards() throws IOException {
         IDeck<ProgrammingCard> deck = DeckLoaderUtil.loadProgrammingCardsDeck();
         deck.shuffle();
-        //Get 16 programming cards
+        //Get 9 programming cards
         List<ProgrammingCard> cardList = deck.getCards().subList(0, 9);
         float cardWidth = viewport.getWorldWidth() / 3;
-        float cardHeight = viewport.getWorldHeight() / 3;
+        float cardHeight = (viewport.getWorldHeight() - 30) / 3;
         for (int i = 0; i < 9; i++) {
             int x = (int)(((i % 3)*cardWidth) + 10);
             int y = (int)(((i / 3) * cardHeight + 10));
@@ -102,6 +140,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
             shapeRenderer.rect(cardRectangle.rectangle.x, cardRectangle.rectangle.y,
                     cardRectangle.rectangle.width, cardRectangle.rectangle.height);
         }
+
         shapeRenderer.end();
         roboRallyWrapper.batch.begin();
         for (CardRectangle cardRectangle : cardRectangles) {
@@ -112,6 +151,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
             drawCardSymbol(cardRectangle);
         }
         roboRallyWrapper.batch.end();
+        stage.draw();
     }
 
     /**

@@ -28,65 +28,68 @@ public class Player {
 
     /**
      * Gives you the RobotID of a player
-     * @return An RobotID
+     * @return A RobotID
      */
-    public RobotID getRobotID(){return robotID;}
+    public RobotID getRobotID() {
+        return robotID;
+    }
 
     /**
      * Set the players deck to the given deck
-     * @param playerDeck a deck of cards given to the player
+     * @param playerDeck A deck of cards given to the player
      */
-    public void setPlayerDeck(ProgrammingCardDeck playerDeck){
-        this.playerDeck=playerDeck;
+    public void setPlayerDeck(ProgrammingCardDeck playerDeck) {
+        this.playerDeck = playerDeck;
     }
 
     /**
      * Gives you the Name of the player
-     * @return a player Name
+     * @return A player Name
      */
-    public String getName() {return name;}
+    public String getName() {
+        return name;
+    }
 
     /**
      * Gives you the players program
-     * @return a list<ProgrammingCard>
+     * @return A list of programming cards
      */
-    public List<ProgrammingCard> getProgram() {return program;}
+    public List<ProgrammingCard> getProgram() {
+        return program;
+    }
 
     /**
      * Gives you the player hand/deck
      * @return a deck
      */
-    public ProgrammingCardDeck getPlayerDeck() {return playerDeck;}
+    public ProgrammingCardDeck getPlayerDeck() {
+        return playerDeck;
+    }
 
     /**
-     * Gives you the players powerdown status
-     * @return a boolean
+     * Gives you the players power down status
+     * @return Whether the player is to power down
      */
-    public boolean getPowerDownNextRound() { return powerDownNextRound;}
+    public boolean getPowerDownNextRound() {
+        return powerDownNextRound;
+    }
 
     /**
-     * Sets the prowerdown status
-     * @param powerDownStatus the boolean that determines if it goes to a powerdown or not
+     * Sets the power down status
+     * @param powerDownStatus Whether the player is to take power down next round
      */
-    public void setPowerDownNextRound(boolean powerDownStatus) { this.powerDownNextRound = powerDownStatus;}
-
-    /**
-     * Gets the program from the player
-     * @return List of programing cards
-     */
-    public List <ProgrammingCard> getProgramFromPlayer(){
-        return program;
+    public void setPowerDownNextRound(boolean powerDownStatus) {
+        this.powerDownNextRound = powerDownStatus;
     }
 
     /**
      * Sets the Players program to the given list of programing cards
      * @param cardList list the size of 5 with programing cards
      */
-    public void setInProgram(List <ProgrammingCard> cardList){
-        if(cardList.size() != 5){
+    public void setInProgram(List <ProgrammingCard> cardList) {
+        if (cardList.size() != 5) {
             throw new IllegalArgumentException("list must contain 5 programing cards");
-        }
-        else {
+        } else {
             program = new ArrayList<>(cardList);
         }
     }

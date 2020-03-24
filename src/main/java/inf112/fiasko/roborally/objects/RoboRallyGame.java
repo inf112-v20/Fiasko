@@ -170,6 +170,21 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
+     * Runs one phase as defined in the Robo Rally rulebook
+     * @param phaseNumber The number of the phase to run
+     * @throws InterruptedException If interrupted wile trying to sleep
+     */
+    private void runPhase(int phaseNumber) throws InterruptedException {
+        //TODO: Run programming cards
+
+        moveAllConveyorBelts();
+        rotateCogwheels();
+
+        fireAllLasers();
+        checkAllFlags();
+    }
+
+    /**
      * Makes the given robot move according to to the action input.
      * @param robotID The ID of the robot to move.
      * @param action The specific movement the robot is to take.

@@ -106,6 +106,7 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
+            playerList = new ArrayList<>();
             playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
             playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
             playerList.add(new Player(RobotID.ROBOT_3, "Player3"));
@@ -175,6 +176,21 @@ public class RoboRallyGame implements IDrawableGame {
         checkAllFlags();
         rotateCogwheels();
         makeMove(RobotID.ROBOT_7, Action.MOVE_1);
+    }
+
+    /**
+     * Runs one phase as defined in the Robo Rally rulebook
+     * @param phaseNumber The number of the phase to run
+     * @throws InterruptedException If interrupted wile trying to sleep
+     */
+    private void runPhase(int phaseNumber) throws InterruptedException {
+        runProgramCards(phaseNumber);
+
+        moveAllConveyorBelts();
+        rotateCogwheels();
+
+        fireAllLasers();
+        checkAllFlags();
     }
 
     /**

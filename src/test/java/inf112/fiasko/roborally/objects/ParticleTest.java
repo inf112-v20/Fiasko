@@ -2,7 +2,6 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.ParticleType;
-import inf112.fiasko.roborally.element_properties.TileType;
 import org.junit.Before;
 import org.junit.Test;
 

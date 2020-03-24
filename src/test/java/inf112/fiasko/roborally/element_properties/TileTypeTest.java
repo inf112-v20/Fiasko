@@ -1,6 +1,5 @@
 package inf112.fiasko.roborally.element_properties;
 
-import inf112.fiasko.roborally.objects.Tile;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -9,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class TileTypeTest {
 

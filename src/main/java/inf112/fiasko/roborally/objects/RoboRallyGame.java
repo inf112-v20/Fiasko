@@ -296,9 +296,7 @@ public class RoboRallyGame implements IDrawableGame {
         List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsThatShouldMove =
                 conveyorBeltsThatCanMoveWithoutConflict(conveyorBelts);
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBeltsWithRobotsThatShouldMove) {
-            System.out.println(gameBoard.getTileOnPosition(conveyorBelt.getPosition()).getTileType().toString());
-            System.out.println(conveyorBelt.getPosition().toString());
-            System.out.println(gameBoard.getRobotOnPosition(conveyorBelt.getPosition()));
+
             Direction currentDirection = conveyorBelt.getElement().getDirection();
             RobotID robot = gameBoard.getRobotOnPosition(conveyorBelt.getPosition());
             Position newPosition = gameBoard.getNewPosition(conveyorBelt.getPosition(), currentDirection);
@@ -338,7 +336,7 @@ public class RoboRallyGame implements IDrawableGame {
             Tile nextTile = gameBoard.getTileOnPosition(newPosition);
             BoardElementContainer<Tile> nextConveyorBelt = new BoardElementContainer<>(nextTile, newPosition);
 
-            BoardElementContainer<Tile> lastInRow = findLastRobotInRow (nextConveyorBelt, conveyorBeltsWithRobotsOn);
+            BoardElementContainer<Tile> lastInRow = findLastRobotInRow (conveyorBeltWithRobot, conveyorBeltsWithRobotsOn);
             List<BoardElementContainer<Tile>> listOfRow = new ArrayList<>();
             List<BoardElementContainer<Tile>> results = findFirstRobotInRow(lastInRow, conveyorBeltsWithRobotsOn,
                     listOfRow);
@@ -405,8 +403,6 @@ public class RoboRallyGame implements IDrawableGame {
             return currentConveyorBelt;
         }
     }
-
-
 
     private List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile(Boolean forward,
                                                                              BoardElementContainer<Tile> currentTile,

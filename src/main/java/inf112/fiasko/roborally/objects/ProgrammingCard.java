@@ -43,6 +43,6 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
 
     @Override
     public int compareTo(ProgrammingCard programmingCard) {
-        return this.cardPriority - programmingCard.cardPriority;
+        return programmingCard.cardPriority - this.cardPriority;
     }
 }

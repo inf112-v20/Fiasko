@@ -183,7 +183,7 @@ public class RoboRallyGame implements IDrawableGame {
      * @throws InterruptedException If interrupted wile trying to sleep
      */
     private void runPhase(int phaseNumber) throws InterruptedException {
-        runProgramPhase(phaseNumber);
+        runProgramCards(phaseNumber);
 
         moveAllConveyorBelts();
         rotateCogwheels();

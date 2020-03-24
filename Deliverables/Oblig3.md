@@ -78,7 +78,7 @@ Implementere fase og alt av funksjoner en fase kommer til trenge.
 *   Som spiller trenger jeg å kunne registrere flagg for å kunne vinne spillet.
     *   Ved slutten av en fase vil roboter som står på et flagg få oppdatert currentflagg verdien sin,
         gitt at den har besøkt det forige flagget.
-        
+
     *   Spilleren vinner når alle flagg er besøkt i rett rekkefølge.
 
 ### Arbeidsoppgaver

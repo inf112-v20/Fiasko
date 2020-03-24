@@ -8,8 +8,7 @@ import inf112.fiasko.roborally.element_properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 
@@ -21,6 +20,7 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
+    private List<Player> playerList;
 
     public RoboRallyGame(boolean debug) {
         if (debug) {
@@ -106,6 +106,14 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
+            playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
+            playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
+            playerList.add(new Player(RobotID.ROBOT_3, "Player3"));
+            playerList.add(new Player(RobotID.ROBOT_4, "Player4"));
+            playerList.add(new Player(RobotID.ROBOT_5, "Player5"));
+            playerList.add(new Player(RobotID.ROBOT_6, "Player6"));
+            playerList.add(new Player(RobotID.ROBOT_7, "Player7"));
+            playerList.add(new Player(RobotID.ROBOT_8, "Player8"));
             gameBoard = BoardLoaderUtil.loadBoard("boards/Dizzy_Dash.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
@@ -381,5 +389,26 @@ public class RoboRallyGame implements IDrawableGame {
         gameBoard.fireAllLasers();
         sleep();
         gameBoard.doLaserCleanup();
+    }
+
+    private void runProgramCards(int phase) throws InterruptedException {
+
+        List<RobotID> robotsToDoAction = new ArrayList<>();
+        List<ProgrammingCard> programToBeRun = new ArrayList<>();
+        List<Integer> originalPriority = new ArrayList<>();
+        for (Player player:playerList) {
+            List<ProgrammingCard> playerProgram = player.getProgram();
+            if (!playerProgram.isEmpty()) {
+                originalPriority.add(playerProgram.get(phase).getPriority());
+                robotsToDoAction.add(player.getRobotID());
+                programToBeRun.add(playerProgram.get(phase));
+            }
+        }
+        Collections.sort(programToBeRun);
+        for (ProgrammingCard card:programToBeRun) {
+            int i = originalPriority.indexOf(card.getPriority());
+            RobotID robot = robotsToDoAction.get(i);
+            makeMove(robot, card.getAction());
+        }
     }
 }

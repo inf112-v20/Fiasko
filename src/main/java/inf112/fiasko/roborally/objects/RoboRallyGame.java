@@ -397,6 +397,11 @@ public class RoboRallyGame implements IDrawableGame {
         gameBoard.doLaserCleanup();
     }
 
+    /**
+     * Runs all the programs in the correct order for the phase that is given.
+     * @param phase The phaser Nr we are in.
+     * @throws InterruptedException If it gets interupted while trying to sleep
+     */
     private void runProgramCards(int phase) throws InterruptedException {
         List<RobotID> robotsToDoAction = new ArrayList<>();
         List<ProgrammingCard> programToBeRun = new ArrayList<>();

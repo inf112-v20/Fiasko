@@ -106,6 +106,7 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
+            playerList = new ArrayList<>();
             playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
             playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
             playerList.add(new Player(RobotID.ROBOT_3, "Player3"));

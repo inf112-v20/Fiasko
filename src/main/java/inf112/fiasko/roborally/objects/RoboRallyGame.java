@@ -301,6 +301,12 @@ public class RoboRallyGame implements IDrawableGame {
                 if (gameBoard.isConveyorBelt(gameBoard.getTileOnPosition(newPosition))) {
                     newPositions.put(robotAtConveyorBelt, newPosition);
                     moveNormally.put(robotAtConveyorBelt, false);
+                    Direction newDirection = gameBoard.getTileOnPosition(newPosition).getDirection();
+                    if (Direction.getRightRotatedDirection(newDirection) == conveyorBeltDirection) {
+                        gameBoard.rotateRobotLeft(robotAtConveyorBelt);
+                    } else if (Direction.getLeftRotatedDirection(newDirection) == conveyorBeltDirection) {
+                        gameBoard.rotateRobotRight(robotAtConveyorBelt);
+                    }
                 } else {
                     newPositions.put(robotAtConveyorBelt, conveyorBeltPosition);
                     moveNormally.put(robotAtConveyorBelt, true);

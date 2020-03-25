@@ -296,21 +296,7 @@ public class RoboRallyGame implements IDrawableGame {
             Direction conveyorBeltDirection = conveyorBelt.getElement().getDirection();
             if (gameBoard.conveyorBeltCanMove(conveyorBelt) &&
                     gameBoard.hasRobotOnPosition(conveyorBeltPosition)) {
-                RobotID robotAtConveyorBelt = gameBoard.getRobotOnPosition(conveyorBeltPosition);
-                Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
-                if (gameBoard.isConveyorBelt(gameBoard.getTileOnPosition(newPosition))) {
-                    newPositions.put(robotAtConveyorBelt, newPosition);
-                    moveNormally.put(robotAtConveyorBelt, false);
-                    Direction newDirection = gameBoard.getTileOnPosition(newPosition).getDirection();
-                    if (Direction.getRightRotatedDirection(newDirection) == conveyorBeltDirection) {
-                        gameBoard.rotateRobotLeft(robotAtConveyorBelt);
-                    } else if (Direction.getLeftRotatedDirection(newDirection) == conveyorBeltDirection) {
-                        gameBoard.rotateRobotRight(robotAtConveyorBelt);
-                    }
-                } else {
-                    newPositions.put(robotAtConveyorBelt, conveyorBeltPosition);
-                    moveNormally.put(robotAtConveyorBelt, true);
-                }
+                updateConveyorBeltMaps(conveyorBeltPosition, conveyorBeltDirection, newPositions, moveNormally);
             }
         }
         //Updates position for all robots affected by conveyor belts
@@ -323,6 +309,32 @@ public class RoboRallyGame implements IDrawableGame {
             } else {
                 gameBoard.teleportRobot(robotID, newPositions.get(robotID));
             }
+        }
+    }
+
+    /**
+     * Updates maps containing information about what a robot on a conveyor belt should do
+     * @param conveyorBeltPosition The position of the conveyor belt the robot stands on
+     * @param conveyorBeltDirection The direction of the conveyor belt the robot stands on
+     * @param newPositions The map containing new positions for robots
+     * @param moveNormally The map containing whether a robot should move normally following normal rules
+     */
+    private void updateConveyorBeltMaps(Position conveyorBeltPosition, Direction conveyorBeltDirection,
+                     Map<RobotID, Position> newPositions, Map<RobotID, Boolean> moveNormally) {
+        RobotID robotAtConveyorBelt = gameBoard.getRobotOnPosition(conveyorBeltPosition);
+        Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
+        if (gameBoard.isConveyorBelt(gameBoard.getTileOnPosition(newPosition))) {
+            newPositions.put(robotAtConveyorBelt, newPosition);
+            moveNormally.put(robotAtConveyorBelt, false);
+            Direction newDirection = gameBoard.getTileOnPosition(newPosition).getDirection();
+            if (Direction.getRightRotatedDirection(newDirection) == conveyorBeltDirection) {
+                gameBoard.rotateRobotLeft(robotAtConveyorBelt);
+            } else if (Direction.getLeftRotatedDirection(newDirection) == conveyorBeltDirection) {
+                gameBoard.rotateRobotRight(robotAtConveyorBelt);
+            }
+        } else {
+            newPositions.put(robotAtConveyorBelt, conveyorBeltPosition);
+            moveNormally.put(robotAtConveyorBelt, true);
         }
     }
 

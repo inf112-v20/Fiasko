@@ -447,7 +447,7 @@ public class Board {
      * @param direction The direction something is going
      * @return True if a wall would stop its path
      */
-    boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
+    private boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
             return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
                     hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
     }

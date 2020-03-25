@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
  * This class generates a simple text button using a default skin
  */
 public class SimpleButton {
-    private TextButton button;
+    private final TextButton button;
 
     /**
      * Instantiates a new simple button

@@ -171,11 +171,11 @@ public class RoboRallyGame implements IDrawableGame {
      */
     private void runGameLoop() throws InterruptedException {
         TimeUnit.SECONDS.sleep(3);
-        runPhase(0);
         runPhase(1);
         runPhase(2);
         runPhase(3);
         runPhase(4);
+        runPhase(5);
     }
 
     /**
@@ -356,7 +356,7 @@ public class RoboRallyGame implements IDrawableGame {
         for (Player player : playerList) {
             List<ProgrammingCard> playerProgram = player.getProgram();
             if (!playerProgram.isEmpty()) {
-                ProgrammingCard programmingCard = playerProgram.get(phase-1);
+                ProgrammingCard programmingCard = playerProgram.get(phase - 1);
                 originalPriority.add(programmingCard.getPriority());
                 robotsToDoAction.add(player.getRobotID());
                 programToBeRun.add(programmingCard);

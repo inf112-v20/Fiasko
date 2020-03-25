@@ -23,6 +23,10 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<Player> playerList;
 
+    /**
+     * Instantiates a new robo rally game
+     * @param debug Whether to start the game in debugging mode
+     */
     public RoboRallyGame(boolean debug) {
         if (debug) {
             initializeDebugMode();
@@ -31,6 +35,9 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
+    /**
+     * Instantiates a new robo rally game
+     */
     public RoboRallyGame() {
         initializeGame();
     }

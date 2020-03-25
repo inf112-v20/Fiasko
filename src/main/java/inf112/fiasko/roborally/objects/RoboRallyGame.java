@@ -11,9 +11,10 @@ import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
 
 /**
  * This class represent a game which is drawable using libgdx
@@ -24,8 +25,6 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<Player> playerList;
-    private List<BoardElementContainer<Tile>> blacklistedTiles = new ArrayList<>();
-    private List<BoardElementContainer<Tile>> whitelistedTiles = new ArrayList<>();
 
     /**
      * Instantiates a new robo rally game
@@ -138,7 +137,7 @@ public class RoboRallyGame implements IDrawableGame {
                 player.setInProgram(testProgram);
             }
 
-            gameBoard = BoardLoaderUtil.loadBoard("boards/Dizzy_Dash.txt", robots);
+            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
                     TileType.COGWHEEL_LEFT);
             fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
@@ -268,22 +267,6 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
-     * Checks whether a given list has at least one element as defined by the predicate
-     * @param list The list to check
-     * @param predicate The predicate to test
-     * @param <T> The type of the list
-     * @return True if the list has at least one element passing the test of the predicate
-     */
-    private static <T> boolean testPredicate(List<T> list, Predicate<T> predicate) {
-        for (T object : list) {
-            if (predicate.test(object)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Moves robots standing on conveyor belts in the direction of the conveyor belt
      *
      * In addition, the function rotates appropriately when arriving at any non-straight conveyor belt
@@ -298,190 +281,41 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
-     * Moves all conveyor belts in the input list
-     * @param conveyorBelts A list of conveyor belts to move
+     * Moves a list of conveyor belts
+     * @param conveyorBelts A list of board element containers containing conveyor belts
      */
     private void moveConveyorBelts(List<BoardElementContainer<Tile>> conveyorBelts) {
-        List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsThatShouldMove =
-                conveyorBeltsThatCanMoveWithoutConflict(conveyorBelts);
-        for (BoardElementContainer<Tile> conveyorBelt : conveyorBeltsWithRobotsThatShouldMove) {
-
-            Direction currentDirection = conveyorBelt.getElement().getDirection();
-            RobotID robot = gameBoard.getRobotOnPosition(conveyorBelt.getPosition());
-            Position newPosition = gameBoard.getNewPosition(conveyorBelt.getPosition(), currentDirection);
-            Tile nextTile = gameBoard.getTileOnPosition(newPosition);
-
-            doConveyorBeltMovement(robot, currentDirection, nextTile);
+        Map<RobotID, Position> newPositions = new HashMap<>();
+        Map<RobotID, Boolean> moveNormally = new HashMap<>();
+        for (Robot robot : gameBoard.getAliveRobots()) {
+            newPositions.put(robot.getRobotId(), robot.getPosition());
         }
-    }
-
-    /**
-     * Finds conveyor belts that can move without conflict
-     * @param conveyorBelts that should be checked
-     * @return List of conveyor belts that can move robots without conflict
-     */
-    private List<BoardElementContainer<Tile>> conveyorBeltsThatCanMoveWithoutConflict(
-            List<BoardElementContainer<Tile>> conveyorBelts) {
-
-        List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn = new ArrayList<>();
-        whitelistedTiles.clear();
-        blacklistedTiles.clear();
-
+        //Updates hash maps containing robot move information
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
-            if (gameBoard.hasRobotOnPosition(conveyorBelt.getPosition())) {
-                conveyorBeltsWithRobotsOn.add(conveyorBelt);
-            }
-        }
-
-        List<BoardElementContainer<Tile>> listOfRow = new ArrayList<>();
-        for (BoardElementContainer<Tile> conveyorBeltWithRobot : conveyorBeltsWithRobotsOn) {
-            if (blacklistedTiles.contains(conveyorBeltWithRobot) ||
-                    whitelistedTiles.contains((conveyorBeltWithRobot))) {
-                continue;
-            }
-
-            BoardElementContainer<Tile> lastInRow = findLastRobotInRow (conveyorBeltWithRobot, conveyorBeltsWithRobotsOn);
-
-            List<BoardElementContainer<Tile>> results = findFirstRobotInRow(lastInRow, conveyorBeltsWithRobotsOn,
-                    listOfRow);
-
-            for (BoardElementContainer<Tile> result : results) {
-                if (!whitelistedTiles.contains(result)) {
-                    whitelistedTiles.add(0, result);
+            Position conveyorBeltPosition = conveyorBelt.getPosition();
+            Direction conveyorBeltDirection = conveyorBelt.getElement().getDirection();
+            if (gameBoard.conveyorBeltCanMove(conveyorBelt) &&
+                    gameBoard.hasRobotOnPosition(conveyorBeltPosition)) {
+                RobotID robotAtConveyorBelt = gameBoard.getRobotOnPosition(conveyorBeltPosition);
+                Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
+                if (gameBoard.isConveyorBelt(gameBoard.getTileOnPosition(newPosition))) {
+                    newPositions.put(robotAtConveyorBelt, newPosition);
+                    moveNormally.put(robotAtConveyorBelt, false);
+                } else {
+                    newPositions.put(robotAtConveyorBelt, conveyorBeltPosition);
+                    moveNormally.put(robotAtConveyorBelt, true);
                 }
             }
         }
-        return whitelistedTiles;
-    }
-
-    /**
-     * Recursive function to find all robots in a row that should move, and blacklists those that should not
-     * @param currentConveyorBelt The current conveyor belt
-     * @param conveyorBeltsWithRobotsOn List of conveyor belts that have robots on them
-     * @param listOfRow List of conveyor belts in a row with robots on them
-     * @return listOfRow
-     */
-    private List<BoardElementContainer<Tile>> findFirstRobotInRow(BoardElementContainer<Tile> currentConveyorBelt,
-                                     List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn,
-                                     List<BoardElementContainer<Tile>> listOfRow) {
-        Position nextPosition = gameBoard.getNewPosition(currentConveyorBelt.getPosition(),
-                currentConveyorBelt.getElement().getDirection());
-        Direction nextDirection = gameBoard.getTileOnPosition(nextPosition).getDirection();
-        Tile nextTile = gameBoard.getTileOnPosition(nextPosition);
-        BoardElementContainer<Tile> nextElementContainer = new BoardElementContainer<>(nextTile, nextPosition);
-        List<BoardElementContainer<Tile>> pointingNeighbours = listOfConveyorBeltsWithRobotPointingAtTile(true,
-                nextElementContainer, conveyorBeltsWithRobotsOn);
-
-        listOfRow.add(currentConveyorBelt);
-
-        if (blacklistedTiles.contains(nextElementContainer)) {
-            blacklistedTiles.addAll(listOfRow);
-            listOfRow.clear();
-        } else if (currentConveyorBelt.getElement().getDirection() == Direction.getReverseDirection(nextDirection) &&
-                conveyorBeltsWithRobotsOn.contains(nextElementContainer)) {
-            blacklistedTiles.addAll(listOfRow);
-            blacklistedTiles.add(nextElementContainer);
-            listOfRow.clear();
-        } else if ((!conveyorBelts.contains(nextElementContainer)) && gameBoard.hasRobotOnPosition(nextPosition)) {
-            blacklistedTiles.addAll(listOfRow);
-            listOfRow.clear();
-        } else if (gameBoard.moveIsStoppedByWall(currentConveyorBelt.getPosition(), nextPosition,
-                currentConveyorBelt.getElement().getDirection())) {
-            blacklistedTiles.addAll(listOfRow);
-            listOfRow.clear();
-        } else if (pointingNeighbours.size() > 0) {
-            blacklistedTiles.addAll(pointingNeighbours);
-            blacklistedTiles.addAll(listOfRow);
-            listOfRow.clear();
-        } else if ((conveyorBeltsWithRobotsOn.contains(nextElementContainer))) {
-            listOfRow = findFirstRobotInRow(nextElementContainer, conveyorBeltsWithRobotsOn, listOfRow);
-        }
-        return listOfRow;
-    }
-
-    /**
-     * Recursive function that finds the last robot in a row with conveyor belts without conflicts
-     * @param currentConveyorBelt The current conveyor belt
-     * @param conveyorBeltsWithRobotsOn List with conveyor belts that have robots on them
-     * @return The last conveyor belt with a robot without conflict in a row
-     */
-    private BoardElementContainer<Tile> findLastRobotInRow(BoardElementContainer<Tile> currentConveyorBelt,
-                                    List<BoardElementContainer<Tile>> conveyorBeltsWithRobotsOn) {
-        List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile =
-                listOfConveyorBeltsWithRobotPointingAtTile(false, currentConveyorBelt,
-                        conveyorBeltsWithRobotsOn);
-        int sizeOfPointingList = listOfConveyorBeltsWithRobotPointingAtTile.size();
-        if (sizeOfPointingList == 0) {
-            return currentConveyorBelt;
-        } else if (sizeOfPointingList == 1) {
-            return findLastRobotInRow(listOfConveyorBeltsWithRobotPointingAtTile.get(0), conveyorBeltsWithRobotsOn);
-        } else {
-            blacklistedTiles.addAll(listOfConveyorBeltsWithRobotPointingAtTile);
-            return currentConveyorBelt;
-        }
-    }
-
-    /**
-     * Finds all neighbouring conveyor belt tiles with robots that are pointing on the current tile
-     * @param forward True if looking forward, false otherwise
-     * @param currentTile The current tile
-     * @param conveyorBeltsWithRobots List with conveyor belts that have robots on them
-     * @return A list of the neighbouring conveyor belt tiles with robots that are pointing on the current tile
-     */
-    private List<BoardElementContainer<Tile>> listOfConveyorBeltsWithRobotPointingAtTile(Boolean forward,
-                                                                             BoardElementContainer<Tile> currentTile,
-                                                            List<BoardElementContainer<Tile>> conveyorBeltsWithRobots) {
-        List<BoardElementContainer<Tile>> possibleConflictConveyorBelts = new ArrayList<>();
-        Tile conveyorBeltTile = currentTile.getElement();
-        Position currentPosition = currentTile.getPosition();
-        Direction currentDirection;
-
-        if (forward) {
-            currentDirection = conveyorBeltTile.getDirection();
-        } else currentDirection = Direction.getReverseDirection(conveyorBeltTile.getDirection());
-
-        Position nextPositionStraight = gameBoard.getNewPosition(currentPosition, currentDirection);
-        Tile nextTileStraight = gameBoard.getTileOnPosition(nextPositionStraight);
-        Position nextPositionLeft = gameBoard.getNewPosition(currentPosition,
-                Direction.getLeftRotatedDirection(currentDirection));
-        Tile nextTileLeft = gameBoard.getTileOnPosition(nextPositionLeft);
-        Position nextPositionRight = gameBoard.getNewPosition(currentPosition,
-                Direction.getRightRotatedDirection(currentDirection));
-        Tile nextTileRight = gameBoard.getTileOnPosition(nextPositionRight);
-
-        BoardElementContainer<Tile> rightOfCurrent = new BoardElementContainer<>(nextTileRight, nextPositionRight);
-        BoardElementContainer<Tile> leftOfCurrent = new BoardElementContainer<>(nextTileLeft, nextPositionLeft);
-        BoardElementContainer<Tile> inFrontOfCurrent = new BoardElementContainer<>(nextTileStraight, nextPositionStraight);
-
-        if (currentDirection == Direction.getReverseDirection(
-                nextTileStraight.getDirection()) && conveyorBeltsWithRobots.contains(inFrontOfCurrent)) {
-            possibleConflictConveyorBelts.add(inFrontOfCurrent);
-        }
-        if (currentDirection == Direction.getLeftRotatedDirection(
-                nextTileLeft.getDirection()) && conveyorBeltsWithRobots.contains(leftOfCurrent)) {
-            possibleConflictConveyorBelts.add(leftOfCurrent);
-        }
-        if (currentDirection == Direction.getRightRotatedDirection(
-                nextTileRight.getDirection()) && conveyorBeltsWithRobots.contains(rightOfCurrent)) {
-            possibleConflictConveyorBelts.add(rightOfCurrent);
-        }
-        return possibleConflictConveyorBelts;
-    }
-
-    /**
-     * Moves a robot standing on a conveyor belt
-     * @param robot The id of the robot to move
-     * @param currentDirection The direction of the conveyor belt the robot is standing on
-     * @param nextTile The tile the robot is moving to
-     */
-    private void doConveyorBeltMovement(RobotID robot, Direction currentDirection, Tile nextTile) {
-        Direction nextDirection = nextTile.getDirection();
-        gameBoard.moveRobot(robot, currentDirection);
-        if (testPredicate(conveyorBelts, (container) -> container.getElement() == nextTile)) {
-            if (Direction.getRightRotatedDirection(nextDirection) == currentDirection) {
-                gameBoard.rotateRobotLeft(robot);
-            } else if (Direction.getLeftRotatedDirection(nextDirection) == currentDirection) {
-                gameBoard.rotateRobotRight(robot);
+        //Updates position for all robots affected by conveyor belts
+        for (RobotID robotID : RobotID.values()) {
+            if (newPositions.get(robotID) == null || moveNormally.get(robotID) == null) {
+                continue;
+            }
+            if (moveNormally.get(robotID)) {
+                gameBoard.moveRobot(robotID, gameBoard.getTileOnPosition(newPositions.get(robotID)).getDirection());
+            } else {
+                gameBoard.teleportRobot(robotID, newPositions.get(robotID));
             }
         }
     }
@@ -522,7 +356,7 @@ public class RoboRallyGame implements IDrawableGame {
         for (Player player : playerList) {
             List<ProgrammingCard> playerProgram = player.getProgram();
             if (!playerProgram.isEmpty()) {
-                ProgrammingCard programmingCard = playerProgram.get(phase);
+                ProgrammingCard programmingCard = playerProgram.get(phase-1);
                 originalPriority.add(programmingCard.getPriority());
                 robotsToDoAction.add(player.getRobotID());
                 programToBeRun.add(programmingCard);

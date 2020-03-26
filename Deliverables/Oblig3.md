@@ -34,7 +34,7 @@ Ellers har vi gjennomført planen som planlagt.
 
 *   Til neste oblig må vi bli ferdig med runder og kortvelging først. Etter dette prioriterer vi å få 
     nettverksfunksjonaliteten på plass. Til slutt vil vi prioritere det grafiske og eventuelle "nice to haves".
-    
+
 ![PNG](../Deliverables/Screenshots/Prosjekttavle_26_03_2020.PNG "Skjermdump prosjekttavle")
 
 ### Gruppedynamikk og kommunikasjon
@@ -117,7 +117,7 @@ Implementere faser og alt av funksjonalitet en fase trenger.
 *   Alle krav vi har jobbet med er en del av MVP med unntak av visningen av laseravfyring.
     *   Spillet trenger faser for å virke sånn som det skal.
     *   Alle kravene vi har jobbet med anser vi som viktige deler av en fase.
-    
+
 ## Deloppgave 3
 ### Commitsfordeling
 Vi har brukt en del parprogrammering og har derfor noe skjev fordeling av commits. Vi har stort sett kommentert hvem

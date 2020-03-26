@@ -42,7 +42,6 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
     private final Stage stage;
-    final TextButton confirmCards;
 
     /**
      * Initializes a new card choice screen
@@ -72,7 +71,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         stage = new Stage();
         inputMultiplexer.addProcessor(stage);
 
-        confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
+        TextButton confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
         stage.addActor(confirmCards);
         confirmCards.setY(viewport.getWorldHeight() + 60);
         confirmCards.setX(15);

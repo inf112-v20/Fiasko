@@ -168,6 +168,137 @@ public class Board {
     }
 
     /**
+     * Checks whether a given tile is a conveyor belt
+     * @param tile The tile to check
+     * @return True if the tile is a conveyor belt
+     */
+    public boolean isConveyorBelt(Tile tile) {
+        if (tile == null) {
+            return false;
+        }
+        switch (tile.getTileType()) {
+            case CONVEYOR_BELT_SLOW:
+            case CONVEYOR_BELT_FAST:
+            case CONVEYOR_BELT_FAST_LEFT:
+            case CONVEYOR_BELT_FAST_RIGHT:
+            case CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT:
+            case CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT:
+            case CONVEYOR_BELT_FAST_SIDE_ENTRANCES:
+            case CONVEYOR_BELT_SLOW_LEFT:
+            case CONVEYOR_BELT_SLOW_RIGHT:
+            case CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT:
+            case CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT:
+            case CONVEYOR_BELT_SLOW_SIDE_ENTRANCES:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Teleports a robot to some position without verification
+     *
+     * Be quite careful about using this method. No validation will me done. The robot will magically disappear from
+     * one position and appear on another, hence the name. This method should only be used when the new position has
+     * been confirmed available.
+     *
+     * @param robotID The id of the robot to teleport
+     * @param newPosition The position the robot should teleport to
+     */
+    public void teleportRobot(RobotID robotID, Position newPosition) {
+        robots.get(robotID).setPosition(newPosition);
+    }
+
+    /**
+     * Checks whether a given conveyor belt is able to move in its direction
+     * @param conveyorBelt The conveyor belt to move
+     * @return True if nothing is blocking its movement
+     */
+    public boolean conveyorBeltCanMove(BoardElementContainer<Tile> conveyorBelt) {
+        if (!isConveyorBelt(conveyorBelt.getElement())) {
+            throw new IllegalArgumentException("Input to function is of invalid tile type.");
+        }
+        Position conveyorBeltPosition = conveyorBelt.getPosition();
+        Direction conveyorBeltDirection = conveyorBelt.getElement().getDirection();
+        //Ignore conveyor belts without a robot
+        if (!hasRobotOnPosition(conveyorBeltPosition)) {
+            return true;
+        }
+        Position positionInFront = getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
+        Tile tileInFront = getTileOnPosition(positionInFront);
+        //If a conveyor belt will move the robot outside the map, the move is valid
+        if (!isValidPosition(positionInFront)) {
+            return true;
+        }
+        //The tile in front of the robot is not a conveyor belt and has something on it stopping the conveyor belt
+        if (!isConveyorBelt(tileInFront) &&
+                hasFrontConflict(conveyorBeltPosition, positionInFront, conveyorBeltDirection)) {
+                return false;
+        }
+        //There is another robot trying to enter the same crossing
+        if (hasCrossingConflict(positionInFront, conveyorBeltDirection)) {
+            return false;
+        }
+        //The way forward seems clear
+        if (!hasRobotOnPosition(positionInFront)) {
+            return true;
+        }
+        return conveyorBeltCanMove(new BoardElementContainer<>(tileInFront, positionInFront));
+    }
+
+    /**
+     * Checks whether a conveyor belt has anything in front of it preventing it from moving forward
+     * @param conveyorBeltPosition The position of the conveyor belt
+     * @param positionInFront The position in front of the conveyor belt
+     * @param conveyorBeltDirection The direction of the conveyor belt
+     * @return True if the conveyor belt cannot move forward
+     */
+    private boolean hasFrontConflict(Position conveyorBeltPosition, Position positionInFront,
+                                     Direction conveyorBeltDirection) {
+        //The robot cannot be moved because a wall is blocking it
+        if (moveIsStoppedByWall(conveyorBeltPosition, positionInFront, conveyorBeltDirection)) {
+            return true;
+        }
+        //The robot cannot move off the conveyor belt because another robot is blocking it
+        if (hasRobotOnPosition(positionInFront)) {
+            return true;
+        }
+        Position positionTwoForward = getNewPosition(positionInFront, conveyorBeltDirection);
+        Tile tileTwoForward = getTileOnPosition(positionTwoForward);
+        //If a robot standing on the opposite side of a tile and trying to get to the tile in the middle, none of
+        //the robots should move
+        return (isValidPosition(positionInFront) && isConveyorBelt(tileTwoForward) &&
+                tileTwoForward.getDirection() == Direction.getReverseDirection(conveyorBeltDirection)
+                && hasRobotOnPosition(positionTwoForward));
+    }
+
+    /**
+     * Checks whether a conveyor belt has a conflict in a crossing
+     * @param crossingPosition The position of the crossing
+     * @param conveyorBeltDirection The direction of the conveyor belt
+     * @return True if there is a conflict. False otherwise
+     */
+    private boolean hasCrossingConflict(Position crossingPosition, Direction conveyorBeltDirection) {
+        Position frontLeftPosition = getNewPosition(crossingPosition,
+                Direction.getLeftRotatedDirection(conveyorBeltDirection));
+        Tile frontLeftTile = getTileOnPosition(frontLeftPosition);
+        Position frontRightPosition = getNewPosition(crossingPosition,
+                Direction.getRightRotatedDirection(conveyorBeltDirection));
+        Tile frontRightTile = getTileOnPosition(frontRightPosition);
+        Position twoForwardPosition = getNewPosition(crossingPosition, conveyorBeltDirection);
+        Tile twoForwardTile = getTileOnPosition(twoForwardPosition);
+        //If another robot is standing on a conveyor belt pointing to the conveyor belt in front, a conflict happens
+        return (isValidPosition(frontLeftPosition) && isConveyorBelt(frontLeftTile) && frontLeftTile.getDirection() ==
+                Direction.getRightRotatedDirection(conveyorBeltDirection) && hasRobotOnPosition(frontLeftPosition)) ||
+                (isValidPosition(frontRightPosition) && isConveyorBelt(frontRightTile)
+                        && frontRightTile.getDirection() == Direction.getLeftRotatedDirection(conveyorBeltDirection)
+                        && hasRobotOnPosition(frontRightPosition)) ||
+                (isValidPosition(twoForwardPosition) && isConveyorBelt(twoForwardTile)
+                        && twoForwardTile.getDirection() == Direction.getReverseDirection(conveyorBeltDirection)
+                        && hasRobotOnPosition(twoForwardPosition));
+    }
+
+    /**
      * Moves all dead robots to their backups and makes them part of the board again, and if a robot has no lives
      * it will be removed from the game.
      */
@@ -316,7 +447,7 @@ public class Board {
      * @param direction The direction something is going
      * @return True if a wall would stop its path
      */
-    boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
+    private boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
             return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
                     hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
     }

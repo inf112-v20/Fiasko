@@ -8,7 +8,7 @@ Rollefordelingen i teamet fungerer fint sånn som vi har det.
 Siden vi har fra begynnelsen av prosjektet valgt å ha noen av møtene og parprogrammeringsøktene våre på Discord,
 var vi bedre rustet til utfordringene som kom med SARS-CoV-2 pandemien og de inførte restriksjoner
 det har medbragt.
-    
+
 ### Retrospektiv
 #### Plan
 Det vi planlagte var å ha to fysiske møter og ett digitalt møte per korte sprint (en uke) 
@@ -28,7 +28,7 @@ Ellers har vi gjennomført planen som planlagt.
 #### Forbedringspunkter
 *   Forbedre bruk av tester. Bruke mer test driven development. Vi har til nå skrevet teser etter vi har skrevet kode
     noe som har ført til noen bugs som kanskje kunne vært unngått med tdd.
-    
+
 ### Prioritering av oppgaver
 Vi må bli ferdig med runder og kortvelging først. Etter dette prioriterer vi å få nettverksfunksjonaliteten på plass.
 Til slutt vil vi prioritere det grafiske og eventulle nice to haves.
@@ -63,10 +63,10 @@ Implementere fase og alt av funksjoner en fase kommer til trenge.
 
 *   Som fase trenger jeg å kunne kjøre programmeringskort etter høyest verdi for å bestemme 
     rekkefølgen på trekkene til robotene.
-    
+
     *   Programmeringskort er sorterbare.
     *   Programmeringskort kan hentes og gis videre.
-    
+
 *   Som tannhjul trenger jeg å kunen snu roboter for gjennomføre min funksjon.
     *   Tannhjul vrir roboter som står på de 90 grader i retningen tannhjulet har.
 

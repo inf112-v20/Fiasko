@@ -22,6 +22,11 @@ Korthandling blir representert ved enumen Action
 Ved å bruke metodene over kan alt i en eller flere faser testes og simuleres. Den store forskjellen fra MVP er at all
 bruker-input blir hardkodet før programmet kjører.
 
+Eksempel på makeMove: makeMove(RobotID.ROBOT_1, Action.MOVE_1); //Flytter robot 1 ett steg fremover
+
+Linjene som inneholder runPhase(n) kjører spesifikke faser som bruker tilfeldig utdelte programmeringskort uten 
+integritetsvalidering. Disse bør kommenteres ut under testing.
+
 ## Knapper og kontrollmekanismer
 ### Knapper
 -   Q: Tilbakestiller kamera og kamerarotasjon

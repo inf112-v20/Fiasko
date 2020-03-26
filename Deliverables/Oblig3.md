@@ -92,8 +92,6 @@ Implementere faser og alt av funksjonalitet en fase trenger.
     *   Ved slutten av en fase vil roboter som står på et flagg få oppdatert currentflagg verdien sin,
         gitt at den har besøkt det forrige flagget.
 
-    *   Spilleren vinner når alle flagg er besøkt i rett rekkefølge.
-    
 *   Som spiller trenger jeg å kunne se laserstrålen på brettet for å kunne vite hvor den treffer.
     *   Laserstrålen er synlig på brettet når den blir avfyrt.
 

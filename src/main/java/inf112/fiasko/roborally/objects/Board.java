@@ -255,21 +255,8 @@ public class Board {
      */
     private boolean hasFrontConflict(Position conveyorBeltPosition, Position positionInFront,
                                      Direction conveyorBeltDirection) {
-        //The robot cannot be moved because a wall is blocking it
-        if (moveIsStoppedByWall(conveyorBeltPosition, positionInFront, conveyorBeltDirection)) {
-            return true;
-        }
-        //The robot cannot move off the conveyor belt because another robot is blocking it
-        if (hasRobotOnPosition(positionInFront)) {
-            return true;
-        }
-        Position positionTwoForward = getNewPosition(positionInFront, conveyorBeltDirection);
-        Tile tileTwoForward = getTileOnPosition(positionTwoForward);
-        //If a robot standing on the opposite side of a tile and trying to get to the tile in the middle, none of
-        //the robots should move
-        return (isValidPosition(positionInFront) && isConveyorBelt(tileTwoForward) &&
-                tileTwoForward.getDirection() == Direction.getReverseDirection(conveyorBeltDirection)
-                && hasRobotOnPosition(positionTwoForward));
+        return moveIsStoppedByWall(conveyorBeltPosition, positionInFront, conveyorBeltDirection) ||
+                hasRobotOnPosition(positionInFront);
     }
 
     /**
@@ -287,7 +274,7 @@ public class Board {
         Tile frontRightTile = getTileOnPosition(frontRightPosition);
         Position twoForwardPosition = getNewPosition(crossingPosition, conveyorBeltDirection);
         Tile twoForwardTile = getTileOnPosition(twoForwardPosition);
-        //If another robot is standing on a conveyor belt pointing to the conveyor belt in front, a conflict happens
+        //If another robot is standing on a conveyor belt pointing to the tile in front, a conflict happens
         return (isValidPosition(frontLeftPosition) && isConveyorBelt(frontLeftTile) && frontLeftTile.getDirection() ==
                 Direction.getRightRotatedDirection(conveyorBeltDirection) && hasRobotOnPosition(frontLeftPosition)) ||
                 (isValidPosition(frontRightPosition) && isConveyorBelt(frontRightTile)

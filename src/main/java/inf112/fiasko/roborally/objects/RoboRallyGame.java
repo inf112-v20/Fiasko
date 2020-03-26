@@ -117,41 +117,10 @@ public class RoboRallyGame implements IDrawableGame {
             robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
             robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
             robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
-            playerList = new ArrayList<>();
-            playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
-            playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
-            playerList.add(new Player(RobotID.ROBOT_3, "Player3"));
-            playerList.add(new Player(RobotID.ROBOT_4, "Player4"));
-            playerList.add(new Player(RobotID.ROBOT_5, "Player5"));
-            playerList.add(new Player(RobotID.ROBOT_6, "Player6"));
-            playerList.add(new Player(RobotID.ROBOT_7, "Player7"));
-            playerList.add(new Player(RobotID.ROBOT_8, "Player8"));
-            Deck<ProgrammingCard> cards =  DeckLoaderUtil.loadProgrammingCardsDeck();
-            for (Player player : playerList) {
-                cards.shuffle();
-                List<ProgrammingCard> testProgram = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
-                    cards.shuffle();
-                    testProgram.add(cards.peekTop());
-                }
-                player.setInProgram(testProgram);
-            }
 
+            initializePlayers();
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
-            cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
-                    TileType.COGWHEEL_LEFT);
-            fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
-                    TileType.CONVEYOR_BELT_FAST_RIGHT, TileType.CONVEYOR_BELT_FAST_LEFT,
-                    TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT,
-                    TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT,
-                    TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCES);
-            conveyorBelts = new ArrayList<>();
-            conveyorBelts.addAll(fastConveyorBelts);
-            conveyorBelts.addAll(gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_SLOW,
-                    TileType.CONVEYOR_BELT_SLOW_RIGHT, TileType.CONVEYOR_BELT_SLOW_LEFT,
-                    TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT,
-                    TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT,
-                    TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
+            generateTileLists();
 
             new Thread(() -> {
                 try {
@@ -163,6 +132,52 @@ public class RoboRallyGame implements IDrawableGame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Initializes all players
+     * @throws IOException If interrupted while trying to sleep
+     */
+    private void initializePlayers() throws IOException {
+        playerList = new ArrayList<>();
+        playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
+        playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
+        playerList.add(new Player(RobotID.ROBOT_3, "Player3"));
+        playerList.add(new Player(RobotID.ROBOT_4, "Player4"));
+        playerList.add(new Player(RobotID.ROBOT_5, "Player5"));
+        playerList.add(new Player(RobotID.ROBOT_6, "Player6"));
+        playerList.add(new Player(RobotID.ROBOT_7, "Player7"));
+        playerList.add(new Player(RobotID.ROBOT_8, "Player8"));
+        Deck<ProgrammingCard> cards =  DeckLoaderUtil.loadProgrammingCardsDeck();
+        for (Player player : playerList) {
+            cards.shuffle();
+            List<ProgrammingCard> testProgram = new ArrayList<>();
+            for (int i = 0; i < 5; i++) {
+                cards.shuffle();
+                testProgram.add(cards.peekTop());
+            }
+            player.setInProgram(testProgram);
+        }
+    }
+
+    /**
+     * Generates lists containing board element containers with all tiles of certain types
+     */
+    private void generateTileLists() {
+        cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
+                TileType.COGWHEEL_LEFT);
+        fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
+                TileType.CONVEYOR_BELT_FAST_RIGHT, TileType.CONVEYOR_BELT_FAST_LEFT,
+                TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT,
+                TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT,
+                TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCES);
+        conveyorBelts = new ArrayList<>();
+        conveyorBelts.addAll(fastConveyorBelts);
+        conveyorBelts.addAll(gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_SLOW,
+                TileType.CONVEYOR_BELT_SLOW_RIGHT, TileType.CONVEYOR_BELT_SLOW_LEFT,
+                TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT,
+                TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT,
+                TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
     }
 
     /**

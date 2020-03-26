@@ -6,7 +6,8 @@ vil vi gå over til en fase der målet blir å implementere ting som er gøy, me
 Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, Inc.
 
 ## Spillstatus
-Ved kjøring av .jar filen blir det kjørt en demo, uten mulighet for bruker å bevege robot.
+Ved kjøring av .jar filen blir det vist en "splash screen" og kjørt en demo når brukeren trykker venstre musetast, 
+uten mulighet for bruker å bevege robot.
 
 ## Manuell testing
 Demoen er definert i RoboRallyGame sin metode runGameLoop(). Metodene som kan brukes for testing er:
@@ -26,6 +27,14 @@ Eksempel på makeMove: makeMove(RobotID.ROBOT_1, Action.MOVE_1); //Flytter robot
 
 Linjene som inneholder runPhase(n) kjører spesifikke faser som bruker tilfeldig utdelte programmeringskort uten 
 integritetsvalidering. Disse bør kommenteres ut under testing.
+
+Robotene sin posisjon blir initialisert i RoboRallyGame sin metode initializeGame() og kan endres dersom det er 
+fordelaktig å starte dem på andre posisjoner.
+
+Brettet blir også lastet inn i RoboRallyGame sin metode initializeGame(). Det er 3 brett som er relevante å teste på:
+-   Checkmate
+-   Dizzy_Dash
+-   Risky_Exchange
 
 ## Knapper og kontrollmekanismer
 ### Knapper

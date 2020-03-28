@@ -309,7 +309,7 @@ public class RoboRallyGame implements IDrawableGame {
         for (BoardElementContainer<Tile> conveyorBelt : conveyorBelts) {
             Position conveyorBeltPosition = conveyorBelt.getPosition();
             Direction conveyorBeltDirection = conveyorBelt.getElement().getDirection();
-            if (gameBoard.conveyorBeltCanMove(conveyorBelt) &&
+            if (gameBoard.conveyorBeltCanMove(conveyorBelt, 0) &&
                     gameBoard.hasRobotOnPosition(conveyorBeltPosition)) {
                 updateConveyorBeltMaps(conveyorBeltPosition, conveyorBeltDirection, newPositions, moveNormally);
             }

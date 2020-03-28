@@ -212,11 +212,16 @@ public class Board {
     /**
      * Checks whether a given conveyor belt is able to move in its direction
      * @param conveyorBelt The conveyor belt to move
+     * @param iterations The number of recursive calls already executed
      * @return True if nothing is blocking its movement
      */
-    public boolean conveyorBeltCanMove(BoardElementContainer<Tile> conveyorBelt) {
+    public boolean conveyorBeltCanMove(BoardElementContainer<Tile> conveyorBelt, int iterations) {
         if (!isConveyorBelt(conveyorBelt.getElement())) {
             throw new IllegalArgumentException("Input to function is of invalid tile type.");
+        }
+        //Prevents an infinite loop if robots are in a small conveyor belt loop
+        if (iterations >= 8) {
+            return true;
         }
         Position conveyorBeltPosition = conveyorBelt.getPosition();
         Direction conveyorBeltDirection = conveyorBelt.getElement().getDirection();
@@ -243,7 +248,7 @@ public class Board {
         if (!hasRobotOnPosition(positionInFront)) {
             return true;
         }
-        return conveyorBeltCanMove(new BoardElementContainer<>(tileInFront, positionInFront));
+        return conveyorBeltCanMove(new BoardElementContainer<>(tileInFront, positionInFront), iterations + 1);
     }
 
     /**

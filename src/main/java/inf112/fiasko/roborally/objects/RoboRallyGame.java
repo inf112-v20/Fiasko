@@ -428,4 +428,13 @@ public class RoboRallyGame implements IDrawableGame {
         }
     }
 
+    /**
+     * sets the robots powerdown status too the players powerdown next round status and sets the players status to false
+     */
+    private void updateRobotPowerDown(){
+        for (Player player:playerList) {
+            gameBoard.setPowerDown(player.getRobotID(),player.getPowerDownNextRound());
+            player.setPowerDownNextRound(false);
+        }
+    }
 }

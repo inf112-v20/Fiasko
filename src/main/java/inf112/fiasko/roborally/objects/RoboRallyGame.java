@@ -365,9 +365,14 @@ public class RoboRallyGame implements IDrawableGame {
         List<BoardElementContainer<Tile>> pointingNeighbours = listOfConveyorBeltsWithRobotPointingAtTile(true,
                 nextElementContainer, conveyorBeltsWithRobotsOn);
 
+        int conveyorBeltsWithRobotsPointingToSameTile = listOfConveyorBeltsWithRobotPointingAtTile(true,
+                nextElementContainer, conveyorBeltsWithRobotsOn).size();
         listOfRow.add(currentConveyorBelt);
 
         if (blacklistedTiles.contains(nextElementContainer)) {
+            blacklistedTiles.addAll(listOfRow);
+            listOfRow.clear();
+        } else if (conveyorBeltsWithRobotsPointingToSameTile > 0) {
             blacklistedTiles.addAll(listOfRow);
             listOfRow.clear();
         } else if (currentConveyorBelt.getElement().getDirection() == Direction.getReverseDirection(nextDirection) &&

@@ -136,6 +136,35 @@ public class Board {
     }
 
     /**
+     * sets the powerdown status of the robot
+     * @param robotID the robotid of the robot
+     * @param powerdown the status of the powerdown
+     */
+    public void setPowerDown(RobotID robotID,Boolean powerdown){
+        robots.get(robotID).setPowerDown(powerdown);
+    }
+
+    /**
+     * removes one damage for a given robot given that it has taken som damage before
+     * @param robotID the ID of the robot
+     */
+    public void repairRobotOnTile(RobotID robotID){
+        Robot robot = robots.get(robotID);
+        int newDamage =Math.max(robot.getDamageTaken()-1,0);
+        robot.setDamageTaken(newDamage);
+    }
+
+    /**
+     * sets the damage taken of robots in powerdown to 0
+     */
+    public void executePowerdown(){
+        for (Robot robot:robots.values()) {
+            if(robot.isInPowerDown()){
+                robot.setDamageTaken(0);
+            }
+        }
+    }
+    /**
      * Moves a robot one unit in a specified direction
      * @param robotID ID of the robot to move
      * @param direction The direction to move the robot

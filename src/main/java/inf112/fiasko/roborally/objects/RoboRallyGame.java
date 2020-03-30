@@ -25,12 +25,13 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<Player> playerList;
-
+    private final boolean host;
     /**
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
     public RoboRallyGame(boolean debug) {
+        this.host=false;
         if (debug) {
             initializeDebugMode();
         } else {
@@ -42,6 +43,7 @@ public class RoboRallyGame implements IDrawableGame {
      * Instantiates a new robo rally game
      */
     public RoboRallyGame() {
+        this.host=false;
         initializeGame();
     }
 
@@ -191,6 +193,7 @@ public class RoboRallyGame implements IDrawableGame {
         runPhase(3);
         runPhase(4);
         runPhase(5);
+        respawnRobots();
     }
 
     /**
@@ -402,4 +405,27 @@ public class RoboRallyGame implements IDrawableGame {
             makeMove(robot, card.getAction());
         }
     }
+
+    /**
+     * Respawn all the dead robots with more lives and places them on the game board
+     */
+    private void respawnRobots(){
+        gameBoard.respawnRobots();
+    }
+
+    /**
+     * repair all robots standing on a reparer tile
+     */
+    private void repairAllRobotsOnReparerTiles(){
+        List<BoardElementContainer<Tile>> listOfRepareTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
+                TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
+        for (BoardElementContainer<Tile> repareTile:listOfRepareTiles) {
+            Position robotOnTilePosition = repareTile.getPosition();
+            if (!gameBoard.hasRobotOnPosition(robotOnTilePosition)){
+                continue;
+            }
+            gameBoard.repairRobotOnTile(gameBoard.getRobotOnPosition(robotOnTilePosition));
+        }
+    }
+
 }

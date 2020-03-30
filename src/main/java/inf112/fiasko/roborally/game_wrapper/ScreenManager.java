@@ -7,6 +7,19 @@ public class ScreenManager {
     private MainMenuScreen mainMenuScreen;
     private BoardActiveScreen boardActiveScreen;
     private CardChoiceScreen cardChoiceScreen;
+    private PowerDownScreen powerDownScreen;
+
+    /**
+     * Gets an instance of the main menu screen
+     * @param roboRallyWrapper The robo rally launcher instance to use
+     * @return A main menu screen instance
+     */
+    public synchronized PowerDownScreen getPowerDownScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.powerDownScreen == null) {
+            this.powerDownScreen = new PowerDownScreen(roboRallyWrapper);
+        }
+        return powerDownScreen;
+    }
 
     /**
      * Gets an instance of the main menu screen

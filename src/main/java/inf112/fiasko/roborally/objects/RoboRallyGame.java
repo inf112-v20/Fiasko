@@ -197,6 +197,55 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
+     * Runs all the steps of one turn in the game
+     * @throws InterruptedException If interrupted while trying to sleep
+     */
+    private void runTurn() throws InterruptedException {
+        // The method should follow this sequence:
+        /*
+        Tilegne programeringskort
+
+        Programmer roboten
+
+        Gå i power down
+
+        Kjør 5 faser
+
+        Flagg + reprasjonstiles reparerer
+
+        Fjerner ulåste programmeringskort
+
+        Spør om de i power down skal fortsette i power down
+
+        Respawn roboter
+        */
+
+        // Sets the power down status to true on robots that have players who planned one this turn.
+        // Resets players power down for next turn to false.
+        updateRobotPowerDown();
+        // Set damage of robots in power down to 0
+        gameBoard.executePowerdown();
+        if (host) {
+            // TODO: Distribute programming cards to players not in power down
+        }
+        // TODO: Make program for this player, if not in power down
+        // TODO: Ask player for new power down
+        // Run the phases of the game
+        runPhase(1);
+        runPhase(2);
+        runPhase(3);
+        runPhase(4);
+        runPhase(5);
+
+        // Repair robots on repair tiles
+        repairAllRobotsOnReparerTiles();
+        // TODO: Remove non-locked programming cards
+        // TODO: If this player is in power down, ask if it shall continue
+        // Respawn dead robots, as long as they have more lives left
+        respawnRobots();
+    }
+
+    /**
      * Runs one phase as defined in the Robo Rally rulebook
      * @param phaseNumber The number of the phase to run
      * @throws InterruptedException If interrupted wile trying to sleep

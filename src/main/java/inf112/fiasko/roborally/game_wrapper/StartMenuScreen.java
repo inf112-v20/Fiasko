@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.game_wrapper;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -35,6 +36,8 @@ public class StartMenuScreen implements Screen {
         serverButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                MyTextInputListener nameinput = new MyTextInputListener();
+                Gdx.input.getTextInput(nameinput, "Name input", "input name her", "");
                 press = true;
                 return true;//her we do stuff
             }
@@ -50,6 +53,9 @@ public class StartMenuScreen implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 press = true;
+                MyTextInputListener nameinput = new MyTextInputListener();
+                Gdx.input.getTextInput(nameinput, "Name input", "input name her", "");
+
                 return true;//her we do stuff
             }
         });
@@ -67,6 +73,7 @@ public class StartMenuScreen implements Screen {
                 return true;//her we do stuff
             }
         });
+
     }
 
     @Override

@@ -22,7 +22,7 @@ public class RoboRallyWrapper extends Game {
         batch = new SpriteBatch();
         font = new BitmapFont(Gdx.files.internal("assets/Montserrat-Regular.fnt"));
         this.screenManager = new ScreenManager();
-        this.setScreen(screenManager.getMainMenuScreen(this));
+        this.setScreen(screenManager.getStartMenuScreen(this));
         try {
             RoboRallyServer server = new RoboRallyServer();
             RoboRallyClient client = new RoboRallyClient();

@@ -34,6 +34,8 @@
     - Kort som står i låste register blir ikke samlet inn og kan ikke endres.
 
 
+
+
 - Som spiller må jeg kunne velge kort for å programere roboten min.
     - det finnes et grafisk grensesnitt som velger kort
     
@@ -92,9 +94,16 @@ powerdown skal bli vedlikeholdt mellom alle klientene
 - Som spiller må jeg ha et grensesnitt for å besteme om hvilken server jeg skal bli med
     - det finnes et grafisk grensesnitt for å kunne velge server
 - Som spiller må jeg ha et grensesnitt for å kunne skrive inn spiller navnet mitt
-    - det finnes et grafisk grensesnitt for å kunne skrive inn spiller navnet  
+    - det finnes et grafisk grensesnitt for å kunne skrive inn spiller navnet
+- Som spiller må jeg ha et grensesnitt som viser at jeg venter på noe, for å ikke bli forvirret når ingen ting skjer
     
     
+### GUI/Nettverk
+- Lage et grafisk grensesnitt som lar en bruker velge kort
+- Lage en libgdx skjerm som sier hvilken spiller som har vunnet
+- Lage et grafisk grensesnitt som lar brukeren velge å starte som server, koble til en server eller avslutte spillet
+- Legge til funksjonalitet som starter en server dersom brukeren velger å starte som server
+- Lage en libgdx skjerm som viser at spillet venter på noe
 #### Runde
 
 - Legg til en funksjon for å kjøre fem faser.

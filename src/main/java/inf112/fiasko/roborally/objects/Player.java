@@ -14,6 +14,7 @@ public class Player {
     private final String name;
     private boolean powerDownNextRound = false;
     private ProgrammingCardDeck playerDeck;
+    private ProgrammingCardDeck lockedPlayerDeck;
     private List <ProgrammingCard> program;
 
     /**
@@ -64,6 +65,22 @@ public class Player {
      */
     public ProgrammingCardDeck getPlayerDeck() {
         return playerDeck;
+    }
+
+    /**
+     * Gives you the player deck with locked cards
+     * @return a deck with locked cards
+     */
+    public ProgrammingCardDeck getLockedPlayerDeck() {
+        return lockedPlayerDeck;
+    }
+
+    /**
+     * Set the players locked deck to the given deck
+     * @param lockedPlayerDeck A deck of locked cards kept by the player
+     */
+    public void setLockedPlayerDeck(ProgrammingCardDeck lockedPlayerDeck) {
+        this.lockedPlayerDeck = lockedPlayerDeck;
     }
 
     /**

@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class PowerDownScreen implements Screen {
+public class PowerDownScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
@@ -42,10 +42,6 @@ public class PowerDownScreen implements Screen {
         });
     }
 
-    @Override
-    public void show() {
-        //Nothing to do
-    }
 
     @Override
     public void render(float delta) {
@@ -74,26 +70,6 @@ public class PowerDownScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-    }
-
-    @Override
-    public void pause() {
-        //Nothing to do
-    }
-
-    @Override
-    public void resume() {
-        //Nothing to do
-    }
-
-    @Override
-    public void hide() {
-        //Nothing to do
-    }
-
-    @Override
-    public void dispose() {
-        //Nothing to do
     }
 
 }

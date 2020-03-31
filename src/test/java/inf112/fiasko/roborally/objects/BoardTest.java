@@ -39,6 +39,8 @@ public class BoardTest {
     private final Map<TileType,Integer> tileTypeNumberMap = new HashMap<>();
     private List<Robot> robotListforlaser;
     private Board boardforlaser;
+    private List<Robot> robotListforpowerdown;
+    private Board boardforpowerdown;
 
     @BeforeClass
     public static void globalSetUp() {
@@ -55,6 +57,19 @@ public class BoardTest {
 
     @Before
     public void setUp() {
+
+        Grid<Tile> tileGridforpowerdown = new Grid<>(8, 8, new Tile(TileType.TILE, Direction.NORTH));
+        Grid<Wall> wallGridforpowerdown = new Grid<>(8, 8);
+        robotListforpowerdown = new ArrayList<>();
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_1, new Position(2,1)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_2, new Position(4,0)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_3, new Position(4,1)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_4, new Position(1,7)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_5, new Position(0,4)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_6, new Position(0,5)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_7, new Position(7,0)));
+        robotListforpowerdown.add(new Robot(RobotID.ROBOT_8, new Position(1,1)));
+        boardforpowerdown = new Board(tileGridforpowerdown, wallGridforpowerdown, robotListforpowerdown);
 
         Grid<Tile> tileGridforlaser = new Grid<>(8, 8, new Tile(TileType.TILE, Direction.NORTH));
         Grid<Wall> wallGridforlaser = new Grid<>(8, 8);
@@ -123,6 +138,30 @@ public class BoardTest {
         boardWithDifferentAmountOfAllTypes = new Board(tileGridAllTypes,wallGridAllTypes,emptyRobotList);
 
     }
+    @Test
+    public void setRobotPowerDownStatus(){
+        Robot testrobot = robotListforpowerdown.get(0);
+        assertEquals(false , testrobot.isInPowerDown());
+        boardforpowerdown.setPowerDown(RobotID.ROBOT_1,true);
+        assertEquals(true , testrobot.isInPowerDown());
+    }
+    @Test
+    public void executRobotPowerDown(){
+        Robot testrobot = robotListforpowerdown.get(1);
+        boardforpowerdown.setPowerDown(RobotID.ROBOT_2,true);
+        testrobot.setDamageTaken(4);
+        assertEquals(4,testrobot.getDamageTaken());
+        boardforpowerdown.executePowerdown();
+        assertEquals(0,testrobot.getDamageTaken());
+    }
+    @Test
+    public void repairRobotOnRepairTile(){
+        Robot testrobot = robotListforpowerdown.get(2);
+        testrobot.setDamageTaken(4);
+        assertEquals(4,testrobot.getDamageTaken());
+        boardforpowerdown.repairRobotOnTile(RobotID.ROBOT_3);
+        assertEquals(3,testrobot.getDamageTaken());
+    }
 
     @Test
     public void robotHitByLaserGetsDamaged(){
@@ -155,9 +194,7 @@ public class BoardTest {
         assertEquals(0, testRobot.getDamageTaken());
         boardforlaser.fireAllLasers();
         assertEquals(2,testRobot.getDamageTaken());
-
     }
-
     @Test
     public void robotGetsHitByTwoLasers(){
         Robot testRobot = robotListforlaser.get(3);
@@ -165,9 +202,6 @@ public class BoardTest {
         boardforlaser.fireAllLasers();
         assertEquals(2, testRobot.getDamageTaken());
     }
-
-    
-
    @Test
    public void robotDamageEachOther() {
        Robot robot5 = robotListforlaser.get(4);
@@ -179,9 +213,6 @@ public class BoardTest {
        assertEquals(1, robot5.getDamageTaken());
        assertEquals(2, robot6.getDamageTaken());
    }
-
-
-
    @Test
    public void robotStandingOnLaserTakesDamage() {
        Robot robot6 = robotListforlaser.get(5);
@@ -189,11 +220,6 @@ public class BoardTest {
        boardforlaser.fireAllLasers();
        assertEquals(1, robot6.getDamageTaken());
    }
-
-
-
-
-
     @Test
     public void flagGetsUpdatedOnRobotWithCorrectLastVisitedFlag() {
         Robot testRobot = robotList.get(6);

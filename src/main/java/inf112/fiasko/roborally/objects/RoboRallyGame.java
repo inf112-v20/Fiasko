@@ -463,9 +463,9 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
-     * repair all robots standing on a reparer tile
+     * repair all robots standing on a repair tile
      */
-    private void repairAllRobotsOnReparerTiles(){
+    private void repairAllRobotsOnRepairTiles(){
         List<BoardElementContainer<Tile>> listOfRepareTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
                 TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
         for (BoardElementContainer<Tile> repareTile:listOfRepareTiles) {
@@ -485,5 +485,14 @@ public class RoboRallyGame implements IDrawableGame {
             gameBoard.setPowerDown(player.getRobotID(),player.getPowerDownNextRound());
             player.setPowerDownNextRound(false);
         }
+    }
+
+    /**
+     * sets the powerdown status of a robots
+     * @param player the player that owns the robot
+     * @param powerdownStatus the powerdown status
+     */
+    private void setRobotPowerDown(Player player,Boolean powerdownStatus){
+        gameBoard.setPowerDown(player.getRobotID(),powerdownStatus);
     }
 }

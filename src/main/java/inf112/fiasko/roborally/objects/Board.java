@@ -150,7 +150,7 @@ public class Board {
      */
     public void repairRobotOnTile(RobotID robotID){
         Robot robot = robots.get(robotID);
-        int newDamage =Math.max(robot.getDamageTaken()-1,0);
+        int newDamage = Math.max(robot.getDamageTaken()-1,0);
         robot.setDamageTaken(newDamage);
     }
 

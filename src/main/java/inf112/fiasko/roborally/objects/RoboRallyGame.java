@@ -238,7 +238,7 @@ public class RoboRallyGame implements IDrawableGame {
         runPhase(5);
 
         // Repair robots on repair tiles
-        repairAllRobotsOnReparerTiles();
+        repairAllRobotsOnRepairTiles();
         // TODO: Remove non-locked programming cards
         // TODO: If this player is in power down, ask if it shall continue
         // Respawn dead robots, as long as they have more lives left

@@ -59,7 +59,7 @@ skal bli synkroniserte
 kortene mine inn til serveren for at spillet skal bli synkroniserte
     - klienten må kunne sende powerdown, programmet mitt og de ubrukte kortene inn til serveren
     - serven må forvente å mota information om powerdown, programmet til klienten og det ubrukte kortene til klienten
-- Som server må jeg kunne sende information alle som skal i powerdown og alle sine programmer for at spillet skal bli 
+- Som server må jeg kunne sende information om alle som skal i powerdown og alle sine programmer for at spillet skal bli 
 synkroniserte
     - servern må kunne sende information om alle som skal i powerdown til alle klientene
     - klientene må forvente å mota informatiom om alle skal i powerdown 
@@ -99,11 +99,32 @@ powerdown skal bli vedlikeholdt mellom alle klientene
     
     
 ### GUI/Nettverk
+- klientene må kunne sende inn information om den skal i powerdown, programmet dens og de ubrukte kortene inn til 
+serveren og serveren må forvente å mota denne informationen
+
+- Serveren må kunne sende programmeringskortene, spiller listen og brett navnet til alle klientene og alle klientene må
+ forvente å mota dette objektet
+ 
+- Serveren må kunne sende information om alle som skal i powerdown og alle sine programmer til alle klientene og 
+klientene må forvente å mota denne information
+
+- Klienten må kunne sende inn alle de ulåste kortene til serveren og serveren må forvente å mota disse kortene
+- Klienten må få mulighet til å fortsett powerdown og serveren må forvente å mota denne informationen 
+- Serveren må kunne sende information om alle som fortsetter powerdown og nye programmeringskort. klienten må forvente å
+mota denne informationen
+
+- Serveren makerer alle som har død og derfor ikke skal ha input fra.
+- Lage et grafisk grensesnitt som lar deg se alle spiller navneten og hvilken robot som hører til den spilleren
+- Serveren må forvente å mota navn fra spillere å må bruke det navnet til lage en spiller
 - Lage et grafisk grensesnitt som lar en bruker velge kort
 - Lage en libgdx skjerm som sier hvilken spiller som har vunnet
 - Lage et grafisk grensesnitt som lar brukeren velge å starte som server, koble til en server eller avslutte spillet
 - Legge til funksjonalitet som starter en server dersom brukeren velger å starte som server
 - Lage en libgdx skjerm som viser at spillet venter på noe
+- Lage et grafisk grensesnitt som lar en bruker gå i powerdown
+- Lage et grafisk grensesnitt som lar en klient koble seg til en server
+- Lage et grafisk grensesnitt som lar en klient skrive inn sitt spiller navn
+
 #### Runde
 
 - Legg til en funksjon for å kjøre fem faser.

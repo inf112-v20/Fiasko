@@ -136,12 +136,20 @@ public class Board {
     }
 
     /**
-     * sets the powerdown status of the robot
-     * @param robotID the robotid of the robot
-     * @param powerdown the status of the powerdown
+     * Sets the power down status of the robot
+     * @param robotID The robot id of the robot
+     * @param powerdown The status of the powerdown
      */
     public void setPowerDown(RobotID robotID,Boolean powerdown){
         robots.get(robotID).setPowerDown(powerdown);
+    }
+
+    /**
+     * Gets the power down status of the robot
+     * @param robotID The robot id of the robot
+     */
+    public void getPowerDown(RobotID robotID) {
+        robots.get(robotID).isInPowerDown();
     }
 
     /**

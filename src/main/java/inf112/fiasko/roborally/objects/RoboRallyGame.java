@@ -249,6 +249,9 @@ public class RoboRallyGame implements IDrawableGame {
         respawnRobots();
     }
 
+    /**
+     * Deals correct amount of cards to active players, based on their robots damage
+     */
     private void distributeProgrammingCardsToPlayers() {
         int robotDamage;
         ProgrammingCardDeck playerDeck;

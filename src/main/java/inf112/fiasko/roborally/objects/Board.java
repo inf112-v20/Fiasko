@@ -136,30 +136,38 @@ public class Board {
     }
 
     /**
-     * sets the powerdown status of the robot
-     * @param robotID the robotid of the robot
-     * @param powerdown the status of the powerdown
+     * Sets the power down status of the robot
+     * @param robotID The robot id of the robot
+     * @param powerdown The status of the powerdown
      */
-    public void setPowerDown(RobotID robotID,Boolean powerdown){
+    public void setPowerDown(RobotID robotID, Boolean powerdown) {
         robots.get(robotID).setPowerDown(powerdown);
+    }
+
+    /**
+     * Gets the power down status of the robot
+     * @param robotID The robot id of the robot
+     */
+    public boolean getPowerDown(RobotID robotID) {
+        return robots.get(robotID).isInPowerDown();
     }
 
     /**
      * removes one damage for a given robot given that it has taken som damage before
      * @param robotID the ID of the robot
      */
-    public void repairRobotOnTile(RobotID robotID){
+    public void repairRobotOnTile(RobotID robotID) {
         Robot robot = robots.get(robotID);
-        int newDamage = Math.max(robot.getDamageTaken()-1,0);
+        int newDamage = Math.max(robot.getDamageTaken() - 1, 0);
         robot.setDamageTaken(newDamage);
     }
 
     /**
      * sets the damage taken of robots in powerdown to 0
      */
-    public void executePowerdown(){
+    public void executePowerdown() {
         for (Robot robot:robots.values()) {
-            if(robot.isInPowerDown()){
+            if (robot.isInPowerDown()) {
                 robot.setDamageTaken(0);
             }
         }

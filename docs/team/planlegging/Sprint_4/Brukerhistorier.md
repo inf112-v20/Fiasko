@@ -113,7 +113,8 @@ klientene må forvente å mota denne information
 - Serveren må kunne sende information om alle som fortsetter powerdown og nye programmeringskort. klienten må forvente å
 mota denne informationen
 
-- Serveren makerer alle som har død og derfor ikke skal ha input fra.
+- Serveren makerer alle som har død og derfor ikke skal ha input fra
+- Serveren må håndere en spiller som er dø og blir avkoblet og som ikke er host
 - Lage et grafisk grensesnitt som lar deg se alle spiller navneten og hvilken robot som hører til den spilleren
 - Serveren må forvente å mota navn fra spillere å må bruke det navnet til lage en spiller
 - Lage et grafisk grensesnitt som lar en bruker velge kort

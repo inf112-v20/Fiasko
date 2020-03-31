@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class LoadingScreen implements Screen {
+public class LoadingScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
@@ -25,10 +25,6 @@ public class LoadingScreen implements Screen {
         startTime = System.currentTimeMillis();
     }
 
-    @Override
-    public void show() {
-        //Nothing to do
-    }
 
     @Override
     public void render(float delta) {
@@ -53,23 +49,4 @@ public class LoadingScreen implements Screen {
         viewport.update(width, height);
     }
 
-    @Override
-    public void pause() {
-        //Nothing to do
-    }
-
-    @Override
-    public void resume() {
-        //Nothing to do
-    }
-
-    @Override
-    public void hide() {
-        //Nothing to do
-    }
-
-    @Override
-    public void dispose() {
-        //Nothing to do
-    }
 }

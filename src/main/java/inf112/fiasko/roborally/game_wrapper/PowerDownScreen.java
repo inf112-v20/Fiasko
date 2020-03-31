@@ -20,6 +20,7 @@ public class PowerDownScreen implements Screen {
     private long startTime;
     private final int applicationWidth = 600;
     private final int applicationHeight = 800;
+    private Boolean press = false;
     public PowerDownScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
@@ -35,7 +36,8 @@ public class PowerDownScreen implements Screen {
         powerDownButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
+                press = true;
+                return true;//her we do stuff
             }
         });
     }
@@ -61,6 +63,10 @@ public class PowerDownScreen implements Screen {
         long time = System.currentTimeMillis();
         if (time-startTime>10000){
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(this.roboRallyWrapper));
+            dispose();
+        }
+        else if (press){
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
             dispose();
         }
     }

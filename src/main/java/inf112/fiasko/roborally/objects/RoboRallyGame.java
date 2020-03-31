@@ -26,6 +26,7 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<Player> playerList;
     private final boolean host;
+    private Deck<ProgrammingCard> mainDeck;
     /**
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
@@ -123,6 +124,7 @@ public class RoboRallyGame implements IDrawableGame {
             initializePlayers();
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             generateTileLists();
+            mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
 
             new Thread(() -> {
                 try {
@@ -227,6 +229,7 @@ public class RoboRallyGame implements IDrawableGame {
         gameBoard.executePowerdown();
         if (host) {
             // TODO: Distribute programming cards to players not in power down
+            distributeProgrammingCardsToPlayers();
         }
         // TODO: Make program for this player, if not in power down
         // TODO: Ask player for new power down
@@ -239,10 +242,32 @@ public class RoboRallyGame implements IDrawableGame {
 
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();
+        // TODO: Update locked cards deck
         // TODO: Remove non-locked programming cards
         // TODO: If this player is in power down, ask if it shall continue
         // Respawn dead robots, as long as they have more lives left
         respawnRobots();
+    }
+
+    private void distributeProgrammingCardsToPlayers() {
+        int robotDamage;
+        ProgrammingCardDeck playerDeck;
+        mainDeck.shuffle();
+
+        for (Player player : playerList) {
+            RobotID robot = player.getRobotID();
+            playerDeck = player.getPlayerDeck();
+            if (gameBoard.getPowerDown(robot)) {
+                continue;
+            }
+            robotDamage = gameBoard.getRobotDamage(robot);
+            if (robotDamage >= 9) {
+                continue;
+            }
+            if (playerDeck.isEmpty()) {
+                playerDeck.draw(mainDeck,9-robotDamage);
+            } else throw new IllegalStateException("Player deck must be empty!");
+        }
     }
 
     /**

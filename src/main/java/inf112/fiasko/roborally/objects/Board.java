@@ -172,6 +172,16 @@ public class Board {
             }
         }
     }
+
+    /**
+     * Get the damage of a specific robot
+     * @param robot The RobotID of a robot
+     * @return The amount of damage the robot has currently
+     */
+    public int getRobotDamage(RobotID robot) {
+        return robots.get(robot).getDamageTaken();
+    }
+
     /**
      * Moves a robot one unit in a specified direction
      * @param robotID ID of the robot to move

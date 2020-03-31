@@ -8,6 +8,8 @@ public class ScreenManager {
     private BoardActiveScreen boardActiveScreen;
     private CardChoiceScreen cardChoiceScreen;
     private PowerDownScreen powerDownScreen;
+    private LoadingScreen loadingScreen;
+    private StartMenuScreen startMenuScreen;
 
     /**
      * Gets an instance of the main menu screen
@@ -19,6 +21,20 @@ public class ScreenManager {
             this.powerDownScreen = new PowerDownScreen(roboRallyWrapper);
         }
         return powerDownScreen;
+    }
+
+    public synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.startMenuScreen == null) {
+            this.startMenuScreen = new StartMenuScreen(roboRallyWrapper);
+        }
+        return startMenuScreen;
+    }
+
+    public synchronized LoadingScreen getLoadingScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.loadingScreen == null) {
+            this.loadingScreen = new LoadingScreen(roboRallyWrapper);
+        }
+        return loadingScreen;
     }
 
     /**

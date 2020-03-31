@@ -4,42 +4,25 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class PowerDownScreen implements Screen {
+public class LoadingScreen implements Screen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
-    private final Stage stage;
+
     private long startTime;
     private final int applicationWidth = 600;
     private final int applicationHeight = 800;
-    private Boolean press = false;
-    public PowerDownScreen(final RoboRallyWrapper roboRallyWrapper) {
-        camera = new OrthographicCamera();
-        viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        stage = new Stage();
-        TextButton powerDownButton = new SimpleButton("PowerDown", roboRallyWrapper.font).getButton();
-        stage.addActor(powerDownButton);
-        powerDownButton.setY(applicationHeight/2f);
-        powerDownButton.setX(applicationWidth/2f+powerDownButton.getWidth()/4f);
+
+    public LoadingScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
+        camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
+        viewport = new ExtendViewport(applicationWidth, applicationHeight, camera);
         startTime = System.currentTimeMillis();
-        powerDownButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                press = true;
-                return true;//her we do stuff
-            }
-        });
     }
 
     @Override
@@ -49,24 +32,18 @@ public class PowerDownScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.2f, 1f, 0.2f, 1);
+        Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "click to go in PowerDown you have 10 seconds",
-                applicationWidth/2f-380/2f,applicationHeight/2f +100,380, 1, true);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth/2f-380/2f,
+                applicationHeight/2f,380, 1, true);
         roboRallyWrapper.batch.end();
-        stage.draw();
-
         long time = System.currentTimeMillis();
         if (time-startTime>10000){
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(this.roboRallyWrapper));
-            dispose();
-        }
-        else if (press){
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
             dispose();
         }
     }
@@ -95,5 +72,4 @@ public class PowerDownScreen implements Screen {
     public void dispose() {
         //Nothing to do
     }
-
 }

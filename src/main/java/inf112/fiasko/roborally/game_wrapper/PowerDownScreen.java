@@ -1,7 +1,6 @@
 package inf112.fiasko.roborally.game_wrapper;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,15 +19,15 @@ public class PowerDownScreen extends AbstractScreen {
     private long startTime;
     private final int applicationWidth = 600;
     private final int applicationHeight = 800;
-    private Boolean press = false;
+    private Boolean buttonPressed = false;
     public PowerDownScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         stage = new Stage();
         TextButton powerDownButton = new SimpleButton("PowerDown", roboRallyWrapper.font).getButton();
         stage.addActor(powerDownButton);
-        powerDownButton.setY(applicationHeight/2f);
-        powerDownButton.setX(applicationWidth/2f+powerDownButton.getWidth()/4f);
+        powerDownButton.setY(applicationHeight / 2f);
+        powerDownButton.setX(applicationWidth / 2f + powerDownButton.getWidth() / 4f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         Gdx.input.setInputProcessor(stage);
@@ -36,7 +35,7 @@ public class PowerDownScreen extends AbstractScreen {
         powerDownButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                press = true;
+                buttonPressed = true;
                 return true;//her we do stuff
             }
         });
@@ -50,18 +49,20 @@ public class PowerDownScreen extends AbstractScreen {
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
+        int elapsedTime = (int)Math.floor((System.currentTimeMillis() - startTime) / 1000f);
+
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "click to go in PowerDown you have 10 seconds",
-                applicationWidth/2f-380/2f,applicationHeight/2f +100,380, 1, true);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to enter Power Down next round",
+                applicationWidth/2f-380/2f,applicationHeight/2f + 100,380, 1, true);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(10 - elapsedTime),
+                applicationWidth / 2f - 40 / 2f,applicationHeight/2f - 100,40, 1, true);
         roboRallyWrapper.batch.end();
         stage.draw();
 
-        long time = System.currentTimeMillis();
-        if (time-startTime>10000){
+        if (elapsedTime > 10) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(this.roboRallyWrapper));
             dispose();
-        }
-        else if (press){
+        } else if (buttonPressed) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
             dispose();
         }

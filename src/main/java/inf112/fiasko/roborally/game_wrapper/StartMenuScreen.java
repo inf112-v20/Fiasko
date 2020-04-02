@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class StartMenuScreen implements Screen {
+public class StartMenuScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
@@ -20,7 +20,6 @@ public class StartMenuScreen implements Screen {
     private final Stage stage;
     private final int applicationWidth = 600;
     private final int applicationHeight = 800;
-    private Boolean press = false;
     public StartMenuScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
@@ -33,13 +32,38 @@ public class StartMenuScreen implements Screen {
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         Gdx.input.setInputProcessor(stage);
+        Input.TextInputListener nameInputClient = new Input.TextInputListener() {
+            @Override
+            public void input(String name) {
+                //TODO: do something with the name
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(roboRallyWrapper));
+                dispose();
+            }
+
+            @Override
+            public void canceled() {
+
+            }
+        };
+        Input.TextInputListener nameInputServer = new Input.TextInputListener() {
+            @Override
+            public void input(String name) {
+                //TODO: do something with the name
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+                dispose();
+            }
+
+            @Override
+            public void canceled() {
+
+            }
+        };
+
         serverButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                MyTextInputListener nameinput = new MyTextInputListener();
-                Gdx.input.getTextInput(nameinput, "Name input", "input name her", "");
-                press = true;
-                return true;//her we do stuff
+                Gdx.input.getTextInput(nameInputServer, "Name input", "input name her", "");
+                return true; // Here do stuff
             }
         });
 
@@ -52,11 +76,8 @@ public class StartMenuScreen implements Screen {
         clientButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                press = true;
-                MyTextInputListener nameinput = new MyTextInputListener();
-                Gdx.input.getTextInput(nameinput, "Name input", "input name her", "");
-
-                return true;//her we do stuff
+                Gdx.input.getTextInput(nameInputClient, "Name input", "input name her", "");
+                return true;// Here we do stuff
             }
         });
 
@@ -77,11 +98,6 @@ public class StartMenuScreen implements Screen {
     }
 
     @Override
-    public void show() {
-        //Nothing to do
-    }
-
-    @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -93,36 +109,11 @@ public class StartMenuScreen implements Screen {
                 applicationWidth/2f-380/2f,applicationHeight/2f +100,380, 1, true);
         roboRallyWrapper.batch.end();
         stage.draw();
-
-        if (press){
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
-            dispose();
-        }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-    }
-
-    @Override
-    public void pause() {
-        //Nothing to do
-    }
-
-    @Override
-    public void resume() {
-        //Nothing to do
-    }
-
-    @Override
-    public void hide() {
-        //Nothing to do
-    }
-
-    @Override
-    public void dispose() {
-        //Nothing to do
     }
 
 }

@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
@@ -18,11 +18,6 @@ public class MainMenuScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 400);
         viewport = new ExtendViewport(400, 400, camera);
-    }
-
-    @Override
-    public void show() {
-        //Nothing to do
     }
 
     @Override
@@ -50,23 +45,4 @@ public class MainMenuScreen implements Screen {
         viewport.update(width, height);
     }
 
-    @Override
-    public void pause() {
-        //Nothing to do
-    }
-
-    @Override
-    public void resume() {
-        //Nothing to do
-    }
-
-    @Override
-    public void hide() {
-        //Nothing to do
-    }
-
-    @Override
-    public void dispose() {
-        //Nothing to do
-    }
 }

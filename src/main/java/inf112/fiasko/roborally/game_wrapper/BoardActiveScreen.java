@@ -21,7 +21,7 @@ import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
 import java.util.List;
 
-public class BoardActiveScreen implements Screen, InputProcessor {
+public class BoardActiveScreen extends AbstractScreen implements InputProcessor {
     private final RoboRallyWrapper roboRallyWrapper;
     private final OrthographicCamera camera;
     private IDrawableGame debugGame;
@@ -59,20 +59,6 @@ public class BoardActiveScreen implements Screen, InputProcessor {
         viewport.update(width, height);
     }
 
-    @Override
-    public void pause() {
-        //Nothing to do
-    }
-
-    @Override
-    public void resume() {
-        //Nothing to do
-    }
-
-    @Override
-    public void hide() {
-        //Nothing to do
-    }
 
     @Override
     public void render(float delta) {

@@ -38,15 +38,19 @@ public class LoadingScreen extends AbstractScreen {
                 applicationHeight/2f,380, 1, true);
         roboRallyWrapper.batch.end();
         long time = System.currentTimeMillis();
-        if (time-startTime>10000){
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(this.roboRallyWrapper));
-            dispose();
+        if (time-startTime>5000){
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getStartMenuScreen(this.roboRallyWrapper));
         }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+
+    @Override
+    public void show(){
+        startTime = System.currentTimeMillis();
     }
 
 }

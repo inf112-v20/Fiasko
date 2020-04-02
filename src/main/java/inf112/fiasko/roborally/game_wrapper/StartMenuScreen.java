@@ -2,7 +2,6 @@ package inf112.fiasko.roborally.game_wrapper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,54 +19,30 @@ public class StartMenuScreen extends AbstractScreen {
     private final Stage stage;
     private final int applicationWidth = 600;
     private final int applicationHeight = 800;
+    private TextButton serverButton;
+    private TextButton clientButton;
+    private TextButton quitButton;
     public StartMenuScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         stage = new Stage();
-
-        TextButton serverButton = new SimpleButton("Create", roboRallyWrapper.font).getButton();
+        serverButton = new SimpleButton("Create", roboRallyWrapper.font).getButton();
         stage.addActor(serverButton);
         serverButton.setY(applicationHeight/2f);
         serverButton.setX(applicationWidth/2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         Gdx.input.setInputProcessor(stage);
-        Input.TextInputListener nameInputClient = new Input.TextInputListener() {
-            @Override
-            public void input(String name) {
-                //TODO: do something with the name
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(roboRallyWrapper));
-                dispose();
-            }
-
-            @Override
-            public void canceled() {
-
-            }
-        };
-        Input.TextInputListener nameInputServer = new Input.TextInputListener() {
-            @Override
-            public void input(String name) {
-                //TODO: do something with the name
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-                dispose();
-            }
-
-            @Override
-            public void canceled() {
-
-            }
-        };
 
         serverButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.input.getTextInput(nameInputServer, "Name input", "input name her", "");
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
                 return true; // Here do stuff
             }
         });
 
-        TextButton clientButton = new SimpleButton("Join", roboRallyWrapper.font).getButton();
+        clientButton = new SimpleButton("Join", roboRallyWrapper.font).getButton();
         stage.addActor(clientButton);
         clientButton.setY(applicationHeight/2f);
         clientButton.setX(applicationWidth/2f+serverButton.getWidth()+20);
@@ -76,12 +51,12 @@ public class StartMenuScreen extends AbstractScreen {
         clientButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.input.getTextInput(nameInputClient, "Name input", "input name her", "");
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getIPAddressScreen(roboRallyWrapper));
                 return true;// Here we do stuff
             }
         });
 
-        TextButton quitButton = new SimpleButton("Quit", roboRallyWrapper.font).getButton();
+        quitButton = new SimpleButton("Quit", roboRallyWrapper.font).getButton();
         stage.addActor(quitButton);
         quitButton.setY(applicationHeight/2f);
         quitButton.setX(applicationWidth/2f+serverButton.getWidth()+40+clientButton.getWidth());
@@ -94,7 +69,6 @@ public class StartMenuScreen extends AbstractScreen {
                 return true;//her we do stuff
             }
         });
-
     }
 
     @Override
@@ -115,5 +89,4 @@ public class StartMenuScreen extends AbstractScreen {
     public void resize(int width, int height) {
         viewport.update(width, height);
     }
-
 }

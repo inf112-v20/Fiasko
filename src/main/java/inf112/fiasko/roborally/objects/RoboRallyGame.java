@@ -124,7 +124,7 @@ public class RoboRallyGame implements IDrawableGame {
             initializePlayers();
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             generateTileLists();
-            
+
             if (host) {
                 mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
             }
@@ -231,7 +231,6 @@ public class RoboRallyGame implements IDrawableGame {
         // Set damage of robots in power down to 0
         gameBoard.executePowerdown();
         if (host) {
-            // TODO: Distribute programming cards to players not in power down
             distributeProgrammingCardsToPlayers();
         }
         // TODO: Make program for this player, if not in power down
@@ -245,17 +244,60 @@ public class RoboRallyGame implements IDrawableGame {
 
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();
-        // TODO: Update locked cards deck
-        // TODO: Remove non-locked programming cards
+        if (host) {
+            updatePlayerLockedProgrammingCards();
+            removeNonLockedProgrammingCardsFromPlayers();
+        }
         // TODO: If this player is in power down, ask if it shall continue
         // Respawn dead robots, as long as they have more lives left
         respawnRobots();
     }
 
     /**
+     * Locks the players programming cards in relation to the robots damage
+     */
+    private void updatePlayerLockedProgrammingCards() {
+        for (Player player : playerList) {
+            List<ProgrammingCard> playerProgram = player.getProgram();
+            ProgrammingCardDeck playerDeck = player.getPlayerDeck();
+            ProgrammingCardDeck lockedPlayerDeck = player.getLockedPlayerDeck();
+            int robotDamage = gameBoard.getRobotDamage(player.getRobotID());
+
+            if (robotDamage <= 4) {
+                lockedPlayerDeck.emptyInto(player.getPlayerDeck());
+                player.setLockedPlayerDeck(lockedPlayerDeck);
+                continue;
+            }
+
+            for (int i = 1; i <= (robotDamage-4); i++) {
+                ProgrammingCard card = playerProgram.get(playerProgram.size()-i);
+
+                if (card.compareTo(playerDeck.peekTop()) == 0) {
+                    lockedPlayerDeck.draw(playerDeck);
+                } else {
+                    playerDeck.draw(playerDeck);
+                }
+            }
+            player.setPlayerDeck(playerDeck);
+            player.setLockedPlayerDeck(lockedPlayerDeck);
+        }
+    }
+
+    /**
+     * Moves non-locked player programming cards from their hand back to the main deck
+     */
+    private void removeNonLockedProgrammingCardsFromPlayers() {
+        for (Player player : playerList) {
+            ProgrammingCardDeck playerDeck = player.getPlayerDeck();
+            playerDeck.emptyInto(mainDeck);
+            player.setPlayerDeck(playerDeck);
+        }
+    }
+
+    /**
      * Deals correct amount of cards to active players, based on their robots damage
      */
-    private void distributeProgrammingCardsToPlayers() {
+    public void distributeProgrammingCardsToPlayers() {
         int robotDamage;
         ProgrammingCardDeck playerDeck;
         mainDeck.shuffle();

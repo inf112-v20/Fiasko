@@ -124,7 +124,10 @@ public class RoboRallyGame implements IDrawableGame {
             initializePlayers();
             gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
             generateTileLists();
-            mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
+            
+            if (host) {
+                mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
+            }
 
             new Thread(() -> {
                 try {

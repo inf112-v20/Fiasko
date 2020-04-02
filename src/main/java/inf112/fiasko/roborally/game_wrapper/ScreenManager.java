@@ -10,6 +10,8 @@ public class ScreenManager {
     private PowerDownScreen powerDownScreen;
     private LoadingScreen loadingScreen;
     private StartMenuScreen startMenuScreen;
+    private UsernameScreen usernameScreen;
+    private IPAddressScreen ipAddressScreen;
 
     /**
      * Gets an instance of the main menu screen
@@ -21,6 +23,20 @@ public class ScreenManager {
             this.powerDownScreen = new PowerDownScreen(roboRallyWrapper);
         }
         return powerDownScreen;
+    }
+
+    public synchronized IPAddressScreen getIPAddressScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.ipAddressScreen == null) {
+            this.ipAddressScreen = new IPAddressScreen(roboRallyWrapper);
+        }
+        return ipAddressScreen;
+    }
+
+    public synchronized UsernameScreen getUsernameScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.usernameScreen == null) {
+            this.usernameScreen = new UsernameScreen(roboRallyWrapper);
+        }
+        return usernameScreen;
     }
 
     public synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {

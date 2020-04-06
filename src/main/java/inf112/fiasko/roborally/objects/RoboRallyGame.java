@@ -31,8 +31,9 @@ public class RoboRallyGame implements IDrawableGame {
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
-    public RoboRallyGame(boolean debug) {
+    public RoboRallyGame(List<Player> playerList, boolean debug) {
         this.host=false;
+        this.playerList = playerList;
         if (debug) {
             initializeDebugMode();
         } else {
@@ -43,8 +44,9 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Instantiates a new robo rally game
      */
-    public RoboRallyGame() {
+    public RoboRallyGame(List<Player> playerList) {
         this.host=false;
+        this.playerList = playerList;
         initializeGame();
     }
 
@@ -146,15 +148,6 @@ public class RoboRallyGame implements IDrawableGame {
      * @throws IOException If interrupted while trying to sleep
      */
     private void initializePlayers() throws IOException {
-        playerList = new ArrayList<>();
-        playerList.add(new Player(RobotID.ROBOT_1, "Player1"));
-        playerList.add(new Player(RobotID.ROBOT_2, "Player2"));
-        playerList.add(new Player(RobotID.ROBOT_3, "Player3"));
-        playerList.add(new Player(RobotID.ROBOT_4, "Player4"));
-        playerList.add(new Player(RobotID.ROBOT_5, "Player5"));
-        playerList.add(new Player(RobotID.ROBOT_6, "Player6"));
-        playerList.add(new Player(RobotID.ROBOT_7, "Player7"));
-        playerList.add(new Player(RobotID.ROBOT_8, "Player8"));
         Deck<ProgrammingCard> cards =  DeckLoaderUtil.loadProgrammingCardsDeck();
         for (Player player : playerList) {
             cards.shuffle();

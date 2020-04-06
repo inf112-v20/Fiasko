@@ -10,6 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.networking.RoboRallyClient;
+import inf112.fiasko.roborally.networking.RoboRallyServer;
+
+import java.io.IOException;
 
 public class StartMenuScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
@@ -37,7 +41,13 @@ public class StartMenuScreen extends AbstractScreen {
         serverButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
+                try {
+                    roboRallyWrapper.server = new RoboRallyServer();
+                    roboRallyWrapper.client = new RoboRallyClient("127.0.0.1");
+                    roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 return true; // Here do stuff
             }
         });

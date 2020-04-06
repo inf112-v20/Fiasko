@@ -9,7 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.networking.GameStartInfo;
+import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.utility.IOUtil;
+
+import java.util.List;
 
 public class LobbyScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
@@ -33,8 +37,10 @@ public class LobbyScreen extends AbstractScreen {
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                IOUtil.playerGenerator(roboRallyWrapper.server.getPlayerNames(), roboRallyWrapper.server.getRobotID());
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(roboRallyWrapper));
+                List<Player> playerlist = IOUtil.playerGenerator(roboRallyWrapper.server.getPlayerNames(),
+                        roboRallyWrapper.server.getRobotID());
+                roboRallyWrapper.server.sendToAllClients(new GameStartInfo("Checkmate.txt",playerlist));
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 return true;//her we do stuff
             }
         });

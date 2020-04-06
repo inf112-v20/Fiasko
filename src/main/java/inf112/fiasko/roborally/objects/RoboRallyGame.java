@@ -31,23 +31,23 @@ public class RoboRallyGame implements IDrawableGame {
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
-    public RoboRallyGame(List<Player> playerList, boolean debug) {
-        this.host=false;
+    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, boolean debug) {
+        this.host=host;
         this.playerList = playerList;
         if (debug) {
             initializeDebugMode();
         } else {
-            initializeGame();
+            initializeGame(boardName);
         }
     }
 
     /**
      * Instantiates a new robo rally game
      */
-    public RoboRallyGame(List<Player> playerList) {
-        this.host=false;
+    public RoboRallyGame(List<Player> playerList, String boardName,boolean host) {
+        this.host=host;
         this.playerList = playerList;
-        initializeGame();
+        initializeGame(boardName);
     }
 
     @Override
@@ -111,20 +111,17 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Initializes the game with a playable board
      */
-    private void initializeGame() {
+    private void initializeGame(String boardName) {
         try {
             List<Robot> robots = new ArrayList<>();
-            robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
-            robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
-            robots.add(new Robot(RobotID.ROBOT_3, new Position(1, 3)));
-            robots.add(new Robot(RobotID.ROBOT_4, new Position(4, 8)));
-            robots.add(new Robot(RobotID.ROBOT_5, new Position(6, 6)));
-            robots.add(new Robot(RobotID.ROBOT_6, new Position(7, 7)));
-            robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 7)));
-            robots.add(new Robot(RobotID.ROBOT_8, new Position(6, 8)));
+            int noe = 1;
+            for (Player player:playerList) {
+                Position spawn = new Position(noe,1);
+                robots.add(new Robot(player.getRobotID(),spawn));
+                noe++;
+            }
 
-            initializePlayers();
-            gameBoard = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+            gameBoard = BoardLoaderUtil.loadBoard("boards/"+boardName, robots);
             generateTileLists();
 
             if (host) {
@@ -140,23 +137,6 @@ public class RoboRallyGame implements IDrawableGame {
             }).start();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    /**
-     * Initializes all players
-     * @throws IOException If interrupted while trying to sleep
-     */
-    private void initializePlayers() throws IOException {
-        Deck<ProgrammingCard> cards =  DeckLoaderUtil.loadProgrammingCardsDeck();
-        for (Player player : playerList) {
-            cards.shuffle();
-            List<ProgrammingCard> testProgram = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                cards.shuffle();
-                testProgram.add(cards.peekTop());
-            }
-            player.setInProgram(testProgram);
         }
     }
 

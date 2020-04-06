@@ -39,7 +39,7 @@ public class IPAddressScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button){
                 try {
-                    roboRallyWrapper.client = new RoboRallyClient(txtinput.getText());
+                    roboRallyWrapper.client = new RoboRallyClient(txtinput.getText(),roboRallyWrapper);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException ex) {
                     ex.printStackTrace();

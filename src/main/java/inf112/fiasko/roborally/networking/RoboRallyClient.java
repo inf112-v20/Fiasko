@@ -8,8 +8,9 @@ import inf112.fiasko.roborally.utility.NetworkUtil;
 import java.io.IOException;
 
 public class RoboRallyClient {
+    Client client;
     public RoboRallyClient(String IPaddresse) throws IOException {
-        Client client = new Client();
+        client = new Client();
         client.start();
         NetworkUtil.registerClasses(client.getKryo());
         client.connect(5000, IPaddresse, 54555, 54777);
@@ -19,6 +20,9 @@ public class RoboRallyClient {
         client.sendTCP(request);
 
         client.addListener(new RoboRallyClientListener());
+    }
+    public void sendElement(Object obj) {
+        client.sendTCP(obj);
     }
 }
 
@@ -34,3 +38,4 @@ class RoboRallyClientListener extends Listener {
         }
     }
 }
+

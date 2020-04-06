@@ -30,6 +30,13 @@ public class RoboRallyServer {
         programmingCardDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
     }
 
+    public Map<Connection, RobotID> getRobotID() {
+        return listener.getRobotID();
+    }
+
+    public Map<Connection, String> getPlayerNames() {
+        return listener.getPlayerNames();
+    }
     /**
      * Sends an object to all clients
      * @param object The object to send
@@ -54,10 +61,20 @@ public class RoboRallyServer {
 class RoboRallyServerListener extends Listener {
     protected Connection host;
     protected Map<Connection, RobotID> clients;
+    protected Map<Connection, String> playerNames;
 
     public RoboRallyServerListener() {
         super();
         clients = new HashMap<>();
+        playerNames = new HashMap<>();
+    }
+
+    public Map<Connection, String> getPlayerNames() {
+        return playerNames;
+    }
+
+    public Map<Connection, RobotID> getRobotID() {
+        return clients;
     }
 
     @Override
@@ -69,6 +86,10 @@ class RoboRallyServerListener extends Listener {
             SomeResponse response = new SomeResponse();
             response.text = "Thanks";
             connection.sendTCP(response);
+        }
+        else if (object instanceof String) {
+            String playerName = (String) object;
+            playerNames.put(connection, playerName);
         }
     }
 

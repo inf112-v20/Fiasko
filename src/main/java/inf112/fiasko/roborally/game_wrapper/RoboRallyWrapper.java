@@ -16,6 +16,8 @@ public class RoboRallyWrapper extends Game {
     public BitmapFont font;
     public ScreenManager screenManager;
     public IDrawableGame roboRallyGame;
+    public RoboRallyServer server;
+    public RoboRallyClient client;
 
     @Override
     public void create() {
@@ -23,15 +25,6 @@ public class RoboRallyWrapper extends Game {
         font = new BitmapFont(Gdx.files.internal("assets/Montserrat-Regular.fnt"));
         this.screenManager = new ScreenManager();
         this.setScreen(screenManager.getStartMenuScreen(this));
-        try {
-            RoboRallyServer server = new RoboRallyServer();
-            RoboRallyClient client = new RoboRallyClient();
-            SomeResponse response = new SomeResponse();
-            response.text = "ÆÆÆÆÆÆÆÆÆ";
-            server.sendToAllClients(response);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void dispose() {

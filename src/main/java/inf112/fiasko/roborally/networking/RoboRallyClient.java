@@ -8,11 +8,11 @@ import inf112.fiasko.roborally.utility.NetworkUtil;
 import java.io.IOException;
 
 public class RoboRallyClient {
-    public RoboRallyClient() throws IOException {
+    public RoboRallyClient(String IPaddresse) throws IOException {
         Client client = new Client();
         client.start();
         NetworkUtil.registerClasses(client.getKryo());
-        client.connect(5000, "127.0.0.1", 54555, 54777);
+        client.connect(5000, IPaddresse, 54555, 54777);
 
         SomeRequest request = new SomeRequest();
         request.text = "Here is the request";

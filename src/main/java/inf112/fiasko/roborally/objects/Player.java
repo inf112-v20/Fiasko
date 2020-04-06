@@ -10,8 +10,8 @@ import java.util.List;
  */
 
 public class Player {
-    private final RobotID robotID;
-    private final String name;
+    private RobotID robotID;
+    private String name;
     private boolean powerDownNextRound = false;
     private ProgrammingCardDeck playerDeck;
     private ProgrammingCardDeck lockedPlayerDeck;
@@ -26,6 +26,14 @@ public class Player {
         this.robotID = robotID;
         this.name = name;
     }
+    public Player(){}
+    public void setRobotID(RobotID robotID){
+        this.robotID=robotID;
+    }
+    public void setName(String name){
+        this.name=name;
+    }
+
 
     /**
      * Gives you the RobotID of a player

@@ -39,7 +39,7 @@ public class LoadingScreen extends AbstractScreen {
         roboRallyWrapper.batch.end();
         long time = System.currentTimeMillis();
         if (time-startTime>5000){
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getStartMenuScreen(this.roboRallyWrapper));
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
         }
     }
 

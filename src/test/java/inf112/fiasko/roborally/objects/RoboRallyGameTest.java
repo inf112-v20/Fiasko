@@ -12,7 +12,7 @@ public class RoboRallyGameTest {
 
     @Before
     public void setUp() {
-        game = new RoboRallyGame(new ArrayList<>());
+        game = new RoboRallyGame(new ArrayList<>(),"",false);
     }
 
     @Test

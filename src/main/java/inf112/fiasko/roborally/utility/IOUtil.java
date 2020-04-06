@@ -3,19 +3,25 @@ package inf112.fiasko.roborally.utility;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.objects.IDrawableGame;
-import inf112.fiasko.roborally.objects.DrawableObject;
-import inf112.fiasko.roborally.objects.IDrawableObject;
-import inf112.fiasko.roborally.objects.Particle;
-import inf112.fiasko.roborally.objects.Robot;
-import inf112.fiasko.roborally.objects.Tile;
-import inf112.fiasko.roborally.objects.Wall;
-
+import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.objects.*;
+import com.esotericsoftware.kryonet.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public final class IOUtil {
     private IOUtil() {}
+
+
+    public static List<Player> playerGenerator(Map<Connection, String> playerNames, Map<Connection, RobotID> robotIDs) {
+        List<Player> playerList = new ArrayList<>();
+        for (Connection connection: playerNames.keySet()) {
+            Player player = new Player(robotIDs.get(connection), playerNames.get(connection));
+            playerList.add(player);
+        }
+        return playerList;
+    }
 
     /**
      * Gets a list of all elements which should be drawn from the game provided

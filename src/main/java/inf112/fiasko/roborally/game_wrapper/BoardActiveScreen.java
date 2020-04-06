@@ -37,8 +37,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
-        roboRallyWrapper.roboRallyGame = new RoboRallyGame();
-        debugGame = new RoboRallyGame(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);

@@ -34,7 +34,7 @@ public class UsernameScreen extends AbstractScreen {
         loginbutton.addListener(new ClickListener(){
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button){
-                System.out.println(txtinput.getText());
+                roboRallyWrapper.client.sendElement(txtinput.getText());
                 if (roboRallyWrapper.server == null) {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 }

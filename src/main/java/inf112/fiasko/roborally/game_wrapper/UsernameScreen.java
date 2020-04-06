@@ -35,7 +35,12 @@ public class UsernameScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button){
                 System.out.println(txtinput.getText());
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+                if (roboRallyWrapper.server == null) {
+                    roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+                }
+                else{
+                    roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLobbyScreen(roboRallyWrapper));
+                }
             }
         });
         txtinput = new TextField("",skin);

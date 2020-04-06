@@ -5,12 +5,14 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 public class RoboRallyGameTest {
     private IDrawableGame game;
 
     @Before
     public void setUp() {
-        game = new RoboRallyGame();
+        game = new RoboRallyGame(new ArrayList<>());
     }
 
     @Test

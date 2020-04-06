@@ -43,7 +43,7 @@ public class StartMenuScreen extends AbstractScreen {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 try {
                     roboRallyWrapper.server = new RoboRallyServer();
-                    roboRallyWrapper.client = new RoboRallyClient("127.0.0.1");
+                    roboRallyWrapper.client = new RoboRallyClient("127.0.0.1",roboRallyWrapper);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException e) {
                     e.printStackTrace();

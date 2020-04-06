@@ -11,6 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.networking.RoboRallyClient;
+
+
+import javax.swing.*;
+import java.io.IOException;
 
 public class IPAddressScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
@@ -33,8 +38,13 @@ public class IPAddressScreen extends AbstractScreen {
         loginbutton.addListener(new ClickListener(){
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button){
-                System.out.println(txtinput.getText());
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
+                try {
+                    roboRallyWrapper.client = new RoboRallyClient(txtinput.getText());
+                    roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "A basic JOptionPane message dialog");
+                }
             }
         });
         txtinput = new TextField("",skin);

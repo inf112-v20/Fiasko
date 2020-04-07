@@ -47,10 +47,15 @@ public class RoboRallyClient {
 class RoboRallyClientListener extends Listener {
     private final RoboRallyWrapper wrapper;
 
+    /**
+     * Instantiates a new Robo Rally client listener
+     * @param wrapper The Robo Rally wrapper to interact with
+     */
     RoboRallyClientListener(RoboRallyWrapper wrapper) {
         super();
         this.wrapper = wrapper;
     }
+
     @Override
     public void received (Connection connection, Object object) {
         if (object instanceof ErrorResponse) {
@@ -58,7 +63,7 @@ class RoboRallyClientListener extends Listener {
             System.out.println(errorResponse.getErrorMessage());
         } else if (object instanceof GameStartInfo) {
             GameStartInfo info = (GameStartInfo) object;
-            wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerlist(), info.getBoardname(),
+            wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null);
         }
     }

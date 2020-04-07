@@ -46,8 +46,8 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final Stage stage;
 
     /**
-     * Initializes a new card choice screen
-     * @param roboRallyWrapper The robo rally wrapper which is its parent
+     * Instantiates a new card choice screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
@@ -243,9 +243,14 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
  */
 class CardRectangle {
     final Rectangle rectangle;
-    boolean selected = false;
     final ProgrammingCard card;
+    boolean selected = false;
 
+    /**
+     * Instantiates a new card rectangle
+     * @param rectangle The rectangle of this card rectangle
+     * @param card The card of this card rectangle
+     */
     CardRectangle(Rectangle rectangle, ProgrammingCard card) {
         this.rectangle = rectangle;
         this.card = card;

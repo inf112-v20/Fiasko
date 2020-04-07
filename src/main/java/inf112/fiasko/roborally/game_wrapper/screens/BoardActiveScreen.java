@@ -37,6 +37,10 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     private final int viewPortHeight = 12 * tileDimensions;
     private final Viewport viewport;
 
+    /**
+     * Instantiates a new board active screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
 

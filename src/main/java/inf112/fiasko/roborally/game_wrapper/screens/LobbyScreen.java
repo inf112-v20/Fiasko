@@ -17,6 +17,9 @@ import inf112.fiasko.roborally.utility.IOUtil;
 
 import java.util.List;
 
+/**
+ * This screen allows the host to wait for players to join
+ */
 public class LobbyScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
@@ -24,6 +27,10 @@ public class LobbyScreen extends AbstractScreen {
     private final Viewport viewport;
     private final Stage stage;
 
+    /**
+     * Instantiates a new lobby screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public LobbyScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
@@ -56,6 +63,10 @@ public class LobbyScreen extends AbstractScreen {
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Joined players: " +
+                        roboRallyWrapper.server.getPlayerNames().values().toString(),
+                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 350,380, 1,
+                true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to start game",
                 applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
                 true);

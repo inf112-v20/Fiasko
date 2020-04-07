@@ -44,7 +44,7 @@ public class UsernameScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 String userName = textInput.getText();
-                if (!validateName(userName)) {
+                if (nameInvalid(userName)) {
                     return;
                 }
                 roboRallyWrapper.client.sendElement(userName);
@@ -69,13 +69,13 @@ public class UsernameScreen extends AbstractScreen {
     }
 
     /**
-     * Validates the username set by the user
+     * Checks whether the username is invalid
      * @param userName The username the user wants
-     * @return True if the username can be used
+     * @return False if the username can be used
      */
-    private boolean validateName(String userName) {
+    private boolean nameInvalid(String userName) {
         //TODO: Find a way to ask the server if the name is taken
-        return !userName.equals("");
+        return userName.equals("");
     }
 
     @Override

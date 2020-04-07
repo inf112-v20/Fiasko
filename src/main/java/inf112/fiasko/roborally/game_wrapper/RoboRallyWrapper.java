@@ -6,10 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
-import inf112.fiasko.roborally.networking.SomeResponse;
 import inf112.fiasko.roborally.objects.IDrawableGame;
-
-import java.io.IOException;
 
 public class RoboRallyWrapper extends Game {
     public SpriteBatch batch;

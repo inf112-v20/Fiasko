@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.networking;
+package inf112.fiasko.roborally.networking.containers;
 
 import inf112.fiasko.roborally.objects.Player;
 

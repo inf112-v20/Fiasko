@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.networking;
+package inf112.fiasko.roborally.networking.containers;
 
 /**
  * This class represents a response saying that something went wrong with the request

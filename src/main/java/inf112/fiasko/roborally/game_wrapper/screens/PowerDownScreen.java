@@ -12,6 +12,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.game_wrapper.SimpleButton;
 
+/**
+ * This screen is used for asking players whether they want to power down
+ */
 public class PowerDownScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
@@ -19,8 +22,11 @@ public class PowerDownScreen extends AbstractScreen {
     private final Viewport viewport;
     private final Stage stage;
     private long startTime;
-    private final int applicationWidth = 600;
-    private final int applicationHeight = 800;
+
+    /**
+     * Instantiates a new power down screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public PowerDownScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
@@ -42,7 +48,6 @@ public class PowerDownScreen extends AbstractScreen {
         });
     }
 
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0.2f, 1f, 0.2f, 1);
@@ -54,9 +59,11 @@ public class PowerDownScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to enter Power Down next round",
-                applicationWidth/2f-380/2f,applicationHeight/2f + 100,380, 1, true);
+                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(10 - elapsedTime),
-                applicationWidth / 2f - 40 / 2f,applicationHeight/2f - 100,40, 1, true);
+                applicationWidth / 2f - 40 / 2f,applicationHeight / 2f - 100,40, 1,
+                true);
         roboRallyWrapper.batch.end();
         stage.draw();
 

@@ -88,7 +88,12 @@ class RoboRallyServerListener extends Listener {
     public void received (Connection connection, Object object) {
         if (object instanceof String) {
             String playerName = (String) object;
-            playerNames.put(connection, playerName);
+            if (playerNames.values().contains(playerName)) {
+                String errorMessage = "The player name send is already taken.";
+                connection.sendTCP(new ErrorResponse(errorMessage, new IllegalArgumentException(errorMessage)));
+            } else {
+                playerNames.put(connection, playerName);
+            }
         }
     }
 

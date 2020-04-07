@@ -4,20 +4,18 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.objects.IDeck;
-import inf112.fiasko.roborally.objects.ProgrammingCard;
-import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
-import inf112.fiasko.roborally.utility.DeckLoaderUtil;
+import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class represents a Robo Rally Server
+ */
 public class RoboRallyServer {
     private Server server;
-    private IDeck<ProgrammingCard> programmingCardDeck;
     private RoboRallyServerListener listener;
 
     public RoboRallyServer() throws IOException {
@@ -27,13 +25,20 @@ public class RoboRallyServer {
         server.bind(54555, 54777);
         listener = new RoboRallyServerListener();
         server.addListener(listener);
-        programmingCardDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
     }
 
+    /**
+     * Gets a map between connections and their robot id
+     * @return A mapping between connections and robot ids
+     */
     public Map<Connection, RobotID> getRobotID() {
         return listener.getRobotID();
     }
 
+    /**
+     * Gets a map between connections and their player name
+     * @return A mapping between connections and robot ids
+     */
     public Map<Connection, String> getPlayerNames() {
         return listener.getPlayerNames();
     }
@@ -44,50 +49,44 @@ public class RoboRallyServer {
     public void sendToAllClients(Object object) {
         server.sendToAllTCP(object);
     }
-
-    /**
-     * Deals cards to all players
-     */
-    public void dealCards() {
-        programmingCardDeck.shuffle();
-        for (Connection connection : server.getConnections()) {
-            IDeck<ProgrammingCard> hand = new ProgrammingCardDeck(new ArrayList<>());
-            hand.draw(programmingCardDeck, 9);
-            connection.sendTCP(hand);
-        }
-    }
 }
 
+/**
+ * This listener handles all sending and responses for the server
+ */
 class RoboRallyServerListener extends Listener {
-    protected Connection host;
-    protected Map<Connection, RobotID> clients;
-    protected Map<Connection, String> playerNames;
+    private Connection host;
+    private Map<Connection, RobotID> clients;
+    private Map<Connection, String> playerNames;
 
-    public RoboRallyServerListener() {
+    /**
+     * Instantiates a new Robo Rally server listener
+     */
+    RoboRallyServerListener() {
         super();
         clients = new HashMap<>();
         playerNames = new HashMap<>();
     }
 
-    public Map<Connection, String> getPlayerNames() {
+    /**
+     * Gets a map between connections and their player name
+     * @return A mapping between connections and robot ids
+     */
+    Map<Connection, String> getPlayerNames() {
         return playerNames;
     }
 
-    public Map<Connection, RobotID> getRobotID() {
+    /**
+     * Gets a map between connections and their robot id
+     * @return A mapping between connections and robot ids
+     */
+    Map<Connection, RobotID> getRobotID() {
         return clients;
     }
 
     @Override
     public void received (Connection connection, Object object) {
-        if (object instanceof SomeRequest) {
-            SomeRequest request = (SomeRequest)object;
-            System.out.println(request.text);
-
-            SomeResponse response = new SomeResponse();
-            response.text = "Thanks";
-            connection.sendTCP(response);
-        }
-        else if (object instanceof String) {
+        if (object instanceof String) {
             String playerName = (String) object;
             playerNames.put(connection, playerName);
         }

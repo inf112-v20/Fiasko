@@ -1,11 +1,11 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 
 public class LoadingScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
@@ -14,8 +14,6 @@ public class LoadingScreen extends AbstractScreen {
     private final Viewport viewport;
 
     private long startTime;
-    private final int applicationWidth = 600;
-    private final int applicationHeight = 800;
 
     public LoadingScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;

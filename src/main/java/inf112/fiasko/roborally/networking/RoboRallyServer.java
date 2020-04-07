@@ -18,6 +18,10 @@ public class RoboRallyServer {
     private final Server server;
     private RoboRallyServerListener listener;
 
+    /**
+     * Instantiates a new Robo Rally server
+     * @throws IOException If the server cannot be started
+     */
     public RoboRallyServer() throws IOException {
         server = new Server();
         server.start();

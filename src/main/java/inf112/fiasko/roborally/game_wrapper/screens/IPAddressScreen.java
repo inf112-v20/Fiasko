@@ -29,17 +29,25 @@ public class IPAddressScreen extends AbstractScreen {
     private final Stage stage;
     private TextField txtinput;
 
+    /**
+     * Instantiates a new ip address screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public IPAddressScreen(final RoboRallyWrapper roboRallyWrapper) {
-
         stage = new Stage();
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
-        TextButton loginbutton = new TextButton("click", skin);
-        loginbutton.setSize(300,60);
-        loginbutton.setPosition(300,300);
-        loginbutton.addListener(new ClickListener(){
+        TextButton joinButton = new TextButton("Join", skin);
+        joinButton.setSize(300,60);
+        joinButton.setPosition(300,300);
+        joinButton.addListener(new ClickListener() {
             @Override
-            public void touchUp(InputEvent e, float x, float y, int point, int button){
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 try {
                     roboRallyWrapper.client = new RoboRallyClient(txtinput.getText(),roboRallyWrapper);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
@@ -50,18 +58,17 @@ public class IPAddressScreen extends AbstractScreen {
                 }
             }
         });
-        txtinput = new TextField("",skin);
+        txtinput = new TextField("", skin);
         txtinput.setPosition(300,250);
         txtinput.setSize(150,40);
         stage.addActor(txtinput);
-        stage.addActor(loginbutton);
+        stage.addActor(joinButton);
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         Gdx.input.setInputProcessor(stage);
-
     }
 
 
@@ -74,10 +81,10 @@ public class IPAddressScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Enter IP address and click the button to join a server",
-                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1, true);
+                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                true);
         roboRallyWrapper.batch.end();
         stage.draw();
-
     }
 
     @Override

@@ -9,10 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -44,6 +41,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
     private final Stage stage;
+    private final InputMultiplexer inputMultiplexer;
 
     /**
      * Instantiates a new card choice screen
@@ -60,8 +58,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(this);
+        inputMultiplexer = new InputMultiplexer();
 
         try {
             generateCards();
@@ -71,25 +68,25 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         this.chosenCards = new ArrayList<>();
         this.maxCards = 5;
         stage = new Stage();
-        inputMultiplexer.addProcessor(stage);
 
         TextButton confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
         stage.addActor(confirmCards);
-        confirmCards.setY(viewport.getWorldHeight() + 60);
+        confirmCards.setY(viewport.getWorldHeight() - confirmCards.getHeight());
         confirmCards.setX(15);
-        confirmCards.setTouchable(Touchable.enabled);
+
         confirmCards.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println(chosenCards.size());
-                System.out.println(maxCards);
                 if (chosenCards.size() == maxCards) {
                     System.out.println("Lock cards!");
+                    return true;
                 }
                 return false;
             }
         });
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        stage.setViewport(viewport);
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(stage);
     }
 
     /**
@@ -119,7 +116,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-        //Nothing to do
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override

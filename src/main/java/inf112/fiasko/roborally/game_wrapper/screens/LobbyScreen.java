@@ -41,7 +41,6 @@ public class LobbyScreen extends AbstractScreen {
         startGameButton.setX(applicationWidth / 2f + startGameButton.getWidth() / 4f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -52,8 +51,13 @@ public class LobbyScreen extends AbstractScreen {
                 return true;//her we do stuff
             }
         });
+        stage.setViewport(viewport);
     }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
 
     @Override
     public void render(float delta) {

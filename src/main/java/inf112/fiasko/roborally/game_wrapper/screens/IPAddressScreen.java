@@ -68,9 +68,13 @@ public class IPAddressScreen extends AbstractScreen {
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
+        stage.setViewport(viewport);
     }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
 
     @Override
     public void render(float delta) {

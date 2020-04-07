@@ -34,13 +34,13 @@ public class StartMenuScreen extends AbstractScreen {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         stage = new Stage();
+        stage.setViewport(viewport);
         TextButton serverButton = new SimpleButton("Create", roboRallyWrapper.font).getButton();
         stage.addActor(serverButton);
         serverButton.setY(applicationHeight / 2f);
         serverButton.setX(applicationWidth / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
 
         serverButton.addListener(new InputListener() {
             @Override
@@ -77,7 +77,6 @@ public class StartMenuScreen extends AbstractScreen {
         quitButton.setY(applicationHeight / 2f);
         quitButton.setX(applicationWidth / 2f + serverButton.getWidth() + 40 + clientButton.getWidth());
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
         quitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -85,6 +84,11 @@ public class StartMenuScreen extends AbstractScreen {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

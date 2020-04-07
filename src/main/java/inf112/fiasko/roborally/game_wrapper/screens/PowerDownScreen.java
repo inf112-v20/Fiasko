@@ -31,13 +31,13 @@ public class PowerDownScreen extends AbstractScreen {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         stage = new Stage();
+        stage.setViewport(viewport);
         TextButton powerDownButton = new SimpleButton("PowerDown", roboRallyWrapper.font).getButton();
         stage.addActor(powerDownButton);
         powerDownButton.setY(applicationHeight / 2f);
         powerDownButton.setX(applicationWidth / 2f + powerDownButton.getWidth() / 4f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
         startTime = System.currentTimeMillis();
         powerDownButton.addListener(new InputListener() {
             @Override
@@ -78,7 +78,8 @@ public class PowerDownScreen extends AbstractScreen {
     }
 
     @Override
-    public void show(){
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
         startTime = System.currentTimeMillis();
     }
 

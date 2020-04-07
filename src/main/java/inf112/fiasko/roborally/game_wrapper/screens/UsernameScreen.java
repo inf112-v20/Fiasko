@@ -44,8 +44,6 @@ public class UsernameScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 String userName = textInput.getText();
-                System.out.println(userName);
-                System.out.println(validateName(userName));
                 if (!validateName(userName)) {
                     return;
                 }
@@ -67,8 +65,7 @@ public class UsernameScreen extends AbstractScreen {
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
-
+        stage.setViewport(viewport);
     }
 
     /**
@@ -79,6 +76,11 @@ public class UsernameScreen extends AbstractScreen {
     private boolean validateName(String userName) {
         //TODO: Find a way to ask the server if the name is taken
         return !userName.equals("");
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

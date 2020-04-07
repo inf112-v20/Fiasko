@@ -49,12 +49,12 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
         viewport = new ExtendViewport(viewPortWidth, viewPortHeight, camera);
 
-        Gdx.input.setInputProcessor(this);
         lastTouch = new Vector2();
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
         resetCamera();
     }
 

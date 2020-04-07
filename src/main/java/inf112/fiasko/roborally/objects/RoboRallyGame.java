@@ -24,15 +24,16 @@ public class RoboRallyGame implements IDrawableGame {
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
-    private List<Player> playerList;
+    private final List<Player> playerList;
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
+
     /**
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
     public RoboRallyGame(List<Player> playerList, String boardName, boolean host, boolean debug) {
-        this.host=host;
+        this.host = host;
         this.playerList = playerList;
         if (debug) {
             initializeDebugMode();
@@ -45,7 +46,7 @@ public class RoboRallyGame implements IDrawableGame {
      * Instantiates a new robo rally game
      */
     public RoboRallyGame(List<Player> playerList, String boardName,boolean host) {
-        this.host=host;
+        this.host = host;
         this.playerList = playerList;
         initializeGame(boardName);
     }
@@ -88,6 +89,7 @@ public class RoboRallyGame implements IDrawableGame {
         long cycleDelay = 600;
         TimeUnit.MILLISECONDS.sleep(cycleDelay);
     }
+
     /**
      * Initializes the game with a debugging board
      */
@@ -114,14 +116,15 @@ public class RoboRallyGame implements IDrawableGame {
     private void initializeGame(String boardName) {
         try {
             List<Robot> robots = new ArrayList<>();
-            int noe = 1;
-            for (Player player:playerList) {
-                Position spawn = new Position(noe,1);
-                robots.add(new Robot(player.getRobotID(),spawn));
-                noe++;
+            //TODO: Find correct robot spawn positions
+            int posX = 1;
+            for (Player player : playerList) {
+                Position spawn = new Position(posX,1);
+                robots.add(new Robot(player.getRobotID(), spawn));
+                posX++;
             }
 
-            gameBoard = BoardLoaderUtil.loadBoard("boards/"+boardName, robots);
+            gameBoard = BoardLoaderUtil.loadBoard("boards/" + boardName, robots);
             generateTileLists();
 
             if (host) {
@@ -130,7 +133,7 @@ public class RoboRallyGame implements IDrawableGame {
 
             new Thread(() -> {
                 try {
-                    runGameLoop();
+                    runTurn();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
@@ -158,20 +161,6 @@ public class RoboRallyGame implements IDrawableGame {
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT,
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT,
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
-    }
-
-    /**
-     * Does whatever the game wants to do
-     * @throws InterruptedException If interrupted while trying to sleep
-     */
-    private void runGameLoop() throws InterruptedException {
-        TimeUnit.SECONDS.sleep(3);
-        runPhase(1);
-        runPhase(2);
-        runPhase(3);
-        runPhase(4);
-        runPhase(5);
-        respawnRobots();
     }
 
     /**
@@ -218,7 +207,7 @@ public class RoboRallyGame implements IDrawableGame {
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();
         if (host) {
-            updatePlayerLockedProgrammingCards();
+            updateLockedProgrammingCardsForAllPlayers();
             removeNonLockedProgrammingCardsFromPlayers();
         }
         // TODO: If this player is in power down, ask if it shall continue
@@ -229,31 +218,46 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Locks the players programming cards in relation to the robots damage
      */
-    private void updatePlayerLockedProgrammingCards() {
+    private void updateLockedProgrammingCardsForAllPlayers() {
         for (Player player : playerList) {
             List<ProgrammingCard> playerProgram = player.getProgram();
             ProgrammingCardDeck playerDeck = player.getPlayerDeck();
             ProgrammingCardDeck lockedPlayerDeck = player.getLockedPlayerDeck();
             int robotDamage = gameBoard.getRobotDamage(player.getRobotID());
 
+            //The player has no locked cards. All previously locked cards should go into the free deck
             if (robotDamage <= 4) {
                 lockedPlayerDeck.emptyInto(player.getPlayerDeck());
-                player.setLockedPlayerDeck(lockedPlayerDeck);
                 continue;
             }
 
-            for (int i = 1; i <= (robotDamage-4); i++) {
-                ProgrammingCard card = playerProgram.get(playerProgram.size()-i);
-
-                if (card.compareTo(playerDeck.peekTop()) == 0) {
-                    lockedPlayerDeck.draw(playerDeck);
-                } else {
-                    playerDeck.draw(playerDeck);
-                }
+            //Goes through locked cards and moves them to the locked player deck
+            for (int i = 1; i <= (robotDamage - 4); i++) {
+                ProgrammingCard card = playerProgram.get(playerProgram.size() - i);
+                moveProgrammingCardToLockedDeck(card, playerDeck, lockedPlayerDeck);
             }
-            player.setPlayerDeck(playerDeck);
-            player.setLockedPlayerDeck(lockedPlayerDeck);
         }
+    }
+
+    /**
+     * Moves a card from the player's deck to the player's locked deck if found
+     * @param card The card to move to the locked deck
+     * @param playerDeck The deck containing the player's cards
+     * @param lockedPlayerDeck The deck containing the player's locked cards
+     */
+    private void moveProgrammingCardToLockedDeck(ProgrammingCard card, ProgrammingCardDeck playerDeck,
+                                                 ProgrammingCardDeck lockedPlayerDeck) {
+        for (int i = 0; i < playerDeck.size(); i++) {
+            if (card.equals(playerDeck.peekTop())) {
+                //Found the card. Add to the locked deck
+                lockedPlayerDeck.draw(playerDeck);
+                break;
+            } else {
+                //Move the card to the bottom of the deck
+                playerDeck.draw(playerDeck);
+            }
+        }
+
     }
 
     /**
@@ -270,7 +274,7 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Deals correct amount of cards to active players, based on their robots damage
      */
-    public void distributeProgrammingCardsToPlayers() {
+    private void distributeProgrammingCardsToPlayers() {
         int robotDamage;
         ProgrammingCardDeck playerDeck;
         mainDeck.shuffle();

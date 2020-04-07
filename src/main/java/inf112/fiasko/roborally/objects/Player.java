@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class represents a player
+ * This class represents a player
  */
-
 public class Player {
     private RobotID robotID;
     private String name;
@@ -26,14 +25,27 @@ public class Player {
         this.robotID = robotID;
         this.name = name;
     }
+
+    /**
+     * Empty constructor required by kryo
+     */
     public Player(){}
-    public void setRobotID(RobotID robotID){
-        this.robotID=robotID;
-    }
-    public void setName(String name){
-        this.name=name;
+
+    /**
+     * Sets the robot id of the robot
+     * @param robotID The new id of the robot
+     */
+    public void setRobotID(RobotID robotID) {
+        this.robotID = robotID;
     }
 
+    /**
+     * Sets the name of the robot
+     * @param name The new name of the robot
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
      * Gives you the RobotID of a player

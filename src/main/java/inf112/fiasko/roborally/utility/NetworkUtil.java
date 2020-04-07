@@ -10,6 +10,9 @@ import inf112.fiasko.roborally.objects.ProgrammingCard;
 
 import java.util.ArrayList;
 
+/**
+ * This class helps with networking tasks
+ */
 public final class NetworkUtil {
 
     /**

@@ -14,7 +14,7 @@ import java.io.*;
 import java.util.List;
 
 /**
- * Loads a board
+ * This class helps loading boards
  */
 public final class BoardLoaderUtil {
     private BoardLoaderUtil() {}

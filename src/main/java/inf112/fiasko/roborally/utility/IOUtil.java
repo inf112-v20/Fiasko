@@ -10,10 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class helps with tasks which mix primitive classes and classes from external libraries
+ */
 public final class IOUtil {
     private IOUtil() {}
 
-
+    /**
+     * Generates a list of players from a map of player names and a map of robot ids
+     * @param playerNames A map between connections and player names
+     * @param robotIDs A map between connections and robot ids
+     * @return A list of players
+     */
     public static List<Player> playerGenerator(Map<Connection, String> playerNames, Map<Connection, RobotID> robotIDs) {
         List<Player> playerList = new ArrayList<>();
         for (Connection connection: playerNames.keySet()) {

@@ -13,41 +13,55 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 
+/**
+ * This screen allows a user to choose their player name
+ */
 public class UsernameScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final Stage stage;
-    private final int applicationWidth = 600;
-    private final int applicationHeight = 800;
-    private TextField txtinput;
-    private TextButton loginbutton;
-    public UsernameScreen(final RoboRallyWrapper roboRallyWrapper) {
+    private TextField textInput;
 
+    /**
+     * Instantiates a new username screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
+    public UsernameScreen(final RoboRallyWrapper roboRallyWrapper) {
         stage = new Stage();
 
-        Skin skin =new Skin(Gdx.files.internal("uiskin.json"));
-        loginbutton = new TextButton("click",skin);
-        loginbutton.setSize(300,60);
-        loginbutton.setPosition(300,300);
-        loginbutton.addListener(new ClickListener(){
+        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        TextButton confirm = new TextButton("Confirm", skin);
+        confirm.setSize(300,60);
+        confirm.setPosition(300,300);
+        confirm.addListener(new ClickListener() {
             @Override
-            public void touchUp(InputEvent e, float x, float y, int point, int button){
-                roboRallyWrapper.client.sendElement(txtinput.getText());
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent e, float x, float y, int point, int button) {
+                String userName = textInput.getText();
+                System.out.println(userName);
+                System.out.println(validateName(userName));
+                if (!validateName(userName)) {
+                    return;
+                }
+                roboRallyWrapper.client.sendElement(userName);
                 if (roboRallyWrapper.server == null) {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-                }
-                else{
+                } else{
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLobbyScreen(roboRallyWrapper));
                 }
             }
         });
-        txtinput = new TextField("",skin);
-        txtinput.setPosition(300,250);
-        txtinput.setSize(150,40);
-        stage.addActor(txtinput);
-        stage.addActor(loginbutton);
+        textInput = new TextField("",skin);
+        textInput.setPosition(300,250);
+        textInput.setSize(150,40);
+        stage.addActor(textInput);
+        stage.addActor(confirm);
 
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
@@ -57,6 +71,15 @@ public class UsernameScreen extends AbstractScreen {
 
     }
 
+    /**
+     * Validates the username set by the user
+     * @param userName The username the user wants
+     * @return True if the username can be used
+     */
+    private boolean validateName(String userName) {
+        //TODO: Find a way to ask the server if the name is taken
+        return !userName.equals("");
+    }
 
     @Override
     public void render(float delta) {
@@ -67,7 +90,8 @@ public class UsernameScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to enter username",
-                applicationWidth/2f-380/2f,applicationHeight/2f + 100,380, 1, true);
+                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                true);
         roboRallyWrapper.batch.end();
         stage.draw();
 

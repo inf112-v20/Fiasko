@@ -15,7 +15,7 @@ import java.io.IOException;
  * This class represents a client capable of connecting to a Robo Rally server
  */
 public class RoboRallyClient {
-    private Client client;
+    private final Client client;
 
     /**
      * Instantiates a new Robo Rally client
@@ -45,7 +45,7 @@ public class RoboRallyClient {
  * This listener handles all receiving from the server
  */
 class RoboRallyClientListener extends Listener {
-    private RoboRallyWrapper wrapper;
+    private final RoboRallyWrapper wrapper;
 
     RoboRallyClientListener(RoboRallyWrapper wrapper) {
         super();

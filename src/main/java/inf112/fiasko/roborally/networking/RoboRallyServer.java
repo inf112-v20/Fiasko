@@ -15,7 +15,7 @@ import java.util.Map;
  * This class represents a Robo Rally Server
  */
 public class RoboRallyServer {
-    private Server server;
+    private final Server server;
     private RoboRallyServerListener listener;
 
     public RoboRallyServer() throws IOException {
@@ -56,8 +56,8 @@ public class RoboRallyServer {
  */
 class RoboRallyServerListener extends Listener {
     private Connection host;
-    private Map<Connection, RobotID> clients;
-    private Map<Connection, String> playerNames;
+    private final Map<Connection, RobotID> clients;
+    private final Map<Connection, String> playerNames;
 
     /**
      * Instantiates a new Robo Rally server listener

@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,7 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.fiasko.roborally.networking.GameStartInfo;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.game_wrapper.SimpleButton;
+import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.utility.IOUtil;
 
@@ -21,8 +23,7 @@ public class LobbyScreen extends AbstractScreen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final Stage stage;
-    private final int applicationWidth = 600;
-    private final int applicationHeight = 800;
+
     public LobbyScreen(final RoboRallyWrapper roboRallyWrapper) {
         camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
@@ -54,10 +55,10 @@ public class LobbyScreen extends AbstractScreen {
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
-
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to start game",
-                applicationWidth/2f-380/2f,applicationHeight/2f + 100,380, 1, true);
+                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                true);
         roboRallyWrapper.batch.end();
         stage.draw();
 

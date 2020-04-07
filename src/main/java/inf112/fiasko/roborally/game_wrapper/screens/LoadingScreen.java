@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 
+/**
+ * This screen is used to wait for something
+ */
 public class LoadingScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
@@ -15,6 +18,10 @@ public class LoadingScreen extends AbstractScreen {
 
     private long startTime;
 
+    /**
+     * Instantiates a new loading screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public LoadingScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
@@ -33,10 +40,11 @@ public class LoadingScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth/2f-380/2f,
-                applicationHeight/2f,380, 1, true);
+                applicationHeight / 2f,380, 1, true);
         roboRallyWrapper.batch.end();
         long time = System.currentTimeMillis();
-        if (time-startTime>5000){
+        //TODO: Allow to set any condition and next screen
+        if (time - startTime > 5000){
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
         }
     }

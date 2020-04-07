@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.game_wrapper.SimpleButton;
 import inf112.fiasko.roborally.objects.IDeck;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
@@ -240,9 +242,9 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
  * A helper class for keeping track of card information and a rectangle
  */
 class CardRectangle {
-    protected final Rectangle rectangle;
-    protected boolean selected = false;
-    protected final ProgrammingCard card;
+    final Rectangle rectangle;
+    boolean selected = false;
+    final ProgrammingCard card;
 
     CardRectangle(Rectangle rectangle, ProgrammingCard card) {
         this.rectangle = rectangle;

@@ -1,9 +1,8 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,9 +12,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.objects.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;
-import inf112.fiasko.roborally.objects.RoboRallyGame;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
@@ -38,7 +37,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     private final int viewPortHeight = 12 * tileDimensions;
     private final Viewport viewport;
 
-    BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
+    public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
 
         camera = new OrthographicCamera();

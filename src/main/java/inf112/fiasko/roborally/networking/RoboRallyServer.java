@@ -76,7 +76,7 @@ class RoboRallyServerListener extends Listener {
      * Gets a map between connections and their player name
      * @return A mapping between connections and robot ids
      */
-    Map<Connection, String> getPlayerNames() {
+    public Map<Connection, String> getPlayerNames() {
         return playerNames;
     }
 
@@ -84,7 +84,7 @@ class RoboRallyServerListener extends Listener {
      * Gets a map between connections and their robot id
      * @return A mapping between connections and robot ids
      */
-    Map<Connection, RobotID> getRobotID() {
+    public Map<Connection, RobotID> getRobotID() {
         return clients;
     }
 

@@ -6,8 +6,8 @@ import com.badlogic.gdx.Screen;
  * This class overrides methods of screens which are often unused
  */
 public abstract class AbstractScreen implements Screen {
-    final int applicationWidth = 600;
-    final int applicationHeight = 800;
+    protected final int applicationWidth = 600;
+    protected final int applicationHeight = 800;
 
     @Override
     public void show() {

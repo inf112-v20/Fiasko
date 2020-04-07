@@ -75,7 +75,7 @@ public class UsernameScreen extends AbstractScreen {
      */
     private boolean nameInvalid(String userName) {
         //TODO: Find a way to ask the server if the name is taken
-        return userName.equals("");
+        return "".equals(userName);
     }
 
     @Override

@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -239,9 +241,9 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
  * A helper class for keeping track of card information and a rectangle
  */
 class CardRectangle {
-    final Rectangle rectangle;
-    final ProgrammingCard card;
-    boolean selected = false;
+    protected final Rectangle rectangle;
+    protected final ProgrammingCard card;
+    protected boolean selected = false;
 
     /**
      * Instantiates a new card rectangle

@@ -1,6 +1,14 @@
 package inf112.fiasko.roborally.game_wrapper;
 
-import inf112.fiasko.roborally.game_wrapper.screens.*;
+
+import inf112.fiasko.roborally.game_wrapper.screens.BoardActiveScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.CardChoiceScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.LoadingScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.PowerDownScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.UsernameScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.IPAddressScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.LobbyScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.StartMenuScreen;
 
 /**
  * Keeps track of screen instances
@@ -67,7 +75,7 @@ public class ScreenManager {
      * @param roboRallyWrapper The Robo Rally launcher instance to use
      * @return A start menu screen instance
      */
-    synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {
+    public synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {
         return new StartMenuScreen(roboRallyWrapper);
     }
 

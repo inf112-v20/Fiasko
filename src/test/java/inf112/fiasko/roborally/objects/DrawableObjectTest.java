@@ -70,7 +70,6 @@ public class DrawableObjectTest {
         assertEquals(Y_POSITION_MAX_ARG, drawableObjectMaximumArguments.getYPosition());
     }
 
-
     @Test
     public void getWidthMinArg() {
         assertEquals(64, drawableObjectMinimumArguments.getWidth());

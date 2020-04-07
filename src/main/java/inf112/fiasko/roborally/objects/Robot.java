@@ -73,7 +73,7 @@ public class Robot {
      * Gets the robot's power-down status
      * @return Whether the robot is currently in power-down
      */
-    public Boolean isInPowerDown(){
+    public Boolean isInPowerDown() {
         return inPowerDown;
     }
 
@@ -144,7 +144,9 @@ public class Robot {
      * Gets the amount of life a robot has left.
      * @return amount of life left
      */
-    public int getAmountOfLives() { return this.amountOfLives; }
+    public int getAmountOfLives() {
+        return this.amountOfLives;
+    }
 
     /**
      * Makes a copy of this robot with the same properties as this robot

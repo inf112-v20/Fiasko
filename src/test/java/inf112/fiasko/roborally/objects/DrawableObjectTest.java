@@ -17,8 +17,10 @@ public class DrawableObjectTest {
 
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
     private static final Texture robotsTexture = new Texture(Gdx.files.internal("assets/robots.png"));
-    public static final TextureRegion TEXTURE_MIN_ARG = new TextureRegion(textureSheet, 4*300, 0, 300, 300);
-    public static final TextureRegion TEXTURE_MAX_ARG = new TextureRegion(robotsTexture, 0, 0, 64, 64);
+    private static final TextureRegion TEXTURE_MIN_ARG = new TextureRegion(textureSheet, 4 * 300, 0,
+            300, 300);
+    public static final TextureRegion TEXTURE_MAX_ARG = new TextureRegion(robotsTexture, 0, 0,
+            64, 64);
     public static final int X_POSITION_MIN_ARG = 5;
     public static final int Y_POSITION_MIN_ARG = 8;
     public static final int X_POSITION_MAX_ARG = 6;

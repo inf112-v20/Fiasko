@@ -27,9 +27,4 @@ public class RoboRallyWrapper extends Game {
     public void dispose() {
         batch.dispose();
     }
-
-    @Override
-    public void render() {
-        super.render(); //important!
-    }
 }

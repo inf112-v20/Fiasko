@@ -15,9 +15,9 @@ public class ScreenManager {
     private LobbyScreen lobbyScreen;
 
     /**
-     * Gets an instance of the main menu screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
-     * @return A main menu screen instance
+     * Gets an instance of the power down screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A power down screen instance
      */
     public synchronized PowerDownScreen getPowerDownScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.powerDownScreen == null) {
@@ -25,6 +25,12 @@ public class ScreenManager {
         }
         return powerDownScreen;
     }
+
+    /**
+     * Gets an instance of the lobby screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A lobby screen instance
+     */
     public synchronized LobbyScreen getLobbyScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.lobbyScreen == null) {
             this.lobbyScreen = new LobbyScreen(roboRallyWrapper);
@@ -32,6 +38,11 @@ public class ScreenManager {
         return lobbyScreen;
     }
 
+    /**
+     * Gets an instance of the ip address screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return An ip address screen instance
+     */
     public synchronized IPAddressScreen getIPAddressScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.ipAddressScreen == null) {
             this.ipAddressScreen = new IPAddressScreen(roboRallyWrapper);
@@ -39,6 +50,11 @@ public class ScreenManager {
         return ipAddressScreen;
     }
 
+    /**
+     * Gets an instance of the username screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A username screen instance
+     */
     public synchronized UsernameScreen getUsernameScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.usernameScreen == null) {
             this.usernameScreen = new UsernameScreen(roboRallyWrapper);
@@ -46,10 +62,20 @@ public class ScreenManager {
         return usernameScreen;
     }
 
+    /**
+     * Gets an instance of the start menu screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A start menu screen instance
+     */
     synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {
         return new StartMenuScreen(roboRallyWrapper);
     }
 
+    /**
+     * Gets an instance of the loading screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A loading screen instance
+     */
     public synchronized LoadingScreen getLoadingScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.loadingScreen == null) {
             this.loadingScreen = new LoadingScreen(roboRallyWrapper);
@@ -59,7 +85,7 @@ public class ScreenManager {
 
     /**
      * Gets an instance of the board active screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
      * @return A board active screen instance
      */
     public synchronized BoardActiveScreen getBoardActiveScreen(RoboRallyWrapper roboRallyWrapper) {
@@ -70,9 +96,9 @@ public class ScreenManager {
     }
 
     /**
-     * Gets an instance of the board active screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
-     * @return A board active screen instance
+     * Gets an instance of the card choice screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A card choice screen instance
      */
     public synchronized CardChoiceScreen getCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.cardChoiceScreen == null) {

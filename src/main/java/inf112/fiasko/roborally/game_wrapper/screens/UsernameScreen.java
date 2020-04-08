@@ -34,7 +34,7 @@ public class UsernameScreen extends AbstractScreen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton confirm = new TextButton("Confirm", skin);
         confirm.setSize(300,60);
-        confirm.setPosition(300,300);
+        confirm.setPosition(applicationWidth/2f - confirm.getWidth()/2,300);
         confirm.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
@@ -56,7 +56,7 @@ public class UsernameScreen extends AbstractScreen {
             }
         });
         textInput = new TextField("",skin);
-        textInput.setPosition(300,250);
+        textInput.setPosition(applicationWidth/2f - textInput.getWidth()/2,250);
         textInput.setSize(150,40);
         stage.addActor(textInput);
         stage.addActor(confirm);

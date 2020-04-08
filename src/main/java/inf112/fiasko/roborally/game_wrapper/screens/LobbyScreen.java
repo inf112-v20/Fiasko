@@ -37,8 +37,8 @@ public class LobbyScreen extends AbstractScreen {
         stage = new Stage();
         TextButton startGameButton= new SimpleButton("Start", roboRallyWrapper.font).getButton();
         stage.addActor(startGameButton);
-        startGameButton.setY(applicationHeight / 2f);
-        startGameButton.setX(applicationWidth / 2f + startGameButton.getWidth() / 4f);
+        startGameButton.setY(applicationHeight / 2f-50 );
+        startGameButton.setX(applicationWidth / 2f - startGameButton.getWidth() / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         startGameButton.addListener(new InputListener() {

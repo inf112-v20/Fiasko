@@ -22,6 +22,7 @@ public class Player {
      * @param name the unique name of the player
      */
     public Player(RobotID robotID, String name) {
+        this.playerDeck = new ProgrammingCardDeck(new ArrayList<>());
         this.robotID = robotID;
         this.name = name;
     }

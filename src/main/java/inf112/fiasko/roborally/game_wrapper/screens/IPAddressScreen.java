@@ -39,7 +39,7 @@ public class IPAddressScreen extends AbstractScreen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton joinButton = new TextButton("Join", skin);
         joinButton.setSize(300,60);
-        joinButton.setPosition(300,300);
+        joinButton.setPosition(applicationWidth/2f -joinButton.getWidth()/2f,300);
         joinButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
@@ -59,7 +59,7 @@ public class IPAddressScreen extends AbstractScreen {
             }
         });
         txtinput = new TextField("", skin);
-        txtinput.setPosition(300,250);
+        txtinput.setPosition(applicationWidth/2f -txtinput.getWidth()/2f,250);
         txtinput.setSize(150,40);
         stage.addActor(txtinput);
         stage.addActor(joinButton);

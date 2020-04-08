@@ -38,10 +38,8 @@ public class StartMenuScreen extends AbstractScreen {
         TextButton serverButton = new SimpleButton("Create", roboRallyWrapper.font).getButton();
         stage.addActor(serverButton);
         serverButton.setY(applicationHeight / 2f);
-        serverButton.setX(applicationWidth / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-
         serverButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -62,7 +60,6 @@ public class StartMenuScreen extends AbstractScreen {
         TextButton clientButton = new SimpleButton("Join", roboRallyWrapper.font).getButton();
         stage.addActor(clientButton);
         clientButton.setY(applicationHeight / 2f);
-        clientButton.setX(applicationWidth / 2f + serverButton.getWidth() + 20);
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         Gdx.input.setInputProcessor(stage);
         clientButton.addListener(new InputListener() {
@@ -76,7 +73,6 @@ public class StartMenuScreen extends AbstractScreen {
         TextButton quitButton = new SimpleButton("Quit", roboRallyWrapper.font).getButton();
         stage.addActor(quitButton);
         quitButton.setY(applicationHeight / 2f);
-        quitButton.setX(applicationWidth / 2f + serverButton.getWidth() + 40 + clientButton.getWidth());
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         quitButton.addListener(new InputListener() {
             @Override
@@ -85,6 +81,10 @@ public class StartMenuScreen extends AbstractScreen {
                 return true;
             }
         });
+        serverButton.setX(applicationWidth / 2f-serverButton.getWidth()-clientButton.getWidth()/2 - 10);
+        clientButton.setX(applicationWidth / 2f - clientButton.getWidth()/2);
+        quitButton.setX(applicationWidth / 2f + clientButton.getWidth()/2+10);
+
     }
 
     @Override

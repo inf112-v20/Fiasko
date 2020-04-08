@@ -7,6 +7,7 @@ import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.objects.IDeck;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
+import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 
 import java.util.ArrayList;
 
@@ -27,5 +28,6 @@ public final class NetworkUtil {
         kryo.register(ArrayList.class);
         kryo.register(Player.class);
         kryo.register(RobotID.class);
+        kryo.register(ProgrammingCardDeck.class);
     }
 }

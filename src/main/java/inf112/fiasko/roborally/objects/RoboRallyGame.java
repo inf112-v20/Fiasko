@@ -216,6 +216,16 @@ public class RoboRallyGame implements IDrawableGame {
         // TODO: If this player is in power down, ask if it shall continue
         // Respawn dead robots, as long as they have more lives left
         respawnRobots();
+        resetHasTouchedFlagThisTurnForAllRobots();
+    }
+
+    /**
+     * Resets the boolean for if the robot has touched a flag this turn, to set up the next turn.
+     */
+    private void resetHasTouchedFlagThisTurnForAllRobots() {
+        for (Robot robot : gameBoard.getAliveRobots()) {
+            robot.setHasTouchedFlagThisTurn(false);
+        }
     }
 
     /**
@@ -462,8 +472,14 @@ public class RoboRallyGame implements IDrawableGame {
         for (BoardElementContainer<Tile> flag:listOfFlags) {
             Position flagPosition = flag.getPosition();
             if (gameBoard.hasRobotOnPosition(flagPosition)) {
-                RobotID robot = gameBoard.getRobotOnPosition(flagPosition);
-                gameBoard.updateFlagOnRobot(robot, flag.getElement().getTileType());
+                RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
+                for (Robot robot : gameBoard.getAliveRobots()) {
+                    if (robot.getRobotId() != robotID || robot.isHasTouchedFlagThisTurn()) {
+                        continue;
+                    }
+                    gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
+                    robot.setHasTouchedFlagThisTurn(true);
+                }
             }
         }
     }

@@ -5,6 +5,7 @@ import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.game_wrapper.screens.StartMenuScreen;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
@@ -316,6 +317,7 @@ public class RoboRallyGame implements IDrawableGame {
 
         fireAllLasers();
         checkAllFlags();
+
     }
 
     /**
@@ -479,11 +481,24 @@ public class RoboRallyGame implements IDrawableGame {
                     }
                     gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
                     robot.setHasTouchedFlagThisTurn(true);
+                    if (victoryCheck(robot.getLastFlagVisited(), listOfFlags.size())) {
+                        Player winningPlayer;
+                        for (Player player : playerList) {
+                            if (player.getRobotID() != robotID) {
+                                continue;
+                            }
+                            winningPlayer = player;
+                        }
+                        //TODO: Make win screen announcing the winning player
+                    }
                 }
             }
         }
     }
 
+    private boolean victoryCheck(int lastFlagVisited, int lastFlag) {
+        return (lastFlagVisited == lastFlag);
+    }
     /**
      * Fires all lasers on the game board
      */

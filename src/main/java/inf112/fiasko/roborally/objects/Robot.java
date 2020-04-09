@@ -16,6 +16,7 @@ public class Robot {
     private Position backupPosition;
     private Position currentPosition;
     private Direction facingDirection;
+    private boolean hasTouchedFlagThisTurn = false;
 
     /**
      * Instantiates a new robot
@@ -27,6 +28,23 @@ public class Robot {
         this.backupPosition = spawnPosition;
         this.currentPosition = spawnPosition;
         this.facingDirection = Direction.NORTH;
+    }
+
+    /**
+     * True if the robot has touched a flag in the current turn
+     * @return a boolean
+     */
+    public boolean isHasTouchedFlagThisTurn() {
+        return hasTouchedFlagThisTurn;
+    }
+
+    /**
+     * Sets the boolean value to true if the robot touches a flag during a turn,
+     * and false at the end of each turn.
+     * @param hasTouchedFlagThisTurn the boolean value to be set.
+     */
+    public void setHasTouchedFlagThisTurn(boolean hasTouchedFlagThisTurn) {
+        this.hasTouchedFlagThisTurn = hasTouchedFlagThisTurn;
     }
 
     /**

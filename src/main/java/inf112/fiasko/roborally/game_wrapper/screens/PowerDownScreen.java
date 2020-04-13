@@ -34,8 +34,8 @@ public class PowerDownScreen extends AbstractScreen {
         stage.setViewport(viewport);
         TextButton powerDownButton = new SimpleButton("PowerDown", roboRallyWrapper.font).getButton();
         stage.addActor(powerDownButton);
-        powerDownButton.setY(applicationHeight / 2f);
-        powerDownButton.setX(applicationWidth / 2f + powerDownButton.getWidth() / 4f);
+        powerDownButton.setY(applicationHeight / 2f-50);
+        powerDownButton.setX(applicationWidth / 2f - powerDownButton.getWidth() / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         startTime = System.currentTimeMillis();

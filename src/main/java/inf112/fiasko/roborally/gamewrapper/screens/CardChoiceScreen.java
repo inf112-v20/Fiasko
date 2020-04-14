@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper.screens;
+package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.game_wrapper.SimpleButton;
+import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.objects.IDeck;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
@@ -92,10 +92,6 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         stage.setViewport(viewport);
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stage);
-        if(roboRallyWrapper.roboRallyGame.getClient()==null){
-            roboRallyWrapper.roboRallyGame.setClient(roboRallyWrapper.client);
-            roboRallyWrapper.roboRallyGame.setServer(roboRallyWrapper.server);
-        }
     }
 
     /**

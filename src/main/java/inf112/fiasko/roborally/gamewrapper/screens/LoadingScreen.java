@@ -1,12 +1,12 @@
-package inf112.fiasko.roborally.game_wrapper.screens;
+package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.fiasko.roborally.element_properties.GameState;
-import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.elementproperties.GameState;
+import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 
 /**
  * This screen is used to wait for something
@@ -16,8 +16,6 @@ public class LoadingScreen extends AbstractScreen {
 
     private final OrthographicCamera camera;
     private final Viewport viewport;
-
-    private long startTime;
 
     private GameState initialGameState;
 
@@ -30,8 +28,8 @@ public class LoadingScreen extends AbstractScreen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         viewport = new ExtendViewport(applicationWidth, applicationHeight, camera);
-        startTime = System.currentTimeMillis();
     }
+
 
 
     @Override
@@ -54,6 +52,12 @@ public class LoadingScreen extends AbstractScreen {
 
     private void handleScreenChange() {
         switch (initialGameState) {
+            case BEGINNING_OF_GAME:
+                if(roboRallyWrapper.roboRallyGame.getClient()==null){
+                    roboRallyWrapper.roboRallyGame.setClient(roboRallyWrapper.client);
+                    roboRallyWrapper.roboRallyGame.setServer(roboRallyWrapper.server);
+                }
+
             case SENDING_CARDS:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
                 break;
@@ -67,7 +71,6 @@ public class LoadingScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        startTime = System.currentTimeMillis();
         if (roboRallyWrapper.roboRallyGame == null){
             initialGameState = GameState.INITIAL_SETUP;
         }

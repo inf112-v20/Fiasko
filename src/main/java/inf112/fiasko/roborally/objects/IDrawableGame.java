@@ -1,5 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
+import inf112.fiasko.roborally.element_properties.GameState;
+
 import java.util.List;
 
 /**
@@ -54,5 +56,11 @@ public interface IDrawableGame {
      * @return A list of all robots to draw
      */
     List<Robot> getRobotsToDraw();
+
+    /**
+     * Gets the current state og the game
+     * @return The state the game is currently in
+     */
+    GameState getGameState();
 
 }

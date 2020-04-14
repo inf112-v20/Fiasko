@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.gamewrapper;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

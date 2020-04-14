@@ -1,9 +1,9 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Position;
+import inf112.fiasko.roborally.elementproperties.Position;
 import static org.junit.Assert.assertEquals;
 
-import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.elementproperties.RobotID;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.element_properties;
+package inf112.fiasko.roborally.elementproperties;
 
 /**
  * This enum represents all possible wall types

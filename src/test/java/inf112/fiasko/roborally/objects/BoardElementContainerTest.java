@@ -1,8 +1,8 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.elementproperties.TileType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

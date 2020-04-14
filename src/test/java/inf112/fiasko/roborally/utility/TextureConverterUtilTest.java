@@ -2,8 +2,8 @@ package inf112.fiasko.roborally.utility;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.GdxTestRunner;
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.objects.Tile;
 import org.junit.Before;
 import org.junit.Test;

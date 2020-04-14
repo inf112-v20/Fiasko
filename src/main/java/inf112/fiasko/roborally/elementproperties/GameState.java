@@ -1,8 +1,10 @@
-package inf112.fiasko.roborally.element_properties;
+package inf112.fiasko.roborally.elementproperties;
 
 public enum GameState {
     //Indicates that the server is waiting for something
     WAITING,
+    //Gives the game Access to the client and server
+    BEGINNING_OF_GAME,
     //Indicates that the users' input is being run. The board should be shown
     RUNNING_PROGRAMS,
     //Indicates that

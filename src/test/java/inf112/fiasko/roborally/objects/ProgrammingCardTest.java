@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Action;
+import inf112.fiasko.roborally.elementproperties.Action;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;

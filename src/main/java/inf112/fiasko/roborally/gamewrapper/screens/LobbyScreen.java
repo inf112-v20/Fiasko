@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper.screens;
+package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.game_wrapper.SimpleButton;
+import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.utility.IOUtil;
@@ -54,7 +54,7 @@ public class LobbyScreen extends AbstractScreen {
                             ,playerlist,playernames.get(connection)));
                 }
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-                return true;//her we do stuff
+                return true;
             }
         });
         stage.setViewport(viewport);

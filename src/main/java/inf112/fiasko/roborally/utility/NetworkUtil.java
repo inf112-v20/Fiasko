@@ -1,7 +1,7 @@
 package inf112.fiasko.roborally.utility;
 
 import com.esotericsoftware.kryo.Kryo;
-import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.objects.IDeck;

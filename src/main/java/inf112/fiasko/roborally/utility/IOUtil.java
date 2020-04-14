@@ -1,9 +1,9 @@
 package inf112.fiasko.roborally.utility;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.IDrawableObject;
 import inf112.fiasko.roborally.objects.Tile;

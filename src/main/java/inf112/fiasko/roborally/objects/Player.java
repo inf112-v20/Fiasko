@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.elementproperties.RobotID;
 
 import java.util.ArrayList;
 import java.util.List;

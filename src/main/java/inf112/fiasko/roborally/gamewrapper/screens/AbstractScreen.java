@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper.screens;
+package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Screen;
 

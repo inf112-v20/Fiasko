@@ -1,8 +1,8 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.TileType;
-import inf112.fiasko.roborally.element_properties.WallType;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.TileType;
+import inf112.fiasko.roborally.elementproperties.WallType;
 import inf112.fiasko.roborally.objects.Board;
 import inf112.fiasko.roborally.objects.IGrid;
 import inf112.fiasko.roborally.objects.Robot;

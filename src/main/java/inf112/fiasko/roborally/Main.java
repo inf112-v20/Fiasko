@@ -2,7 +2,7 @@ package inf112.fiasko.roborally;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 
 
 public class Main {

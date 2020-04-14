@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.GameState;
+import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
 

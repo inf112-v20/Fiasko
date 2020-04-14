@@ -1,10 +1,10 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.element_properties.TileType;
-import inf112.fiasko.roborally.element_properties.WallType;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.elementproperties.TileType;
+import inf112.fiasko.roborally.elementproperties.WallType;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;

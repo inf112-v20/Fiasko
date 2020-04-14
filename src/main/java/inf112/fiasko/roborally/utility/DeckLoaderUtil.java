@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.element_properties.Action;
+import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 

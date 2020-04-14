@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper.screens;
+package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.game_wrapper.SimpleButton;
+import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 
 /**
  * This screen is used for asking players whether they want to power down

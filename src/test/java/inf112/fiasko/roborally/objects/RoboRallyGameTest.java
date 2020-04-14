@@ -12,7 +12,7 @@ public class RoboRallyGameTest {
 
     @Before
     public void setUp() {
-        game = new RoboRallyGame(new ArrayList<>(),"Checkmate.txt",false);
+        game = new RoboRallyGame(new ArrayList<>(),"Checkmate.txt",false, "Player1");
     }
 
     @Test

@@ -10,11 +10,20 @@ import java.util.List;
 public class GameStartInfo {
     private String boardName;
     private List<Player> playerList;
+    private String playerName;
 
     /**
      * Empty initialization method used by kryo
      */
     public GameStartInfo() {}
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public String getPlayerName() {
+        return playerName;
+    }
 
     /**
      * Sets the name of the board to be used
@@ -37,7 +46,8 @@ public class GameStartInfo {
      * @param boardName The name of the board to be used, with extension
      * @param playerList List of players for the game
      */
-    public GameStartInfo(String boardName, List<Player> playerList) {
+    public GameStartInfo(String boardName, List<Player> playerList,String name) {
+        this.playerName=name;
         this.boardName = boardName;
         this.playerList = playerList;
     }

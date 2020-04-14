@@ -139,14 +139,14 @@ public class BoardTest {
 
     }
     @Test
-    public void setRobotPowerDownStatus(){
+    public void setRobotPowerDownStatus() {
         Robot testrobot = robotListforpowerdown.get(0);
         assertEquals(false , testrobot.isInPowerDown());
         boardforpowerdown.setPowerDown(RobotID.ROBOT_1,true);
         assertEquals(true , testrobot.isInPowerDown());
     }
     @Test
-    public void executRobotPowerDown(){
+    public void executRobotPowerDown() {
         Robot testrobot = robotListforpowerdown.get(1);
         boardforpowerdown.setPowerDown(RobotID.ROBOT_2,true);
         testrobot.setDamageTaken(4);
@@ -155,7 +155,7 @@ public class BoardTest {
         assertEquals(0,testrobot.getDamageTaken());
     }
     @Test
-    public void repairRobotOnRepairTile(){
+    public void repairRobotOnRepairTile() {
         Robot testrobot = robotListforpowerdown.get(2);
         testrobot.setDamageTaken(4);
         assertEquals(4,testrobot.getDamageTaken());
@@ -164,21 +164,21 @@ public class BoardTest {
     }
 
     @Test
-    public void robotHitByLaserGetsDamaged(){
+    public void robotHitByLaserGetsDamaged() {
         Robot testRobot = robotListforlaser.get(7);
         assertEquals(0, testRobot.getDamageTaken());
         boardforlaser.fireAllLasers();
         assertNotEquals(0,testRobot.getDamageTaken());
     }
     @Test
-    public void laserBlockedByWallDoesNotDamageRobot(){
+    public void laserBlockedByWallDoesNotDamageRobot() {
         Robot testRobot = robotListforlaser.get(0);
         assertEquals(0, testRobot.getDamageTaken());
         boardforlaser.fireAllLasers();
         assertEquals(0,testRobot.getDamageTaken());
     }
     @Test
-    public void laserBlockedByRobotDoesNotDamageOtherRobot(){
+    public void laserBlockedByRobotDoesNotDamageOtherRobot() {
         Robot testRobot1 = robotListforlaser.get(1);
         Robot testRobot2 = robotListforlaser.get(2);
         testRobot2.setFacingDirection(Direction.EAST);
@@ -189,14 +189,14 @@ public class BoardTest {
         assertNotEquals(0,testRobot2.getDamageTaken());
     }
     @Test
-    public void doubleLaserDamage(){
+    public void doubleLaserDamage() {
         Robot testRobot = robotListforlaser.get(6);
         assertEquals(0, testRobot.getDamageTaken());
         boardforlaser.fireAllLasers();
         assertEquals(2,testRobot.getDamageTaken());
     }
     @Test
-    public void robotGetsHitByTwoLasers(){
+    public void robotGetsHitByTwoLasers() {
         Robot testRobot = robotListforlaser.get(3);
         assertEquals(0, testRobot.getDamageTaken());
         boardforlaser.fireAllLasers();
@@ -397,12 +397,12 @@ public class BoardTest {
         assertTrue(tileTypeList.containsAll(tileTypeListResult) && tileTypeListResult.containsAll(tileTypeList));
     }
 
-    public <K> boolean checkIfAllElementsAreOfSpecificWallType(List<BoardElementContainer<Wall>> elemList, K WallType) {
+    private <K> boolean checkIfAllElementsAreOfSpecificWallType(List<BoardElementContainer<Wall>> elemList, K WallType) {
         Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getElement().getWallType() == WallType;
         elemList.removeIf(pred);
         return 0 == elemList.size();
     }
-    public <K> boolean checkIfAllElementsAreOfSpecificTileType(List<BoardElementContainer<Tile>> elemList, K TileType) {
+    private <K> boolean checkIfAllElementsAreOfSpecificTileType(List<BoardElementContainer<Tile>> elemList, K TileType) {
         Predicate<BoardElementContainer<Tile>> pred = (element) -> element.getElement().getTileType() == TileType;
         elemList.removeIf(pred);
         return 0 == elemList.size();

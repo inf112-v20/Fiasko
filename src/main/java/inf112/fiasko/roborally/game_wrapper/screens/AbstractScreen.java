@@ -1,8 +1,14 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Screen;
 
+/**
+ * This class overrides methods of screens which are often unused
+ */
 public abstract class AbstractScreen implements Screen {
+    protected final int applicationWidth = 600;
+    protected final int applicationHeight = 800;
+
     @Override
     public void show() {
         //Nothing to do

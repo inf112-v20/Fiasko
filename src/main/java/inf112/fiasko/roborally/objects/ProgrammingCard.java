@@ -42,6 +42,15 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
     }
 
     @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof ProgrammingCard)) {
+            return false;
+        }
+        ProgrammingCard otherCard = (ProgrammingCard) other;
+        return otherCard.cardAction == this.cardAction && otherCard.cardPriority == this.cardPriority;
+    }
+
+    @Override
     public int compareTo(ProgrammingCard programmingCard) {
         return programmingCard.cardPriority - this.cardPriority;
     }

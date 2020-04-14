@@ -1,20 +1,31 @@
 package inf112.fiasko.roborally.game_wrapper;
 
+
+import inf112.fiasko.roborally.game_wrapper.screens.BoardActiveScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.CardChoiceScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.LoadingScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.PowerDownScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.UsernameScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.IPAddressScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.LobbyScreen;
+import inf112.fiasko.roborally.game_wrapper.screens.StartMenuScreen;
+
 /**
  * Keeps track of screen instances
  */
 public class ScreenManager {
-    private MainMenuScreen mainMenuScreen;
     private BoardActiveScreen boardActiveScreen;
     private CardChoiceScreen cardChoiceScreen;
     private PowerDownScreen powerDownScreen;
     private LoadingScreen loadingScreen;
-    private StartMenuScreen startMenuScreen;
+    private UsernameScreen usernameScreen;
+    private IPAddressScreen ipAddressScreen;
+    private LobbyScreen lobbyScreen;
 
     /**
-     * Gets an instance of the main menu screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
-     * @return A main menu screen instance
+     * Gets an instance of the power down screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A power down screen instance
      */
     public synchronized PowerDownScreen getPowerDownScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.powerDownScreen == null) {
@@ -23,13 +34,56 @@ public class ScreenManager {
         return powerDownScreen;
     }
 
-    public synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {
-        if (this.startMenuScreen == null) {
-            this.startMenuScreen = new StartMenuScreen(roboRallyWrapper);
+    /**
+     * Gets an instance of the lobby screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A lobby screen instance
+     */
+    public synchronized LobbyScreen getLobbyScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.lobbyScreen == null) {
+            this.lobbyScreen = new LobbyScreen(roboRallyWrapper);
         }
-        return startMenuScreen;
+        return lobbyScreen;
     }
 
+    /**
+     * Gets an instance of the ip address screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return An ip address screen instance
+     */
+    public synchronized IPAddressScreen getIPAddressScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.ipAddressScreen == null) {
+            this.ipAddressScreen = new IPAddressScreen(roboRallyWrapper);
+        }
+        return ipAddressScreen;
+    }
+
+    /**
+     * Gets an instance of the username screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A username screen instance
+     */
+    public synchronized UsernameScreen getUsernameScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.usernameScreen == null) {
+            this.usernameScreen = new UsernameScreen(roboRallyWrapper);
+        }
+        return usernameScreen;
+    }
+
+    /**
+     * Gets an instance of the start menu screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A start menu screen instance
+     */
+    public synchronized StartMenuScreen getStartMenuScreen(RoboRallyWrapper roboRallyWrapper) {
+        return new StartMenuScreen(roboRallyWrapper);
+    }
+
+    /**
+     * Gets an instance of the loading screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A loading screen instance
+     */
     public synchronized LoadingScreen getLoadingScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.loadingScreen == null) {
             this.loadingScreen = new LoadingScreen(roboRallyWrapper);
@@ -38,20 +92,8 @@ public class ScreenManager {
     }
 
     /**
-     * Gets an instance of the main menu screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
-     * @return A main menu screen instance
-     */
-    public synchronized MainMenuScreen getMainMenuScreen(RoboRallyWrapper roboRallyWrapper) {
-        if (this.mainMenuScreen == null) {
-            this.mainMenuScreen = new MainMenuScreen(roboRallyWrapper);
-        }
-        return mainMenuScreen;
-    }
-
-    /**
      * Gets an instance of the board active screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
      * @return A board active screen instance
      */
     public synchronized BoardActiveScreen getBoardActiveScreen(RoboRallyWrapper roboRallyWrapper) {
@@ -62,9 +104,9 @@ public class ScreenManager {
     }
 
     /**
-     * Gets an instance of the board active screen
-     * @param roboRallyWrapper The robo rally launcher instance to use
-     * @return A board active screen instance
+     * Gets an instance of the card choice screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A card choice screen instance
      */
     public synchronized CardChoiceScreen getCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
         if (this.cardChoiceScreen == null) {

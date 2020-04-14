@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This Class represents a player
+ * This class represents a player
  */
-
 public class Player {
-    private final RobotID robotID;
-    private final String name;
+    private RobotID robotID;
+    private String name;
     private boolean powerDownNextRound = false;
     private ProgrammingCardDeck playerDeck;
+    private ProgrammingCardDeck lockedPlayerDeck;
     private List <ProgrammingCard> program;
 
     /**
@@ -22,7 +22,29 @@ public class Player {
      * @param name the unique name of the player
      */
     public Player(RobotID robotID, String name) {
+        this.playerDeck = new ProgrammingCardDeck(new ArrayList<>());
         this.robotID = robotID;
+        this.name = name;
+    }
+
+    /**
+     * Empty constructor required by kryo
+     */
+    public Player(){}
+
+    /**
+     * Sets the robot id of the robot
+     * @param robotID The new id of the robot
+     */
+    public void setRobotID(RobotID robotID) {
+        this.robotID = robotID;
+    }
+
+    /**
+     * Sets the name of the robot
+     * @param name The new name of the robot
+     */
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -64,6 +86,22 @@ public class Player {
      */
     public ProgrammingCardDeck getPlayerDeck() {
         return playerDeck;
+    }
+
+    /**
+     * Gives you the player deck with locked cards
+     * @return a deck with locked cards
+     */
+    public ProgrammingCardDeck getLockedPlayerDeck() {
+        return lockedPlayerDeck;
+    }
+
+    /**
+     * Set the players locked deck to the given deck
+     * @param lockedPlayerDeck A deck of locked cards kept by the player
+     */
+    public void setLockedPlayerDeck(ProgrammingCardDeck lockedPlayerDeck) {
+        this.lockedPlayerDeck = lockedPlayerDeck;
     }
 
     /**

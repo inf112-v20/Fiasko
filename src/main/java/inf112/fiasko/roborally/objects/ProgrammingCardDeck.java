@@ -14,4 +14,5 @@ public class ProgrammingCardDeck extends Deck<ProgrammingCard> {
     public ProgrammingCardDeck(List<ProgrammingCard> cardList) {
         super(cardList);
     }
+    public ProgrammingCardDeck(){}
 }

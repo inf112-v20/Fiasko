@@ -1,9 +1,8 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,14 +12,17 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.objects.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;
-import inf112.fiasko.roborally.objects.RoboRallyGame;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
 import java.util.List;
 
+/**
+ * This screen shows the game board in real time
+ */
 public class BoardActiveScreen extends AbstractScreen implements InputProcessor {
     private final RoboRallyWrapper roboRallyWrapper;
     private final OrthographicCamera camera;
@@ -35,22 +37,24 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     private final int viewPortHeight = 12 * tileDimensions;
     private final Viewport viewport;
 
+    /**
+     * Instantiates a new board active screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
-        roboRallyWrapper.roboRallyGame = new RoboRallyGame();
-        debugGame = new RoboRallyGame(true);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);
-        camera.position.set(viewPortWidth/2f, viewPortHeight/2f, 0);
+        camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
         viewport = new ExtendViewport(viewPortWidth, viewPortHeight, camera);
 
-        Gdx.input.setInputProcessor(this);
         lastTouch = new Vector2();
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
         resetCamera();
     }
 
@@ -80,13 +84,13 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     }
 
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean keyDown(int keyCode) {
         return false;
     }
 
     @Override
-    public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.HOME) {
+    public boolean keyUp(int keyCode) {
+        if (keyCode == Input.Keys.HOME) {
             IDrawableGame temp = roboRallyWrapper.roboRallyGame;
             roboRallyWrapper.roboRallyGame = debugGame;
             this.debugGame = temp;
@@ -100,7 +104,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         if (character == 'r') {
             //camera.rotate(-90);
             camera.rotateAround(
-                    new Vector3(viewPortWidth/2f, viewPortHeight/2f, 0),
+                    new Vector3(viewPortWidth / 2f, viewPortHeight / 2f, 0),
                     new Vector3(0, 0, 1), 90);
             return true;
         } else if (character == 'q') {
@@ -152,7 +156,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         camera.up.x = 0;
         camera.up.y = 1;
         cameraZoom = 1;
-        camera.position.set(viewPortWidth/2f, viewPortHeight/2f, 0);
+        camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
     }
 
     /**
@@ -165,7 +169,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         for (IDrawableObject object : elementsToDraw) {
             TextureRegion objectTextureRegion = object.getTexture();
             batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
-                    (float)object.getWidth()/2, (float)object.getHeight()/2,
+                    (float)object.getWidth() / 2, (float)object.getHeight() / 2,
                     object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),
                     objectTextureRegion.getRegionX(), objectTextureRegion.getRegionY(),
                     objectTextureRegion.getRegionWidth(), objectTextureRegion.getRegionHeight(),

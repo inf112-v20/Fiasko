@@ -7,7 +7,6 @@ import inf112.fiasko.roborally.element_properties.WallType;
  * This class represents a wall
  */
 public class Wall {
-
     private final WallType wallType;
     private final Direction direction;
 
@@ -36,7 +35,7 @@ public class Wall {
      * Gets the direction of the wall
      * @return The direction of the wall
      */
-    public Direction getDirection(){
+    public Direction getDirection() {
         return direction;
     }
 }

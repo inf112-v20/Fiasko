@@ -24,12 +24,12 @@ public class PositionTest {
         testPosition6 = new Position(3, 3);
     }
     @Test
-    public void testGetXPosition(){
+    public void testGetXPosition() {
         assertEquals(3,testPosition1.getXCoordinate());
     }
 
     @Test
-    public void testGetYPosition(){
+    public void testGetYPosition() {
         assertEquals(4,testPosition1.getYCoordinate());
     }
 

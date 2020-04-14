@@ -1,12 +1,15 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 
+/**
+ * This screen is used to wait for something
+ */
 public class LoadingScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
@@ -14,9 +17,11 @@ public class LoadingScreen extends AbstractScreen {
     private final Viewport viewport;
 
     private long startTime;
-    private final int applicationWidth = 600;
-    private final int applicationHeight = 800;
 
+    /**
+     * Instantiates a new loading screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
+     */
     public LoadingScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
@@ -35,18 +40,23 @@ public class LoadingScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth/2f-380/2f,
-                applicationHeight/2f,380, 1, true);
+                applicationHeight / 2f,380, 1, true);
         roboRallyWrapper.batch.end();
         long time = System.currentTimeMillis();
-        if (time-startTime>10000){
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getMainMenuScreen(this.roboRallyWrapper));
-            dispose();
+        //TODO: Allow to set any condition and next screen
+        if (time - startTime > 5000){
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
         }
     }
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+    }
+
+    @Override
+    public void show(){
+        startTime = System.currentTimeMillis();
     }
 
 }

@@ -1,12 +1,19 @@
 package inf112.fiasko.roborally.utility;
 
 import com.esotericsoftware.kryo.Kryo;
-import inf112.fiasko.roborally.networking.ErrorResponse;
-import inf112.fiasko.roborally.networking.SomeRequest;
-import inf112.fiasko.roborally.networking.SomeResponse;
+import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.networking.containers.ErrorResponse;
+import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.objects.IDeck;
+import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
+import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 
+import java.util.ArrayList;
+
+/**
+ * This class helps with networking tasks
+ */
 public final class NetworkUtil {
 
     /**
@@ -14,10 +21,13 @@ public final class NetworkUtil {
      * @param kryo The kryo object to register the classes to
      */
     public static void registerClasses(Kryo kryo) {
-        kryo.register(SomeRequest.class);
-        kryo.register(SomeResponse.class);
         kryo.register(ErrorResponse.class);
         kryo.register(IDeck.class);
         kryo.register(ProgrammingCard.class);
+        kryo.register(GameStartInfo.class);
+        kryo.register(ArrayList.class);
+        kryo.register(Player.class);
+        kryo.register(RobotID.class);
+        kryo.register(ProgrammingCardDeck.class);
     }
 }

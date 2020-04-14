@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -9,13 +9,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.game_wrapper.SimpleButton;
 import inf112.fiasko.roborally.objects.IDeck;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
@@ -42,10 +43,11 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
     private final Stage stage;
+    private final InputMultiplexer inputMultiplexer;
 
     /**
-     * Initializes a new card choice screen
-     * @param roboRallyWrapper The robo rally wrapper which is its parent
+     * Instantiates a new card choice screen
+     * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
@@ -58,8 +60,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        InputMultiplexer inputMultiplexer = new InputMultiplexer();
-        inputMultiplexer.addProcessor(this);
+        inputMultiplexer = new InputMultiplexer();
 
         try {
             generateCards();
@@ -69,25 +70,25 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         this.chosenCards = new ArrayList<>();
         this.maxCards = 5;
         stage = new Stage();
-        inputMultiplexer.addProcessor(stage);
 
         TextButton confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
         stage.addActor(confirmCards);
-        confirmCards.setY(viewport.getWorldHeight() + 60);
+        confirmCards.setY(viewport.getWorldHeight() - confirmCards.getHeight());
         confirmCards.setX(15);
-        confirmCards.setTouchable(Touchable.enabled);
+
         confirmCards.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println(chosenCards.size());
-                System.out.println(maxCards);
                 if (chosenCards.size() == maxCards) {
                     System.out.println("Lock cards!");
+                    return true;
                 }
                 return false;
             }
         });
-        Gdx.input.setInputProcessor(inputMultiplexer);
+        stage.setViewport(viewport);
+        inputMultiplexer.addProcessor(this);
+        inputMultiplexer.addProcessor(stage);
     }
 
     /**
@@ -117,7 +118,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-        //Nothing to do
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
@@ -241,9 +242,14 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
  */
 class CardRectangle {
     protected final Rectangle rectangle;
-    protected boolean selected = false;
     protected final ProgrammingCard card;
+    protected boolean selected = false;
 
+    /**
+     * Instantiates a new card rectangle
+     * @param rectangle The rectangle of this card rectangle
+     * @param card The card of this card rectangle
+     */
     CardRectangle(Rectangle rectangle, ProgrammingCard card) {
         this.rectangle = rectangle;
         this.card = card;

@@ -10,6 +10,9 @@ import java.util.Random;
 public abstract class Deck<T> implements IDeck<T> {
     private final List<T> cardList;
 
+    public Deck (){
+        this.cardList=new ArrayList<>();
+    }
     /**
      * Initializes the deck with cards
      * @param cardList list of cards

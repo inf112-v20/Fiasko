@@ -19,17 +19,17 @@ public class RobotTest {
     }
 
     @Test
-    public void testRobotGetDamageOnInitializedRobot(){
+    public void testRobotGetDamageOnInitializedRobot() {
         assertEquals(0, testRobot.getDamageTaken());
     }
 
     @Test
-    public void testRobotGetPlayerId(){
+    public void testRobotGetPlayerId() {
         assertEquals(RobotID.ROBOT_6, testRobot.getRobotId());
     }
 
     @Test
-    public void testRobotGetBackupOnInitializedRobot(){
+    public void testRobotGetBackupOnInitializedRobot() {
         assertEquals(robotPosition, testRobot.getBackupPosition());
     }
 
@@ -40,7 +40,7 @@ public class RobotTest {
     }
 
     @Test
-    public void testRobotGetPositionOnInitializedRobot(){
+    public void testRobotGetPositionOnInitializedRobot() {
         assertEquals(robotPosition, testRobot.getPosition());
     }
 
@@ -52,7 +52,7 @@ public class RobotTest {
     }
 
     @Test
-    public void testRobotIsInPowerDownOnInitializedRobot(){
+    public void testRobotIsInPowerDownOnInitializedRobot() {
         assertEquals(false, testRobot.isInPowerDown());
     }
 

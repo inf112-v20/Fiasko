@@ -3,19 +3,40 @@ package inf112.fiasko.roborally.utility;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.objects.IDrawableGame;
-import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.element_properties.RobotID;
+import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.objects.Tile;
+import inf112.fiasko.roborally.objects.IDrawableGame;
+import inf112.fiasko.roborally.objects.Wall;
 import inf112.fiasko.roborally.objects.Particle;
 import inf112.fiasko.roborally.objects.Robot;
-import inf112.fiasko.roborally.objects.Tile;
-import inf112.fiasko.roborally.objects.Wall;
-
+import inf112.fiasko.roborally.objects.DrawableObject;
+import com.esotericsoftware.kryonet.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+/**
+ * This class helps with tasks which mix primitive classes and classes from external libraries
+ */
 public final class IOUtil {
     private IOUtil() {}
+
+    /**
+     * Generates a list of players from a map of player names and a map of robot ids
+     * @param playerNames A map between connections and player names
+     * @param robotIDs A map between connections and robot ids
+     * @return A list of players
+     */
+    public static List<Player> playerGenerator(Map<Connection, String> playerNames, Map<Connection, RobotID> robotIDs) {
+        List<Player> playerList = new ArrayList<>();
+        for (Connection connection: playerNames.keySet()) {
+            Player player = new Player(robotIDs.get(connection), playerNames.get(connection));
+            playerList.add(player);
+        }
+        return playerList;
+    }
 
     /**
      * Gets a list of all elements which should be drawn from the game provided

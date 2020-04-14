@@ -2,6 +2,9 @@ package inf112.fiasko.roborally.utility;
 
 import java.io.InputStream;
 
+/**
+ * This class helps with tasks related to resource loading
+ */
 public final class ResourceUtil {
     private ResourceUtil() {}
 

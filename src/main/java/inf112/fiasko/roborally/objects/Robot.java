@@ -16,6 +16,7 @@ public class Robot {
     private Position backupPosition;
     private Position currentPosition;
     private Direction facingDirection;
+    private boolean hasTouchedFlagThisTurn = false;
 
     /**
      * Instantiates a new robot
@@ -27,6 +28,23 @@ public class Robot {
         this.backupPosition = spawnPosition;
         this.currentPosition = spawnPosition;
         this.facingDirection = Direction.NORTH;
+    }
+
+    /**
+     * True if the robot has touched a flag in the current turn
+     * @return a boolean
+     */
+    public boolean isHasTouchedFlagThisTurn() {
+        return hasTouchedFlagThisTurn;
+    }
+
+    /**
+     * Sets the boolean value to true if the robot touches a flag during a turn,
+     * and false at the end of each turn.
+     * @param hasTouchedFlagThisTurn the boolean value to be set.
+     */
+    public void setHasTouchedFlagThisTurn(boolean hasTouchedFlagThisTurn) {
+        this.hasTouchedFlagThisTurn = hasTouchedFlagThisTurn;
     }
 
     /**
@@ -73,7 +91,7 @@ public class Robot {
      * Gets the robot's power-down status
      * @return Whether the robot is currently in power-down
      */
-    public Boolean isInPowerDown(){
+    public Boolean isInPowerDown() {
         return inPowerDown;
     }
 
@@ -144,7 +162,9 @@ public class Robot {
      * Gets the amount of life a robot has left.
      * @return amount of life left
      */
-    public int getAmountOfLives() { return this.amountOfLives; }
+    public int getAmountOfLives() {
+        return this.amountOfLives;
+    }
 
     /**
      * Makes a copy of this robot with the same properties as this robot

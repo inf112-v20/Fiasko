@@ -2,6 +2,7 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.Action;
 import inf112.fiasko.roborally.element_properties.Direction;
+import inf112.fiasko.roborally.element_properties.GameState;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
@@ -28,6 +29,23 @@ public class RoboRallyGame implements IDrawableGame {
     private final List<Player> playerList;
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
+    private GameState gameState = GameState.INITIAL_SETUP;
+
+    /**
+     * Returns the gameState of the game
+     * @return the gameState of the game
+     */
+    public GameState getGameState(){
+        return gameState;
+    }
+
+    /**
+     * Sets the gameState of the game
+     * @param gameState the gameState
+     */
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
 
     /**
      * Instantiates a new robo rally game

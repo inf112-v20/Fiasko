@@ -1,13 +1,12 @@
 package inf112.fiasko.roborally.objects;
 
-import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
-import inf112.fiasko.roborally.element_properties.Action;
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.GameState;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.elementproperties.Action;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.GameState;
+import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
@@ -33,7 +32,7 @@ public class RoboRallyGame implements IDrawableGame {
     private final List<Player> playerList;
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
-    private GameState gameState = GameState.INITIAL_SETUP;
+    private GameState gameState = GameState.BEGINNING_OF_GAME;
     private String nameOfPlayer;
     private RoboRallyClient client;
     private RoboRallyServer server;
@@ -257,6 +256,9 @@ public class RoboRallyGame implements IDrawableGame {
         gameBoard.executePowerdown();
         if (host) {
             distributeProgrammingCardsToPlayers();
+            if (server == null) {
+                    System.out.println("Serveren er null");
+            }
             for (Connection connection: server.getPlayerNames().keySet()) {
                 String playerName  = server.getPlayerNames().get(connection);
                 Player player = getPlayerFromName(playerName);
@@ -288,6 +290,12 @@ public class RoboRallyGame implements IDrawableGame {
         // Respawn dead robots, as long as they have more lives left
         respawnRobots();
         resetHasTouchedFlagThisTurnForAllRobots();
+    }
+
+    private void sendAllDeadPlayersToServer() {
+        if (host) {
+            server.setDeadPlayers(gameBoard.getRealDeadRobots());
+        }
     }
 
     /**

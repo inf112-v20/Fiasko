@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.gamewrapper.screens;
+package inf112.fiasko.roborally.game_wrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -74,6 +74,11 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         roboRallyWrapper.batch.begin();
         drawBoard(roboRallyWrapper.batch);
         roboRallyWrapper.batch.end();
+
+        // Checks if there has been found a winning player and then changes the screen to display the winning screen
+        if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.GAME_IS_WON) {
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
+        }
     }
 
     @Override

@@ -65,6 +65,17 @@ public interface IDrawableGame {
      */
     GameState getGameState();
 
+    /**
+     * Sets the current state og the game
+     */
+    void setGameState(GameState gameState);
+
+    /**
+     * Gets the name of the player who won
+     * @return A string of the player name
+     */
+    String getWinningPlayerName();
+
 
     RoboRallyClient getClient();
 

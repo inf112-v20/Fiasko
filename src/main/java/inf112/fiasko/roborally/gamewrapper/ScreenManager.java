@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.gamewrapper;
+package inf112.fiasko.roborally.game_wrapper;
 
 
 import inf112.fiasko.roborally.gamewrapper.screens.BoardActiveScreen;
@@ -19,6 +19,19 @@ public class ScreenManager {
     private UsernameScreen usernameScreen;
     private IPAddressScreen ipAddressScreen;
     private LobbyScreen lobbyScreen;
+    private WinnerScreen winnerScreen;
+
+    /**
+     * Gets an instance of the winner screen
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A winner screen instance
+     */
+    public synchronized WinnerScreen getWinnerScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.winnerScreen == null) {
+            this.winnerScreen = new WinnerScreen(roboRallyWrapper);
+        }
+        return winnerScreen;
+    }
 
     /**
      * Gets an instance of the power down screen

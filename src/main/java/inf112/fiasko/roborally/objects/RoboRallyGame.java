@@ -36,6 +36,7 @@ public class RoboRallyGame implements IDrawableGame {
     private String nameOfPlayer;
     private RoboRallyClient client;
     private RoboRallyServer server;
+    private String winningPlayerName;
 
 
 
@@ -47,12 +48,31 @@ public class RoboRallyGame implements IDrawableGame {
         this.nameOfPlayer = nameOfPlayer;
     }
 
+
+    public String getWinningPlayerName() {
+        return winningPlayerName;
+    }
+
+    public void setWinningPlayerName(String winningPlayerName) {
+        this.winningPlayerName = winningPlayerName;
+    }
+
     /**
      * Returns the gameState of the game
      * @return the gameState of the game
      */
+    @Override
     public GameState getGameState(){
         return gameState;
+    }
+
+    /**
+     * Sets the gameState of the game
+     * @param gameState the gameState
+     */
+    @Override
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 
     @Override
@@ -72,14 +92,6 @@ public class RoboRallyGame implements IDrawableGame {
     }
 
     /**
-     * Sets the gameState of the game
-     * @param gameState the gameState
-     */
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-    /**
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
@@ -93,6 +105,7 @@ public class RoboRallyGame implements IDrawableGame {
             initializeGame(boardName);
         }
     }
+
     /**
      * Instantiates a new robo rally game
      */
@@ -560,14 +573,13 @@ public class RoboRallyGame implements IDrawableGame {
                     gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
                     robot.setHasTouchedFlagThisTurn(true);
                     if (victoryCheck(robot.getLastFlagVisited(), listOfFlags.size())) {
-                        Player winningPlayer;
                         for (Player player : playerList) {
                             if (player.getRobotID() != robotID) {
                                 continue;
                             }
-                            winningPlayer = player;
+                            setWinningPlayerName(player.getName());
+                            setGameState(GameState.GAME_IS_WON);
                         }
-                        //TODO: Make win screen announcing the winning player
                     }
                 }
             }

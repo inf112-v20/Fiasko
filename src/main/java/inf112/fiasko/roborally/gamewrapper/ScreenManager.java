@@ -1,13 +1,7 @@
-package inf112.fiasko.roborally.game_wrapper;
+package inf112.fiasko.roborally.gamewrapper;
 
 
-import inf112.fiasko.roborally.gamewrapper.screens.BoardActiveScreen;
-import inf112.fiasko.roborally.gamewrapper.screens.LoadingScreen;
-import inf112.fiasko.roborally.gamewrapper.screens.PowerDownScreen;
-import inf112.fiasko.roborally.gamewrapper.screens.UsernameScreen;
-import inf112.fiasko.roborally.gamewrapper.screens.IPAddressScreen;
-import inf112.fiasko.roborally.gamewrapper.screens.LobbyScreen;
-import inf112.fiasko.roborally.gamewrapper.screens.StartMenuScreen;
+import inf112.fiasko.roborally.gamewrapper.screens.*;
 
 /**
  * Keeps track of screen instances

@@ -1,11 +1,11 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.element_properties.Direction;
-import inf112.fiasko.roborally.element_properties.ParticleType;
-import inf112.fiasko.roborally.element_properties.Position;
-import inf112.fiasko.roborally.element_properties.RobotID;
-import inf112.fiasko.roborally.element_properties.TileType;
-import inf112.fiasko.roborally.element_properties.WallType;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.ParticleType;
+import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.elementproperties.TileType;
+import inf112.fiasko.roborally.elementproperties.WallType;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class Board {
     private IGrid<Particle> particles;
     private Map<RobotID, Robot> robots;
     private List<Robot> deadRobots;
-    private List<Robot> realDeadRobots;
+    private List<RobotID> realDeadRobots;
 
     /**
      * Initializes the board
@@ -55,7 +55,7 @@ public class Board {
      * All the Real dead player's robots.
      * @return A list of Robots.
      */
-    public List<Robot> getRealDeadRobots() { return realDeadRobots; }
+    public List<RobotID> getRealDeadRobots() { return realDeadRobots; }
 
     /**
      * Gets the height of the board
@@ -358,7 +358,7 @@ public class Board {
                 robots.put(robot.getRobotId(), robot);
             }
             else {
-                realDeadRobots.add(robot);
+                realDeadRobots.add(robot.getRobotId());
             }
         }
         deadRobots = new ArrayList<>();

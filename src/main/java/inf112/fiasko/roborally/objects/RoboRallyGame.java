@@ -1,11 +1,15 @@
 package inf112.fiasko.roborally.objects;
 
+import com.esotericsoftware.kryonet.Client;
+import com.esotericsoftware.kryonet.Connection;
 import inf112.fiasko.roborally.element_properties.Action;
 import inf112.fiasko.roborally.element_properties.Direction;
 import inf112.fiasko.roborally.element_properties.GameState;
 import inf112.fiasko.roborally.element_properties.Position;
 import inf112.fiasko.roborally.element_properties.RobotID;
 import inf112.fiasko.roborally.element_properties.TileType;
+import inf112.fiasko.roborally.networking.RoboRallyClient;
+import inf112.fiasko.roborally.networking.RoboRallyServer;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
@@ -30,7 +34,21 @@ public class RoboRallyGame implements IDrawableGame {
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
     private GameState gameState = GameState.INITIAL_SETUP;
+    private String nameOfPlayer;
+    private RoboRallyClient client;
+    private RoboRallyServer server;
     private String winningPlayerName;
+
+
+
+    public String getNameOfPlayer() {
+        return nameOfPlayer;
+    }
+
+    public void setNameOfPlayer(String nameOfPlayer) {
+        this.nameOfPlayer = nameOfPlayer;
+    }
+
 
     public String getWinningPlayerName() {
         return winningPlayerName;
@@ -58,11 +76,28 @@ public class RoboRallyGame implements IDrawableGame {
         this.gameState = gameState;
     }
 
+    @Override
+    public RoboRallyClient getClient() {
+        return client;
+    }
+
+    @Override
+    public void setClient(RoboRallyClient client) {
+        this.client=client;
+
+    }
+
+    @Override
+    public void setServer(RoboRallyServer server) {
+        this.server=server;
+    }
+
     /**
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
-    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, boolean debug) {
+    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, boolean debug, String name) {
+        this.nameOfPlayer = name;
         this.host = host;
         this.playerList = playerList;
         if (debug) {
@@ -75,7 +110,8 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Instantiates a new robo rally game
      */
-    public RoboRallyGame(List<Player> playerList, String boardName,boolean host) {
+    public RoboRallyGame(List<Player> playerList, String boardName,boolean host,String nameOfPlayer) {
+        this.nameOfPlayer = nameOfPlayer;
         this.host = host;
         this.playerList = playerList;
         initializeGame(boardName);
@@ -194,6 +230,14 @@ public class RoboRallyGame implements IDrawableGame {
         repairTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3,
                 TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
     }
+    private Player getPlayerFromName(String name){
+        for (Player player:playerList) {
+            if(player.getName().equals(name)){
+                return player;
+            }
+        }
+        return null;
+    }
 
     /**
      * Runs all the steps of one turn in the game
@@ -226,15 +270,26 @@ public class RoboRallyGame implements IDrawableGame {
         gameBoard.executePowerdown();
         if (host) {
             distributeProgrammingCardsToPlayers();
+            for (Connection connection: server.getPlayerNames().keySet()) {
+                String playerName  = server.getPlayerNames().get(connection);
+                Player player = getPlayerFromName(playerName);
+                if(player.getPlayerDeck()!=null) {
+                    server.sendToClient(connection, player.getPlayerDeck());
+                }
+            }
         }
+        setGameState(GameState.CHOOSING_CARDS);
         // TODO: Make program for this player, if not in power down
         // TODO: Ask player for new power down
         // Run the phases of the game
-        runPhase(1);
-        runPhase(2);
-        runPhase(3);
-        runPhase(4);
-        runPhase(5);
+        while (getGameState()==GameState.CHOOSING_CARDS) {
+        //loops waiting for the player to be done choosing their cards
+        }
+            runPhase(1);
+            runPhase(2);
+            runPhase(3);
+            runPhase(4);
+            runPhase(5);
 
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();

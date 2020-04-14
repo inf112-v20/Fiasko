@@ -14,8 +14,10 @@ import inf112.fiasko.roborally.game_wrapper.SimpleButton;
 import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.utility.IOUtil;
+import com.esotericsoftware.kryonet.Connection;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This screen allows the host to wait for players to join
@@ -44,9 +46,13 @@ public class LobbyScreen extends AbstractScreen {
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                List<Player> playerlist = IOUtil.playerGenerator(roboRallyWrapper.server.getPlayerNames(),
+                Map<Connection,String> playernames = roboRallyWrapper.server.getPlayerNames();
+                List<Player> playerlist = IOUtil.playerGenerator(playernames,
                         roboRallyWrapper.server.getRobotID());
-                roboRallyWrapper.server.sendToAllClients(new GameStartInfo("Checkmate.txt",playerlist));
+                for (Connection connection:playernames.keySet()) {
+                    roboRallyWrapper.server.sendToClient(connection,new GameStartInfo("Checkmate.txt"
+                            ,playerlist,playernames.get(connection)));
+                }
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 return true;//her we do stuff
             }

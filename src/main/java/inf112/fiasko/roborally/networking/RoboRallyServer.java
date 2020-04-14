@@ -53,7 +53,12 @@ public class RoboRallyServer {
     public void sendToAllClients(Object object) {
         server.sendToAllTCP(object);
     }
+
+    public void sendToClient(Connection connection, Object object){
+        server.sendToTCP(connection.getID(),object);
+    }
 }
+
 
 /**
  * This listener handles all sending and responses for the server

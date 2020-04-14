@@ -17,6 +17,8 @@ public enum GameState {
     CHOOSING_POWER_DOWN,
     //Indicates that the user is in the process of choosing whether to stay in power down
     CHOOSING_STAY_IN_POWER_DOWN,
+    //Indicates that the user is in the process of sending their cards to the server
+    SENDING_CARDS,
     //Indicates that the game is won by a player
     GAME_IS_WON
 }

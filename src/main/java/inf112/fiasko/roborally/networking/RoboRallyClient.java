@@ -1,14 +1,7 @@
 package inf112.fiasko.roborally.networking;
 
 import com.esotericsoftware.kryonet.Client;
-import com.esotericsoftware.kryonet.Connection;
-import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.gamewrapper.screens.CardChoiceScreen;
-import inf112.fiasko.roborally.networking.containers.ErrorResponse;
-import inf112.fiasko.roborally.networking.containers.GameStartInfo;
-import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
-import inf112.fiasko.roborally.objects.RoboRallyGame;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;

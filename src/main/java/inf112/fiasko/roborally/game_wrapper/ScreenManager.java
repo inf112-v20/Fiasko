@@ -15,7 +15,6 @@ import inf112.fiasko.roborally.game_wrapper.screens.StartMenuScreen;
  */
 public class ScreenManager {
     private BoardActiveScreen boardActiveScreen;
-    private CardChoiceScreen cardChoiceScreen;
     private PowerDownScreen powerDownScreen;
     private LoadingScreen loadingScreen;
     private UsernameScreen usernameScreen;
@@ -103,15 +102,5 @@ public class ScreenManager {
         return boardActiveScreen;
     }
 
-    /**
-     * Gets an instance of the card choice screen
-     * @param roboRallyWrapper The Robo Rally launcher instance to use
-     * @return A card choice screen instance
-     */
-    public synchronized CardChoiceScreen getCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
-        if (this.cardChoiceScreen == null) {
-            this.cardChoiceScreen = new CardChoiceScreen(roboRallyWrapper);
-        }
-        return cardChoiceScreen;
-    }
+
 }

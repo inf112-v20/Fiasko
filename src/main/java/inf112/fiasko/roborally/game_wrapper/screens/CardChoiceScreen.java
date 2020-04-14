@@ -19,6 +19,7 @@ import inf112.fiasko.roborally.game_wrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.game_wrapper.SimpleButton;
 import inf112.fiasko.roborally.objects.IDeck;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
+import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
 import java.awt.*;
@@ -44,12 +45,14 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final int maxCards;
     private final Stage stage;
     private final InputMultiplexer inputMultiplexer;
+    private ProgrammingCardDeck deck;
 
     /**
      * Instantiates a new card choice screen
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
-    public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
+    public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper, ProgrammingCardDeck deck) {
+        this.deck = deck;
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
         int applicationWidth = 600;
@@ -89,6 +92,10 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         stage.setViewport(viewport);
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stage);
+        if(roboRallyWrapper.roboRallyGame.getClient()==null){
+            roboRallyWrapper.roboRallyGame.setClient(roboRallyWrapper.client);
+            roboRallyWrapper.roboRallyGame.setServer(roboRallyWrapper.server);
+        }
     }
 
     /**

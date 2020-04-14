@@ -1,6 +1,8 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.element_properties.GameState;
+import inf112.fiasko.roborally.networking.RoboRallyClient;
+import inf112.fiasko.roborally.networking.RoboRallyServer;
 
 import java.util.List;
 
@@ -63,4 +65,10 @@ public interface IDrawableGame {
      */
     GameState getGameState();
 
+
+    RoboRallyClient getClient();
+
+    void setClient(RoboRallyClient client);
+
+    void setServer(RoboRallyServer server);
 }

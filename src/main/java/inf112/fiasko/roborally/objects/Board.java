@@ -23,6 +23,7 @@ public class Board {
     private IGrid<Particle> particles;
     private Map<RobotID, Robot> robots;
     private List<Robot> deadRobots;
+    private List<Robot> realDeadRobots;
 
     /**
      * Initializes the board
@@ -47,7 +48,14 @@ public class Board {
         this.tiles = tiles;
         this.particles = new Grid<>(tiles.getWidth(), tiles.getHeight());
         this.deadRobots = new ArrayList<>();
+        this.realDeadRobots = new ArrayList<>();
     }
+
+    /**
+     * All the Real dead player's robots.
+     * @return A list of Robots.
+     */
+    public List<Robot> getRealDeadRobots() { return realDeadRobots; }
 
     /**
      * Gets the height of the board
@@ -348,6 +356,9 @@ public class Board {
                 robot.setFacingDirection(Direction.NORTH);
                 robot.setDamageTaken(2);
                 robots.put(robot.getRobotId(), robot);
+            }
+            else {
+                realDeadRobots.add(robot);
             }
         }
         deadRobots = new ArrayList<>();

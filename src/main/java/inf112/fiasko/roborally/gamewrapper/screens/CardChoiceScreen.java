@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.objects.IDeck;
@@ -51,8 +52,8 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
      * Instantiates a new card choice screen
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
-    public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper, ProgrammingCardDeck deck) {
-        this.deck = deck;
+    public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
+        this.deck = roboRallyWrapper.roboRallyGame.getPlayerHand();
         this.roboRallyWrapper = roboRallyWrapper;
         camera = new OrthographicCamera();
         int applicationWidth = 600;
@@ -66,12 +67,13 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         inputMultiplexer = new InputMultiplexer();
 
         try {
-            generateCards();
+            generateCards(deck);
         } catch (IOException e) {
             e.printStackTrace();
         }
         this.chosenCards = new ArrayList<>();
-        this.maxCards = 5;
+
+        this.maxCards = roboRallyWrapper.roboRallyGame.getProgramSize();
         stage = new Stage();
 
         TextButton confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
@@ -83,7 +85,10 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 if (chosenCards.size() == maxCards) {
-                    System.out.println("Lock cards!");
+
+                    roboRallyWrapper.roboRallyGame.setProgram(getCards());
+                    roboRallyWrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
+                    roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
                     return true;
                 }
                 return false;
@@ -93,16 +98,19 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         inputMultiplexer.addProcessor(this);
         inputMultiplexer.addProcessor(stage);
     }
+    private List<ProgrammingCard> getCards(){
+        List<ProgrammingCard> program = new ArrayList<>();
+        chosenCards.forEach((cardRectangle -> program.add(cardRectangle.card)));
+        return program;
+    }
 
     /**
      * Generates some placeholder cards for testing
      * @throws IOException If programming cards cannot be loaded
      */
-    private void generateCards() throws IOException {
-        IDeck<ProgrammingCard> deck = DeckLoaderUtil.loadProgrammingCardsDeck();
-        deck.shuffle();
+    private void generateCards(ProgrammingCardDeck deck) throws IOException {
         //Get 9 programming cards
-        List<ProgrammingCard> cardList = deck.getCards().subList(0, 9);
+        List<ProgrammingCard> cardList = deck.getCards();
         float cardWidth = viewport.getWorldWidth() / 3;
         float cardHeight = (viewport.getWorldHeight() - 30) / 3;
         for (int i = 0; i < 9; i++) {

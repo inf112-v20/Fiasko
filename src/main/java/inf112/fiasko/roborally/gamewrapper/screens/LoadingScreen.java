@@ -45,19 +45,13 @@ public class LoadingScreen extends AbstractScreen {
         roboRallyWrapper.batch.end();
         long time = System.currentTimeMillis();
         //TODO: Allow to set any condition and next screen
-        if (roboRallyWrapper.roboRallyGame != null && roboRallyWrapper.roboRallyGame.getGameState() != initialGameState  ) {
+        if (roboRallyWrapper.roboRallyGame != null && roboRallyWrapper.roboRallyGame.getGameState() != initialGameState) {
             handleScreenChange();
         }
     }
 
     private void handleScreenChange() {
         switch (initialGameState) {
-            case BEGINNING_OF_GAME:
-                if(roboRallyWrapper.roboRallyGame.getClient()==null){
-                    roboRallyWrapper.roboRallyGame.setClient(roboRallyWrapper.client);
-                    roboRallyWrapper.roboRallyGame.setServer(roboRallyWrapper.server);
-                }
-
             case SENDING_CARDS:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
                 break;

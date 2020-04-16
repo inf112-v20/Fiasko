@@ -19,7 +19,7 @@ class RoboRallyServerListener extends Listener {
     private Connection host;
     private final Map<Connection, RobotID> clients;
     private final Map<Connection, String> playerNames;
-    private List<Connection> deadPlayers;
+    private final List<Connection> deadPlayers;
 
     /**
      * Instantiates a new Robo Rally server listener

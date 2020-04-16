@@ -32,7 +32,7 @@ class RoboRallyClientListener extends Listener {
         } else if (object instanceof GameStartInfo) {
             GameStartInfo info = (GameStartInfo) object;
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
-                    wrapper.server != null,info.getPlayerName());
+                    wrapper.server != null, info.getPlayerName(), wrapper.client, wrapper.server);
             wrapper.setScreen(wrapper.screenManager.getLoadingScreen(wrapper));
         }
         else if(object instanceof ProgrammingCardDeck){

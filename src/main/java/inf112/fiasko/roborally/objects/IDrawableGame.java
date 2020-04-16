@@ -1,9 +1,5 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.GameState;
-import inf112.fiasko.roborally.networking.RoboRallyClient;
-import inf112.fiasko.roborally.networking.RoboRallyServer;
-
 import java.util.List;
 
 /**
@@ -58,28 +54,4 @@ public interface IDrawableGame {
      * @return A list of all robots to draw
      */
     List<Robot> getRobotsToDraw();
-
-    /**
-     * Gets the current state og the game
-     * @return The state the game is currently in
-     */
-    GameState getGameState();
-
-    /**
-     * Sets the current state og the game
-     */
-    void setGameState(GameState gameState);
-
-    /**
-     * Gets the name of the player who won
-     * @return A string of the player name
-     */
-    String getWinningPlayerName();
-
-
-    RoboRallyClient getClient();
-
-    void setClient(RoboRallyClient client);
-
-    void setServer(RoboRallyServer server);
 }

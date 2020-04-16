@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * This class represent a game which is drawable using libgdx
  */
-public class RoboRallyGame implements IDrawableGame {
+public class RoboRallyGame implements IRoboRallyGame {
     private Board gameBoard;
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
@@ -33,19 +33,19 @@ public class RoboRallyGame implements IDrawableGame {
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
     private GameState gameState = GameState.BEGINNING_OF_GAME;
-    private String nameOfPlayer;
-    private RoboRallyClient client;
+    private String playerName;
+    private final RoboRallyClient client;
     private RoboRallyServer server;
     private String winningPlayerName;
 
 
 
-    public String getNameOfPlayer() {
-        return nameOfPlayer;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setNameOfPlayer(String nameOfPlayer) {
-        this.nameOfPlayer = nameOfPlayer;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
 
@@ -75,30 +75,17 @@ public class RoboRallyGame implements IDrawableGame {
         this.gameState = gameState;
     }
 
-    @Override
-    public RoboRallyClient getClient() {
-        return client;
-    }
-
-    @Override
-    public void setClient(RoboRallyClient client) {
-        this.client=client;
-
-    }
-
-    @Override
-    public void setServer(RoboRallyServer server) {
-        this.server=server;
-    }
-
     /**
      * Instantiates a new robo rally game
      * @param debug Whether to start the game in debugging mode
      */
-    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, boolean debug, String name) {
-        this.nameOfPlayer = name;
+    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String name, RoboRallyClient client,
+                         RoboRallyServer server, boolean debug) {
+        this.playerName = name;
         this.host = host;
         this.playerList = playerList;
+        this.client = client;
+        this.server = server;
         if (debug) {
             initializeDebugMode();
         } else {
@@ -109,10 +96,13 @@ public class RoboRallyGame implements IDrawableGame {
     /**
      * Instantiates a new robo rally game
      */
-    public RoboRallyGame(List<Player> playerList, String boardName,boolean host,String nameOfPlayer) {
-        this.nameOfPlayer = nameOfPlayer;
+    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName, RoboRallyClient client,
+                         RoboRallyServer server) {
+        this.playerName = playerName;
         this.host = host;
         this.playerList = playerList;
+        this.client = client;
+        this.server = server;
         initializeGame(boardName);
     }
 
@@ -275,7 +265,7 @@ public class RoboRallyGame implements IDrawableGame {
             for (Connection connection: server.getPlayerNames().keySet()) {
                 String playerName  = server.getPlayerNames().get(connection);
                 Player player = getPlayerFromName(playerName);
-                if(player.getPlayerDeck()!=null) {
+                if (player != null && player.getPlayerDeck() != null) {
                     server.sendToClient(connection, player.getPlayerDeck());
                 }
             }

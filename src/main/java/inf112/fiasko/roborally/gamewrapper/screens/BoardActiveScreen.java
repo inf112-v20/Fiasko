@@ -14,8 +14,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.objects.IDrawableGame;
 import inf112.fiasko.roborally.objects.IDrawableObject;
+import inf112.fiasko.roborally.objects.IRoboRallyGame;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
@@ -27,7 +27,7 @@ import java.util.List;
 public class BoardActiveScreen extends AbstractScreen implements InputProcessor {
     private final RoboRallyWrapper roboRallyWrapper;
     private final OrthographicCamera camera;
-    private IDrawableGame debugGame;
+    private IRoboRallyGame debugGame;
 
     private final int tileDimensions = 64;
     private float cameraZoom = 1;
@@ -97,7 +97,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     @Override
     public boolean keyUp(int keyCode) {
         if (keyCode == Input.Keys.HOME) {
-            IDrawableGame temp = roboRallyWrapper.roboRallyGame;
+            IRoboRallyGame temp = roboRallyWrapper.roboRallyGame;
             roboRallyWrapper.roboRallyGame = debugGame;
             this.debugGame = temp;
             return true;

@@ -554,31 +554,46 @@ public class RoboRallyGame implements IRoboRallyGame {
                 TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
         for (BoardElementContainer<Tile> flag:listOfFlags) {
             Position flagPosition = flag.getPosition();
-            if (gameBoard.hasRobotOnPosition(flagPosition)) {
-                RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
-                for (Robot robot : gameBoard.getAliveRobots()) {
-                    if (robot.getRobotId() != robotID || robot.isHasTouchedFlagThisTurn()) {
-                        continue;
-                    }
-                    gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
-                    robot.setHasTouchedFlagThisTurn(true);
-                    if (victoryCheck(robot.getLastFlagVisited(), listOfFlags.size())) {
-                        for (Player player : playerList) {
-                            if (player.getRobotID() != robotID) {
-                                continue;
-                            }
-                            setWinningPlayerName(player.getName());
-                            setGameState(GameState.GAME_IS_WON);
-                        }
-                    }
+            if (!gameBoard.hasRobotOnPosition(flagPosition)) {
+                continue;
+            }
+            RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
+            if (gameBoard.isHasTouchedFlagThisTurnFromRobotID(robotID)) {
+                continue;
+            }
+            gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
+            gameBoard.setHasTouchedFlagThisTurnFromRobotID(robotID,true);
+            checkIfPlayerWon(robotID, listOfFlags.size());
+        }
+    }
+
+    /**
+     * Checks if the player won, and shows the victory screen
+     * @param robotID The robot to be checked
+     * @param numberOfFlags The number of flags on the map
+     */
+    private void checkIfPlayerWon(RobotID robotID, int numberOfFlags) {
+        if (victoryCheck(gameBoard.getLastFlagVisitedFromRobotID(robotID), numberOfFlags)) {
+            for (Player player : playerList) {
+                if (player.getRobotID() != robotID) {
+                    continue;
                 }
+                setWinningPlayerName(player.getName());
+                setGameState(GameState.GAME_IS_WON);
             }
         }
     }
 
+    /**
+     * Checks if last flag visited is the last flag
+     * @param lastFlagVisited The last flag a robot visited
+     * @param lastFlag The last flag on the map
+     * @return If the robot won
+     */
     private boolean victoryCheck(int lastFlagVisited, int lastFlag) {
         return (lastFlagVisited == lastFlag);
     }
+
     /**
      * Fires all lasers on the game board
      */

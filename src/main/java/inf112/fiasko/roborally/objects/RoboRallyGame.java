@@ -9,6 +9,8 @@ import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
+import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
+import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
@@ -37,8 +39,24 @@ public class RoboRallyGame implements IRoboRallyGame {
     private final RoboRallyClient client;
     private RoboRallyServer server;
     private String winningPlayerName;
+    private List<ProgrammingCard> program;
+    private ProgrammingCardDeck playerHand;
 
+    public ProgrammingCardDeck getPlayerHand() {
+        return playerHand;
+    }
 
+    public void setPlayerHand(ProgrammingCardDeck playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public List<ProgrammingCard> getProgram() {
+        return program;
+    }
+
+    public void setProgram(List<ProgrammingCard> program) {
+        this.program = program;
+    }
 
     public String getPlayerName() {
         return playerName;
@@ -228,6 +246,14 @@ public class RoboRallyGame implements IRoboRallyGame {
         return null;
     }
 
+    public int getProgramSize(){
+        Player player = getPlayerFromName(playerName);
+        if (player != null) {
+            return Math.min(5, 5 - gameBoard.getRobotDamage(player.getRobotID()) + 4);
+        }
+        return -1;
+    }
+
     /**
      * Runs all the steps of one turn in the game
      * @throws InterruptedException If interrupted while trying to sleep
@@ -270,18 +296,40 @@ public class RoboRallyGame implements IRoboRallyGame {
                 }
             }
         }
-        setGameState(GameState.CHOOSING_CARDS);
+        setGameState(GameState.JUST_BEFORE_CHOOSING_CARDS);
+
         // TODO: Make program for this player, if not in power down
         // TODO: Ask player for new power down
         // Run the phases of the game
-        while (getGameState()==GameState.CHOOSING_CARDS) {
-        //loops waiting for the player to be done choosing their cards
+
+
+        // TODO: If this player is in power down, ask if it shall continue
+        // Respawn dead robots, as long as they have more lives left
+    }
+
+    public void recivedStayInPowerdown(PowerdownContainer powerdowns){
+        for (Player player:playerList) {
+            player.setPowerDownNextRound(powerdowns.getPowerdown().get(player.getName()));
         }
-            runPhase(1);
-            runPhase(2);
-            runPhase(3);
-            runPhase(4);
-            runPhase(5);
+        respawnRobots();
+        resetHasTouchedFlagThisTurnForAllRobots();
+    }
+
+    public void reciveAllProgrammes(ProgamsContainer programs) throws InterruptedException {
+        Map<String,List<ProgrammingCard>> progs = programs.getProgram();
+        Map<String,Boolean> powerdown = programs.getPowerdown();
+        String playername;
+        for (Player player:playerList) {
+            playername = player.getName();
+            player.setInProgram(progs.get(playername));
+            player.setPowerDownNextRound(powerdown.get(playername));
+        }
+        setGameState(GameState.RUNNING_PROGRAMS);
+        runPhase(1);
+        runPhase(2);
+        runPhase(3);
+        runPhase(4);
+        runPhase(5);
 
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();
@@ -290,9 +338,8 @@ public class RoboRallyGame implements IRoboRallyGame {
             removeNonLockedProgrammingCardsFromPlayers();
         }
         // TODO: If this player is in power down, ask if it shall continue
-        // Respawn dead robots, as long as they have more lives left
-        respawnRobots();
-        resetHasTouchedFlagThisTurnForAllRobots();
+
+
     }
 
     private void sendAllDeadPlayersToServer() {

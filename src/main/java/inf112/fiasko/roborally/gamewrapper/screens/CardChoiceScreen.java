@@ -45,7 +45,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     private final int maxCards;
     private final Stage stage;
     private final InputMultiplexer inputMultiplexer;
-    private ProgrammingCardDeck deck;
+    private final ProgrammingCardDeck deck;
 
     /**
      * Instantiates a new card choice screen
@@ -237,29 +237,5 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
             }
         }
         return false;
-    }
-}
-
-/**
- * A helper class for keeping track of card information and a rectangle
- */
-class CardRectangle {
-    protected final Rectangle rectangle;
-    protected final ProgrammingCard card;
-    protected boolean selected = false;
-
-    /**
-     * Instantiates a new card rectangle
-     * @param rectangle The rectangle of this card rectangle
-     * @param card The card of this card rectangle
-     */
-    CardRectangle(Rectangle rectangle, ProgrammingCard card) {
-        this.rectangle = rectangle;
-        this.card = card;
-    }
-
-    @Override
-    public String toString() {
-        return card.toString();
     }
 }

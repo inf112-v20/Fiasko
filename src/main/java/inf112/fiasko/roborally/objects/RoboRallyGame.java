@@ -31,6 +31,7 @@ public class RoboRallyGame implements IRoboRallyGame {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<BoardElementContainer<Tile>> repairTiles;
+    private List<BoardElementContainer<Tile>> flags;
     private final List<Player> playerList;
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
@@ -58,48 +59,19 @@ public class RoboRallyGame implements IRoboRallyGame {
         this.program = program;
     }
 
-    public String getPlayerName() {
-        return playerName;
-    }
-
-    public void setPlayerName(String playerName) {
+    /**
+     * Instantiates a new Robo Rally game
+     * @param playerList A list of all the players participating in the game
+     * @param boardName The playerName of the board to use
+     * @param host Whether this player is the host
+     * @param playerName The name of the player of this instance of the game
+     * @param client The client used to send data to the server
+     * @param server The server if this player is host. Should be null otherwise
+     * @param debug Whether this game is to use the debugging board
+     */
+    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName,
+                         RoboRallyClient client, RoboRallyServer server, boolean debug) {
         this.playerName = playerName;
-    }
-
-
-    public String getWinningPlayerName() {
-        return winningPlayerName;
-    }
-
-    public void setWinningPlayerName(String winningPlayerName) {
-        this.winningPlayerName = winningPlayerName;
-    }
-
-    /**
-     * Returns the gameState of the game
-     * @return the gameState of the game
-     */
-    @Override
-    public GameState getGameState(){
-        return gameState;
-    }
-
-    /**
-     * Sets the gameState of the game
-     * @param gameState the gameState
-     */
-    @Override
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
-
-    /**
-     * Instantiates a new robo rally game
-     * @param debug Whether to start the game in debugging mode
-     */
-    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String name, RoboRallyClient client,
-                         RoboRallyServer server, boolean debug) {
-        this.playerName = name;
         this.host = host;
         this.playerList = playerList;
         this.client = client;
@@ -111,11 +83,20 @@ public class RoboRallyGame implements IRoboRallyGame {
         }
     }
 
+
+
+
     /**
-     * Instantiates a new robo rally game
+     * Instantiates a new Robo Rally game
+     * @param playerList A list of all the players participating in the game
+     * @param boardName The playerName of the board to use
+     * @param host Whether this player is the host
+     * @param playerName The name of the player of this instance of the game
+     * @param client The client used to send data to the server
+     * @param server The server if this player is host. Should be null otherwise
      */
-    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName, RoboRallyClient client,
-                         RoboRallyServer server) {
+    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName,
+                         RoboRallyClient client, RoboRallyServer server) {
         this.playerName = playerName;
         this.host = host;
         this.playerList = playerList;
@@ -152,6 +133,41 @@ public class RoboRallyGame implements IRoboRallyGame {
     @Override
     public List<Robot> getRobotsToDraw() {
         return gameBoard.getAliveRobots();
+    }
+
+    @Override
+    public GameState getGameState(){
+        return gameState;
+    }
+
+    @Override
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
+    /**
+     * Gets the name of the player playing this instance of the game
+     * @return The name of this player
+     */
+    public String getPlayerName() {
+        return playerName;
+    }
+
+    /**
+     * Sets the name of the player playing this instance of the game
+     * @param playerName The new name of this player
+     */
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+
+    /**
+     * Gets the name of the player that won the game
+     * @return The name of the winning player
+     */
+    public String getWinningPlayerName() {
+        return winningPlayerName;
     }
 
     /**
@@ -236,10 +252,18 @@ public class RoboRallyGame implements IRoboRallyGame {
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
         repairTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3,
                 TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
+        flags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
+                TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
     }
-    private Player getPlayerFromName(String name){
-        for (Player player:playerList) {
-            if(player.getName().equals(name)){
+
+    /**
+     * Gets a player object given a player name
+     * @param name The name of the player to get
+     * @return The corresponding player object or null if no such object exists
+     */
+    private Player getPlayerFromName(String name) {
+        for (Player player : playerList) {
+            if (player.getName().equals(name)) {
                 return player;
             }
         }
@@ -342,6 +366,9 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     }
 
+    /**
+     * Sends information about players no longer part of the game to the server
+     */
     private void sendAllDeadPlayersToServer() {
         if (host) {
             server.setDeadPlayers(gameBoard.getRealDeadRobots());
@@ -430,6 +457,14 @@ public class RoboRallyGame implements IRoboRallyGame {
             //Gives the player the correct amount of cards
             playerDeck.draw(mainDeck,9 - robotDamage);
         }
+    }
+
+    /**
+     * Sets the name of the player that won the game
+     * @param winningPlayerName The player winning the game
+     */
+    private void setWinningPlayerName(String winningPlayerName) {
+        this.winningPlayerName = winningPlayerName;
     }
 
     /**
@@ -597,35 +632,48 @@ public class RoboRallyGame implements IRoboRallyGame {
      * Checks all flags for robots. Tries to update the flag of the robot.
      */
     private void checkAllFlags() {
-        List<BoardElementContainer<Tile>> listOfFlags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
-                TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
-        for (BoardElementContainer<Tile> flag:listOfFlags) {
+        for (BoardElementContainer<Tile> flag:flags) {
             Position flagPosition = flag.getPosition();
-            if (gameBoard.hasRobotOnPosition(flagPosition)) {
-                RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
-                for (Robot robot : gameBoard.getAliveRobots()) {
-                    if (robot.getRobotId() != robotID || robot.isHasTouchedFlagThisTurn()) {
-                        continue;
-                    }
-                    gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
-                    robot.setHasTouchedFlagThisTurn(true);
-                    if (victoryCheck(robot.getLastFlagVisited(), listOfFlags.size())) {
-                        for (Player player : playerList) {
-                            if (player.getRobotID() != robotID) {
-                                continue;
-                            }
-                            setWinningPlayerName(player.getName());
-                            setGameState(GameState.GAME_IS_WON);
-                        }
-                    }
+            if (!gameBoard.hasRobotOnPosition(flagPosition)) {
+                continue;
+            }
+            RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
+            if (gameBoard.isHasTouchedFlagThisTurnFromRobotID(robotID)) {
+                continue;
+            }
+            gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
+            gameBoard.setHasTouchedFlagThisTurnFromRobotID(robotID,true);
+            checkIfPlayerWon(robotID, flags.size());
+        }
+    }
+
+    /**
+     * Checks if the player won, and shows the victory screen
+     * @param robotID The robot to be checked
+     * @param numberOfFlags The number of flags on the map
+     */
+    private void checkIfPlayerWon(RobotID robotID, int numberOfFlags) {
+        if (victoryCheck(gameBoard.getLastFlagVisitedFromRobotID(robotID), numberOfFlags)) {
+            for (Player player : playerList) {
+                if (player.getRobotID() != robotID) {
+                    continue;
                 }
+                setWinningPlayerName(player.getName());
+                setGameState(GameState.GAME_IS_WON);
             }
         }
     }
 
+    /**
+     * Checks whether a player has won
+     * @param lastFlagVisited The last flag the player visited
+     * @param lastFlag The last flag of the board
+     * @return True if the player has visited the last flag
+     */
     private boolean victoryCheck(int lastFlagVisited, int lastFlag) {
         return (lastFlagVisited == lastFlag);
     }
+
     /**
      * Fires all lasers on the game board
      */

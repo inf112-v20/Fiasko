@@ -30,9 +30,10 @@ public class RoboRallyClient {
      * Sends something to the server
      * @param object The object to send to the server
      */
-    public void sendElement(Object object) {
-        client.sendTCP(object);
-    }
+    public void sendElement(Object object) {try{
+        client.sendTCP(object);}
+        catch(Exception e){e.printStackTrace();}
+        }
 }
 
 

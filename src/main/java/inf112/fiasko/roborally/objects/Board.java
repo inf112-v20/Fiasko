@@ -756,4 +756,31 @@ public class Board {
         particles.setElement(positionX, positionY, new Particle(type, laserDirection));
     }
 
+    /**
+     * Gets the int corresponding to the flag a robot has last visited
+     * @param robotID The robot to be checked
+     * @return The flag last visited in a number
+     */
+    public int getLastFlagVisitedFromRobotID(RobotID robotID) {
+        return robots.get(robotID).getLastFlagVisited();
+    }
+
+    /**
+     * Sets a boolean for if the robot has touched a flag this turn
+     * @param robotID The robot to be checked
+     * @param hasTouched If the robot has touched a flag this turn
+     */
+    public void setHasTouchedFlagThisTurnFromRobotID(RobotID robotID, boolean hasTouched) {
+        robots.get(robotID).setHasTouchedFlagThisTurn(hasTouched);
+    }
+
+    /**
+     * Checks a boolean for if the robot has touched a flag this turn
+     * @param robotID The robot to be checked
+     * @return If the robot has touched a flag this turn
+     */
+    public boolean isHasTouchedFlagThisTurnFromRobotID(RobotID robotID) {
+        return robots.get(robotID).isHasTouchedFlagThisTurn();
+    }
+
 }

@@ -22,5 +22,10 @@ public enum GameState {
     //Indicates that the user is in the process of sending their cards to the server
     SENDING_CARDS,
     //Indicates that the game is won by a player
-    GAME_IS_WON
+    GAME_IS_WON,
+
+    JUST_BEFORE_CHOOSING_CARDS,
+
+    LOADING
+
 }

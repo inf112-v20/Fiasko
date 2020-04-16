@@ -9,8 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.elementproperties.Action;
+import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.objects.ProgrammingCard;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This screen is used for asking players whether they want to power down
@@ -42,8 +49,8 @@ public class PowerDownScreen extends AbstractScreen {
         powerDownButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-                return true;//her we do stuff
+                sendPowerdownStatus(true);
+                return true;
             }
         });
     }
@@ -68,8 +75,27 @@ public class PowerDownScreen extends AbstractScreen {
         stage.draw();
 
         if (elapsedTime > 10) {
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
+            sendPowerdownStatus( false);
         }
+    }
+
+    public void sendPowerdownStatus (boolean bool){
+        if(roboRallyWrapper.roboRallyGame.getGameState()== GameState.CHOOSING_STAY_IN_POWER_DOWN){
+            roboRallyWrapper.roboRallyGame.setGameState(GameState.TURN_CLEANUP);
+            roboRallyWrapper.client.sendElement(bool);
+        }
+        else if (roboRallyWrapper.roboRallyGame.getGameState()==GameState.CHOOSING_POWER_DOWN){
+
+            roboRallyWrapper.roboRallyGame.setGameState(GameState.LOADING);
+
+            roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(bool,
+                    roboRallyWrapper.roboRallyGame.getProgram()));
+
+        }
+
+
+        roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
+
     }
 
     @Override

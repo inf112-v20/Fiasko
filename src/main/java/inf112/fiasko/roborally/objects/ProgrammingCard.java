@@ -7,8 +7,8 @@ import inf112.fiasko.roborally.elementproperties.Action;
  */
 public class ProgrammingCard implements Comparable<ProgrammingCard> {
 
-    private final int cardPriority;
-    private final Action cardAction;
+    private int cardPriority;
+    private Action cardAction;
 
     /**
      * Initializes the priority and the action of the card
@@ -18,6 +18,10 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
     public ProgrammingCard(int cardPriority, Action cardAction) {
         this.cardPriority = cardPriority;
         this.cardAction = cardAction;
+    }
+
+    public ProgrammingCard(){
+
     }
 
     /**

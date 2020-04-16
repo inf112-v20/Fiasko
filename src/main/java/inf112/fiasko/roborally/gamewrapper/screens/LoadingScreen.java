@@ -43,19 +43,26 @@ public class LoadingScreen extends AbstractScreen {
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth/2f-380/2f,
                 applicationHeight / 2f,380, 1, true);
         roboRallyWrapper.batch.end();
-        long time = System.currentTimeMillis();
-        //TODO: Allow to set any condition and next screen
-        if (roboRallyWrapper.roboRallyGame != null && roboRallyWrapper.roboRallyGame.getGameState() != initialGameState) {
+
+        //if (roboRallyWrapper.roboRallyGame != null){
+        //    System.out.println(roboRallyWrapper.roboRallyGame.getGameState());
+        //}
+        if (roboRallyWrapper.roboRallyGame != null && roboRallyWrapper.roboRallyGame.getGameState() != GameState.LOADING) {
             handleScreenChange();
         }
     }
 
     private void handleScreenChange() {
-        switch (initialGameState) {
-            case SENDING_CARDS:
+        switch (roboRallyWrapper.roboRallyGame.getGameState()) {
+            case RUNNING_PROGRAMS:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
                 break;
-        }
+            case INITIAL_SETUP:
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
+                break;
+            case CHOOSING_CARDS:
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(this.roboRallyWrapper));
+                break; }
     }
 
     @Override

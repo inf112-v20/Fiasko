@@ -5,12 +5,16 @@ import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfo;
+import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
+import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 import inf112.fiasko.roborally.objects.IDeck;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class helps with networking tasks
@@ -31,5 +35,11 @@ public final class NetworkUtil {
         kryo.register(RobotID.class);
         kryo.register(ProgrammingCardDeck.class);
         kryo.register(Action.class);
+        kryo.register(ProgramAndPowerdownRequest.class);
+        kryo.register(ProgamsContainer.class);
+        kryo.register(PowerdownContainer.class);
+        kryo.register(HashMap.class);
+
+
     }
 }

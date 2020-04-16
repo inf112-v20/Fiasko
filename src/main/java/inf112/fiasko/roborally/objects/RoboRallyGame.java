@@ -9,6 +9,8 @@ import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
+import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
+import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
@@ -38,6 +40,24 @@ public class RoboRallyGame implements IRoboRallyGame {
     private final RoboRallyClient client;
     private RoboRallyServer server;
     private String winningPlayerName;
+    private List<ProgrammingCard> program;
+    private ProgrammingCardDeck playerHand;
+
+    public ProgrammingCardDeck getPlayerHand() {
+        return playerHand;
+    }
+
+    public void setPlayerHand(ProgrammingCardDeck playerHand) {
+        this.playerHand = playerHand;
+    }
+
+    public List<ProgrammingCard> getProgram() {
+        return program;
+    }
+
+    public void setProgram(List<ProgrammingCard> program) {
+        this.program = program;
+    }
 
     /**
      * Instantiates a new Robo Rally game
@@ -62,6 +82,9 @@ public class RoboRallyGame implements IRoboRallyGame {
             initializeGame(boardName);
         }
     }
+
+
+
 
     /**
      * Instantiates a new Robo Rally game
@@ -247,6 +270,14 @@ public class RoboRallyGame implements IRoboRallyGame {
         return null;
     }
 
+    public int getProgramSize(){
+        Player player = getPlayerFromName(playerName);
+        if (player != null) {
+            return Math.min(5, 5 - gameBoard.getRobotDamage(player.getRobotID()) + 4);
+        }
+        return -1;
+    }
+
     /**
      * Runs all the steps of one turn in the game
      * @throws InterruptedException If interrupted while trying to sleep
@@ -289,18 +320,40 @@ public class RoboRallyGame implements IRoboRallyGame {
                 }
             }
         }
-        setGameState(GameState.CHOOSING_CARDS);
+        setGameState(GameState.JUST_BEFORE_CHOOSING_CARDS);
+
         // TODO: Make program for this player, if not in power down
         // TODO: Ask player for new power down
         // Run the phases of the game
-        while (getGameState()==GameState.CHOOSING_CARDS) {
-        //loops waiting for the player to be done choosing their cards
+
+
+        // TODO: If this player is in power down, ask if it shall continue
+        // Respawn dead robots, as long as they have more lives left
+    }
+
+    public void recivedStayInPowerdown(PowerdownContainer powerdowns){
+        for (Player player:playerList) {
+            player.setPowerDownNextRound(powerdowns.getPowerdown().get(player.getName()));
         }
-            runPhase(1);
-            runPhase(2);
-            runPhase(3);
-            runPhase(4);
-            runPhase(5);
+        respawnRobots();
+        resetHasTouchedFlagThisTurnForAllRobots();
+    }
+
+    public void reciveAllProgrammes(ProgamsContainer programs) throws InterruptedException {
+        Map<String,List<ProgrammingCard>> progs = programs.getProgram();
+        Map<String,Boolean> powerdown = programs.getPowerdown();
+        String playername;
+        for (Player player:playerList) {
+            playername = player.getName();
+            player.setInProgram(progs.get(playername));
+            player.setPowerDownNextRound(powerdown.get(playername));
+        }
+        setGameState(GameState.RUNNING_PROGRAMS);
+        runPhase(1);
+        runPhase(2);
+        runPhase(3);
+        runPhase(4);
+        runPhase(5);
 
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();
@@ -309,9 +362,8 @@ public class RoboRallyGame implements IRoboRallyGame {
             removeNonLockedProgrammingCardsFromPlayers();
         }
         // TODO: If this player is in power down, ask if it shall continue
-        // Respawn dead robots, as long as they have more lives left
-        respawnRobots();
-        resetHasTouchedFlagThisTurnForAllRobots();
+
+
     }
 
     /**
@@ -582,24 +634,32 @@ public class RoboRallyGame implements IRoboRallyGame {
     private void checkAllFlags() {
         for (BoardElementContainer<Tile> flag : flags) {
             Position flagPosition = flag.getPosition();
-            if (gameBoard.hasRobotOnPosition(flagPosition)) {
-                RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
-                for (Robot robot : gameBoard.getAliveRobots()) {
-                    if (robot.getRobotId() != robotID || robot.isHasTouchedFlagThisTurn()) {
-                        continue;
-                    }
-                    gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
-                    robot.setHasTouchedFlagThisTurn(true);
-                    if (victoryCheck(robot.getLastFlagVisited(), flags.size())) {
-                        for (Player player : playerList) {
-                            if (player.getRobotID() != robotID) {
-                                continue;
-                            }
-                            setWinningPlayerName(player.getName());
-                            setGameState(GameState.GAME_IS_WON);
-                        }
-                    }
+            if (!gameBoard.hasRobotOnPosition(flagPosition)) {
+                continue;
+            }
+            RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
+            if (gameBoard.isHasTouchedFlagThisTurnFromRobotID(robotID)) {
+                continue;
+            }
+            gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
+            gameBoard.setHasTouchedFlagThisTurnFromRobotID(robotID,true);
+            checkIfPlayerWon(robotID, flags.size());
+        }
+    }
+
+    /**
+     * Checks if the player won, and shows the victory screen
+     * @param robotID The robot to be checked
+     * @param numberOfFlags The number of flags on the map
+     */
+    private void checkIfPlayerWon(RobotID robotID, int numberOfFlags) {
+        if (victoryCheck(gameBoard.getLastFlagVisitedFromRobotID(robotID), numberOfFlags)) {
+            for (Player player : playerList) {
+                if (player.getRobotID() != robotID) {
+                    continue;
                 }
+                setWinningPlayerName(player.getName());
+                setGameState(GameState.GAME_IS_WON);
             }
         }
     }
@@ -613,7 +673,6 @@ public class RoboRallyGame implements IRoboRallyGame {
     private boolean victoryCheck(int lastFlagVisited, int lastFlag) {
         return (lastFlagVisited == lastFlag);
     }
-
 
     /**
      * Fires all lasers on the game board

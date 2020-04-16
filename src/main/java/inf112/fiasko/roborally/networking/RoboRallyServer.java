@@ -24,7 +24,7 @@ public class RoboRallyServer {
         server.start();
         NetworkUtil.registerClasses(server.getKryo());
         server.bind(54555, 54777);
-        listener = new RoboRallyServerListener();
+        listener = new RoboRallyServerListener(this);
         server.addListener(listener);
     }
 

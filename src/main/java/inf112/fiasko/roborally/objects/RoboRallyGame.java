@@ -580,7 +580,7 @@ public class RoboRallyGame implements IRoboRallyGame {
      * Checks all flags for robots. Tries to update the flag of the robot.
      */
     private void checkAllFlags() {
-        for (BoardElementContainer<Tile> flag:flags) {
+        for (BoardElementContainer<Tile> flag : flags) {
             Position flagPosition = flag.getPosition();
             if (gameBoard.hasRobotOnPosition(flagPosition)) {
                 RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);

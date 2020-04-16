@@ -174,7 +174,7 @@ public class Board {
      * sets the damage taken of robots in powerdown to 0
      */
     public void executePowerdown() {
-        for (Robot robot:robots.values()) {
+        for (Robot robot : robots.values()) {
             if (robot.isInPowerDown()) {
                 robot.setDamageTaken(0);
             }
@@ -655,7 +655,7 @@ public class Board {
         Direction laserDirection = Direction.getReverseDirection(wallLaser.getElement().getDirection());
         List<Position> laserTargets = new ArrayList<>();
         getLaserTarget(laserDirection, wallLaser.getPosition(), laserTargets);
-        Position hitPosition = laserTargets.get(laserTargets.size()-1);
+        Position hitPosition = laserTargets.get(laserTargets.size() - 1);
         WallType laserType = wallLaser.getElement().getWallType();
         updateLaserDisplay(laserTargets, laserDirection, laserType);
         if (getRobotOnPosition(hitPosition) != null) {
@@ -675,7 +675,7 @@ public class Board {
         }
         List<Position> laserTargets = new ArrayList<>();
         getLaserTarget(robotDirection, positionInFront, laserTargets);
-        Position hitPosition = laserTargets.get(laserTargets.size()-1);
+        Position hitPosition = laserTargets.get(laserTargets.size() - 1);
         WallType laserType = WallType.WALL_LASER_SINGLE;
         updateLaserDisplay(laserTargets, robotDirection, laserType);
         if (getRobotOnPosition(hitPosition) != null) {

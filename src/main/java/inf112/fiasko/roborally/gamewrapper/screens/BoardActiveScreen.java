@@ -206,17 +206,17 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         int cameraUpX = Math.round(camera.up.x);
         int cameraUpY = Math.round(camera.up.y);
         if (cameraUpX == 0 && Math.round(camera.up.y) == 1) {
-            outX = (int)-x;
-            outY = (int)y;
+            outX = (int) -x;
+            outY = (int) y;
         } else if (cameraUpX == 0 && cameraUpY == -1) {
-            outX = (int)x;
-            outY = (int)-y;
+            outX = (int) x;
+            outY = (int) -y;
         } else if (cameraUpX == -1 && cameraUpY == 0) {
-            outX = (int)-y;
-            outY = (int)-x;
+            outX = (int) -y;
+            outY = (int) -x;
         } else if (cameraUpX == 1 && cameraUpY == 0) {
-            outX = (int)y;
-            outY = (int)x;
+            outX = (int) y;
+            outY = (int) x;
         }
         return new int[]{outX, outY};
     }

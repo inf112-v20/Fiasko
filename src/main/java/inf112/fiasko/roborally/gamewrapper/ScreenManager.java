@@ -14,6 +14,15 @@ public class ScreenManager {
     private IPAddressScreen ipAddressScreen;
     private LobbyScreen lobbyScreen;
     private WinnerScreen winnerScreen;
+    private CardChoiceScreen cardChoiceScreen;
+
+
+    public synchronized CardChoiceScreen getCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
+        if (this.cardChoiceScreen == null) {
+            this.cardChoiceScreen = new CardChoiceScreen(roboRallyWrapper);
+        }
+        return cardChoiceScreen;
+    }
 
     /**
      * Gets an instance of the winner screen

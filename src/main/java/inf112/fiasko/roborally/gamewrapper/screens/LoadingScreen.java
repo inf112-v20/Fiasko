@@ -17,8 +17,6 @@ public class LoadingScreen extends AbstractScreen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
-    private GameState initialGameState;
-
     /**
      * Instantiates a new loading screen
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
@@ -30,8 +28,6 @@ public class LoadingScreen extends AbstractScreen {
         viewport = new ExtendViewport(applicationWidth, applicationHeight, camera);
     }
 
-
-
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
@@ -40,20 +36,24 @@ public class LoadingScreen extends AbstractScreen {
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth/2f-380/2f,
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth / 2f - 380 / 2f,
                 applicationHeight / 2f,380, 1, true);
         roboRallyWrapper.batch.end();
 
-        //if (roboRallyWrapper.roboRallyGame != null){
-        //    System.out.println(roboRallyWrapper.roboRallyGame.getGameState());
-        //}
-        if (roboRallyWrapper.roboRallyGame != null && roboRallyWrapper.roboRallyGame.getGameState() != GameState.LOADING) {
-            handleScreenChange();
+        if (roboRallyWrapper.roboRallyGame != null) {
+            GameState gameState = roboRallyWrapper.roboRallyGame.getGameState();
+            if (gameState != GameState.LOADING) {
+                handleScreenChange(gameState);
+            }
         }
     }
 
-    private void handleScreenChange() {
-        switch (roboRallyWrapper.roboRallyGame.getGameState()) {
+    /**
+     * Changes to another screen depending on which state the game is in
+     * @param gameState The current state of the game
+     */
+    private void handleScreenChange(GameState gameState) {
+        switch (gameState) {
             case RUNNING_PROGRAMS:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(this.roboRallyWrapper));
                 break;
@@ -68,16 +68,6 @@ public class LoadingScreen extends AbstractScreen {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-    }
-
-    @Override
-    public void show() {
-        if (roboRallyWrapper.roboRallyGame == null){
-            initialGameState = GameState.INITIAL_SETUP;
-        }
-        else {
-            initialGameState = roboRallyWrapper.roboRallyGame.getGameState();
-        }
     }
 
 }

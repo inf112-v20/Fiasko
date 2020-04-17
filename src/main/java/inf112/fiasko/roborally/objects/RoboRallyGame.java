@@ -27,9 +27,9 @@ public class RoboRallyGame implements IRoboRallyGame {
     private final boolean host;
     private Deck<ProgrammingCard> mainDeck;
     private GameState gameState = GameState.BEGINNING_OF_GAME;
-    private String playerName;
+    private final String playerName;
     private final RoboRallyClient client;
-    private RoboRallyServer server;
+    private final RoboRallyServer server;
     private String winningPlayerName;
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
@@ -172,6 +172,7 @@ public class RoboRallyGame implements IRoboRallyGame {
         repairAllRobotsOnRepairTiles();
         //Updates the host's card deck
         if (host) {
+            //TODO: Fix updateLockedProgrammingCardsForAllPlayers throwing NullPointerException on robotDamage
             updateLockedProgrammingCardsForAllPlayers();
             removeNonLockedProgrammingCardsFromPlayers();
         }
@@ -231,6 +232,7 @@ public class RoboRallyGame implements IRoboRallyGame {
             }
 
             gameBoard = BoardLoaderUtil.loadBoard("boards/" + boardName, robots);
+            moveRobotsToSpawn();
             repairTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3,
                     TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
 
@@ -241,6 +243,22 @@ public class RoboRallyGame implements IRoboRallyGame {
             new Thread(this::runTurn).start();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Teleports all robots to their respective spawn positions
+     */
+    private void moveRobotsToSpawn() {
+        for (Player player : playerList) {
+            RobotID robotID = player.getRobotID();
+            TileType robotSpawn = TileType.getTileTypeFromID(robotID.getRobotIDID() + 22);
+            List<BoardElementContainer<Tile>> spawnTileContainerList = gameBoard.getPositionsOfTileOnBoard(robotSpawn);
+            if (spawnTileContainerList.size() != 1) {
+                throw new IllegalArgumentException("The chosen board seems to be missing a robot spawn");
+            }
+            BoardElementContainer<Tile> spawnTileContainer = spawnTileContainerList.get(0);
+            gameBoard.teleportRobot(robotID, spawnTileContainer.getPosition());
         }
     }
 

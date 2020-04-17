@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit;
  * This class handles everything that should happen during a phase
  */
 public class Phase {
-    private Board gameBoard;
+    private final Board gameBoard;
     private final List<Player> playerList;
-    private int cycleDelay;
+    private final int cycleDelay;
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;

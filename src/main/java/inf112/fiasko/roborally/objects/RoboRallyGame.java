@@ -183,7 +183,7 @@ public class RoboRallyGame implements IRoboRallyGame {
     @Override
     public void receiveStayInPowerDown(PowerdownContainer powerDowns) {
         for (Player player : playerList) {
-            player.setPowerDownNextRound(powerDowns.getPowerdown().get(player.getName()));
+            player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
         }
         respawnRobots();
         resetHasTouchedFlagThisTurnForAllRobots();

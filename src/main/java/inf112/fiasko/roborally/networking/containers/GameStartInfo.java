@@ -13,14 +13,22 @@ public class GameStartInfo {
     private String playerName;
 
     /**
-     * Empty initialization method used by kryo
+     * Empty initialization method required by kryo
      */
     public GameStartInfo() {}
 
+    /**
+     * Sets the player name of the current player
+     * @param playerName The player name of the current player
+     */
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
 
+    /**
+     * Gets the player name of the current player
+     * @return The player name of the current player
+     */
     public String getPlayerName() {
         return playerName;
     }

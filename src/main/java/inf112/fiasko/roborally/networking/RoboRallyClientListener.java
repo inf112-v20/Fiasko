@@ -4,15 +4,12 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.gamewrapper.screens.CardChoiceScreen;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfo;
 import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
 import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
-
-import java.util.concurrent.TimeUnit;
 
 /**
  * This listener handles all receiving from the server
@@ -38,20 +35,17 @@ class RoboRallyClientListener extends Listener {
             GameStartInfo info = (GameStartInfo) object;
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null, info.getPlayerName(), wrapper.client, wrapper.server);
-        }
-        else if(object instanceof ProgrammingCardDeck){
+        } else if (object instanceof ProgrammingCardDeck) {
             wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
             wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object);
-        }
-        else if(object instanceof ProgamsContainer){
+        } else if (object instanceof ProgamsContainer) {
             try {
-                wrapper.roboRallyGame.reciveAllProgrammes((ProgamsContainer) object);
+                wrapper.roboRallyGame.receiveAllPrograms((ProgamsContainer) object);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-        else if (object instanceof PowerdownContainer){
-            wrapper.roboRallyGame.recivedStayInPowerdown((PowerdownContainer) object);
+        } else if (object instanceof PowerdownContainer) {
+            wrapper.roboRallyGame.receiveStayInPowerDown((PowerdownContainer) object);
         }
 
     }

@@ -28,6 +28,10 @@ public class RoboRallyServer {
         server.addListener(listener);
     }
 
+    /**
+     * Makes notice of players which are dead and as such should not be expected to send anything
+     * @param deadRobotList A list of robot ids of robots which are permanently dead
+     */
     public void setDeadPlayers(List<RobotID> deadRobotList) {
         listener.setDeadPlayers(deadRobotList);
     }
@@ -47,6 +51,7 @@ public class RoboRallyServer {
     public Map<Connection, String> getPlayerNames() {
         return listener.getPlayerNames();
     }
+
     /**
      * Sends an object to all clients
      * @param object The object to send
@@ -55,8 +60,13 @@ public class RoboRallyServer {
         server.sendToAllTCP(object);
     }
 
-    public void sendToClient(Connection connection, Object object){
-        server.sendToTCP(connection.getID(),object);
+    /**
+     * Sends an object to a specific client
+     * @param connection The connection to send the object to
+     * @param object The object to send
+     */
+    public void sendToClient(Connection connection, Object object) {
+        server.sendToTCP(connection.getID(), object);
     }
 }
 

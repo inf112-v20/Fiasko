@@ -223,7 +223,6 @@ public class RoboRallyGame implements IRoboRallyGame {
     private void initializeGame(String boardName) {
         try {
             List<Robot> robots = new ArrayList<>();
-            //TODO: Find correct robot spawn positions
             int posX = 1;
             for (Player player : playerList) {
                 Position spawn = new Position(posX,1);
@@ -311,7 +310,12 @@ public class RoboRallyGame implements IRoboRallyGame {
             List<ProgrammingCard> playerProgram = player.getProgram();
             ProgrammingCardDeck playerDeck = player.getPlayerDeck();
             ProgrammingCardDeck lockedPlayerDeck = player.getLockedPlayerDeck();
-            int robotDamage = gameBoard.getRobotDamage(player.getRobotID());
+            int robotDamage;
+            if (!gameBoard.isRobotAlive(player.getRobotID())) {
+                robotDamage = 0;
+            } else {
+                robotDamage = gameBoard.getRobotDamage(player.getRobotID());
+            }
 
             //The player has no locked cards. All previously locked cards should go into the free deck
             if (robotDamage <= 4) {

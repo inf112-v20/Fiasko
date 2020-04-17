@@ -55,8 +55,8 @@ public abstract class Deck<T> implements IDeck<T> {
     @Override
     public void draw(IDeck<T> other, int n) {
         Deck<T> otherDeck = (Deck<T>) other;
-        if (n < 1 || n > otherDeck.size()) {
-            throw new IllegalArgumentException("n can't be below 1 or over the size of the other card deck");
+        if (n < 0 || n > otherDeck.size()) {
+            throw new IllegalArgumentException("n can't be below 0 or over the size of the other card deck");
         }
         for (int i = 0; i < n; i++) {
             draw(other);

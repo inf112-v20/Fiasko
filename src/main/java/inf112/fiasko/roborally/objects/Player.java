@@ -23,6 +23,7 @@ public class Player {
      */
     public Player(RobotID robotID, String name) {
         this.playerDeck = new ProgrammingCardDeck(new ArrayList<>());
+        this.lockedPlayerDeck = new ProgrammingCardDeck(new ArrayList<>());
         this.robotID = robotID;
         this.name = name;
     }

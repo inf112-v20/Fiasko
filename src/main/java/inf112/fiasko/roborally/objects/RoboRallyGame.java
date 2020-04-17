@@ -1,8 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
 import com.esotericsoftware.kryonet.Connection;
-import inf112.fiasko.roborally.elementproperties.Action;
-import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
@@ -16,11 +14,8 @@ import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class represent a game which is drawable using libgdx
@@ -39,22 +34,6 @@ public class RoboRallyGame implements IRoboRallyGame {
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
     private Phase phase;
-
-    public ProgrammingCardDeck getPlayerHand() {
-        return playerHand;
-    }
-
-    public void setPlayerHand(ProgrammingCardDeck playerHand) {
-        this.playerHand = playerHand;
-    }
-
-    public List<ProgrammingCard> getProgram() {
-        return program;
-    }
-
-    public void setProgram(List<ProgrammingCard> program) {
-        this.program = program;
-    }
 
     /**
      * Instantiates a new Robo Rally game
@@ -80,9 +59,6 @@ public class RoboRallyGame implements IRoboRallyGame {
         }
         this.phase = new Phase(gameBoard, playerList, 600, this);
     }
-
-
-
 
     /**
      * Instantiates a new Robo Rally game
@@ -144,22 +120,73 @@ public class RoboRallyGame implements IRoboRallyGame {
         this.gameState = gameState;
     }
 
-    /**
-     * Gets the name of the player playing this instance of the game
-     * @return The name of this player
-     */
-    public String getPlayerName() {
-        return playerName;
+    @Override
+    public ProgrammingCardDeck getPlayerHand() {
+        return playerHand;
     }
 
-    /**
-     * Sets the name of the player playing this instance of the game
-     * @param playerName The new name of this player
-     */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    @Override
+    public void setPlayerHand(ProgrammingCardDeck playerHand) {
+        this.playerHand = playerHand;
     }
 
+    @Override
+    public List<ProgrammingCard> getProgram() {
+        return program;
+    }
+
+    @Override
+    public int getProgramSize() {
+        Player player = getPlayerFromName(playerName);
+        if (player != null) {
+            return Math.min(5, 5 - gameBoard.getRobotDamage(player.getRobotID()) + 4);
+        }
+        return -1;
+    }
+
+    @Override
+    public void setProgram(List<ProgrammingCard> program) {
+        this.program = program;
+    }
+
+    @Override
+    public void receiveAllPrograms(ProgamsContainer programs) throws InterruptedException {
+        //Reads data from server and updates player objects
+        Map<String, List<ProgrammingCard>> programMap = programs.getProgram();
+        Map<String, Boolean> powerDown = programs.getPowerdown();
+        String playerName;
+        for (Player player : playerList) {
+            playerName = player.getName();
+            player.setInProgram(programMap.get(playerName));
+            player.setPowerDownNextRound(powerDown.get(playerName));
+        }
+        //Runs 5 phases
+        setGameState(GameState.RUNNING_PROGRAMS);
+        phase.runPhase(1);
+        phase.runPhase(2);
+        phase.runPhase(3);
+        phase.runPhase(4);
+        phase.runPhase(5);
+
+        // Repair robots on repair tiles
+        repairAllRobotsOnRepairTiles();
+        //Updates the host's card deck
+        if (host) {
+            updateLockedProgrammingCardsForAllPlayers();
+            removeNonLockedProgrammingCardsFromPlayers();
+        }
+        sendAllDeadPlayersToServer();
+        // TODO: If this player is in power down, ask if it shall continue
+    }
+
+    @Override
+    public void receiveStayInPowerDown(PowerdownContainer powerDowns) {
+        for (Player player : playerList) {
+            player.setPowerDownNextRound(powerDowns.getPowerdown().get(player.getName()));
+        }
+        respawnRobots();
+        resetHasTouchedFlagThisTurnForAllRobots();
+    }
 
     /**
      * Gets the name of the player that won the game
@@ -211,75 +238,25 @@ public class RoboRallyGame implements IRoboRallyGame {
                 mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
             }
 
-            new Thread(() -> {
-                try {
-                    runTurn();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }).start();
+            new Thread(this::runTurn).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Gets a player object given a player name
-     * @param name The name of the player to get
-     * @return The corresponding player object or null if no such object exists
-     */
-    private Player getPlayerFromName(String name) {
-        for (Player player : playerList) {
-            if (player.getName().equals(name)) {
-                return player;
-            }
-        }
-        return null;
-    }
-
-    public int getProgramSize(){
-        Player player = getPlayerFromName(playerName);
-        if (player != null) {
-            return Math.min(5, 5 - gameBoard.getRobotDamage(player.getRobotID()) + 4);
-        }
-        return -1;
-    }
-
-    /**
      * Runs all the steps of one turn in the game
-     * @throws InterruptedException If interrupted while trying to sleep
      */
-    private void runTurn() throws InterruptedException {
-        // The method should follow this sequence:
-        /*
-        Tilegne programeringskort
-
-        Programmer roboten
-
-        Gå i power down
-
-        Kjør 5 faser
-
-        Flagg + reprasjonstiles reparerer
-
-        Fjerner ulåste programmeringskort
-
-        Spør om de i power down skal fortsette i power down
-
-        Respawn roboter
-        */
-
+    private void runTurn() {
         // Sets the power down status to true on robots that have players who planned one this turn.
         // Resets players power down for next turn to false.
         updateRobotPowerDown();
         // Set damage of robots in power down to 0
         gameBoard.executePowerdown();
         if (host) {
+            //Distributes programming cards for all players, and sends a deck to each player
             distributeProgrammingCardsToPlayers();
-            if (server == null) {
-                    System.out.println("Serveren er null");
-            }
-            for (Connection connection: server.getPlayerNames().keySet()) {
+            for (Connection connection : server.getPlayerNames().keySet()) {
                 String playerName  = server.getPlayerNames().get(connection);
                 Player player = getPlayerFromName(playerName);
                 if (player != null && player.getPlayerDeck() != null) {
@@ -287,50 +264,7 @@ public class RoboRallyGame implements IRoboRallyGame {
                 }
             }
         }
-        setGameState(GameState.JUST_BEFORE_CHOOSING_CARDS);
-
-        // TODO: Make program for this player, if not in power down
-        // TODO: Ask player for new power down
-        // Run the phases of the game
-
-
-        // TODO: If this player is in power down, ask if it shall continue
-        // Respawn dead robots, as long as they have more lives left
-    }
-
-    public void recivedStayInPowerdown(PowerdownContainer powerdowns){
-        for (Player player:playerList) {
-            player.setPowerDownNextRound(powerdowns.getPowerdown().get(player.getName()));
-        }
-        respawnRobots();
-        resetHasTouchedFlagThisTurnForAllRobots();
-    }
-
-    public void reciveAllProgrammes(ProgamsContainer programs) throws InterruptedException {
-        Map<String,List<ProgrammingCard>> progs = programs.getProgram();
-        Map<String,Boolean> powerdown = programs.getPowerdown();
-        String playername;
-        for (Player player:playerList) {
-            playername = player.getName();
-            player.setInProgram(progs.get(playername));
-            player.setPowerDownNextRound(powerdown.get(playername));
-        }
-        setGameState(GameState.RUNNING_PROGRAMS);
-        phase.runPhase(1);
-        phase.runPhase(2);
-        phase.runPhase(3);
-        phase.runPhase(4);
-        phase.runPhase(5);
-
-        // Repair robots on repair tiles
-        repairAllRobotsOnRepairTiles();
-        if (host) {
-            updateLockedProgrammingCardsForAllPlayers();
-            removeNonLockedProgrammingCardsFromPlayers();
-        }
-        // TODO: If this player is in power down, ask if it shall continue
-
-
+        setGameState(GameState.LOADING);
     }
 
     /**
@@ -471,5 +405,19 @@ public class RoboRallyGame implements IRoboRallyGame {
      */
     private void setRobotPowerDown(Player player, Boolean powerDownStatus) {
         gameBoard.setPowerDown(player.getRobotID(), powerDownStatus);
+    }
+
+    /**
+     * Gets a player object given a player name
+     * @param name The name of the player to get
+     * @return The corresponding player object or null if no such object exists
+     */
+    private Player getPlayerFromName(String name) {
+        for (Player player : playerList) {
+            if (player.getName().equals(name)) {
+                return player;
+            }
+        }
+        return null;
     }
 }

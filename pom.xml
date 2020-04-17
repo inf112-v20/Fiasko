@@ -6,7 +6,7 @@
 
   <groupId>inf112.fiasko.roborally</groupId>
   <artifactId>roborally</artifactId>
-  <version>0.2-alpha</version>
+  <version>0.3-alpha</version>
 
   <packaging>jar</packaging>
 

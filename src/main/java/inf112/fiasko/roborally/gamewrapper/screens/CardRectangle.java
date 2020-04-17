@@ -1,8 +1,7 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
+import com.badlogic.gdx.math.Rectangle;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
-
-import java.awt.*;
 
 /**
  * A helper class for keeping track of card information and a rectangle

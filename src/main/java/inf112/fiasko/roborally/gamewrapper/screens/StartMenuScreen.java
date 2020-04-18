@@ -50,8 +50,7 @@ public class StartMenuScreen extends AbstractScreen {
                 } catch (IOException e) {
                     e.printStackTrace();
                     //Hard fail
-                    Gdx.app.error("Server error", "Server could not be started");
-                    Gdx.app.exit();
+                    roboRallyWrapper.quit("Server could not be started");
                 }
                 return true;
             }
@@ -77,7 +76,7 @@ public class StartMenuScreen extends AbstractScreen {
         quitButton.addListener(new InputListener() {
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
+                roboRallyWrapper.quit();
                 return true;
             }
         });

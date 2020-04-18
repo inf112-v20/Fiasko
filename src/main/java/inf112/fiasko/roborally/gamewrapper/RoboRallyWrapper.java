@@ -8,6 +8,9 @@ import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
 import inf112.fiasko.roborally.objects.IRoboRallyGame;
 
+/**
+ * This class acts as a wrapper around the different screens of the game
+ */
 public class RoboRallyWrapper extends Game {
     public SpriteBatch batch;
     public BitmapFont font;
@@ -24,7 +27,25 @@ public class RoboRallyWrapper extends Game {
         this.setScreen(screenManager.getStartMenuScreen(this));
     }
 
+    @Override
     public void dispose() {
         batch.dispose();
+        font.dispose();
+    }
+
+    /**
+     * Quits the game after logging the input as an error
+     * @param string The error causing the game to quit
+     */
+    public void quit(String string) {
+        Gdx.app.error("Critical", string);
+        Gdx.app.exit();
+    }
+
+    /**
+     * Quits the game
+     */
+    public void quit() {
+        Gdx.app.exit();
     }
 }

@@ -30,6 +30,9 @@ class RoboRallyClientListener extends Listener {
     public void received (Connection connection, Object object) {
         if (object instanceof ErrorResponse) {
             ErrorResponse errorResponse = (ErrorResponse) object;
+            if (errorResponse.isCritical()) {
+                wrapper.quit(errorResponse.getErrorMessage());
+            }
             System.out.println(errorResponse.getErrorMessage());
         } else if (object instanceof GameStartInfo) {
             GameStartInfo info = (GameStartInfo) object;

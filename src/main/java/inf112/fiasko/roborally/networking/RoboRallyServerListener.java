@@ -25,8 +25,8 @@ class RoboRallyServerListener extends Listener {
     private final Map<Connection, RobotID> clients;
     private final Map<Connection, String> playerNames;
     private final List<Connection> deadPlayers;
-    private Map<Connection,Boolean> stayInPowerDown;
-    private Map<Connection,ProgramAndPowerdownRequest> programs;
+    private Map<Connection, Boolean> stayInPowerDown;
+    private Map<Connection, ProgramAndPowerdownRequest> programs;
     private final RoboRallyServer server;
 
     /**
@@ -92,7 +92,7 @@ class RoboRallyServerListener extends Listener {
     private void receivedString(Connection connection, String playerName) {
         if (playerNames.containsValue(playerName)) {
             String errorMessage = "The player playerName send is already taken.";
-            connection.sendTCP(new ErrorResponse(errorMessage, new IllegalArgumentException(errorMessage)));
+            connection.sendTCP(new ErrorResponse(errorMessage));
         } else {
             playerNames.put(connection, playerName);
         }
@@ -155,7 +155,7 @@ class RoboRallyServerListener extends Listener {
         //Prevents more than 8 players from connecting at once
         if (clients.size() >= 8) {
             String errorMessage = "The server already has 8 players. You cannot join.";
-            connection.sendTCP(new ErrorResponse(errorMessage, new IOException(errorMessage)));
+            connection.sendTCP(new ErrorResponse(errorMessage));
             connection.close();
             return;
         }
@@ -165,6 +165,18 @@ class RoboRallyServerListener extends Listener {
 
     @Override
     public void disconnected(Connection connection) {
+        if (deadPlayers.contains(connection)) {
+            //Remove all traces of the player ever existing
+            clients.remove(connection);
+            playerNames.remove(connection);
+            deadPlayers.remove(connection);
+            stayInPowerDown.remove(connection);
+            programs.remove(connection);
+        } else {
+            //Stop the game for all players
+            String errorMessage = "An active player disconnected from the game. Cannot continue. Shutting down.";
+            server.sendToAllClients(new ErrorResponse(errorMessage, true));
+        }
         System.out.println(connection.getRemoteAddressTCP() + " disconnected");
     }
 }

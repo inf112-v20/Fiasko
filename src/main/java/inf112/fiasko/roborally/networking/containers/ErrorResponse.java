@@ -5,7 +5,7 @@ package inf112.fiasko.roborally.networking.containers;
  */
 public class ErrorResponse {
     private final String errorMessage;
-    private Exception thrownException;
+    private boolean critical;
 
     /**
      * Constructs a new error response
@@ -13,16 +13,17 @@ public class ErrorResponse {
      */
     public ErrorResponse(String errorMessage) {
         this.errorMessage = errorMessage;
+        this.critical = false;
     }
 
     /**
      * Constructs a new error response
      * @param errorMessage The error message describing the error
-     * @param thrownException The exception to throw
+     * @param critical Whether the error is critical
      */
-    public ErrorResponse(String errorMessage, Exception thrownException) {
+    public ErrorResponse(String errorMessage, boolean critical) {
         this.errorMessage = errorMessage;
-        this.thrownException = thrownException;
+        this.critical = critical;
     }
 
     /**
@@ -34,10 +35,10 @@ public class ErrorResponse {
     }
 
     /**
-     * Gets the exception attached to the error response
-     * @return An exception or null
+     * Gets whether the error is critical or not
+     * @return True if the error is critical. False otherwise
      */
-    public Exception getThrownException() {
-        return this.thrownException;
+    public boolean isCritical() {
+        return this.critical;
     }
 }

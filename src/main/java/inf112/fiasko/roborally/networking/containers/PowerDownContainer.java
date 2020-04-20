@@ -13,7 +13,9 @@ public class PowerDownContainer {
      * DO NOT USE!
      * Kryonet demands a no args constructor or else it throws a exception
      */
-    public PowerDownContainer(){}
+    public PowerDownContainer() {
+    }
+
     /**
      * Instantiates a new power down container
      *

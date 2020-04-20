@@ -169,22 +169,17 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         //Updates the host's card deck
 
         if (host) {
-            //TODO: Fix updateLockedProgrammingCardsForAllPlayers throwing NullPointerException on robotDamage
             updateLockedProgrammingCardsForAllPlayers();
             removeNonLockedProgrammingCardsFromPlayers();
         }
 
-        sendAllDeadPlayersToServer();
-        // TODO: If this player is in power down, ask if it shall continue
-        if(gameBoard.getPowerDown(getPlayerFromName(this.playerName).getRobotID())){
+        if (gameBoard.getPowerDown(getPlayerFromName(this.playerName).getRobotID())) {
             setGameState(GameState.CHOOSING_STAY_IN_POWER_DOWN);
-
         } else {
             setGameState(GameState.LOADING);
 
         }
-        updateRobotPowerDown();
-
+        //updateRobotPowerDown(); Should this be here?
     }
 
     @Override
@@ -193,6 +188,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
         }
         respawnRobots();
+        sendAllDeadPlayersToServer();
         resetHasTouchedFlagThisTurnForAllRobots();
         setGameState(GameState.BEGINNING_OF_GAME);
         runTurn();
@@ -285,6 +281,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         updateRobotPowerDown();
         // Set damage of robots in power down to 0
         gameBoard.executePowerDown();
+        setGameState(GameState.LOADING);
         if (host) {
             //Distributes programming cards for all players, and sends a deck to each player
             distributeProgrammingCardsToPlayers();
@@ -296,7 +293,6 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                 }
             }
         }
-        setGameState(GameState.LOADING);
     }
 
     /**
@@ -306,9 +302,15 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         if (host) {
             server.setDeadPlayers(gameBoard.getRealDeadRobots());
         }
+        //Removes dead players from playerList
         playerList.removeIf((player) -> gameBoard.getRealDeadRobots().contains(player.getRobotID()));
-        if(playerList.isEmpty()){
-            System.exit(1);
+        if (playerList.isEmpty()) {
+            setGameState(GameState.EXITED);
+            try {
+                Thread.sleep(100000000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
 
     }

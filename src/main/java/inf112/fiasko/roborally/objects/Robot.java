@@ -32,14 +32,6 @@ public class Robot {
     }
 
     /**
-     * setBackupPosition
-     * @param backupPosition
-     */
-    public void setBackupPosition(Position backupPosition) {
-        this.backupPosition = backupPosition;
-    }
-
-    /**
      * True if the robot has touched a flag in the current turn
      *
      * @return a boolean
@@ -113,15 +105,6 @@ public class Robot {
     }
 
     /**
-     * Set the robot's last visited flag to the new flag and places its backup on the flag's position
-     *
-     * @param currentFlag The flag the robot is standing on
-     */
-    public void setLastFlagVisited(int currentFlag) {
-        this.lastFlagVisited = currentFlag;
-    }
-
-    /**
      * Gets the last flag the robot visited
      *
      * @return Last visited flag
@@ -131,12 +114,30 @@ public class Robot {
     }
 
     /**
+     * Set the robot's last visited flag to the new flag and places its backup on the flag's position
+     *
+     * @param currentFlag The flag the robot is standing on
+     */
+    public void setLastFlagVisited(int currentFlag) {
+        this.lastFlagVisited = currentFlag;
+    }
+
+    /**
      * Gets the robot's backup position
      *
      * @return The robot's backup position
      */
     public Position getBackupPosition() {
         return backupPosition;
+    }
+
+    /**
+     * setBackupPosition
+     *
+     * @param backupPosition
+     */
+    public void setBackupPosition(Position backupPosition) {
+        this.backupPosition = backupPosition;
     }
 
     /**

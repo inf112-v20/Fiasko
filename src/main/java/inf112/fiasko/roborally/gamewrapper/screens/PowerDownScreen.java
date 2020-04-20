@@ -84,17 +84,18 @@ public class PowerDownScreen extends AbstractScreen {
         switch (roboRallyWrapper.roboRallyGame.getGameState()) {
             case CHOOSING_STAY_IN_POWER_DOWN:
                 roboRallyWrapper.roboRallyGame.setGameState(GameState.TURN_CLEANUP);
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
                 roboRallyWrapper.client.sendElement(bool);
                 break;
             case CHOOSING_POWER_DOWN:
                 roboRallyWrapper.roboRallyGame.setGameState(GameState.LOADING);
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
                 roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(bool,
                         roboRallyWrapper.roboRallyGame.getProgram()));
                 break;
             default:
                 throw new IllegalStateException("The game is in an unexpected state. Cannot continue.");
         }
-        roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
     }
 
     @Override

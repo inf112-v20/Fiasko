@@ -72,6 +72,19 @@ public class Player {
     }
 
     /**
+     * Sets the Players program to the given list of programing cards
+     *
+     * @param cardList list the size of 5 with programing cards
+     */
+    public void setProgram(List<ProgrammingCard> cardList) {
+        if (cardList.size() != 5) {
+            throw new IllegalArgumentException("The program must contain exactly 5 cards.");
+        } else {
+            program = new ArrayList<>(cardList);
+        }
+    }
+
+    /**
      * Gives you the player hand/deck
      *
      * @return a deck
@@ -114,19 +127,6 @@ public class Player {
      */
     public void setPowerDownNextRound(boolean powerDownStatus) {
         this.powerDownNextRound = powerDownStatus;
-    }
-
-    /**
-     * Sets the Players program to the given list of programing cards
-     *
-     * @param cardList list the size of 5 with programing cards
-     */
-    public void setProgram(List<ProgrammingCard> cardList) {
-        if (cardList.size() != 5) {
-            throw new IllegalArgumentException("The program must contain exactly 5 cards.");
-        } else {
-            program = new ArrayList<>(cardList);
-        }
     }
 
 }

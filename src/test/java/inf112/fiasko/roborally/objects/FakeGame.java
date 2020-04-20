@@ -25,6 +25,11 @@ public class FakeGame implements InteractableGame {
     }
 
     @Override
+    public void setWinningPlayerName(String winningPlayerName) {
+        this.winningPlayerName = winningPlayerName;
+    }
+
+    @Override
     public void receiveAllPrograms(ProgamsContainer programs) throws InterruptedException {
         //Not needed for testing
     }
@@ -57,10 +62,5 @@ public class FakeGame implements InteractableGame {
     @Override
     public void setProgram(List<ProgrammingCard> program) {
         //Not needed for testing
-    }
-
-    @Override
-    public void setWinningPlayerName(String winningPlayerName) {
-        this.winningPlayerName = winningPlayerName;
     }
 }

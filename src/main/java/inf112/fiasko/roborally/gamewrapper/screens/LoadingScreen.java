@@ -63,7 +63,10 @@ public class LoadingScreen extends AbstractScreen {
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
                 break;
             case CHOOSING_CARDS:
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(this.roboRallyWrapper));
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getNewCardChoiceScreen(this.roboRallyWrapper));
+                break;
+            case EXITED:
+                roboRallyWrapper.quit("All players died. Cannot continue playing.");
                 break;
             default:
                 System.out.println("The loading screen doesn't know what to do with " + gameState);

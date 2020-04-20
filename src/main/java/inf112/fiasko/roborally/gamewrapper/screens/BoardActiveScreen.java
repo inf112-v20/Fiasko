@@ -77,14 +77,20 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         roboRallyWrapper.batch.end();
 
         // Checks if there has been found a winning player and then changes the screen to display the winning screen
-        if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.GAME_IS_WON) {
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
-        } else if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_STAY_IN_POWER_DOWN) {
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
-        } else if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.LOADING){
-            roboRallyWrapper.client.sendElement(false);
-            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-
+        switch (roboRallyWrapper.roboRallyGame.getGameState()) {
+            case GAME_IS_WON:
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
+                break;
+            case CHOOSING_STAY_IN_POWER_DOWN:
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
+                break;
+            case LOADING:
+                roboRallyWrapper.client.sendElement(false);
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+                break;
+                default:
+                    //Ignored
+                    break;
         }
     }
 

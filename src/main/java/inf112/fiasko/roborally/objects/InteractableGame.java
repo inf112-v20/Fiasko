@@ -32,6 +32,13 @@ public interface InteractableGame {
     String getWinningPlayerName();
 
     /**
+     * Sets the name of the player that won the game
+     *
+     * @param winningPlayerName The player winning the game
+     */
+    void setWinningPlayerName(String winningPlayerName);
+
+    /**
      * Continues turn when programs for all players are received from the server
      *
      * @param programs The programs container received from the server
@@ -80,12 +87,5 @@ public interface InteractableGame {
      * @param program The program of this player
      */
     void setProgram(List<ProgrammingCard> program);
-
-    /**
-     * Sets the name of the player that won the game
-     *
-     * @param winningPlayerName The player winning the game
-     */
-    void setWinningPlayerName(String winningPlayerName);
 
 }

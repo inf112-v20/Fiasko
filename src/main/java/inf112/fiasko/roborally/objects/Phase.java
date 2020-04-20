@@ -69,7 +69,7 @@ public class Phase {
                 continue;
             }
             RobotID robotID = gameBoard.getRobotOnPosition(flagPosition);
-            if (gameBoard.isHasTouchedFlagThisTurnFromRobotID(robotID)) {
+            if (gameBoard.hasTouchedFlagThisTurn(robotID)) {
                 continue;
             }
             gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
@@ -79,6 +79,7 @@ public class Phase {
 
     /**
      * Fires all lasers on the game board
+     *
      * @throws InterruptedException If it gets interrupted while trying to sleep
      */
     public void fireAllLasers() throws InterruptedException {
@@ -197,7 +198,7 @@ public class Phase {
      * @param numberOfFlags The number of flags on the map
      */
     private void checkIfPlayerWon(RobotID robotID, int numberOfFlags) {
-        if (victoryCheck(gameBoard.getLastFlagVisitedFromRobotID(robotID), numberOfFlags)) {
+        if (victoryCheck(gameBoard.getLastFlagVisited(robotID), numberOfFlags)) {
             for (Player player : playerList) {
                 if (player.getRobotID() != robotID) {
                     continue;

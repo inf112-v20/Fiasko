@@ -23,9 +23,28 @@ public class ScreenManager {
     private WinnerScreen winnerScreen;
     private CardChoiceScreen cardChoiceScreen;
 
+    /**
+     * Gets a new instance of the card choice screen
+     *
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A new card choice screen instance
+     */
+    public synchronized CardChoiceScreen getNewCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
+        this.cardChoiceScreen = new CardChoiceScreen(roboRallyWrapper);
+        return cardChoiceScreen;
+    }
 
+    /**
+     * Gets an instance of the card choice screen
+     *
+     * @param roboRallyWrapper The Robo Rally launcher instance to use
+     * @return A card choice screen instance
+     */
     public synchronized CardChoiceScreen getCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
-        return new CardChoiceScreen(roboRallyWrapper);
+        if (this.cardChoiceScreen == null) {
+            this.cardChoiceScreen = new CardChoiceScreen(roboRallyWrapper);
+        }
+        return cardChoiceScreen;
     }
 
     /**

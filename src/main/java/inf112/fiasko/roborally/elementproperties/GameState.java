@@ -40,6 +40,10 @@ public enum GameState {
     /**
      * Indicates that the game is currently waiting for something
      */
-    LOADING
+    LOADING,
+    /**
+     * Indicates that the game is no longer running
+     */
+    EXITED
 
 }

@@ -23,7 +23,7 @@ public class RoboRallyClient {
         client = new Client();
         client.start();
         NetworkUtil.registerClasses(client.getKryo());
-        client.connect(5000, ipAddress, 54555, 54777);
+        client.connect(5000, ipAddress, 54555);
         client.addListener(new RoboRallyClientListener(wrapper));
 
     }
@@ -35,9 +35,6 @@ public class RoboRallyClient {
      */
     public void sendElement(Object object) {
         try {
-            if(!client.isConnected()){
-                client.reconnect();
-            }
             client.sendTCP(object);
         } catch (Exception e) {
             e.printStackTrace();

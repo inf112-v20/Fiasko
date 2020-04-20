@@ -14,14 +14,15 @@ import java.util.List;
 import static junit.framework.TestCase.*;
 
 public class PhaseTest {
+    List<Robot> robots = new ArrayList<>();
     private Phase phase;
     private Board board;
     private Position robot1Position = new Position(2, 2);
     private Position robot2Position = new Position(3, 2);
-    private Position robot3Position = new Position(7 , 2);
-    private Position robot4Position = new Position(3 , 8);
-    private Position robot5Position = new Position(2 , 14);
-    private Position robot6Position = new Position(2 , 15);
+    private Position robot3Position = new Position(7, 2);
+    private Position robot4Position = new Position(3, 8);
+    private Position robot5Position = new Position(2, 14);
+    private Position robot6Position = new Position(2, 15);
     private Robot robot1 = new Robot(RobotID.ROBOT_1, robot1Position);
     private Robot robot2 = new Robot(RobotID.ROBOT_2, robot2Position);
     private Robot robot3 = new Robot(RobotID.ROBOT_3, robot3Position);
@@ -34,8 +35,6 @@ public class PhaseTest {
     private Player player4 = new Player(RobotID.ROBOT_4, "Player 4");
     private Player player5 = new Player(RobotID.ROBOT_5, "Player 5");
     private Player player6 = new Player(RobotID.ROBOT_6, "Player 6");
-
-    List<Robot> robots = new ArrayList<>();
 
     @Before
     public void setUp() {
@@ -72,7 +71,7 @@ public class PhaseTest {
         FakeGame testGame = new FakeGame();
         List<Robot> robot = new ArrayList<>();
         List<Player> player = new ArrayList<>();
-        robot.add(new Robot(RobotID.ROBOT_1, new Position(0,0)));
+        robot.add(new Robot(RobotID.ROBOT_1, new Position(0, 0)));
         player.add(new Player(RobotID.ROBOT_1, "Player 1"));
 
         try {
@@ -86,7 +85,7 @@ public class PhaseTest {
     }
 
     @Test
-    public void robotRegistersFlagWhenOnCorrectOne()  {
+    public void robotRegistersFlagWhenOnCorrectOne() {
         assertEquals(robot3.getLastFlagVisited(), 0);
         assertFalse(robot3.hasTouchedFlagThisTurn());
         phase.checkAllFlags();
@@ -107,7 +106,7 @@ public class PhaseTest {
     public void actionDoesPerformAnAction() throws InterruptedException {
         assertEquals(robot4.getRobotId(), board.getRobotOnPosition(robot4Position));
         phase.makeMove(RobotID.ROBOT_4, Action.MOVE_1);
-        assertEquals(robot4.getRobotId(),board.getRobotOnPosition(new Position(3, 7)));
+        assertEquals(robot4.getRobotId(), board.getRobotOnPosition(new Position(3, 7)));
     }
 
     @Test
@@ -126,7 +125,7 @@ public class PhaseTest {
         ProgrammingCard card9 = new ProgrammingCard(13, Action.MOVE_1);
         ProgrammingCard card10 = new ProgrammingCard(14, Action.MOVE_1);
         ProgrammingCard card11 = new ProgrammingCard(100, Action.ROTATE_LEFT);
-        ProgrammingCard card12= new ProgrammingCard(200, Action.ROTATE_LEFT);
+        ProgrammingCard card12 = new ProgrammingCard(200, Action.ROTATE_LEFT);
         ProgrammingCard card13 = new ProgrammingCard(300, Action.ROTATE_LEFT);
         ProgrammingCard card14 = new ProgrammingCard(400, Action.ROTATE_LEFT);
         ProgrammingCard card15 = new ProgrammingCard(500, Action.ROTATE_LEFT);

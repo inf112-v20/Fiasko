@@ -39,20 +39,20 @@ class RoboRallyClientListener extends Listener {
             GameStartInfo info = (GameStartInfo) object;
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null, info.getPlayerName(), wrapper.server);
-        }  else if (object instanceof ProgrammingCardDeck) {
-             wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
-             new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();
+        } else if (object instanceof ProgrammingCardDeck) {
+            wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
+            new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();
         } else if (object instanceof ProgamsContainer) {
             new Thread(() -> {
                 try {
-                wrapper.roboRallyGame.receiveAllPrograms((ProgamsContainer) object);
-                     } catch (InterruptedException e) {
-                          e.printStackTrace();
-                     }
-             }).start();
-         } else if (object instanceof PowerDownContainer) {
+                    wrapper.roboRallyGame.receiveAllPrograms((ProgamsContainer) object);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } else if (object instanceof PowerDownContainer) {
             new Thread(() -> wrapper.roboRallyGame.receiveStayInPowerDown((PowerDownContainer) object)).start();
-    }
+        }
 
     }
 }

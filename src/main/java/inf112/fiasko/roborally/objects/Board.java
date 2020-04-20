@@ -164,34 +164,35 @@ public class Board {
      * @param powerDown The status of the power down
      */
     public void setPowerDown(RobotID robotID, Boolean powerDown) {
-        if(robots.containsKey(robotID)){
+        if (robots.containsKey(robotID)) {
             robots.get(robotID).setPowerDown(powerDown);
-        }
-        else if (getRobotFromDeadRobots(robotID)!=null) {
+        } else if (getRobotFromDeadRobots(robotID) != null) {
             getRobotFromDeadRobots(robotID).setPowerDown(powerDown);
         }
     }
-    public void setBackupPositionOfRobot(RobotID robotID, Position pos){
+
+    public void setBackupPositionOfRobot(RobotID robotID, Position pos) {
         robots.get(robotID).setBackupPosition(pos);
     }
 
     /**
      * Gets the power down status of the robot
+     *
      * @param robotID The robot id of the robot
      * @return The power down status of the robot
      */
     public boolean getPowerDown(RobotID robotID) {
-        if(robots.containsKey(robotID)){
+        if (robots.containsKey(robotID)) {
             return robots.get(robotID).isInPowerDown();
-        }
-        else if (getRobotFromDeadRobots(robotID)!=null){
-            return  getRobotFromDeadRobots(robotID).isInPowerDown();
+        } else if (getRobotFromDeadRobots(robotID) != null) {
+            return getRobotFromDeadRobots(robotID).isInPowerDown();
         }
         return false;
     }
-    private Robot getRobotFromDeadRobots(RobotID robotID){
-        for (Robot robot:deadRobots) {
-            if (robot.getRobotId()==robotID){
+
+    private Robot getRobotFromDeadRobots(RobotID robotID) {
+        for (Robot robot : deadRobots) {
+            if (robot.getRobotId() == robotID) {
                 return robot;
             }
         }
@@ -445,7 +446,7 @@ public class Board {
         int flagNr = flagID.getTileTypeID() % 16;
         if (flagNr - 1 == robot.getLastFlagVisited()) {
             robot.setLastFlagVisited(flagNr);
-            setHasTouchedFlagThisTurnFromRobotID(robotID, true);
+            setHasTouchedFlagThisTurn(robotID, true);
         }
     }
 
@@ -828,7 +829,7 @@ public class Board {
      * @param robotID The robot to be checked
      * @return The flag last visited in a number
      */
-    public int getLastFlagVisitedFromRobotID(RobotID robotID) {
+    public int getLastFlagVisited(RobotID robotID) {
         return robots.get(robotID).getLastFlagVisited();
     }
 
@@ -838,7 +839,7 @@ public class Board {
      * @param robotID    The robot to be checked
      * @param hasTouched If the robot has touched a flag this turn
      */
-    public void setHasTouchedFlagThisTurnFromRobotID(RobotID robotID, boolean hasTouched) {
+    public void setHasTouchedFlagThisTurn(RobotID robotID, boolean hasTouched) {
         robots.get(robotID).setHasTouchedFlagThisTurn(hasTouched);
     }
 
@@ -848,7 +849,7 @@ public class Board {
      * @param robotID The robot to be checked
      * @return If the robot has touched a flag this turn
      */
-    public boolean isHasTouchedFlagThisTurnFromRobotID(RobotID robotID) {
+    public boolean hasTouchedFlagThisTurn(RobotID robotID) {
         return robots.get(robotID).hasTouchedFlagThisTurn();
     }
 

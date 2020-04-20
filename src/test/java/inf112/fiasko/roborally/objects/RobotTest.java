@@ -68,12 +68,5 @@ public class RobotTest {
         testRobot.setLastFlagVisited(nextFlag);
         assertEquals(1, testRobot.getLastFlagVisited());
     }
-
-    @Test
-    public void testRobotGetNewBackup() {
-        Position nextFlagPosition = new Position(3, 4);
-        testRobot.setPosition(nextFlagPosition);
-        testRobot.setLastFlagVisited(nextFlag);
-        assertEquals(nextFlagPosition, testRobot.getBackupPosition());
-    }
+    
 }

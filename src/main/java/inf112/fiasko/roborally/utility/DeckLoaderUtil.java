@@ -17,6 +17,7 @@ public final class DeckLoaderUtil {
 
     /**
      * Returns a programming card deck containing all official programming cards
+     *
      * @return A programming card deck with programming cards
      * @throws IOException If the programming cards file is invalid
      */

@@ -13,7 +13,7 @@ import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-@RunWith (GdxTestRunner.class)
+@RunWith(GdxTestRunner.class)
 public class TextureConverterUtilTest {
     private Tile tileNorth;
     private Tile holeNorth;
@@ -34,20 +34,20 @@ public class TextureConverterUtilTest {
 
     @Test
     public void tileTileConversion() {
-        assertEquals(4*300, tileTextureRegion.getRegionX());
+        assertEquals(4 * 300, tileTextureRegion.getRegionX());
         assertEquals(0, tileTextureRegion.getRegionY());
     }
 
     @Test
     public void tileHoleConversion() {
-        assertEquals(5*300, holeTextureRegion.getRegionX());
+        assertEquals(5 * 300, holeTextureRegion.getRegionX());
         assertEquals(0, holeTextureRegion.getRegionY());
     }
 
     @Test
     public void tileTransportBandSlowFacingEastConversion() {
-        assertEquals(3*300, transportBandSlowEastTextureRegion.getRegionX());
-        assertEquals(6*300, transportBandSlowEastTextureRegion.getRegionY());
+        assertEquals(3 * 300, transportBandSlowEastTextureRegion.getRegionX());
+        assertEquals(6 * 300, transportBandSlowEastTextureRegion.getRegionY());
     }
 
     @Test

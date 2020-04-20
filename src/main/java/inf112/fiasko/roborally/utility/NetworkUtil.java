@@ -5,10 +5,10 @@ import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfo;
-import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
 import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
-import inf112.fiasko.roborally.objects.IDeck;
+import inf112.fiasko.roborally.objects.Deck;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
@@ -23,11 +23,12 @@ public final class NetworkUtil {
 
     /**
      * Registers all classes which can be sent between a server and a client
+     *
      * @param kryo The kryo object to register the classes to
      */
     public static void registerClasses(Kryo kryo) {
         kryo.register(ErrorResponse.class);
-        kryo.register(IDeck.class);
+        kryo.register(Deck.class);
         kryo.register(ProgrammingCard.class);
         kryo.register(GameStartInfo.class);
         kryo.register(ArrayList.class);
@@ -37,7 +38,7 @@ public final class NetworkUtil {
         kryo.register(Action.class);
         kryo.register(ProgramAndPowerdownRequest.class);
         kryo.register(ProgamsContainer.class);
-        kryo.register(PowerdownContainer.class);
+        kryo.register(PowerDownContainer.class);
         kryo.register(HashMap.class);
 
 

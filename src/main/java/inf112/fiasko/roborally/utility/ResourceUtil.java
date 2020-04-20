@@ -6,10 +6,12 @@ import java.io.InputStream;
  * This class helps with tasks related to resource loading
  */
 public final class ResourceUtil {
-    private ResourceUtil() {}
+    private ResourceUtil() {
+    }
 
     /**
      * Gets an input stream for a given resource
+     *
      * @param resourcePath The relative path from the resources folder to the resource
      * @return An input stream
      */

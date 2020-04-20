@@ -4,11 +4,11 @@ import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.elementproperties.WallType;
 import inf112.fiasko.roborally.objects.Board;
-import inf112.fiasko.roborally.objects.IGrid;
+import inf112.fiasko.roborally.objects.Grid;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.Wall;
-import inf112.fiasko.roborally.objects.Grid;
+import inf112.fiasko.roborally.objects.ListGrid;
 
 import java.io.*;
 import java.util.List;
@@ -17,10 +17,13 @@ import java.util.List;
  * This class helps loading boards
  */
 public final class BoardLoaderUtil {
-    private BoardLoaderUtil() {}
+
+    private BoardLoaderUtil() {
+    }
 
     /**
      * Loads a board described in a file
+     *
      * @param boardFile The file containing the board description
      * @param robotList A list of robots on the board
      * @return A board
@@ -34,21 +37,22 @@ public final class BoardLoaderUtil {
         int gridWidth = Integer.parseInt(infoData[0]);
         int gridHeight = Integer.parseInt(infoData[1]);
 
-        IGrid<Tile> tileGrid = loadTileGrid(reader, gridWidth, gridHeight);
-        IGrid<Wall> wallGrid = loadWallGrid(reader, gridWidth, gridHeight);
+        Grid<Tile> tileGrid = loadTileGrid(reader, gridWidth, gridHeight);
+        Grid<Wall> wallGrid = loadWallGrid(reader, gridWidth, gridHeight);
         return new Board(tileGrid, wallGrid, robotList);
     }
 
     /**
      * Loads information about a tile grid from a buffered reader
-     * @param reader A buffered reader ready to read information about the grid
-     * @param gridWidth The width of the grid to load
+     *
+     * @param reader     A buffered reader ready to read information about the grid
+     * @param gridWidth  The width of the grid to load
      * @param gridHeight The height of the grid to load
      * @return A grid containing the tiles described by the buffered reader
      * @throws IOException If the reader reads invalid grid information
      */
-    private static IGrid<Tile> loadTileGrid(BufferedReader reader, int gridWidth, int gridHeight) throws IOException {
-        IGrid<Tile> tileGrid = new Grid<>(gridWidth, gridHeight);
+    private static Grid<Tile> loadTileGrid(BufferedReader reader, int gridWidth, int gridHeight) throws IOException {
+        Grid<Tile> tileGrid = new ListGrid<>(gridWidth, gridHeight);
         for (int y = 0; y < gridHeight; y++) {
             String gridLine = reader.readLine();
             String[] tilesOnLine = gridLine.split(" ");
@@ -67,14 +71,15 @@ public final class BoardLoaderUtil {
 
     /**
      * Loads information about a wall grid from a buffered reader
-     * @param reader A buffered reader ready to read information about the grid
-     * @param gridWidth The width of the grid to load
+     *
+     * @param reader     A buffered reader ready to read information about the grid
+     * @param gridWidth  The width of the grid to load
      * @param gridHeight The height of the grid to load
      * @return A grid containing the walls described by the buffered reader
      * @throws IOException If the reader reads invalid grid information
      */
-    private static IGrid<Wall> loadWallGrid(BufferedReader reader, int gridWidth, int gridHeight) throws IOException {
-        IGrid<Wall> wallGrid = new Grid<>(gridWidth, gridHeight);
+    private static Grid<Wall> loadWallGrid(BufferedReader reader, int gridWidth, int gridHeight) throws IOException {
+        Grid<Wall> wallGrid = new ListGrid<>(gridWidth, gridHeight);
         for (int y = 0; y < gridHeight; y++) {
             String gridLine = reader.readLine();
             String[] wallsOnLine = gridLine.split(" ");

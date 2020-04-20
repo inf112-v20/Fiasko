@@ -35,10 +35,12 @@ public final class TextureConverterUtil {
     private static Map<ParticleType, Boolean> tileSheetParticleHasRotatedTextureMappings;
     private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
 
-    private TextureConverterUtil() {}
+    private TextureConverterUtil() {
+    }
 
     /**
      * Gets a list of all disposable elements which should be disposed when the software closes
+     *
      * @return A list of disposable elements
      */
     public static List<Disposable> getDisposableElements() {
@@ -50,6 +52,7 @@ public final class TextureConverterUtil {
 
     /**
      * Gets the texture representing the tile
+     *
      * @param tile The tile to draw
      * @return The texture to draw
      */
@@ -74,6 +77,7 @@ public final class TextureConverterUtil {
 
     /**
      * Gets the texture representing the particle
+     *
      * @param particle The particle to draw
      * @return The texture to draw
      */
@@ -98,6 +102,7 @@ public final class TextureConverterUtil {
 
     /**
      * Gets the texture representing the tile
+     *
      * @param wall The wall to draw
      * @return The texture to draw
      */
@@ -125,6 +130,7 @@ public final class TextureConverterUtil {
 
     /**
      * Gets the texture representing the robot
+     *
      * @param robot The robot to draw
      * @return The texture to draw
      */
@@ -134,17 +140,17 @@ public final class TextureConverterUtil {
         } else if (robot.getRobotId() == RobotID.ROBOT_2) {
             return new TextureRegion(robotsTexture, 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_3) {
-            return new TextureRegion(robotsTexture, 2*64, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 2 * 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_4) {
-            return new TextureRegion(robotsTexture, 3*64, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 3 * 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_5) {
-            return new TextureRegion(robotsTexture, 4*64, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 4 * 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_6) {
-            return new TextureRegion(robotsTexture, 5*64, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 5 * 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_7) {
-            return new TextureRegion(robotsTexture, 6*64, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 6 * 64, 0, 64, 64);
         } else if (robot.getRobotId() == RobotID.ROBOT_8) {
-            return new TextureRegion(robotsTexture, 7*64, 0, 64, 64);
+            return new TextureRegion(robotsTexture, 7 * 64, 0, 64, 64);
         }
         throw new IllegalArgumentException("Robot has no drawable texture.");
     }
@@ -152,7 +158,7 @@ public final class TextureConverterUtil {
     /**
      * Checks whether a tile has textures for different rotations
      *
-     * For a tile without a rotated texture, the texture needs to be rotated when rendering.
+     * <p>For a tile without a rotated texture, the texture needs to be rotated when rendering.</p>
      *
      * @param tile The tile to check
      * @return True if rotated versions of the texture exists. False otherwise
@@ -171,7 +177,7 @@ public final class TextureConverterUtil {
     /**
      * Checks whether a particle has textures for different rotations
      *
-     * For a particle without a rotated texture, the texture needs to be rotated when rendering.
+     * <p>For a particle without a rotated texture, the texture needs to be rotated when rendering.</p>
      *
      * @param particle The particle to check
      * @return True if rotated versions of the texture exists. False otherwise
@@ -190,8 +196,8 @@ public final class TextureConverterUtil {
     /**
      * Loads mappings between a tile and texture
      *
-     * Loads both information about mapping from a tile to a texture converter container and information about mapping
-     * from a tile to whether the tile has a rotated version of each texture
+     * <p>Loads both information about mapping from a tile to a texture converter container and information about mapping
+     * from a tile to whether the tile has a rotated version of each texture</p>
      *
      * @throws IOException If the mapping file can't be properly read
      */
@@ -212,8 +218,8 @@ public final class TextureConverterUtil {
     /**
      * Loads mappings between a particle and a texture
      *
-     * Loads both information about mapping from a particle to a texture converter container and information about
-     * mapping from a particle to whether the particle has a rotated version of each texture
+     * <p>Loads both information about mapping from a particle to a texture converter container and information about
+     * mapping from a particle to whether the particle has a rotated version of each texture</p>
      *
      * @throws IOException If the mapping file can't be properly read
      */
@@ -251,15 +257,16 @@ public final class TextureConverterUtil {
 
     /**
      * Reads one line of texture mapping and puts it into the correct maps
-     * @param parameters The parameters describing the texture mapping of the element
-     * @param mapKey The key to store in the map
-     * @param textureMapping The map containing texture mappings
+     *
+     * @param parameters               The parameters describing the texture mapping of the element
+     * @param mapKey                   The key to store in the map
+     * @param textureMapping           The map containing texture mappings
      * @param hasRotatedTextureMapping The map containing whether an element has rotated textures or not
-     * @param <K> The type of element that will be used for map keys
+     * @param <K>                      The type of element that will be used for map keys
      */
     private static synchronized <K> void storeTextMappingInMap(String[] parameters, K mapKey,
-                                                               Map<K,TextureConverterContainer> textureMapping,
-                                                               Map<K,Boolean> hasRotatedTextureMapping) {
+                                                               Map<K, TextureConverterContainer> textureMapping,
+                                                               Map<K, Boolean> hasRotatedTextureMapping) {
         TextureConverterContainer container;
         int xNorth = Integer.parseInt(parameters[1]);
         int yNorth = Integer.parseInt(parameters[2]);
@@ -287,15 +294,16 @@ public final class TextureConverterUtil {
 
     /**
      * Gets a texture region based on the direction of the tile
+     *
      * @param direction The direction the tile is facing
-     * @param xNorth The relative x position on the texture sheet if the tile is facing north
-     * @param yNorth The relative y position on the texture sheet if the tile is facing north
-     * @param xEast The relative x position on the texture sheet if the tile is facing east
-     * @param yEast The relative y position on the texture sheet if the tile is facing east
-     * @param xSouth The relative x position on the texture sheet if the tile is facing south
-     * @param ySouth The relative y position on the texture sheet if the tile is facing south
-     * @param xWest The relative x position on the texture sheet if the tile is facing west
-     * @param yWest The relative y position on the texture sheet if the tile is facing west
+     * @param xNorth    The relative x position on the texture sheet if the tile is facing north
+     * @param yNorth    The relative y position on the texture sheet if the tile is facing north
+     * @param xEast     The relative x position on the texture sheet if the tile is facing east
+     * @param yEast     The relative y position on the texture sheet if the tile is facing east
+     * @param xSouth    The relative x position on the texture sheet if the tile is facing south
+     * @param ySouth    The relative y position on the texture sheet if the tile is facing south
+     * @param xWest     The relative x position on the texture sheet if the tile is facing west
+     * @param yWest     The relative y position on the texture sheet if the tile is facing west
      * @return The texture region containing the tile's texture
      */
     private static TextureRegion getDirectionalTextureRegion(Direction direction, int xNorth, int yNorth, int xEast,
@@ -321,6 +329,7 @@ public final class TextureConverterUtil {
 
     /**
      * Gets a texture on the main tiles texture sheet
+     *
      * @param x The relative x coordinate on the sheet
      * @param y The relative y coordinate on the sheet
      * @return The texture region containing the texture
@@ -328,7 +337,7 @@ public final class TextureConverterUtil {
     private static TextureRegion getTextureOnSheet(int x, int y) {
         final int tileTextureHeight = 300;
         final int tileTextureWidth = 300;
-        return new TextureRegion(textureSheet, x*tileTextureWidth, y*tileTextureHeight,
+        return new TextureRegion(textureSheet, x * tileTextureWidth, y * tileTextureHeight,
                 tileTextureWidth, tileTextureHeight);
     }
 

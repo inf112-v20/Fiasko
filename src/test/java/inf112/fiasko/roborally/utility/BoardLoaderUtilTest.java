@@ -2,6 +2,7 @@ package inf112.fiasko.roborally.utility;
 
 import inf112.fiasko.roborally.objects.Robot;
 import org.junit.Test;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

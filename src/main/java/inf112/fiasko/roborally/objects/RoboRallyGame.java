@@ -153,7 +153,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         String playerName;
         for (Player player : playerList) {
             playerName = player.getName();
-            player.setInProgram(programMap.get(playerName));
+            player.setProgram(programMap.get(playerName));
             player.setPowerDownNextRound(powerDown.get(playerName));
         }
         //Runs 5 phases
@@ -185,21 +185,13 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         resetHasTouchedFlagThisTurnForAllRobots();
     }
 
-    /**
-     * Gets the name of the player that won the game
-     *
-     * @return The name of the winning player
-     */
+    @Override
     public String getWinningPlayerName() {
         return winningPlayerName;
     }
 
-    /**
-     * Sets the name of the player that won the game
-     *
-     * @param winningPlayerName The player winning the game
-     */
-    protected void setWinningPlayerName(String winningPlayerName) {
+    @Override
+    public void setWinningPlayerName(String winningPlayerName) {
         this.winningPlayerName = winningPlayerName;
     }
 
@@ -275,15 +267,15 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         // Resets players power down for next turn to false.
         updateRobotPowerDown();
         // Set damage of robots in power down to 0
-        gameBoard.executePowerdown();
+        gameBoard.executePowerDown();
         if (host) {
             //Distributes programming cards for all players, and sends a deck to each player
             distributeProgrammingCardsToPlayers();
             for (Connection connection : server.getPlayerNames().keySet()) {
                 String playerName = server.getPlayerNames().get(connection);
                 Player player = getPlayerFromName(playerName);
-                if (player != null && player.getPlayerDeck() != null) {
-                    server.sendToClient(connection, player.getPlayerDeck());
+                if (player != null && player.getProgrammingCardDeck() != null) {
+                    server.sendToClient(connection, player.getProgrammingCardDeck());
                 }
             }
         }
@@ -314,8 +306,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private void updateLockedProgrammingCardsForAllPlayers() {
         for (Player player : playerList) {
             List<ProgrammingCard> playerProgram = player.getProgram();
-            ProgrammingCardDeck playerDeck = player.getPlayerDeck();
-            ProgrammingCardDeck lockedPlayerDeck = player.getLockedPlayerDeck();
+            ProgrammingCardDeck playerDeck = player.getProgrammingCardDeck();
+            ProgrammingCardDeck lockedPlayerDeck = player.getLockedProgrammingCardDeck();
             int robotDamage;
             if (!gameBoard.isRobotAlive(player.getRobotID())) {
                 robotDamage = 0;
@@ -325,7 +317,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
 
             //The player has no locked cards. All previously locked cards should go into the free deck
             if (robotDamage <= 4) {
-                lockedPlayerDeck.emptyInto(player.getPlayerDeck());
+                lockedPlayerDeck.emptyInto(player.getProgrammingCardDeck());
                 continue;
             }
 
@@ -364,7 +356,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      */
     private void removeNonLockedProgrammingCardsFromPlayers() {
         for (Player player : playerList) {
-            player.getPlayerDeck().emptyInto(mainDeck);
+            player.getProgrammingCardDeck().emptyInto(mainDeck);
         }
     }
 
@@ -375,7 +367,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         mainDeck.shuffle();
         for (Player player : playerList) {
             RobotID robot = player.getRobotID();
-            ProgrammingCardDeck playerDeck = player.getPlayerDeck();
+            ProgrammingCardDeck playerDeck = player.getProgrammingCardDeck();
             int robotDamage = gameBoard.getRobotDamage(robot);
             //Powered down or heavily damaged robots don't get any cards
             if (gameBoard.getPowerDown(robot) || robotDamage >= 9) {

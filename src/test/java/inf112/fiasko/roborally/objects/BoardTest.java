@@ -153,7 +153,7 @@ public class BoardTest {
         boardforpowerdown.setPowerDown(RobotID.ROBOT_2, true);
         testrobot.setDamageTaken(4);
         assertEquals(4, testrobot.getDamageTaken());
-        boardforpowerdown.executePowerdown();
+        boardforpowerdown.executePowerDown();
         assertEquals(0, testrobot.getDamageTaken());
     }
 

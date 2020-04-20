@@ -81,4 +81,11 @@ public interface InteractableGame {
      */
     void setProgram(List<ProgrammingCard> program);
 
+    /**
+     * Sets the name of the player that won the game
+     *
+     * @param winningPlayerName The player winning the game
+     */
+    void setWinningPlayerName(String winningPlayerName);
+
 }

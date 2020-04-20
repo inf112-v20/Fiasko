@@ -45,15 +45,6 @@ public class Player {
     }
 
     /**
-     * Sets the robot id of the robot
-     *
-     * @param robotID The new id of the robot
-     */
-    public void setRobotID(RobotID robotID) {
-        this.robotID = robotID;
-    }
-
-    /**
      * Gives you the Name of the player
      *
      * @return A player Name
@@ -85,7 +76,7 @@ public class Player {
      *
      * @return a deck
      */
-    public ProgrammingCardDeck getPlayerDeck() {
+    public ProgrammingCardDeck getProgrammingCardDeck() {
         return playerDeck;
     }
 
@@ -94,7 +85,7 @@ public class Player {
      *
      * @param playerDeck A deck of cards given to the player
      */
-    public void setPlayerDeck(ProgrammingCardDeck playerDeck) {
+    public void setProgrammingCardDeck(ProgrammingCardDeck playerDeck) {
         this.playerDeck = playerDeck;
     }
 
@@ -103,17 +94,8 @@ public class Player {
      *
      * @return a deck with locked cards
      */
-    public ProgrammingCardDeck getLockedPlayerDeck() {
+    public ProgrammingCardDeck getLockedProgrammingCardDeck() {
         return lockedPlayerDeck;
-    }
-
-    /**
-     * Set the players locked deck to the given deck
-     *
-     * @param lockedPlayerDeck A deck of locked cards kept by the player
-     */
-    public void setLockedPlayerDeck(ProgrammingCardDeck lockedPlayerDeck) {
-        this.lockedPlayerDeck = lockedPlayerDeck;
     }
 
     /**
@@ -139,9 +121,9 @@ public class Player {
      *
      * @param cardList list the size of 5 with programing cards
      */
-    public void setInProgram(List<ProgrammingCard> cardList) {
+    public void setProgram(List<ProgrammingCard> cardList) {
         if (cardList.size() != 5) {
-            throw new IllegalArgumentException("list must contain 5 programing cards");
+            throw new IllegalArgumentException("The program must contain exactly 5 cards.");
         } else {
             program = new ArrayList<>(cardList);
         }

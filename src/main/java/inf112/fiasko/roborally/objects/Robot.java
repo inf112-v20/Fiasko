@@ -36,7 +36,7 @@ public class Robot {
      *
      * @return a boolean
      */
-    public boolean isHasTouchedFlagThisTurn() {
+    public boolean hasTouchedFlagThisTurn() {
         return hasTouchedFlagThisTurn;
     }
 

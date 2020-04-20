@@ -41,7 +41,7 @@ public class PlayerTest {
 
     @Test
     public void testSetInProgram() {
-        playerTest.setInProgram(cards);
+        playerTest.setProgram(cards);
         assertEquals(Action.MOVE_1, playerTest.getProgram().get(0).getAction());
         assertEquals(Action.MOVE_2, playerTest.getProgram().get(1).getAction());
         assertEquals(Action.MOVE_3, playerTest.getProgram().get(2).getAction());
@@ -51,15 +51,15 @@ public class PlayerTest {
     @Test(expected = IllegalArgumentException.class)
     public void testSetInProgramWithToManyCards() {
         cards.add(new ProgrammingCard(10, Action.ROTATE_LEFT));
-        playerTest.setInProgram(cards);
+        playerTest.setProgram(cards);
     }
 
     @Test
     public void testSetInDeck() {
         cards.add(new ProgrammingCard(10, Action.ROTATE_LEFT));
         ProgrammingCardDeck playerDeck = new ProgrammingCardDeck(cards);
-        playerTest.setPlayerDeck(playerDeck);
-        assertEquals(playerDeck, playerTest.getPlayerDeck());
+        playerTest.setProgrammingCardDeck(playerDeck);
+        assertEquals(playerDeck, playerTest.getProgrammingCardDeck());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class PlayerTest {
 
     @Test
     public void getProgramFromPlayer() {
-        playerTest.setInProgram(cards);
+        playerTest.setProgram(cards);
         assertEquals(cards, playerTest.getProgram());
     }
 

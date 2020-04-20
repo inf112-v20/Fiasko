@@ -161,16 +161,16 @@ public class Board {
      * Sets the power down status of the robot
      *
      * @param robotID   The robot id of the robot
-     * @param powerdown The status of the powerdown
+     * @param powerDown The status of the power down
      */
-    public void setPowerDown(RobotID robotID, Boolean powerdown) {
-        robots.get(robotID).setPowerDown(powerdown);
+    public void setPowerDown(RobotID robotID, Boolean powerDown) {
+        robots.get(robotID).setPowerDown(powerDown);
     }
 
     /**
      * Gets the power down status of the robot
-     *
      * @param robotID The robot id of the robot
+     * @return The power down status of the robot
      */
     public boolean getPowerDown(RobotID robotID) {
         return robots.get(robotID).isInPowerDown();
@@ -190,7 +190,7 @@ public class Board {
     /**
      * sets the damage taken of robots in powerdown to 0
      */
-    public void executePowerdown() {
+    public void executePowerDown() {
         for (Robot robot : robots.values()) {
             if (robot.isInPowerDown()) {
                 robot.setDamageTaken(0);
@@ -826,7 +826,7 @@ public class Board {
      * @return If the robot has touched a flag this turn
      */
     public boolean isHasTouchedFlagThisTurnFromRobotID(RobotID robotID) {
-        return robots.get(robotID).isHasTouchedFlagThisTurn();
+        return robots.get(robotID).hasTouchedFlagThisTurn();
     }
 
 }

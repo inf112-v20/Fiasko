@@ -25,7 +25,7 @@ public class Phase {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<BoardElementContainer<Tile>> flags;
-    private RoboRallyGame game;
+    private InteractableGame game;
 
     /**
      * Instantiates a new phase
@@ -35,7 +35,7 @@ public class Phase {
      * @param cycleDelay The amount of milliseconds to wait between moves
      * @param game       The game which uses this object
      */
-    public Phase(Board gameBoard, List<Player> playerList, int cycleDelay, RoboRallyGame game) {
+    public Phase(Board gameBoard, List<Player> playerList, int cycleDelay, InteractableGame game) {
         this.gameBoard = gameBoard;
         this.playerList = playerList;
         this.cycleDelay = cycleDelay;
@@ -80,6 +80,7 @@ public class Phase {
 
     /**
      * Fires all lasers on the game board
+     * @throws InterruptedException If it gets interrupted while trying to sleep
      */
     public void fireAllLasers() throws InterruptedException {
         gameBoard.fireAllLasers();

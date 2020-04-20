@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
@@ -158,6 +159,14 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         renderCardText();
         roboRallyWrapper.batch.end();
         stage.draw();
+    }
+
+    @Override
+    public boolean keyUp(int keyCode) {
+        if (keyCode == Input.Keys.TAB) {
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getBoardActiveScreen(roboRallyWrapper));
+        }
+        return false;
     }
 
     /**

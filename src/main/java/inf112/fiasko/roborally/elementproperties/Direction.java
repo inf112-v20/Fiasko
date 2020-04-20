@@ -4,13 +4,37 @@ package inf112.fiasko.roborally.elementproperties;
  * This enum represents all possible directions for an element on the board
  */
 public enum Direction {
+    /**
+     * The north direction
+     */
     NORTH(1),
+    /**
+     * The north-east direction
+     */
     NORTH_EAST(2),
+    /**
+     * The east direction
+     */
     EAST(3),
+    /**
+     * The south-east direction
+     */
     SOUTH_EAST(4),
+    /**
+     * The south direction
+     */
     SOUTH(5),
+    /**
+     * The south-west direction
+     */
     SOUTH_WEST(6),
+    /**
+     * The west direction
+     */
     WEST(7),
+    /**
+     * The north-west direction
+     */
     NORTH_WEST(8);
 
     private final int directionID;

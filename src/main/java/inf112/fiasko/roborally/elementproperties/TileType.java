@@ -4,21 +4,69 @@ package inf112.fiasko.roborally.elementproperties;
  * This enum represents all possible tile types
  */
 public enum TileType {
+    /**
+     * The generic tile without functionality
+     */
     TILE(1),
+    /**
+     * A hole which robots might fall into
+     */
     HOLE(2),
+    /**
+     * A cogwheel rotating to the right
+     */
     COGWHEEL_RIGHT(3),
+    /**
+     * A cogwheel rotating to the left
+     */
     COGWHEEL_LEFT(4),
+    /**
+     * A slow and straight conveyor belt
+     */
     CONVEYOR_BELT_SLOW(5),
+    /**
+     * A slow conveyor belt with a rightward bend
+     */
     CONVEYOR_BELT_SLOW_RIGHT(6),
+    /**
+     * A slow conveyor belt with a leftward bend
+     */
     CONVEYOR_BELT_SLOW_LEFT(7),
+    /**
+     * A slow conveyor belt with entrances both to the left and to the right
+     */
     CONVEYOR_BELT_SLOW_SIDE_ENTRANCES(8),
+    /**
+     * A slow conveyor belt with one entrance on the left and one from behind
+     */
     CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT(9),
+    /**
+     * A slow conveyor belt with one entrance on the right and one from behind
+     */
     CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT(10),
+    /**
+     * A fast and straight conveyor belt
+     */
     CONVEYOR_BELT_FAST(11),
+    /**
+     * A fast conveyor belt with a rightward bend
+     */
     CONVEYOR_BELT_FAST_RIGHT(12),
+    /**
+     * A fast conveyor belt with a leftward bend
+     */
     CONVEYOR_BELT_FAST_LEFT(13),
+    /**
+     * A fast conveyor belt with one entrance on the left and one from behind
+     */
     CONVEYOR_BELT_FAST_SIDE_ENTRANCES(14),
+    /**
+     * A fast conveyor belt with one entrance on the left and one from behind
+     */
     CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT(15),
+    /**
+     * A fast conveyor belt with one entrance on the right and one from behind
+     */
     CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT(16),
     FLAG_1(17),
     FLAG_2(18),

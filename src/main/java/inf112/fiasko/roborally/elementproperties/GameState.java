@@ -5,23 +5,41 @@ package inf112.fiasko.roborally.elementproperties;
  */
 public enum GameState {
 
-    //Gives the game Access to the client and server
+    /**
+     * At the absolute start of the game, before anything has happended
+     */
     BEGINNING_OF_GAME,
-    //Indicates that the users' input is being run. The board should be shown
+    /**
+     * Indicates that the users' input is being run. The board should be shown
+     */
     RUNNING_PROGRAMS,
-    //Indicates that
+    /**
+     * The game is in the process of setting up things which are needed before it's ready for user input
+     */
     INITIAL_SETUP,
-    //Indicates that the game is in the process of cleaning up after a turn
+    /**
+     * Indicates that the game is in the process of cleaning up after a turn
+     */
     TURN_CLEANUP,
-    //Indicates that the user is in the process of choosing cards
+    /**
+     * Indicates that the user is in the process of choosing cards
+     */
     CHOOSING_CARDS,
-    //Indicates that the user is in the process of choosing whether to power down
+    /**
+     * Indicates that the user is in the process of choosing whether to power down
+     */
     CHOOSING_POWER_DOWN,
-    //Indicates that the user is in the process of choosing whether to stay in power down
+    /**
+     * Indicates that the user is in the process of choosing whether to stay in power down
+     */
     CHOOSING_STAY_IN_POWER_DOWN,
-    //Indicates that the game is won by a player
+    /**
+     * Indicates that the game is won by a player
+     */
     GAME_IS_WON,
-    //Indicates that the game is currently waiting for something
+    /**
+     * Indicates that the game is currently waiting for something
+     */
     LOADING
 
 }

@@ -4,13 +4,37 @@ package inf112.fiasko.roborally.elementproperties;
  * This class represents an id for marking specific robots
  */
 public enum RobotID {
+    /**
+     * The id of the first robot (white)
+     */
     ROBOT_1(1),
+    /**
+     * The id of the second robot (pink)
+     */
     ROBOT_2(2),
+    /**
+     * The id of the third robot (light green)
+     */
     ROBOT_3(3),
+    /**
+     * The id of the fourth robot (blue)
+     */
     ROBOT_4(4),
+    /**
+     * The id of the fifth robot (yellow)
+     */
     ROBOT_5(5),
+    /**
+     * The id of the sixth robot (dark green)
+     */
     ROBOT_6(6),
+    /**
+     * The id of the seventh robot (orange)
+     */
     ROBOT_7(7),
+    /**
+     * The id of the eight robot (red)
+     */
     ROBOT_8(8);
 
     private final int robotID;

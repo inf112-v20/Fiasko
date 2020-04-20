@@ -65,7 +65,7 @@ public class RobotTest {
 
     @Test
     public void testRobotGetNewFlag() {
-        testRobot.setLastFlagVisitedAndUpdateBackupPosition(nextFlag);
+        testRobot.setLastFlagVisited(nextFlag);
         assertEquals(1, testRobot.getLastFlagVisited());
     }
 
@@ -73,7 +73,7 @@ public class RobotTest {
     public void testRobotGetNewBackup() {
         Position nextFlagPosition = new Position(3, 4);
         testRobot.setPosition(nextFlagPosition);
-        testRobot.setLastFlagVisitedAndUpdateBackupPosition(nextFlag);
+        testRobot.setLastFlagVisited(nextFlag);
         assertEquals(nextFlagPosition, testRobot.getBackupPosition());
     }
 }

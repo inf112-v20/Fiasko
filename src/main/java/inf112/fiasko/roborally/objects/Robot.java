@@ -117,12 +117,8 @@ public class Robot {
      *
      * @param currentFlag The flag the robot is standing on
      */
-    public void setLastFlagVisitedAndUpdateBackupPosition(int currentFlag) {
-        if (currentFlag - 1 != this.lastFlagVisited) {
-            throw new IllegalArgumentException("The robot has not yet visited the previous flag!");
-        }
+    public void setLastFlagVisited(int currentFlag) {
         this.lastFlagVisited = currentFlag;
-        this.backupPosition = currentPosition;
     }
 
     /**

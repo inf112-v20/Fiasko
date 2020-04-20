@@ -443,7 +443,7 @@ public class Board {
         Robot robot = robots.get(robotID);
         int flagNr = flagID.getTileTypeID() % 16;
         if (flagNr - 1 == robot.getLastFlagVisited()) {
-            robot.setLastFlagVisitedAndUpdateBackupPosition(flagNr);
+            robot.setLastFlagVisited(flagNr);
             setHasTouchedFlagThisTurnFromRobotID(robotID, true);
         }
     }

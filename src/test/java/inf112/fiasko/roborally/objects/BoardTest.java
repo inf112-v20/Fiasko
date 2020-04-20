@@ -239,7 +239,7 @@ public class BoardTest {
     }
 
     @Test
-    public void flagDoesNotUpdatedOnRobotWithWringLastVisitedFlag() {
+    public void flagDoesNotUpdatedOnRobotWithWrongLastVisitedFlag() {
         Robot testRobot = robotList.get(6);
         assertEquals(0, testRobot.getLastFlagVisited());
         board.updateFlagOnRobot(RobotID.ROBOT_7, TileType.FLAG_2);

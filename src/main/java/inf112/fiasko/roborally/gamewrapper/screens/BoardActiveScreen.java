@@ -81,6 +81,10 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
         } else if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_STAY_IN_POWER_DOWN) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
+        } else if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.LOADING){
+            roboRallyWrapper.client.sendElement(false);
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+
         }
     }
 

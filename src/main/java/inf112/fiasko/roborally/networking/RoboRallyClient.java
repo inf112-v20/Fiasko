@@ -11,10 +11,12 @@ import java.io.IOException;
  */
 public class RoboRallyClient {
     private final Client client;
+
     /**
      * Instantiates a new Robo Rally client
+     *
      * @param ipAddress The ip address of the server to connect to
-     * @param wrapper The Robo Rally wrapper to be used
+     * @param wrapper   The Robo Rally wrapper to be used
      * @throws IOException If the server cannot be reached
      */
     public RoboRallyClient(String ipAddress, RoboRallyWrapper wrapper) throws IOException {
@@ -28,12 +30,16 @@ public class RoboRallyClient {
 
     /**
      * Sends something to the server
+     *
      * @param object The object to send to the server
      */
-    public void sendElement(Object object) {try{
-        client.sendTCP(object);}
-        catch(Exception e){e.printStackTrace();}
+    public void sendElement(Object object) {
+        try {
+            client.sendTCP(object);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
 }
 
 

@@ -5,12 +5,11 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
-import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
 import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,16 +20,17 @@ import java.util.Set;
  * This listener handles all sending and responses for the server
  */
 class RoboRallyServerListener extends Listener {
-    private Connection host;
     private final Map<Connection, RobotID> clients;
     private final Map<Connection, String> playerNames;
     private final List<Connection> deadPlayers;
+    private final RoboRallyServer server;
+    private Connection host;
     private Map<Connection, Boolean> stayInPowerDown;
     private Map<Connection, ProgramAndPowerdownRequest> programs;
-    private final RoboRallyServer server;
 
     /**
      * Instantiates a new Robo Rally server listener
+     *
      * @param server The Robo Rally server using the listener
      */
     RoboRallyServerListener(RoboRallyServer server) {
@@ -45,6 +45,7 @@ class RoboRallyServerListener extends Listener {
 
     /**
      * Lets the server know which players have lost this game.
+     *
      * @param deadRobots List of RobotID
      */
     public void setDeadPlayers(List<RobotID> deadRobots) {
@@ -59,6 +60,7 @@ class RoboRallyServerListener extends Listener {
 
     /**
      * Gets a map between connections and their player name
+     *
      * @return A mapping between connections and robot ids
      */
     public Map<Connection, String> getPlayerNames() {
@@ -67,6 +69,7 @@ class RoboRallyServerListener extends Listener {
 
     /**
      * Gets a map between connections and their robot id
+     *
      * @return A mapping between connections and robot ids
      */
     public Map<Connection, RobotID> getRobotID() {
@@ -74,7 +77,7 @@ class RoboRallyServerListener extends Listener {
     }
 
     @Override
-    public void received (Connection connection, Object object) {
+    public void received(Connection connection, Object object) {
         if (object instanceof String) {
             receivedString(connection, (String) object);
         } else if (object instanceof Boolean) {
@@ -86,6 +89,7 @@ class RoboRallyServerListener extends Listener {
 
     /**
      * Handles the receiving of a string, handled as a player name in this context
+     *
      * @param connection The connection sending the string
      * @param playerName The player name received
      */
@@ -100,8 +104,9 @@ class RoboRallyServerListener extends Listener {
 
     /**
      * Handles the receiving of continuing power down
+     *
      * @param connection The connection sending the stay in power down value
-     * @param bool The stay in power down value received
+     * @param bool       The stay in power down value received
      */
     private void receiveContinuePowerDown(Connection connection, Boolean bool) {
         stayInPowerDown.put(connection, bool);
@@ -110,18 +115,19 @@ class RoboRallyServerListener extends Listener {
             for (Connection connected : stayInPowerDown.keySet()) {
                 powerDowns.put(playerNames.get(connected), stayInPowerDown.get(connected));
             }
-            server.sendToAllClients(new PowerdownContainer(powerDowns));
+            server.sendToAllClients(new PowerDownContainer(powerDowns));
             stayInPowerDown = new HashMap<>();
         }
     }
 
     /**
      * Handles the receiving of a player's program and whether they want to power down
+     *
      * @param connection The connection sending the program and power down request
-     * @param request The program and power down request received
+     * @param request    The program and power down request received
      */
     private void receiveProgramAndPowerDownRequest(Connection connection, ProgramAndPowerdownRequest request) {
-        programs.put(connection,request);
+        programs.put(connection, request);
         if (receivedDataFromAllConnections(programs)) {
             Map<String, Boolean> powerDown = new HashMap<>();
             Map<String, List<ProgrammingCard>> program = new HashMap<>();
@@ -136,11 +142,12 @@ class RoboRallyServerListener extends Listener {
 
     /**
      * Checks whether the input map contains data received by all expected connections
+     *
      * @param data A map between connections and some type of data
-     * @param <K> The type of the data contained in the map
+     * @param <K>  The type of the data contained in the map
      * @return True if information has been received by all alive players
      */
-    private<K> boolean receivedDataFromAllConnections(Map<Connection, K> data) {
+    private <K> boolean receivedDataFromAllConnections(Map<Connection, K> data) {
         Set<Connection> connections = clients.keySet();
         connections.removeAll(deadPlayers);
         return connections.containsAll(data.keySet()) && data.keySet().containsAll(connections);

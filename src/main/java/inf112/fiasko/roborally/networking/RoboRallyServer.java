@@ -4,6 +4,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.utility.NetworkUtil;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ public class RoboRallyServer {
 
     /**
      * Instantiates a new Robo Rally server
+     *
      * @throws IOException If the server cannot be started
      */
     public RoboRallyServer() throws IOException {
@@ -30,6 +32,7 @@ public class RoboRallyServer {
 
     /**
      * Makes notice of players which are dead and as such should not be expected to send anything
+     *
      * @param deadRobotList A list of robot ids of robots which are permanently dead
      */
     public void setDeadPlayers(List<RobotID> deadRobotList) {
@@ -38,6 +41,7 @@ public class RoboRallyServer {
 
     /**
      * Gets a map between connections and their robot id
+     *
      * @return A mapping between connections and robot ids
      */
     public Map<Connection, RobotID> getRobotID() {
@@ -46,6 +50,7 @@ public class RoboRallyServer {
 
     /**
      * Gets a map between connections and their player name
+     *
      * @return A mapping between connections and robot ids
      */
     public Map<Connection, String> getPlayerNames() {
@@ -54,6 +59,7 @@ public class RoboRallyServer {
 
     /**
      * Sends an object to all clients
+     *
      * @param object The object to send
      */
     public void sendToAllClients(Object object) {
@@ -62,8 +68,9 @@ public class RoboRallyServer {
 
     /**
      * Sends an object to a specific client
+     *
      * @param connection The connection to send the object to
-     * @param object The object to send
+     * @param object     The object to send
      */
     public void sendToClient(Connection connection, Object object) {
         server.sendToTCP(connection.getID(), object);

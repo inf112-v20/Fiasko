@@ -15,18 +15,24 @@ public class GameStartInfo {
     /**
      * Empty initialization method required by kryo
      */
-    public GameStartInfo() {}
+    public GameStartInfo() {
+    }
 
     /**
-     * Sets the player name of the current player
-     * @param playerName The player name of the current player
+     * Instantiates a new GameStartInfo object
+     *
+     * @param boardName  The name of the board to be used, with extension
+     * @param playerList List of players for the game
      */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public GameStartInfo(String boardName, List<Player> playerList, String name) {
+        this.playerName = name;
+        this.boardName = boardName;
+        this.playerList = playerList;
     }
 
     /**
      * Gets the player name of the current player
+     *
      * @return The player name of the current player
      */
     public String getPlayerName() {
@@ -34,34 +40,17 @@ public class GameStartInfo {
     }
 
     /**
-     * Sets the name of the board to be used
-     * @param boardName The name of the board to be used, with extension
+     * Sets the player name of the current player
+     *
+     * @param playerName The player name of the current player
      */
-    public void setBoardName(String boardName) {
-        this.boardName = boardName;
-    }
-
-    /**
-     * Sets the list of players for the game
-     * @param playerList List of players for the game
-     */
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
-    }
-
-    /**
-     * Instantiates a new GameStartInfo object
-     * @param boardName The name of the board to be used, with extension
-     * @param playerList List of players for the game
-     */
-    public GameStartInfo(String boardName, List<Player> playerList,String name) {
-        this.playerName=name;
-        this.boardName = boardName;
-        this.playerList = playerList;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     /**
      * Gets the list of players
+     *
      * @return A list of players
      */
     public List<Player> getPlayerList() {
@@ -69,11 +58,30 @@ public class GameStartInfo {
     }
 
     /**
+     * Sets the list of players for the game
+     *
+     * @param playerList List of players for the game
+     */
+    public void setPlayerList(List<Player> playerList) {
+        this.playerList = playerList;
+    }
+
+    /**
      * Gets the board name
+     *
      * @return The board name
      */
     public String getBoardName() {
         return boardName;
+    }
+
+    /**
+     * Sets the name of the board to be used
+     *
+     * @param boardName The name of the board to be used, with extension
+     */
+    public void setBoardName(String boardName) {
+        this.boardName = boardName;
     }
 
 }

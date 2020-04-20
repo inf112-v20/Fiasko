@@ -9,6 +9,7 @@ public class ErrorResponse {
 
     /**
      * Constructs a new error response
+     *
      * @param errorMessage The error message describing the error
      */
     public ErrorResponse(String errorMessage) {
@@ -18,8 +19,9 @@ public class ErrorResponse {
 
     /**
      * Constructs a new error response
+     *
      * @param errorMessage The error message describing the error
-     * @param critical Whether the error is critical
+     * @param critical     Whether the error is critical
      */
     public ErrorResponse(String errorMessage, boolean critical) {
         this.errorMessage = errorMessage;
@@ -28,6 +30,7 @@ public class ErrorResponse {
 
     /**
      * Gets the error message attached to the error response
+     *
      * @return An error message
      */
     public String getErrorMessage() {
@@ -36,6 +39,7 @@ public class ErrorResponse {
 
     /**
      * Gets whether the error is critical or not
+     *
      * @return True if the error is critical. False otherwise
      */
     public boolean isCritical() {

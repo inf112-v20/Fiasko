@@ -8,9 +8,11 @@ public class ProgramAndPowerdownRequest {
     private Boolean powerdown;
     private List<ProgrammingCard> program;
 
-    public ProgramAndPowerdownRequest(){}
+    public ProgramAndPowerdownRequest() {
+    }
+
     public ProgramAndPowerdownRequest(Boolean powerdown, List<ProgrammingCard> program) {
-        this.program=program;
+        this.program = program;
         this.powerdown = powerdown;
     }
 

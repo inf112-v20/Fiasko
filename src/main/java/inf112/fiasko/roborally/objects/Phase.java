@@ -73,7 +73,6 @@ public class Phase {
                 continue;
             }
             gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
-            gameBoard.setHasTouchedFlagThisTurnFromRobotID(robotID, true);
             checkIfPlayerWon(robotID, flags.size());
         }
     }

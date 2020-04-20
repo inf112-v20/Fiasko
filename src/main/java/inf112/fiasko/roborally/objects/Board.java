@@ -167,7 +167,7 @@ public class Board {
         if(robots.containsKey(robotID)){
             robots.get(robotID).setPowerDown(powerDown);
         }
-        else {
+        else if (getRobotFromDeadRobots(robotID)!=null) {
             getRobotFromDeadRobots(robotID).setPowerDown(powerDown);
         }
     }
@@ -184,9 +184,10 @@ public class Board {
         if(robots.containsKey(robotID)){
             return robots.get(robotID).isInPowerDown();
         }
-        else {
+        else if (getRobotFromDeadRobots(robotID)!=null){
             return  getRobotFromDeadRobots(robotID).isInPowerDown();
         }
+        return false;
     }
     private Robot getRobotFromDeadRobots(RobotID robotID){
         for (Robot robot:deadRobots) {

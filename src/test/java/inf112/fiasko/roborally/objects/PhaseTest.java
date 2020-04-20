@@ -39,4 +39,22 @@ public class PhaseTest {
         phase.moveAllConveyorBelts();
         assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(robot1Position));
     }
+
+    @Test
+    public void playerWinsAfterTouchingAllFlagsInCorrectOrder() {
+        FakeGame testGame = new FakeGame();
+        List<Robot> robot = new ArrayList<>();
+        List<Player> player = new ArrayList<>();
+        robot.add(new Robot(RobotID.ROBOT_1, new Position(0,0)));
+        player.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/win_test_board.txt", robot);
+            Phase testPhase = new Phase(board, player, 0, testGame);
+            testPhase.checkAllFlags();
+            assertEquals("Player 1", testGame.getWinningPlayerName());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

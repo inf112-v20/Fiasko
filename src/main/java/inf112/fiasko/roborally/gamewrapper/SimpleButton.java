@@ -14,6 +14,7 @@ public class SimpleButton {
 
     /**
      * Instantiates a new simple button
+     *
      * @param text The text to display on the button
      * @param font The font to use to draw button text
      */
@@ -29,6 +30,7 @@ public class SimpleButton {
 
     /**
      * Gets the button generated
+     *
      * @return A button
      */
     public TextButton getButton() {

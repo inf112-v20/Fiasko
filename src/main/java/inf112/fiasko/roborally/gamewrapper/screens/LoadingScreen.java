@@ -19,6 +19,7 @@ public class LoadingScreen extends AbstractScreen {
 
     /**
      * Instantiates a new loading screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public LoadingScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -37,7 +38,7 @@ public class LoadingScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Loading...", applicationWidth / 2f - 380 / 2f,
-                applicationHeight / 2f,380, 1, true);
+                applicationHeight / 2f, 380, 1, true);
         roboRallyWrapper.batch.end();
 
         if (roboRallyWrapper.roboRallyGame != null) {
@@ -50,6 +51,7 @@ public class LoadingScreen extends AbstractScreen {
 
     /**
      * Changes to another screen depending on which state the game is in
+     *
      * @param gameState The current state of the game
      */
     private void handleScreenChange(GameState gameState) {
@@ -62,7 +64,12 @@ public class LoadingScreen extends AbstractScreen {
                 break;
             case CHOOSING_CARDS:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(this.roboRallyWrapper));
-                break; }
+                break;
+            default:
+                if (gameState != GameState.LOADING) {
+                    System.out.println("Don't know what to do with " + gameState);
+                }
+        }
     }
 
     @Override

@@ -27,6 +27,7 @@ public class PowerDownScreen extends AbstractScreen {
 
     /**
      * Instantiates a new power down screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public PowerDownScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -36,14 +37,14 @@ public class PowerDownScreen extends AbstractScreen {
         stage.setViewport(viewport);
         TextButton powerDownButton = new SimpleButton("PowerDown", roboRallyWrapper.font).getButton();
         stage.addActor(powerDownButton);
-        powerDownButton.setY(applicationHeight / 2f-50);
+        powerDownButton.setY(applicationHeight / 2f - 50);
         powerDownButton.setX(applicationWidth / 2f - powerDownButton.getWidth() / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         startTime = System.currentTimeMillis();
         powerDownButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 sendPowerDownStatus(true);
                 return true;
             }
@@ -57,25 +58,26 @@ public class PowerDownScreen extends AbstractScreen {
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
-        int elapsedTime = (int)Math.floor((System.currentTimeMillis() - startTime) / 1000f);
+        int elapsedTime = (int) Math.floor((System.currentTimeMillis() - startTime) / 1000f);
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to enter Power Down next round",
-                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(10 - elapsedTime),
-                applicationWidth / 2f - 40 / 2f,applicationHeight / 2f - 100,40, 1,
+                applicationWidth / 2f - 40 / 2f, applicationHeight / 2f - 100, 40, 1,
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();
 
         if (elapsedTime > 10) {
-            sendPowerDownStatus( false);
+            sendPowerDownStatus(false);
         }
     }
 
     /**
      * Sends power down status to the server
+     *
      * @param bool Whether the player wants to go/stay in power down
      */
     private void sendPowerDownStatus(boolean bool) {

@@ -31,6 +31,7 @@ public class IPAddressScreen extends AbstractScreen {
 
     /**
      * Instantiates a new ip address screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public IPAddressScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -38,8 +39,8 @@ public class IPAddressScreen extends AbstractScreen {
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton joinButton = new TextButton("Join", skin);
-        joinButton.setSize(300,60);
-        joinButton.setPosition(applicationWidth/2f -joinButton.getWidth()/2f,300);
+        joinButton.setSize(300, 60);
+        joinButton.setPosition(applicationWidth / 2f - joinButton.getWidth() / 2f, 300);
         joinButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
@@ -49,7 +50,7 @@ public class IPAddressScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 try {
-                    roboRallyWrapper.client = new RoboRallyClient(txtinput.getText(),roboRallyWrapper);
+                    roboRallyWrapper.client = new RoboRallyClient(txtinput.getText(), roboRallyWrapper);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -59,8 +60,8 @@ public class IPAddressScreen extends AbstractScreen {
             }
         });
         txtinput = new TextField("", skin);
-        txtinput.setPosition(applicationWidth/2f -txtinput.getWidth()/2f,250);
-        txtinput.setSize(150,40);
+        txtinput.setPosition(applicationWidth / 2f - txtinput.getWidth() / 2f, 250);
+        txtinput.setSize(150, 40);
         stage.addActor(txtinput);
         stage.addActor(joinButton);
 
@@ -85,7 +86,7 @@ public class IPAddressScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Enter IP address and click the button to join a server",
-                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();

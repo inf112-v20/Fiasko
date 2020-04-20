@@ -14,8 +14,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
-import inf112.fiasko.roborally.objects.IDrawableObject;
-import inf112.fiasko.roborally.objects.IRoboRallyGame;
+import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.objects.RoboRallyGame;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
@@ -27,19 +27,19 @@ import java.util.List;
 public class BoardActiveScreen extends AbstractScreen implements InputProcessor {
     private final RoboRallyWrapper roboRallyWrapper;
     private final OrthographicCamera camera;
-    private IRoboRallyGame debugGame;
-
     private final int tileDimensions = 64;
+    private final int viewPortWidth = 12 * tileDimensions;
+    private final int viewPortHeight = 12 * tileDimensions;
+    private final Viewport viewport;
+    private RoboRallyGame debugGame;
     private float cameraZoom = 1;
     private int cameraX = 0;
     private int cameraY = 0;
     private Vector2 lastTouch;
-    private final int viewPortWidth = 12 * tileDimensions;
-    private final int viewPortHeight = 12 * tileDimensions;
-    private final Viewport viewport;
 
     /**
      * Instantiates a new board active screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -67,9 +67,9 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-                (Gdx.graphics.getBufferFormat().coverageSampling?GL20.GL_COVERAGE_BUFFER_BIT_NV:0));
+                (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
         updateCamera();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
         roboRallyWrapper.batch.begin();
@@ -79,8 +79,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         // Checks if there has been found a winning player and then changes the screen to display the winning screen
         if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.GAME_IS_WON) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
-        }
-        else if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_STAY_IN_POWER_DOWN){
+        } else if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_STAY_IN_POWER_DOWN) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
         }
     }
@@ -100,7 +99,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     @Override
     public boolean keyUp(int keyCode) {
         if (keyCode == Input.Keys.HOME) {
-            IRoboRallyGame temp = roboRallyWrapper.roboRallyGame;
+            RoboRallyGame temp = roboRallyWrapper.roboRallyGame;
             roboRallyWrapper.roboRallyGame = debugGame;
             this.debugGame = temp;
             return true;
@@ -140,8 +139,8 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         Vector2 diff = newTouch.cpy().sub(lastTouch);
         lastTouch = newTouch;
         int[] positionChange = translateCoordinateAccountingForCameraRotation(diff.x, diff.y);
-        cameraX = (int)(positionChange[0] * cameraZoom);
-        cameraY = (int)(positionChange[1] * cameraZoom);
+        cameraX = (int) (positionChange[0] * cameraZoom);
+        cameraY = (int) (positionChange[1] * cameraZoom);
         return true;
     }
 
@@ -170,15 +169,16 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     /**
      * Renders all drawable objects on the board
+     *
      * @param batch The sprite batch to use for drawing
      */
     private void drawBoard(SpriteBatch batch) {
-        List<IDrawableObject> elementsToDraw =
+        List<DrawableObject> elementsToDraw =
                 IOUtil.getDrawableObjectsFromGame(roboRallyWrapper.roboRallyGame, tileDimensions, tileDimensions);
-        for (IDrawableObject object : elementsToDraw) {
+        for (DrawableObject object : elementsToDraw) {
             TextureRegion objectTextureRegion = object.getTexture();
             batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
-                    (float)object.getWidth() / 2, (float)object.getHeight() / 2,
+                    (float) object.getWidth() / 2, (float) object.getHeight() / 2,
                     object.getWidth(), object.getHeight(), 1, 1, object.getRotation(),
                     objectTextureRegion.getRegionX(), objectTextureRegion.getRegionY(),
                     objectTextureRegion.getRegionWidth(), objectTextureRegion.getRegionHeight(),
@@ -199,6 +199,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     /**
      * Translates x and y coordinates according to the camera's direction
+     *
      * @param x The x coordinate to translate
      * @param y The y coordinate to translate
      * @return A list containing the translated coordinates of x and y

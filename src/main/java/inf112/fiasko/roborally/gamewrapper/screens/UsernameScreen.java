@@ -26,6 +26,7 @@ public class UsernameScreen extends AbstractScreen {
 
     /**
      * Instantiates a new username screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public UsernameScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -33,8 +34,8 @@ public class UsernameScreen extends AbstractScreen {
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton confirm = new TextButton("Confirm", skin);
-        confirm.setSize(300,60);
-        confirm.setPosition(applicationWidth/2f - confirm.getWidth()/2,300);
+        confirm.setSize(300, 60);
+        confirm.setPosition(applicationWidth / 2f - confirm.getWidth() / 2, 300);
         confirm.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
@@ -50,14 +51,14 @@ public class UsernameScreen extends AbstractScreen {
                 roboRallyWrapper.client.sendElement(userName);
                 if (roboRallyWrapper.server == null) {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-                } else{
+                } else {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLobbyScreen(roboRallyWrapper));
                 }
             }
         });
-        textInput = new TextField("",skin);
-        textInput.setPosition(applicationWidth/2f - textInput.getWidth()/2,250);
-        textInput.setSize(150,40);
+        textInput = new TextField("", skin);
+        textInput.setPosition(applicationWidth / 2f - textInput.getWidth() / 2, 250);
+        textInput.setSize(150, 40);
         stage.addActor(textInput);
         stage.addActor(confirm);
 
@@ -70,6 +71,7 @@ public class UsernameScreen extends AbstractScreen {
 
     /**
      * Checks whether the username is invalid
+     *
      * @param userName The username the user wants
      * @return False if the username can be used
      */
@@ -92,7 +94,7 @@ public class UsernameScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to enter username",
-                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();

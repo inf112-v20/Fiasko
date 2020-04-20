@@ -22,6 +22,7 @@ public class WinnerScreen extends AbstractScreen {
 
     /**
      * Instantiates a new winner screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public WinnerScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -35,12 +36,12 @@ public class WinnerScreen extends AbstractScreen {
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         quitButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
                 return true;
             }
         });
-        quitButton.setX(applicationWidth / 2f + quitButton.getWidth()/2);
+        quitButton.setX(applicationWidth / 2f + quitButton.getWidth() / 2);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
     }
@@ -54,11 +55,11 @@ public class WinnerScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "The winner is: " +
-                        roboRallyWrapper.roboRallyGame.getWinningPlayerName(),applicationWidth / 2f - 380 / 2f,
-                applicationHeight / 2f + 100,380, 1,
+                        roboRallyWrapper.roboRallyGame.getWinningPlayerName(), applicationWidth / 2f - 380 / 2f,
+                applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to exit the game",
-                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();

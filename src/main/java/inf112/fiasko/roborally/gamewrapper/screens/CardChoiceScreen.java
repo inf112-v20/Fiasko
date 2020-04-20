@@ -47,6 +47,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     /**
      * Instantiates a new card choice screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -82,12 +83,13 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     /**
      * Generates a listener for confirming cards
+     *
      * @return An input listener
      */
     private InputListener getConfirmListener() {
         return new InputListener() {
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (chosenCards.size() == maxCards) {
                     roboRallyWrapper.roboRallyGame.setProgram(getCards());
                     roboRallyWrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
@@ -104,6 +106,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     /**
      * Gets a list of programming cards from the player's chosen cards
+     *
      * @return A list of programming cards
      */
     private List<ProgrammingCard> getCards() {
@@ -114,6 +117,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     /**
      * Calculates positions for cards in the given deck
+     *
      * @param deck A deck containing cards which can be chosen
      */
     private void generateCards(ProgrammingCardDeck deck) {
@@ -121,13 +125,13 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         float cardWidth = viewport.getWorldWidth() / 3;
         float cardHeight = (viewport.getWorldHeight() - 30) / 3;
         for (int i = 0; i < cardList.size(); i++) {
-            int x = (int)(((i % 3) * cardWidth) + 10);
-            int y = (int)(((i / 3) * cardHeight + 10));
+            int x = (int) (((i % 3) * cardWidth) + 10);
+            int y = (int) (((i / 3) * cardHeight + 10));
             Rectangle card = new Rectangle();
             card.x = x;
             card.y = y;
-            card.width = (int)cardWidth - 20;
-            card.height = (int)cardHeight - 20;
+            card.width = (int) cardWidth - 20;
+            card.height = (int) cardHeight - 20;
             ProgrammingCard programmingCard = cardList.get(i);
             CardRectangle cardRectangle = new CardRectangle(card, programmingCard);
             cardRectangles.add(cardRectangle);
@@ -179,7 +183,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         for (CardRectangle cardRectangle : cardRectangles) {
             GlyphLayout layout = new GlyphLayout(roboRallyWrapper.font,
                     Integer.toString(cardRectangle.card.getPriority()));
-            float fontX = (int)(cardRectangle.rectangle.x + (cardRectangle.rectangle.width - layout.width) / 2.0);
+            float fontX = (int) (cardRectangle.rectangle.x + (cardRectangle.rectangle.width - layout.width) / 2.0);
             float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 30;
             roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
             drawCardSymbol(cardRectangle);
@@ -188,6 +192,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     /**
      * Draws the symbol on a card
+     *
      * @param cardRectangle The card rectangle to draw
      */
     private void drawCardSymbol(CardRectangle cardRectangle) {

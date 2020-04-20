@@ -13,8 +13,9 @@ public class CardRectangle {
 
     /**
      * Instantiates a new card rectangle
+     *
      * @param rectangle The rectangle of this card rectangle
-     * @param card The card of this card rectangle
+     * @param card      The card of this card rectangle
      */
     CardRectangle(Rectangle rectangle, ProgrammingCard card) {
         this.rectangle = rectangle;

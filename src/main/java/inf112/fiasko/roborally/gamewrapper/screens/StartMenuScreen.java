@@ -28,6 +28,7 @@ public class StartMenuScreen extends AbstractScreen {
 
     /**
      * Instantiates a new start menu screen
+     *
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public StartMenuScreen(final RoboRallyWrapper roboRallyWrapper) {
@@ -42,7 +43,7 @@ public class StartMenuScreen extends AbstractScreen {
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         serverButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 try {
                     roboRallyWrapper.server = new RoboRallyServer();
                     roboRallyWrapper.client = new RoboRallyClient("127.0.0.1", roboRallyWrapper);
@@ -63,7 +64,7 @@ public class StartMenuScreen extends AbstractScreen {
         Gdx.input.setInputProcessor(stage);
         clientButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getIPAddressScreen(roboRallyWrapper));
                 return true;
             }
@@ -75,14 +76,14 @@ public class StartMenuScreen extends AbstractScreen {
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         quitButton.addListener(new InputListener() {
             @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 roboRallyWrapper.quit();
                 return true;
             }
         });
-        serverButton.setX(applicationWidth / 2f-serverButton.getWidth()-clientButton.getWidth()/2 - 10);
-        clientButton.setX(applicationWidth / 2f - clientButton.getWidth()/2);
-        quitButton.setX(applicationWidth / 2f + clientButton.getWidth()/2+10);
+        serverButton.setX(applicationWidth / 2f - serverButton.getWidth() - clientButton.getWidth() / 2 - 10);
+        clientButton.setX(applicationWidth / 2f - clientButton.getWidth() / 2);
+        quitButton.setX(applicationWidth / 2f + clientButton.getWidth() / 2 + 10);
 
     }
 
@@ -100,7 +101,7 @@ public class StartMenuScreen extends AbstractScreen {
 
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "RoboRally",
-                applicationWidth / 2f - 380 / 2f,applicationHeight / 2f + 100,380, 1,
+                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();

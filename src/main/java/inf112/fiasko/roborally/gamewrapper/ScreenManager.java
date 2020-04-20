@@ -25,10 +25,7 @@ public class ScreenManager {
 
 
     public synchronized CardChoiceScreen getCardChoiceScreen(RoboRallyWrapper roboRallyWrapper) {
-        if (this.cardChoiceScreen == null) {
-            this.cardChoiceScreen = new CardChoiceScreen(roboRallyWrapper);
-        }
-        return cardChoiceScreen;
+        return new CardChoiceScreen(roboRallyWrapper);
     }
 
     /**
@@ -51,10 +48,7 @@ public class ScreenManager {
      * @return A power down screen instance
      */
     public synchronized PowerDownScreen getPowerDownScreen(RoboRallyWrapper roboRallyWrapper) {
-        if (this.powerDownScreen == null) {
-            this.powerDownScreen = new PowerDownScreen(roboRallyWrapper);
-        }
-        return powerDownScreen;
+        return new PowerDownScreen(roboRallyWrapper);
     }
 
     /**

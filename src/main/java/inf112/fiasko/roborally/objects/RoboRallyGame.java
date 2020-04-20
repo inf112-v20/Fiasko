@@ -167,13 +167,24 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         // Repair robots on repair tiles
         repairAllRobotsOnRepairTiles();
         //Updates the host's card deck
+
         if (host) {
             //TODO: Fix updateLockedProgrammingCardsForAllPlayers throwing NullPointerException on robotDamage
             updateLockedProgrammingCardsForAllPlayers();
             removeNonLockedProgrammingCardsFromPlayers();
         }
+
         sendAllDeadPlayersToServer();
         // TODO: If this player is in power down, ask if it shall continue
+        if(gameBoard.getPowerDown(getPlayerFromName(this.playerName).getRobotID())){
+            setGameState(GameState.CHOOSING_STAY_IN_POWER_DOWN);
+
+        } else {
+            setGameState(GameState.LOADING);
+
+        }
+        updateRobotPowerDown();
+
     }
 
     @Override
@@ -183,6 +194,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         }
         respawnRobots();
         resetHasTouchedFlagThisTurnForAllRobots();
+        setGameState(GameState.BEGINNING_OF_GAME);
+        runTurn();
     }
 
     @Override
@@ -230,6 +243,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
 
             gameBoard = BoardLoaderUtil.loadBoard("boards/" + boardName, robots);
             moveRobotsToSpawn();
+
             repairTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3,
                     TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
 
@@ -256,7 +270,10 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             }
             BoardElementContainer<Tile> spawnTileContainer = spawnTileContainerList.get(0);
             gameBoard.teleportRobot(robotID, spawnTileContainer.getPosition());
+            gameBoard.setBackupPositionOfRobot(robotID, spawnTileContainer.getPosition());
+
         }
+
     }
 
     /**

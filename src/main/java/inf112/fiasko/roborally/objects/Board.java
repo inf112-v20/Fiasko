@@ -444,6 +444,7 @@ public class Board {
         int flagNr = flagID.getTileTypeID() % 16;
         if (flagNr - 1 == robot.getLastFlagVisited()) {
             robot.setLastFlagVisitedAndUpdateBackupPosition(flagNr);
+            setHasTouchedFlagThisTurnFromRobotID(robotID, true);
         }
     }
 

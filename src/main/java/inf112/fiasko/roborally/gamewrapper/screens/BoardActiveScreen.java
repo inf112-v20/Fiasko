@@ -103,6 +103,8 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             roboRallyWrapper.roboRallyGame = debugGame;
             this.debugGame = temp;
             return true;
+        } else if (keyCode == Input.Keys.TAB && roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_CARDS) {
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(roboRallyWrapper));
         }
         return false;
     }

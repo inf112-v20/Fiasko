@@ -10,6 +10,7 @@ public class Position {
 
     /**
      * Initializes the position
+     *
      * @param xCoordinate The x coordinate of the position
      * @param yCoordinate The y coordinate of the position
      */
@@ -20,6 +21,7 @@ public class Position {
 
     /**
      * Gets the x coordinate of the position
+     *
      * @return The x coordinate of the position
      */
     public int getXCoordinate() {
@@ -28,6 +30,7 @@ public class Position {
 
     /**
      * Gets the y coordinate of the position
+     *
      * @return The y coordinate of the position
      */
     public int getYCoordinate() {

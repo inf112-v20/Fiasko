@@ -45,7 +45,7 @@ public class WallTypeTest {
         assertNull(TileType.getTileTypeFromID(-1));
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invalidWallDirectionThrowsError() {
         new Wall(WallType.WALL_NORMAL, Direction.NORTH_EAST);
     }

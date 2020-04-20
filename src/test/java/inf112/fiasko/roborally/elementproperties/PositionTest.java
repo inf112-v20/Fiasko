@@ -23,25 +23,34 @@ public class PositionTest {
         testPosition5 = new Position(1, 4);
         testPosition6 = new Position(3, 3);
     }
+
     @Test
     public void testGetXPosition() {
-        assertEquals(3,testPosition1.getXCoordinate());
+        assertEquals(3, testPosition1.getXCoordinate());
     }
 
     @Test
     public void testGetYPosition() {
-        assertEquals(4,testPosition1.getYCoordinate());
+        assertEquals(4, testPosition1.getYCoordinate());
     }
 
     @Test
-    public void testSamePositionsAreEqual() { assertEquals(testPosition1, testPosition3);}
+    public void testSamePositionsAreEqual() {
+        assertEquals(testPosition1, testPosition3);
+    }
 
     @Test
-    public void testDifferentPositionsAreNotEqual() { assertNotEquals(testPosition2, testPosition4);}
+    public void testDifferentPositionsAreNotEqual() {
+        assertNotEquals(testPosition2, testPosition4);
+    }
 
     @Test
-    public void equalXandDifferentYIsNotEqual() { assertNotEquals(testPosition1, testPosition6);}
+    public void equalXandDifferentYIsNotEqual() {
+        assertNotEquals(testPosition1, testPosition6);
+    }
 
     @Test
-    public void equalYandDifferentXIsNotEqual() { assertNotEquals(testPosition1, testPosition5);}
+    public void equalYandDifferentXIsNotEqual() {
+        assertNotEquals(testPosition1, testPosition5);
+    }
 }

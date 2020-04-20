@@ -71,7 +71,7 @@ public class PowerDownScreen extends AbstractScreen {
         stage.draw();
 
         if (elapsedTime > 10) {
-            sendPowerDownStatus(false);
+            sendPowerDownStatus(Boolean.FALSE);
         }
     }
 

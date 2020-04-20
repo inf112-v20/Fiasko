@@ -6,8 +6,14 @@ import java.util.Map;
  * This class is used to contain power down status for all players
  */
 public class PowerDownContainer {
-    private final Map<String, Boolean> powerDown;
+    private Map<String, Boolean> powerDown;
 
+    /**
+     * IMPORTANT!!!
+     * DO NOT USE!
+     * Kryonet demands a no args constructor or else it throws a exception
+     */
+    public PowerDownContainer(){}
     /**
      * Instantiates a new power down container
      *

@@ -18,20 +18,21 @@ import java.util.Map;
 public class Board {
     private int boardHeight;
     private int boardWidth;
-    private IGrid<Wall> walls;
-    private IGrid<Tile> tiles;
-    private IGrid<Particle> particles;
+    private Grid<Wall> walls;
+    private Grid<Tile> tiles;
+    private Grid<Particle> particles;
     private Map<RobotID, Robot> robots;
     private List<Robot> deadRobots;
     private List<RobotID> realDeadRobots;
 
     /**
      * Initializes the board
-     * @param tiles A grid containing all tiles
-     * @param walls A grid containing all walls
+     *
+     * @param tiles  A grid containing all tiles
+     * @param walls  A grid containing all walls
      * @param robots A list of all robots in the game
      */
-    public Board(IGrid<Tile> tiles, IGrid<Wall> walls, List<Robot> robots) {
+    public Board(Grid<Tile> tiles, Grid<Wall> walls, List<Robot> robots) {
         if (walls.getWidth() != tiles.getWidth() || walls.getHeight() != tiles.getHeight()) {
             throw new IllegalArgumentException("The grids in the input don't have the same dimensions.");
         }
@@ -46,19 +47,23 @@ public class Board {
         this.boardHeight = tiles.getHeight();
         this.walls = walls;
         this.tiles = tiles;
-        this.particles = new Grid<>(tiles.getWidth(), tiles.getHeight());
+        this.particles = new ListGrid<>(tiles.getWidth(), tiles.getHeight());
         this.deadRobots = new ArrayList<>();
         this.realDeadRobots = new ArrayList<>();
     }
 
     /**
      * All the Real dead player's robots.
+     *
      * @return A list of Robots.
      */
-    public List<RobotID> getRealDeadRobots() { return realDeadRobots; }
+    public List<RobotID> getRealDeadRobots() {
+        return realDeadRobots;
+    }
 
     /**
      * Gets the height of the board
+     *
      * @return The height of the board
      */
     public int getBoardHeight() {
@@ -67,6 +72,7 @@ public class Board {
 
     /**
      * Gets the width of the board
+     *
      * @return The width of the board
      */
     public int getBoardWidth() {
@@ -75,6 +81,7 @@ public class Board {
 
     /**
      * Gets all alive robots from the board
+     *
      * @return A list of alive robots
      */
     public List<Robot> getAliveRobots() {
@@ -85,6 +92,7 @@ public class Board {
 
     /**
      * Gets all the tiles from the board
+     *
      * @return A list of all tiles on the board
      */
     public List<Tile> getTiles() {
@@ -93,6 +101,7 @@ public class Board {
 
     /**
      * Gets all the walls from the board
+     *
      * @return A list of all the walls on the board
      */
     public List<Wall> getWalls() {
@@ -101,6 +110,7 @@ public class Board {
 
     /**
      * Gets all the particles from the board
+     *
      * @return A list of all the particles on the board
      */
     public List<Particle> getParticles() {
@@ -109,6 +119,7 @@ public class Board {
 
     /**
      * Rotates a robot to the right
+     *
      * @param robotID The id of the robot to rotate
      */
     public void rotateRobotLeft(RobotID robotID) {
@@ -119,6 +130,7 @@ public class Board {
 
     /**
      * Rotates a robot to the left
+     *
      * @param robotID The id of the robot to rotate
      */
     public void rotateRobotRight(RobotID robotID) {
@@ -129,6 +141,7 @@ public class Board {
 
     /**
      * Moves a robot one unit forward according to the direction it's currently facing
+     *
      * @param robotID The robot to move
      */
     public void moveRobotForward(RobotID robotID) {
@@ -137,6 +150,7 @@ public class Board {
 
     /**
      * Moves a robot one unit backwards according to the direction it's currently facing
+     *
      * @param robotID The robot to move
      */
     public void reverseRobot(RobotID robotID) {
@@ -145,7 +159,8 @@ public class Board {
 
     /**
      * Sets the power down status of the robot
-     * @param robotID The robot id of the robot
+     *
+     * @param robotID   The robot id of the robot
      * @param powerdown The status of the powerdown
      */
     public void setPowerDown(RobotID robotID, Boolean powerdown) {
@@ -154,6 +169,7 @@ public class Board {
 
     /**
      * Gets the power down status of the robot
+     *
      * @param robotID The robot id of the robot
      */
     public boolean getPowerDown(RobotID robotID) {
@@ -162,6 +178,7 @@ public class Board {
 
     /**
      * removes one damage for a given robot given that it has taken som damage before
+     *
      * @param robotID the ID of the robot
      */
     public void repairRobotOnTile(RobotID robotID) {
@@ -183,6 +200,7 @@ public class Board {
 
     /**
      * Get the damage of a specific robot
+     *
      * @param robot The RobotID of a robot
      * @return The amount of damage the robot has currently
      */
@@ -192,7 +210,8 @@ public class Board {
 
     /**
      * Moves a robot one unit in a specified direction
-     * @param robotID ID of the robot to move
+     *
+     * @param robotID   ID of the robot to move
      * @param direction The direction to move the robot
      * @return True if the robot moved away from its old position
      */
@@ -224,6 +243,7 @@ public class Board {
 
     /**
      * Checks whether a given tile is a conveyor belt
+     *
      * @param tile The tile to check
      * @return True if the tile is a conveyor belt
      */
@@ -253,11 +273,11 @@ public class Board {
     /**
      * Teleports a robot to some position without verification
      *
-     * Be quite careful about using this method. No validation will me done. The robot will magically disappear from
+     * <p>Be quite careful about using this method. No validation will me done. The robot will magically disappear from
      * one position and appear on another, hence the name. This method should only be used when the new position has
-     * been confirmed available.
+     * been confirmed available.</p>
      *
-     * @param robotID The id of the robot to teleport
+     * @param robotID     The id of the robot to teleport
      * @param newPosition The position the robot should teleport to
      */
     public void teleportRobot(RobotID robotID, Position newPosition) {
@@ -266,8 +286,9 @@ public class Board {
 
     /**
      * Checks whether a given conveyor belt is able to move in its direction
+     *
      * @param conveyorBelt The conveyor belt to move
-     * @param iterations The number of recursive calls already executed
+     * @param iterations   The number of recursive calls already executed
      * @return True if nothing is blocking its movement
      */
     public boolean conveyorBeltCanMove(BoardElementContainer<Tile> conveyorBelt, int iterations) {
@@ -293,7 +314,7 @@ public class Board {
         //The tile in front of the robot is not a conveyor belt and has something on it stopping the conveyor belt
         if (!isConveyorBelt(tileInFront) &&
                 hasFrontConflict(conveyorBeltPosition, positionInFront, conveyorBeltDirection)) {
-                return false;
+            return false;
         }
         //There is another robot trying to enter the same crossing
         if (hasCrossingConflict(positionInFront, conveyorBeltDirection)) {
@@ -308,8 +329,9 @@ public class Board {
 
     /**
      * Checks whether a conveyor belt has anything in front of it preventing it from moving forward
-     * @param conveyorBeltPosition The position of the conveyor belt
-     * @param positionInFront The position in front of the conveyor belt
+     *
+     * @param conveyorBeltPosition  The position of the conveyor belt
+     * @param positionInFront       The position in front of the conveyor belt
      * @param conveyorBeltDirection The direction of the conveyor belt
      * @return True if the conveyor belt cannot move forward
      */
@@ -321,7 +343,8 @@ public class Board {
 
     /**
      * Checks whether a conveyor belt has a conflict in a crossing
-     * @param crossingPosition The position of the crossing
+     *
+     * @param crossingPosition      The position of the crossing
      * @param conveyorBeltDirection The direction of the conveyor belt
      * @return True if there is a conflict. False otherwise
      */
@@ -356,8 +379,7 @@ public class Board {
                 robot.setFacingDirection(Direction.NORTH);
                 robot.setDamageTaken(2);
                 robots.put(robot.getRobotId(), robot);
-            }
-            else {
+            } else {
                 realDeadRobots.add(robot.getRobotId());
             }
         }
@@ -366,6 +388,7 @@ public class Board {
 
     /**
      * Returns a robot id for a robot on a specific position if such a robot exists
+     *
      * @param position The position to check
      * @return The robot id of the robot on the position or null if there is no robot there
      */
@@ -381,6 +404,7 @@ public class Board {
 
     /**
      * Checks if a specific robot is currently alive on the board
+     *
      * @param robot the ID of the robot you want to check
      * @return True/False based on if the robot was found.
      */
@@ -390,8 +414,9 @@ public class Board {
 
     /**
      * Updates the flag of the robot if it stands on the correct flag.
+     *
      * @param robotID The RobotID of a robot
-     * @param flagID TileType of the flag we check
+     * @param flagID  TileType of the flag we check
      */
     public void updateFlagOnRobot(RobotID robotID, TileType flagID) {
         Robot robot = robots.get(robotID);
@@ -403,8 +428,9 @@ public class Board {
 
     /**
      * Gets the position 1 unit in a specific direction from another position
+     *
      * @param oldPosition The old/current position of the element
-     * @param direction The direction to move the element
+     * @param direction   The direction to move the element
      * @return The new position of the element
      */
     public Position getNewPosition(Position oldPosition, Direction direction) {
@@ -428,8 +454,8 @@ public class Board {
     public void fireAllLasers() {
         List<BoardElementContainer<Wall>> listOfWallLasers = getPositionsOfWallOnBoard(WallType.WALL_LASER_SINGLE,
                 WallType.WALL_LASER_DOUBLE);
-        for (Robot robot:robots.values()) {
-            fireRobotLaser(robot.getPosition(),robot.getFacingDirection());
+        for (Robot robot : robots.values()) {
+            fireRobotLaser(robot.getPosition(), robot.getFacingDirection());
         }
         for (BoardElementContainer<Wall> laser : listOfWallLasers) {
             fireWallLaser(laser);
@@ -440,12 +466,13 @@ public class Board {
      * Does necessary cleanup after lasers have been fired
      */
     public void doLaserCleanup() {
-        this.particles = new Grid<>(tiles.getWidth(), tiles.getHeight());
+        this.particles = new ListGrid<>(tiles.getWidth(), tiles.getHeight());
         killAllHeavilyDamagedRobots();
     }
 
     /**
      * Gets the tile on a specific position
+     *
      * @param position The position to get a tile from
      * @return The tile on the given position
      */
@@ -458,10 +485,11 @@ public class Board {
 
     /**
      * Gets a list of BoardElementContainers, containing all tiles and positions of given tile types
+     *
      * @param tiles The tiles you want all positions for
      * @return A list of BoardElementContainers
      */
-    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType ... tiles) {
+    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType... tiles) {
         List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
         for (TileType tile : tiles) {
             combinedList.addAll(makeTileList(tile, this.tiles));
@@ -471,6 +499,7 @@ public class Board {
 
     /**
      * Gets a list of BoardElementContainers, containing all tiles and positions of given wall types
+     *
      * @param walls The walls you want all positions for
      * @return A list of BoardElementContainers
      */
@@ -484,6 +513,7 @@ public class Board {
 
     /**
      * Checks whether there exists a robot on a specific position
+     *
      * @param position The position to check
      * @return True if there is a robot on the specified position
      */
@@ -493,18 +523,20 @@ public class Board {
 
     /**
      * Checks if a potential move would be blocked by a wall
+     *
      * @param robotPosition The current position of whatever is trying to move
-     * @param newPosition The position something is trying to move to
-     * @param direction The direction something is going
+     * @param newPosition   The position something is trying to move to
+     * @param direction     The direction something is going
      * @return True if a wall would stop its path
      */
     private boolean moveIsStoppedByWall(Position robotPosition, Position newPosition, Direction direction) {
-            return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
-                    hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
+        return hasWallFacing(robotPosition, direction) || (isValidPosition(newPosition) &&
+                hasWallFacing(newPosition, Direction.getReverseDirection(direction)));
     }
 
     /**
      * Checks whether a given position is valid
+     *
      * @param position The position to test
      * @return True if the position is valid. False otherwise
      */
@@ -517,7 +549,8 @@ public class Board {
 
     /**
      * Checks if the robot is about to step outside of the board, and kills it if it does
-     * @param robot The robot attempting to move
+     *
+     * @param robot       The robot attempting to move
      * @param newPosition The position the robot is attempting to move to
      * @return True if the robot was killed for leaving the board
      */
@@ -531,7 +564,8 @@ public class Board {
 
     /**
      * Checks the tile the robot is about to step on and kills it if the tile is dangerous
-     * @param robot The robot attempting to move
+     *
+     * @param robot       The robot attempting to move
      * @param newPosition The position the robot is attempting to move to
      */
     private void killRobotIfStepsOnDangerousTile(Robot robot, Position newPosition) {
@@ -555,8 +589,8 @@ public class Board {
     /**
      * Kills the robot
      *
-     * If the robot steps outside of the board, steps on a hole or takes too much damage, this method should be used to
-     * properly dispose of the robot until the next round.
+     * <p>If the robot steps outside of the board, steps on a hole or takes too much damage, this method should be used to
+     * properly dispose of the robot until the next round.</p>
      *
      * @param robot The robot to kill
      */
@@ -568,7 +602,8 @@ public class Board {
 
     /**
      * Checks whether a position has a wall facing a specific direction
-     * @param position The position to check
+     *
+     * @param position  The position to check
      * @param direction The direction of the wall to check for
      * @return True if there is a wall on the position facing the input direction
      */
@@ -588,11 +623,12 @@ public class Board {
 
     /**
      * Gets all elements on a grid
+     *
      * @param grid The grid to get elements from
-     * @param <K> The type of the elements int the grid
+     * @param <K>  The type of the elements int the grid
      * @return A list containing all the elements in the grid
      */
-    private <K> List<K> getAllElementsFromGrid(IGrid<K> grid) {
+    private <K> List<K> getAllElementsFromGrid(Grid<K> grid) {
         List<K> elements = new ArrayList<>();
         for (int y = grid.getHeight() - 1; y >= 0; y--) {
             for (int x = 0; x < grid.getWidth(); x++) {
@@ -604,13 +640,14 @@ public class Board {
 
     /**
      * Finds all tiles/walls with a certain type
+     *
      * @param type The type of tile/wall to look for
      * @param grid The grid to look through
-     * @param <K> Type of the type to look for
-     * @param <T> Type of the grid
+     * @param <K>  Type of the type to look for
+     * @param <T>  Type of the grid
      * @return List of BoardElementContainers
      */
-    private <K,T> List<BoardElementContainer<T>> makeTileList(K type, IGrid<T> grid) {
+    private <K, T> List<BoardElementContainer<T>> makeTileList(K type, Grid<T> grid) {
         List<BoardElementContainer<T>> objList = new ArrayList<>();
 
         for (int y = grid.getHeight() - 1; y >= 0; y--) {
@@ -628,7 +665,7 @@ public class Board {
                             objList.add(new BoardElementContainer<>(gridElement, new Position(x, y)));
                         }
                     } else {
-                        throw new IllegalArgumentException("Grid has unknown type.");
+                        throw new IllegalArgumentException("ListGrid has unknown type.");
                     }
                 }
             }
@@ -640,7 +677,7 @@ public class Board {
      * Kills all robots that have taken too much damage
      */
     private void killAllHeavilyDamagedRobots() {
-        for (Robot robot:robots.values()) {
+        for (Robot robot : robots.values()) {
             if (robot.getDamageTaken() >= 10) {
                 killRobot(robot);
             }
@@ -649,6 +686,7 @@ public class Board {
 
     /**
      * Fires one wall laser
+     *
      * @param wallLaser The wall laser being fired
      */
     private void fireWallLaser(BoardElementContainer<Wall> wallLaser) {
@@ -665,11 +703,12 @@ public class Board {
 
     /**
      * Fires one robot laser
-     * @param robotPosition The position of the robot firing the laser
+     *
+     * @param robotPosition  The position of the robot firing the laser
      * @param robotDirection The direction the robot is facing
      */
     private void fireRobotLaser(Position robotPosition, Direction robotDirection) {
-        Position positionInFront = getNewPosition(robotPosition,robotDirection);
+        Position positionInFront = getNewPosition(robotPosition, robotDirection);
         if (!isValidPosition(positionInFront) || moveIsStoppedByWall(robotPosition, positionInFront, robotDirection)) {
             return;
         }
@@ -685,8 +724,9 @@ public class Board {
 
     /**
      * Applies the damage form the laser to the robot the laser hit
+     *
      * @param laserType The type of laser that hit the robot
-     * @param robot The robot getting hit by the robot
+     * @param robot     The robot getting hit by the robot
      */
     private void applyLaserDamage(WallType laserType, Robot robot) {
         robot.setDamageTaken(robot.getDamageTaken() + laserType.getWallTypeID() - 2);
@@ -694,9 +734,10 @@ public class Board {
 
     /**
      * Gets all the positions the laser fires at
-     * @param direction The direction of the laser
+     *
+     * @param direction     The direction of the laser
      * @param startPosition The start position of the laser
-     * @param targets The list to update with target positions
+     * @param targets       The list to update with target positions
      */
     private void getLaserTarget(Direction direction, Position startPosition, List<Position> targets) {
         Position newPosition = getNewPosition(startPosition, direction);
@@ -714,9 +755,10 @@ public class Board {
 
     /**
      * Adds any lasers in the targets list to the grid displaying lasers
-     * @param laserTargets The tiles the laser will hit
+     *
+     * @param laserTargets   The tiles the laser will hit
      * @param laserDirection The direction of the laser
-     * @param laserType The type of the laser
+     * @param laserType      The type of the laser
      */
     private void updateLaserDisplay(List<Position> laserTargets, Direction laserDirection, WallType laserType) {
         for (Position laserTarget : laserTargets) {
@@ -726,9 +768,10 @@ public class Board {
 
     /**
      * Updates a laser beam on the particle grid
-     * @param addPosition The position of the beam
+     *
+     * @param addPosition    The position of the beam
      * @param laserDirection The direction of the beam
-     * @param laserType The type of the laser shooting
+     * @param laserType      The type of the laser shooting
      */
     private void updateLaserBeamOnParticleGrid(Position addPosition, Direction laserDirection, WallType laserType) {
         int positionX = addPosition.getXCoordinate();
@@ -758,6 +801,7 @@ public class Board {
 
     /**
      * Gets the int corresponding to the flag a robot has last visited
+     *
      * @param robotID The robot to be checked
      * @return The flag last visited in a number
      */
@@ -767,7 +811,8 @@ public class Board {
 
     /**
      * Sets a boolean for if the robot has touched a flag this turn
-     * @param robotID The robot to be checked
+     *
+     * @param robotID    The robot to be checked
      * @param hasTouched If the robot has touched a flag this turn
      */
     public void setHasTouchedFlagThisTurnFromRobotID(RobotID robotID, boolean hasTouched) {
@@ -776,6 +821,7 @@ public class Board {
 
     /**
      * Checks a boolean for if the robot has touched a flag this turn
+     *
      * @param robotID The robot to be checked
      * @return If the robot has touched a flag this turn
      */

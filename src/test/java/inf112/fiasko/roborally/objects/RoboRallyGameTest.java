@@ -8,12 +8,12 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class RoboRallyGameTest {
-    private IDrawableGame game;
+    private DrawableGame game;
 
     @Before
     public void setUp() {
-        game = new RoboRallyGame(new ArrayList<>(),"Checkmate.txt",false, "Player1",
-                null, null);
+        game = new RoboRallyGame(new ArrayList<>(), "Checkmate.txt", false, "Player1",
+                null);
     }
 
     @Test

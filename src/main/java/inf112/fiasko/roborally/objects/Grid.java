@@ -1,83 +1,42 @@
 package inf112.fiasko.roborally.objects;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
- * This class represents a grid which can store anything
- * @param <K> The type of element the grid should store
+ * This Interface describes a grid
+ *
+ * @param <K> The type of element the grid is to store
  */
-public class Grid<K> implements IGrid<K> {
-
-    private final int height;
-    private final int width;
-    private final List<ArrayList<K>> grid = new ArrayList<>();
+public interface Grid<K> {
 
     /**
-     * Initializes an empty grid
-     * @param width The width of the grid
-     * @param height The height of the grid
+     * Gets the width of the grid
+     *
+     * @return The width of the grid
      */
-    public Grid(int width, int height) {
-        this.width = width;
-        this.height = height;
-        for (int y = 0; y < height; y++) {
-            ArrayList<K> row = new ArrayList<>();
-            for(int x = 0; x < width; x++) {
-                row.add(null);
-            }
-            this.grid.add(row);
-        }
-    }
+    int getWidth();
 
     /**
-     * Initializes a grid filled with standard tiles.
-     * @param height sets the height of the grid
-     * @param width sets the width of the grid
-     * @param tile gives the TileType the grid is to be filled with
+     * Gets height of the grid
+     *
+     * @return The height of the grid
      */
-    public Grid(int width, int height, K tile) {
-        this.width = width;
-        this.height = height;
-        for (int y = 0; y < height; y++) {
-            ArrayList<K> row = new ArrayList<>();
-            for(int x = 0; x < width; x++) {
-                row.add(tile);
-            }
-            this.grid.add(row);
-        }
-    }
-
-    @Override
-    public int getWidth() {
-        return width;
-    }
-
-    @Override
-    public int getHeight() {
-        return height;
-    }
-
-    @Override
-    public K getElement(int x, int y) throws IllegalArgumentException {
-        makeSureCoordinatesAreWithinBounds(x, y);
-        return grid.get(y).get(x);
-    }
-
-    @Override
-    public void setElement(int x, int y, K element) throws IllegalArgumentException {
-        makeSureCoordinatesAreWithinBounds(x, y);
-        grid.get(y).set(x, element);
-    }
+    int getHeight();
 
     /**
-     * Throws an exception if input coordinates are out of bounds
-     * @param x The x coordinate to check
-     * @param y The y coordinate to check
+     * Gets the element in a given x and y coordinate
+     *
+     * @param x Coordinate in the grid
+     * @param y Coordinate in the grid
+     * @return Element in the x and y coordinate
+     * @throws IllegalArgumentException Throws an exception if the coordinates are outside of the grid
      */
-    private void makeSureCoordinatesAreWithinBounds(int x, int y) {
-        if (x < 0 || x >= width || y < 0 || y >= height) {
-            throw new IllegalArgumentException("Coordinates are outside the bounds of the board.");
-        }
-    }
+    K getElement(int x, int y) throws IllegalArgumentException;
+
+    /**
+     * Places the element on the given x and y coordinate
+     *
+     * @param x       Coordinate in the grid
+     * @param y       Coordinate in the grid
+     * @param element The element to place in the grid
+     */
+    void setElement(int x, int y, K element) throws IllegalArgumentException;
 }

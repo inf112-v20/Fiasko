@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.Position;
+
 import static org.junit.Assert.assertEquals;
 
 import inf112.fiasko.roborally.elementproperties.RobotID;
@@ -8,13 +9,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class RobotTest {
+    private final int nextFlag = 1;
     private Position robotPosition;
     private Robot testRobot;
-    private final int nextFlag = 1;
 
     @Before
     public void setUp() {
-        robotPosition = new Position(3,6);
+        robotPosition = new Position(3, 6);
         testRobot = new Robot(RobotID.ROBOT_6, robotPosition);
     }
 
@@ -46,7 +47,7 @@ public class RobotTest {
 
     @Test
     public void testRobotGetPositionOnRobotWithNewPosition() {
-        Position newRobotPosition = new Position(8,12);
+        Position newRobotPosition = new Position(8, 12);
         testRobot.setPosition(newRobotPosition);
         assertEquals(newRobotPosition, testRobot.getPosition());
     }
@@ -70,7 +71,7 @@ public class RobotTest {
 
     @Test
     public void testRobotGetNewBackup() {
-        Position nextFlagPosition = new Position(3,4);
+        Position nextFlagPosition = new Position(3, 4);
         testRobot.setPosition(nextFlagPosition);
         testRobot.setLastFlagVisitedAndUpdateBackupPosition(nextFlag);
         assertEquals(nextFlagPosition, testRobot.getBackupPosition());

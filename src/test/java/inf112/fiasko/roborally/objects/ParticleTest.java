@@ -44,7 +44,7 @@ public class ParticleTest {
         assertNull(ParticleType.getParticleTypeFromID(-1));
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invalidParticleDirectionThrowsError() {
         new Particle(ParticleType.LASER_BEAM_DOUBLE, Direction.NORTH_EAST);
     }

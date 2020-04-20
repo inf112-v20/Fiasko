@@ -44,7 +44,7 @@ public class TileTest {
         assertNull(TileType.getTileTypeFromID(-1));
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invalidTileDirectionThrowsError() {
         new Tile(TileType.TILE, Direction.NORTH_EAST);
     }

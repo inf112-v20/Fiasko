@@ -1,8 +1,17 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.*;
+import inf112.fiasko.roborally.elementproperties.Action;
+import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.elementproperties.GameState;
+import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.elementproperties.TileType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -20,10 +29,11 @@ public class Phase {
 
     /**
      * Instantiates a new phase
-     * @param gameBoard The board to act on
+     *
+     * @param gameBoard  The board to act on
      * @param playerList A list of players participating in the game
      * @param cycleDelay The amount of milliseconds to wait between moves
-     * @param game The game which uses this object
+     * @param game       The game which uses this object
      */
     public Phase(Board gameBoard, List<Player> playerList, int cycleDelay, RoboRallyGame game) {
         this.gameBoard = gameBoard;
@@ -35,6 +45,7 @@ public class Phase {
 
     /**
      * Runs one phase as defined in the Robo Rally rulebook
+     *
      * @param phaseNumber The number of the phase to run
      * @throws InterruptedException If interrupted wile trying to sleep
      */
@@ -62,7 +73,7 @@ public class Phase {
                 continue;
             }
             gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
-            gameBoard.setHasTouchedFlagThisTurnFromRobotID(robotID,true);
+            gameBoard.setHasTouchedFlagThisTurnFromRobotID(robotID, true);
             checkIfPlayerWon(robotID, flags.size());
         }
     }
@@ -78,6 +89,7 @@ public class Phase {
 
     /**
      * Runs all programming cards for a phase
+     *
      * @param phase The number of the phase to run cards for
      * @throws InterruptedException If it gets interrupted while trying to sleep
      */
@@ -104,6 +116,7 @@ public class Phase {
 
     /**
      * Rotates all robots that are standing on cogWheel tiles on the board.
+     *
      * @throws InterruptedException If interrupted while sleeping.
      */
     public void rotateCogwheels() throws InterruptedException {
@@ -123,7 +136,7 @@ public class Phase {
     /**
      * Moves robots standing on conveyor belts in the direction of the conveyor belt
      *
-     * In addition, the function rotates appropriately when arriving at any non-straight conveyor belt
+     * <p>In addition, the function rotates appropriately when arriving at any non-straight conveyor belt.</p>
      *
      * @throws InterruptedException If disturbed during sleep
      */
@@ -136,8 +149,9 @@ public class Phase {
 
     /**
      * Makes the given robot move according to to the action input.
+     *
      * @param robotID The ID of the robot to move.
-     * @param action The specific movement the robot is to take.
+     * @param action  The specific movement the robot is to take.
      * @throws InterruptedException If interrupted wile trying to sleep.
      */
     public void makeMove(RobotID robotID, Action action) throws InterruptedException {
@@ -178,7 +192,8 @@ public class Phase {
 
     /**
      * Checks if the player won, and shows the victory screen
-     * @param robotID The robot to be checked
+     *
+     * @param robotID       The robot to be checked
      * @param numberOfFlags The number of flags on the map
      */
     private void checkIfPlayerWon(RobotID robotID, int numberOfFlags) {
@@ -197,8 +212,9 @@ public class Phase {
 
     /**
      * Checks whether a player has won
+     *
      * @param lastFlagVisited The last flag the player visited
-     * @param lastFlag The last flag of the board
+     * @param lastFlag        The last flag of the board
      * @return True if the player has visited the last flag
      */
     private boolean victoryCheck(int lastFlagVisited, int lastFlag) {
@@ -207,6 +223,7 @@ public class Phase {
 
     /**
      * Moves a list of conveyor belts
+     *
      * @param conveyorBelts A list of board element containers containing conveyor belts
      */
     private void moveConveyorBelts(List<BoardElementContainer<Tile>> conveyorBelts) {
@@ -239,10 +256,11 @@ public class Phase {
 
     /**
      * Updates maps containing information about what a robot on a conveyor belt should do
-     * @param conveyorBeltPosition The position of the conveyor belt the robot stands on
+     *
+     * @param conveyorBeltPosition  The position of the conveyor belt the robot stands on
      * @param conveyorBeltDirection The direction of the conveyor belt the robot stands on
-     * @param newPositions The map containing new positions for robots
-     * @param moveNormally The map containing whether a robot should move normally following normal rules
+     * @param newPositions          The map containing new positions for robots
+     * @param moveNormally          The map containing whether a robot should move normally following normal rules
      */
     private void updateConveyorBeltMaps(Position conveyorBeltPosition, Direction conveyorBeltDirection,
                                         Map<RobotID, Position> newPositions, Map<RobotID, Boolean> moveNormally) {
@@ -265,6 +283,7 @@ public class Phase {
 
     /**
      * Helper method for makeMove. Takes care of movement forward of given robot.
+     *
      * @param robotID ID of the given robot.
      * @throws InterruptedException If interrupted wile sleeping.
      */
@@ -278,6 +297,7 @@ public class Phase {
 
     /**
      * Makes the game thread wait a given time amount before continuing.
+     *
      * @throws InterruptedException If interrupted while trying to sleep.
      */
     private void sleep() throws InterruptedException {

@@ -12,20 +12,22 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
 
     /**
      * Initializes the priority and the action of the card
+     *
      * @param cardPriority the priority of the card
-     * @param cardAction the action of the card
+     * @param cardAction   the action of the card
      */
     public ProgrammingCard(int cardPriority, Action cardAction) {
         this.cardPriority = cardPriority;
         this.cardAction = cardAction;
     }
 
-    public ProgrammingCard(){
+    public ProgrammingCard() {
 
     }
 
     /**
      * Gets the priority of the programming card
+     *
      * @return The programming card priority
      */
     public int getPriority() {
@@ -34,6 +36,7 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
 
     /**
      * Gets the action of the programming card
+     *
      * @return The programming card action
      */
     public Action getAction() {

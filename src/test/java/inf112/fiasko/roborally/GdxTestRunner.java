@@ -29,6 +29,7 @@ import org.junit.runners.model.InitializationError;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+
 import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.ApplicationListener;

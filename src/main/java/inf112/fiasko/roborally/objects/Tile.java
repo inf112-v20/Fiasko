@@ -13,7 +13,8 @@ public class Tile {
 
     /**
      * Instantiates a new tile
-     * @param tileType The type of the tile
+     *
+     * @param tileType  The type of the tile
      * @param direction The direction of the tile
      */
     public Tile(TileType tileType, Direction direction) {
@@ -26,6 +27,7 @@ public class Tile {
 
     /**
      * Gets the tile type of the tile
+     *
      * @return The tile's tile type
      */
     public TileType getTileType() {
@@ -34,6 +36,7 @@ public class Tile {
 
     /**
      * Gets the direction of the tile
+     *
      * @return The tile's direction
      */
     public Direction getDirection() {

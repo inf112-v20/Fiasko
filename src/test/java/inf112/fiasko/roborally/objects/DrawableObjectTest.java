@@ -15,16 +15,16 @@ import static org.junit.Assert.assertFalse;
 @RunWith(GdxTestRunner.class)
 public class DrawableObjectTest {
 
+    private static final int X_POSITION_MIN_ARG = 5;
+    private static final int Y_POSITION_MIN_ARG = 8;
+    private static final int X_POSITION_MAX_ARG = 6;
+    private static final int Y_POSITION_MAX_ARG = 7;
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
     private static final Texture robotsTexture = new Texture(Gdx.files.internal("assets/robots.png"));
+    private static final TextureRegion TEXTURE_MAX_ARG = new TextureRegion(robotsTexture, 0, 0,
+            64, 64);
     private static final TextureRegion TEXTURE_MIN_ARG = new TextureRegion(textureSheet, 4 * 300, 0,
             300, 300);
-    public static final TextureRegion TEXTURE_MAX_ARG = new TextureRegion(robotsTexture, 0, 0,
-            64, 64);
-    public static final int X_POSITION_MIN_ARG = 5;
-    public static final int Y_POSITION_MIN_ARG = 8;
-    public static final int X_POSITION_MAX_ARG = 6;
-    public static final int Y_POSITION_MAX_ARG = 7;
     private final int WIDTH_MAX_ARG = 50;
     private final int HEIGHT_MAX_ARG = 60;
     private final int ROTATION_MAX_ARG = 90;

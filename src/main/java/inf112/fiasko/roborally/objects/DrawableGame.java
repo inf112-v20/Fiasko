@@ -5,16 +5,18 @@ import java.util.List;
 /**
  * This interface describes a game drawable using libgdx
  */
-public interface IDrawableGame {
+public interface DrawableGame {
 
     /**
      * Gets the number of tiles in the x direction
+     *
      * @return A positive integer
      */
     int getWidth();
 
     /**
      * Gets the number of tiles in the y direction
+     *
      * @return A positive integer
      */
     int getHeight();
@@ -22,8 +24,8 @@ public interface IDrawableGame {
     /**
      * Gets a list of all the tiles to be drawn
      *
-     * Should return a list readable from top-left to top-right and so on. In other words, the first getWidth() tiles
-     * should be drawn on the top row from left to right.
+     * <p>Should return a list readable from top-left to top-right and so on. In other words, the first getWidth() tiles
+     * should be drawn on the top row from left to right.</p>
      *
      * @return A list of tiles
      */
@@ -32,8 +34,8 @@ public interface IDrawableGame {
     /**
      * Gets a list of all the walls to be drawn
      *
-     * Should return a list readable from top-left to top-right and so on. In other words, the first getWidth() walls
-     * should be drawn on the top row from left to right.
+     * <p>Should return a list readable from top-left to top-right and so on. In other words, the first getWidth() walls
+     * should be drawn on the top row from left to right.</p>
      *
      * @return A list of walls
      */
@@ -42,8 +44,8 @@ public interface IDrawableGame {
     /**
      * Gets a list of all the particles to be drawn
      *
-     * Should return a list readable from top-left to top-right and so on. In other words, the first getWidth()
-     * particles should be drawn on the top row from left to right.
+     * <p>Should return a list readable from top-left to top-right and so on. In other words, the first getWidth()
+     * particles should be drawn on the top row from left to right.</p>
      *
      * @return A list of particles
      */
@@ -51,6 +53,7 @@ public interface IDrawableGame {
 
     /**
      * Gets a list of all robots to draw
+     *
      * @return A list of all robots to draw
      */
     List<Robot> getRobotsToDraw();

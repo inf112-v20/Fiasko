@@ -14,8 +14,8 @@ import static org.junit.Assert.assertTrue;
 
 
 public class PlayerTest {
-    private Player playerTest;
     private final List<ProgrammingCard> cards = new ArrayList<>();
+    private Player playerTest;
 
     @Before
     public void setUp() {
@@ -24,7 +24,7 @@ public class PlayerTest {
         cards.add(new ProgrammingCard(30, Action.MOVE_3));
         cards.add(new ProgrammingCard(40, Action.BACK_UP));
         cards.add(new ProgrammingCard(50, Action.ROTATE_LEFT));
-        playerTest = new Player(RobotID.ROBOT_1, "TestPlayer" );
+        playerTest = new Player(RobotID.ROBOT_1, "TestPlayer");
     }
 
     @Test
@@ -48,18 +48,18 @@ public class PlayerTest {
         assertEquals(Action.BACK_UP, playerTest.getProgram().get(3).getAction());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testSetInProgramWithToManyCards() {
-        cards.add(new ProgrammingCard(10,Action.ROTATE_LEFT));
+        cards.add(new ProgrammingCard(10, Action.ROTATE_LEFT));
         playerTest.setInProgram(cards);
     }
 
     @Test
     public void testSetInDeck() {
-        cards.add(new ProgrammingCard(10,Action.ROTATE_LEFT));
+        cards.add(new ProgrammingCard(10, Action.ROTATE_LEFT));
         ProgrammingCardDeck playerDeck = new ProgrammingCardDeck(cards);
         playerTest.setPlayerDeck(playerDeck);
-        assertEquals(playerDeck , playerTest.getPlayerDeck());
+        assertEquals(playerDeck, playerTest.getPlayerDeck());
     }
 
     @Test
@@ -75,7 +75,7 @@ public class PlayerTest {
     @Test
     public void getProgramFromPlayer() {
         playerTest.setInProgram(cards);
-        assertEquals(cards,playerTest.getProgram());
+        assertEquals(cards, playerTest.getProgram());
     }
 
 }

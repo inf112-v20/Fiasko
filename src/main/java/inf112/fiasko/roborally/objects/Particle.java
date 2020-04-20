@@ -13,8 +13,9 @@ public class Particle {
 
     /**
      * Instantiates a new particle
+     *
      * @param particleType The type of the particle
-     * @param direction The direction of the particle
+     * @param direction    The direction of the particle
      */
     public Particle(ParticleType particleType, Direction direction) {
         if (direction.getDirectionID() % 2 == 0) {
@@ -26,6 +27,7 @@ public class Particle {
 
     /**
      * Gets the particle type of the particle
+     *
      * @return The particle's particle type
      */
     public ParticleType getParticleType() {
@@ -34,6 +36,7 @@ public class Particle {
 
     /**
      * Gets the direction of the particle
+     *
      * @return The particle's direction
      */
     public Direction getDirection() {

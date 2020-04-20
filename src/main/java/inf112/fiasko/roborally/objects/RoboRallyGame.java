@@ -7,7 +7,7 @@ import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
-import inf112.fiasko.roborally.networking.containers.PowerdownContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
 import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
@@ -20,16 +20,15 @@ import java.util.Map;
 /**
  * This class represent a game which is drawable using libgdx
  */
-public class RoboRallyGame implements IRoboRallyGame {
-    private Board gameBoard;
-    private List<BoardElementContainer<Tile>> repairTiles;
+public class RoboRallyGame implements DrawableGame, InteractableGame {
     private final List<Player> playerList;
     private final boolean host;
+    private final String playerName;
+    private final RoboRallyServer server;
+    private Board gameBoard;
+    private List<BoardElementContainer<Tile>> repairTiles;
     private Deck<ProgrammingCard> mainDeck;
     private GameState gameState = GameState.BEGINNING_OF_GAME;
-    private final String playerName;
-    private final RoboRallyClient client;
-    private final RoboRallyServer server;
     private String winningPlayerName;
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
@@ -37,20 +36,19 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     /**
      * Instantiates a new Robo Rally game
+     *
      * @param playerList A list of all the players participating in the game
-     * @param boardName The playerName of the board to use
-     * @param host Whether this player is the host
+     * @param boardName  The playerName of the board to use
+     * @param host       Whether this player is the host
      * @param playerName The name of the player of this instance of the game
-     * @param client The client used to send data to the server
-     * @param server The server if this player is host. Should be null otherwise
-     * @param debug Whether this game is to use the debugging board
+     * @param server     The server if this player is host. Should be null otherwise
+     * @param debug      Whether this game is to use the debugging board
      */
     public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName,
-                         RoboRallyClient client, RoboRallyServer server, boolean debug) {
+                         RoboRallyServer server, boolean debug) {
         this.playerName = playerName;
         this.host = host;
         this.playerList = playerList;
-        this.client = client;
         this.server = server;
         if (debug) {
             initializeDebugMode();
@@ -62,19 +60,18 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     /**
      * Instantiates a new Robo Rally game
+     *
      * @param playerList A list of all the players participating in the game
-     * @param boardName The playerName of the board to use
-     * @param host Whether this player is the host
+     * @param boardName  The playerName of the board to use
+     * @param host       Whether this player is the host
      * @param playerName The name of the player of this instance of the game
-     * @param client The client used to send data to the server
-     * @param server The server if this player is host. Should be null otherwise
+     * @param server     The server if this player is host. Should be null otherwise
      */
     public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName,
-                         RoboRallyClient client, RoboRallyServer server) {
+                         RoboRallyServer server) {
         this.playerName = playerName;
         this.host = host;
         this.playerList = playerList;
-        this.client = client;
         this.server = server;
         initializeGame(boardName);
         this.phase = new Phase(gameBoard, playerList, 600, this);
@@ -111,7 +108,7 @@ public class RoboRallyGame implements IRoboRallyGame {
     }
 
     @Override
-    public GameState getGameState(){
+    public GameState getGameState() {
         return gameState;
     }
 
@@ -136,17 +133,17 @@ public class RoboRallyGame implements IRoboRallyGame {
     }
 
     @Override
+    public void setProgram(List<ProgrammingCard> program) {
+        this.program = program;
+    }
+
+    @Override
     public int getProgramSize() {
         Player player = getPlayerFromName(playerName);
         if (player != null) {
             return Math.min(5, 5 - gameBoard.getRobotDamage(player.getRobotID()) + 4);
         }
         return -1;
-    }
-
-    @Override
-    public void setProgram(List<ProgrammingCard> program) {
-        this.program = program;
     }
 
     @Override
@@ -181,7 +178,7 @@ public class RoboRallyGame implements IRoboRallyGame {
     }
 
     @Override
-    public void receiveStayInPowerDown(PowerdownContainer powerDowns) {
+    public void receiveStayInPowerDown(PowerDownContainer powerDowns) {
         for (Player player : playerList) {
             player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
         }
@@ -191,10 +188,20 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     /**
      * Gets the name of the player that won the game
+     *
      * @return The name of the winning player
      */
     public String getWinningPlayerName() {
         return winningPlayerName;
+    }
+
+    /**
+     * Sets the name of the player that won the game
+     *
+     * @param winningPlayerName The player winning the game
+     */
+    protected void setWinningPlayerName(String winningPlayerName) {
+        this.winningPlayerName = winningPlayerName;
     }
 
     /**
@@ -225,7 +232,7 @@ public class RoboRallyGame implements IRoboRallyGame {
             List<Robot> robots = new ArrayList<>();
             int posX = 1;
             for (Player player : playerList) {
-                Position spawn = new Position(posX,1);
+                Position spawn = new Position(posX, 1);
                 robots.add(new Robot(player.getRobotID(), spawn));
                 posX++;
             }
@@ -274,7 +281,7 @@ public class RoboRallyGame implements IRoboRallyGame {
             //Distributes programming cards for all players, and sends a deck to each player
             distributeProgrammingCardsToPlayers();
             for (Connection connection : server.getPlayerNames().keySet()) {
-                String playerName  = server.getPlayerNames().get(connection);
+                String playerName = server.getPlayerNames().get(connection);
                 Player player = getPlayerFromName(playerName);
                 if (player != null && player.getPlayerDeck() != null) {
                     server.sendToClient(connection, player.getPlayerDeck());
@@ -333,8 +340,9 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     /**
      * Moves a card from the player's deck to the player's locked deck if found
-     * @param card The card to move to the locked deck
-     * @param playerDeck The deck containing the player's cards
+     *
+     * @param card             The card to move to the locked deck
+     * @param playerDeck       The deck containing the player's cards
      * @param lockedPlayerDeck The deck containing the player's locked cards
      */
     private void moveProgrammingCardToLockedDeck(ProgrammingCard card, ProgrammingCardDeck playerDeck,
@@ -378,16 +386,8 @@ public class RoboRallyGame implements IRoboRallyGame {
                 throw new IllegalStateException("Player deck must be empty when dealing new cards!");
             }
             //Gives the player the correct amount of cards
-            playerDeck.draw(mainDeck,9 - robotDamage);
+            playerDeck.draw(mainDeck, 9 - robotDamage);
         }
-    }
-
-    /**
-     * Sets the name of the player that won the game
-     * @param winningPlayerName The player winning the game
-     */
-    protected void setWinningPlayerName(String winningPlayerName) {
-        this.winningPlayerName = winningPlayerName;
     }
 
     /**
@@ -422,7 +422,8 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     /**
      * Sets the power down status of a robot
-     * @param player The player that owns the robot
+     *
+     * @param player          The player that owns the robot
      * @param powerDownStatus The new power down status
      */
     private void setRobotPowerDown(Player player, Boolean powerDownStatus) {
@@ -431,6 +432,7 @@ public class RoboRallyGame implements IRoboRallyGame {
 
     /**
      * Gets a player object given a player name
+     *
      * @param name The name of the player to get
      * @return The corresponding player object or null if no such object exists
      */

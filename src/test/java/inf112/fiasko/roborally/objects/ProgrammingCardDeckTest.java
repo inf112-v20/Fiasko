@@ -4,6 +4,7 @@ import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -16,9 +17,9 @@ import java.util.List;
 public class ProgrammingCardDeckTest {
     private ProgrammingCard programmingCard1;
     private ProgrammingCard programmingCard3;
-    private IDeck<ProgrammingCard> testDeck;
-    private IDeck<ProgrammingCard> testDeck2;
-    private IDeck<ProgrammingCard> fullDeck;
+    private Deck<ProgrammingCard> testDeck;
+    private Deck<ProgrammingCard> testDeck2;
+    private Deck<ProgrammingCard> fullDeck;
 
     @Before
     public void setUp() {
@@ -40,18 +41,18 @@ public class ProgrammingCardDeckTest {
 
     @Test
     public void testSize() {
-        assertEquals(3,testDeck.size());
+        assertEquals(3, testDeck.size());
         testDeck.emptyInto(testDeck2);
-        assertEquals(0,testDeck.size());
+        assertEquals(0, testDeck.size());
     }
 
     @Test
     public void testDrawCard() {
-        assertEquals(3,testDeck.size());
-        assertEquals(3,testDeck2.size());
+        assertEquals(3, testDeck.size());
+        assertEquals(3, testDeck2.size());
         testDeck.draw(testDeck2);
-        assertEquals(4,testDeck.size());
-        assertEquals(2,testDeck2.size());
+        assertEquals(4, testDeck.size());
+        assertEquals(2, testDeck2.size());
     }
 
     @Test

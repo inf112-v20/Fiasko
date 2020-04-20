@@ -1,134 +1,76 @@
 package inf112.fiasko.roborally.objects;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
- * This class represents a deck of cards
+ * Describes a deck
+ *
+ * <p>Any card stored in the deck is assumed to be immutable. If it's not, the integrity of the deck cannot be
+ * guaranteed.</p>
  */
-public abstract class Deck<T> implements IDeck<T> {
-    private final List<T> cardList;
+public interface Deck<T> {
 
-    public Deck (){
-        this.cardList=new ArrayList<>();
-    }
     /**
-     * Initializes the deck with cards
-     * @param cardList list of cards
+     * Shuffles the order of the cards in the deck
      */
-    public Deck (List<T> cardList) {
-        this.cardList = new ArrayList<>(cardList);
-    }
+    void shuffle();
 
     /**
-     * Randomises the order of the deck
-     */
-    @Override
-    public void shuffle() {
-        Random randomGenerator = new Random();
-        int deckSize = cardList.size();
-        int halfDeckSize = deckSize / 2;
-        int timesToShuffle = 30 * deckSize;
-        for (int i = 0; i < timesToShuffle; i++) {
-            int oldPosition = randomGenerator.nextInt(halfDeckSize);
-            int newPosition = randomGenerator.nextInt(deckSize - halfDeckSize) + halfDeckSize;
-            cardList.add(newPosition, cardList.remove(oldPosition));
-        }
-    }
-
-    /**
-     * Draws one card from the other deck
+     * Draws one card from the top of another deck
+     *
      * @param other The deck to draw the card from
      */
-    @Override
-    public void draw(IDeck<T> other) {
-        Deck<T> otherDeck = (Deck<T>) other;
-        cardList.add(otherDeck.cardList.remove(0));
-    }
+    void draw(Deck<T> other);
 
     /**
-     * Draws multiple cards from the other deck
+     * Draws n cards from the top of another deck
+     *
      * @param other The other deck to draw from
-     * @param n The number of cards to draw
+     * @param n     The number of cards to draw
      */
-    @Override
-    public void draw(IDeck<T> other, int n) {
-        Deck<T> otherDeck = (Deck<T>) other;
-        if (n < 0 || n > otherDeck.size()) {
-            throw new IllegalArgumentException("n can't be below 0 or over the size of the other card deck");
-        }
-        for (int i = 0; i < n; i++) {
-            draw(other);
-        }
-    }
+    void draw(Deck<T> other, int n);
 
     /**
-     * Empty the entire deck into the other deck
+     * Moves all cards in this deck into another deck
+     *
      * @param other The deck to move this deck's cards into
      */
-    @Override
-    public void emptyInto(IDeck<T> other) {
-        Deck<T> otherDeck = (Deck<T>) other;
-        otherDeck.draw(this, this.size());
-    }
+    void emptyInto(Deck<T> other);
 
     /**
-     * Checks if the deck is empty
-     * @return Boolean for if the deck is empty
+     * Whether this deck is empty
+     *
+     * @return True if this deck is currently empty
      */
-    @Override
-    public boolean isEmpty() {
-        return cardList.isEmpty();
-    }
+    boolean isEmpty();
 
     /**
-     * Gets the size of the deck
-     * @return int size of the deck
+     * Gets the number of cards currently in this deck
+     *
+     * @return The number of cards in this deck
      */
-    @Override
-    public int size() {
-        return cardList.size();
-    }
+    int size();
 
     /**
-     * Gets a list of all the cards in the deck
-     * @return ArrayList of cards from the deck
+     * Takes a peek at the card currently at the top of the deck
+     *
+     * @return The card at the top of the deck
      */
-    @Override
-    public List<T> getCards() {
-        return new ArrayList<>(cardList);
-    }
+    T peekTop();
 
     /**
-     * Gets the card from the deck in String format
-     * @return String the cards from the deck
+     * Takes a peek at the card currently at the bottom of the deck
+     *
+     * @return The card at the bottom of the deck
      */
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-        for (T card : cardList) {
-            builder.append(card.toString()).append("\n");
-        }
-        return builder.toString();
-    }
+    T peekBottom();
 
     /**
-     * Looks at the top card in the deck
-     * @return ProgrammingCard the first card in the deck
+     * Gets a list of all cards in this deck
+     *
+     * <p>The list should have the correct order according to the actual order within the deck.</p>
+     *
+     * @return A list of all cards in this deck
      */
-    @Override
-    public T peekTop() {
-        return cardList.get(0);
-    }
-
-    /**
-     * Looks at the bottom card of the deck
-     * @return ProgrammingCard the last card in the deck
-     */
-    @Override
-    public T peekBottom() {
-        return cardList.get(size()-1);
-    }
+    List<T> getCards();
 }
-

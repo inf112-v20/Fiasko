@@ -66,9 +66,8 @@ public class LoadingScreen extends AbstractScreen {
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(this.roboRallyWrapper));
                 break;
             default:
-                if (gameState != GameState.LOADING) {
-                    System.out.println("Don't know what to do with " + gameState);
-                }
+                System.out.println("The loading screen doesn't know what to do with " + gameState);
+                break;
         }
     }
 

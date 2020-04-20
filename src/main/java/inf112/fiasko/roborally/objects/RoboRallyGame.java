@@ -5,7 +5,6 @@ import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
-import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
 import inf112.fiasko.roborally.networking.containers.ProgamsContainer;

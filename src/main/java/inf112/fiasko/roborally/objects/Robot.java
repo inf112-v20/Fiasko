@@ -32,6 +32,14 @@ public class Robot {
     }
 
     /**
+     * setBackupPosition
+     * @param backupPosition
+     */
+    public void setBackupPosition(Position backupPosition) {
+        this.backupPosition = backupPosition;
+    }
+
+    /**
      * True if the robot has touched a flag in the current turn
      *
      * @return a boolean

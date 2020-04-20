@@ -164,7 +164,15 @@ public class Board {
      * @param powerDown The status of the power down
      */
     public void setPowerDown(RobotID robotID, Boolean powerDown) {
-        robots.get(robotID).setPowerDown(powerDown);
+        if(robots.containsKey(robotID)){
+            robots.get(robotID).setPowerDown(powerDown);
+        }
+        else {
+            getRobotFromDeadRobots(robotID).setPowerDown(powerDown);
+        }
+    }
+    public void setBackupPositionOfRobot(RobotID robotID, Position pos){
+        robots.get(robotID).setBackupPosition(pos);
     }
 
     /**
@@ -173,7 +181,20 @@ public class Board {
      * @return The power down status of the robot
      */
     public boolean getPowerDown(RobotID robotID) {
-        return robots.get(robotID).isInPowerDown();
+        if(robots.containsKey(robotID)){
+            return robots.get(robotID).isInPowerDown();
+        }
+        else {
+            return  getRobotFromDeadRobots(robotID).isInPowerDown();
+        }
+    }
+    private Robot getRobotFromDeadRobots(RobotID robotID){
+        for (Robot robot:deadRobots) {
+            if (robot.getRobotId()==robotID){
+                return robot;
+            }
+        }
+        return null;
     }
 
     /**

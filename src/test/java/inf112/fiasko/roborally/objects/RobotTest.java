@@ -68,5 +68,5 @@ public class RobotTest {
         testRobot.setLastFlagVisited(nextFlag);
         assertEquals(1, testRobot.getLastFlagVisited());
     }
-    
+
 }

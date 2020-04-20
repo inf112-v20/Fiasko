@@ -306,6 +306,11 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         if (host) {
             server.setDeadPlayers(gameBoard.getRealDeadRobots());
         }
+        playerList.removeIf((player) -> gameBoard.getRealDeadRobots().contains(player.getRobotID()));
+        if(playerList.isEmpty()){
+            System.exit(1);
+        }
+
     }
 
     /**

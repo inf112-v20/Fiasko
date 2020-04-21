@@ -59,6 +59,25 @@ class RoboRallyServerListener extends Listener {
     }
 
     /**
+     * Does necessary cleanup of dangling connections before game is started
+     *
+     * <p>Disconnects all connections which have not yet sent a player name.</p>
+     */
+    public void startGame() {
+        List<Connection> connectionsToDrop = new ArrayList<>();
+        for (Connection connection : clients.keySet()) {
+            if (playerNames.get(connection) == null) {
+                connectionsToDrop.add(connection);
+            }
+        }
+        for (Connection connection : connectionsToDrop) {
+            clients.remove(connection);
+            deadPlayers.add(connection);
+            connection.close();
+        }
+    }
+
+    /**
      * Gets a map between connections and their player name
      *
      * @return A mapping between connections and robot ids
@@ -110,9 +129,7 @@ class RoboRallyServerListener extends Listener {
      */
     private void receiveContinuePowerDown(Connection connection, Boolean bool) {
         stayInPowerDown.put(connection, bool);
-        System.out.println("fuuuuuuuuuuuuuuuuu");
         if (receivedDataFromAllConnections(stayInPowerDown)) {
-            System.out.println("fuuuuuuuuuuuuuuuuasdasdasdasdasdasdasdu");
             Map<String, Boolean> powerDowns = new HashMap<>();
             for (Connection connected : stayInPowerDown.keySet()) {
                 powerDowns.put(playerNames.get(connected), stayInPowerDown.get(connected));
@@ -151,10 +168,7 @@ class RoboRallyServerListener extends Listener {
      */
     private <K> boolean receivedDataFromAllConnections(Map<Connection, K> data) {
         Set<Connection> connections = clients.keySet();
-        System.out.println("keys "+data.keySet());
-        System.out.println(connections);
         connections.removeAll(deadPlayers);
-        System.out.println(connections);
         return data.keySet().containsAll(connections);
     }
 

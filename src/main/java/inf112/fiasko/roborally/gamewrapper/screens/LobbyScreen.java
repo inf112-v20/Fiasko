@@ -47,6 +47,7 @@ public class LobbyScreen extends AbstractScreen {
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                roboRallyWrapper.server.startGame();
                 Map<Connection, String> playernames = roboRallyWrapper.server.getPlayerNames();
                 List<Player> playerlist = IOUtil.playerGenerator(playernames,
                         roboRallyWrapper.server.getRobotID());

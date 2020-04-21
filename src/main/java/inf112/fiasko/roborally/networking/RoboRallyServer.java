@@ -67,6 +67,13 @@ public class RoboRallyServer {
     }
 
     /**
+     * Does necessary cleanup of dangling connections before game is started
+     */
+    public void startGame() {
+        listener.startGame();
+    }
+
+    /**
      * Sends an object to a specific client
      *
      * @param connection The connection to send the object to

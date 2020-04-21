@@ -4,7 +4,7 @@ package inf112.fiasko.roborally.networking.containers;
  * This class represents a response saying that something went wrong with the request
  */
 public class ErrorResponse {
-    private final String errorMessage;
+    private String errorMessage;
     private boolean critical;
 
     /**
@@ -15,6 +15,9 @@ public class ErrorResponse {
     public ErrorResponse(String errorMessage) {
         this.errorMessage = errorMessage;
         this.critical = false;
+    }
+    public ErrorResponse(){
+
     }
 
     /**

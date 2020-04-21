@@ -43,13 +43,13 @@ class RoboRallyClientListener extends Listener {
                     wrapper.server != null, info.getPlayerName(), wrapper.server);
         } else if (object instanceof ProgrammingCardDeck) {
             if(((ProgrammingCardDeck) object).isEmpty()){
+                wrapper.roboRallyGame.setProgram(new ArrayList<>());
                 if (wrapper.roboRallyGame.getRobotPowerdown()){
                     wrapper.roboRallyGame.setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
                 }
                 else {
                     wrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
                 }
-                wrapper.roboRallyGame.setProgram(new ArrayList<>());
             }
             else {wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);}
             new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();

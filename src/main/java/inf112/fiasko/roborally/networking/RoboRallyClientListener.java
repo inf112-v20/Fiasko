@@ -11,6 +11,8 @@ import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
 
+import java.util.ArrayList;
+
 /**
  * This listener handles all receiving from the server
  */
@@ -40,7 +42,16 @@ class RoboRallyClientListener extends Listener {
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null, info.getPlayerName(), wrapper.server);
         } else if (object instanceof ProgrammingCardDeck) {
-            wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
+            if(((ProgrammingCardDeck) object).isEmpty()){
+                if (wrapper.roboRallyGame.getRobotPowerdown()){
+                    wrapper.roboRallyGame.setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
+                }
+                else {
+                    wrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
+                }
+                wrapper.roboRallyGame.setProgram(new ArrayList<>());
+            }
+            else {wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);}
             new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();
         } else if (object instanceof ProgamsContainer) {
             new Thread(() -> {

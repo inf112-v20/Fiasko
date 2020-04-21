@@ -77,7 +77,7 @@ public class Player {
      * @param cardList list the size of 5 with programing cards
      */
     public void setProgram(List<ProgrammingCard> cardList) {
-        if (cardList.size() != 5) {
+        if (cardList.size() != 5 && !cardList.isEmpty()) {
             throw new IllegalArgumentException("The program must contain exactly 5 cards.");
         } else {
             program = new ArrayList<>(cardList);

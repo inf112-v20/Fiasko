@@ -57,4 +57,11 @@ public interface DrawableGame {
      * @return A list of all robots to draw
      */
     List<Robot> getRobotsToDraw();
+
+    /**
+     * Gets a list of active players to receive information about player names
+     *
+     * @return A list of players
+     */
+    List<Player> getPlayers();
 }

@@ -115,6 +115,11 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     }
 
     @Override
+    public List<Player> getPlayers() {
+        return new ArrayList<>(this.playerList);
+    }
+
+    @Override
     public GameState getGameState() {
         return gameState;
     }

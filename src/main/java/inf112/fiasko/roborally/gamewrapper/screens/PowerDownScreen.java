@@ -57,11 +57,18 @@ public class PowerDownScreen extends AbstractScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
-
+        String descriptiontext;
+        if(roboRallyWrapper.roboRallyGame.getGameState()==GameState.CHOOSING_POWER_DOWN){
+            descriptiontext = "click the button to enter powerdown next round";
+        }
+        else{
+            descriptiontext = "continue powerdown?";
+        }
         int elapsedTime = (int) Math.floor((System.currentTimeMillis() - startTime) / 1000f);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to enter Power Down next round",
+
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, descriptiontext,
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(10 - elapsedTime),

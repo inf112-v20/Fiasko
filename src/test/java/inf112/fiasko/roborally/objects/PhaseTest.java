@@ -334,5 +334,21 @@ public class PhaseTest {
         assertNull(board.getRobotOnPosition(new Position(7, 7)));
     }
 
+    @Test
+    public void robotOnConveyorBeltFacingOutOfMapMovesAndDies() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(7, 0)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
 
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertFalse(board.isRobotAlive(RobotID.ROBOT_1));
+        assertNull(board.getRobotOnPosition(new Position(7, 0)));
+    }
 }

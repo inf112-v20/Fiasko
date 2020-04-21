@@ -314,4 +314,25 @@ public class PhaseTest {
         int elapsedTime = (int) Math.floor((System.currentTimeMillis() - startTime) / 1000f);
         assertTrue(elapsedTime < 1);
     }
+
+    @Test
+    public void robotOnConveyorBeltFacingHoleMovesAndDies() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(6, 7)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertFalse(board.isRobotAlive(RobotID.ROBOT_1));
+        assertNull(board.getRobotOnPosition(new Position(6, 7)));
+        assertNull(board.getRobotOnPosition(new Position(7, 7)));
+    }
+
+
 }

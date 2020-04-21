@@ -197,5 +197,22 @@ public class PhaseTest {
         assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(7, 8)));
     }
 
+    @Test
+    public void robotOnConveyorBeltsFacingWallDoesNotMove() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(1, 1)));
+    }
+
 
 }

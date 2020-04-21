@@ -110,7 +110,9 @@ class RoboRallyServerListener extends Listener {
      */
     private void receiveContinuePowerDown(Connection connection, Boolean bool) {
         stayInPowerDown.put(connection, bool);
+        System.out.println("fuuuuuuuuuuuuuuuuu");
         if (receivedDataFromAllConnections(stayInPowerDown)) {
+            System.out.println("fuuuuuuuuuuuuuuuuasdasdasdasdasdasdasdu");
             Map<String, Boolean> powerDowns = new HashMap<>();
             for (Connection connected : stayInPowerDown.keySet()) {
                 powerDowns.put(playerNames.get(connected), stayInPowerDown.get(connected));
@@ -149,8 +151,11 @@ class RoboRallyServerListener extends Listener {
      */
     private <K> boolean receivedDataFromAllConnections(Map<Connection, K> data) {
         Set<Connection> connections = clients.keySet();
+        System.out.println("keys "+data.keySet());
+        System.out.println(connections);
         connections.removeAll(deadPlayers);
-        return connections.containsAll(data.keySet()) && data.keySet().containsAll(connections);
+        System.out.println(connections);
+        return data.keySet().containsAll(connections);
     }
 
     @Override

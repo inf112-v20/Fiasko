@@ -95,9 +95,12 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
                     List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
                     int lockedCardsInt = 5-maxCards;
                     List<ProgrammingCard> newProgram = getCards();
-                    for(int i = 5; i>(5-lockedCardsInt);i--){
+                    for(int i = 4; i>(4-lockedCardsInt);i--){
                        newProgram.add(oldProgram.get(i));
                     }
+                    System.out.println("fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuasdasdasda234234234: "+newProgram.size());
+                    System.out.println(newProgram);
+
                     roboRallyWrapper.roboRallyGame.setProgram(newProgram);
                     roboRallyWrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));

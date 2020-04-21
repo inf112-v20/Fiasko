@@ -50,6 +50,7 @@ public class Phase {
      * @throws InterruptedException If interrupted wile trying to sleep
      */
     public void runPhase(int phaseNumber) throws InterruptedException {
+        sleep();
         runProgrammingCards(phaseNumber);
 
         moveAllConveyorBelts();
@@ -83,6 +84,7 @@ public class Phase {
      * @throws InterruptedException If it gets interrupted while trying to sleep
      */
     public void fireAllLasers() throws InterruptedException {
+        sleep();
         gameBoard.fireAllLasers();
         sleep();
         gameBoard.doLaserCleanup();
@@ -121,15 +123,16 @@ public class Phase {
      * @throws InterruptedException If interrupted while sleeping.
      */
     public void rotateCogwheels() throws InterruptedException {
+        sleep();
         for (BoardElementContainer<Tile> cogwheel : cogwheels) {
             if (!gameBoard.hasRobotOnPosition(cogwheel.getPosition())) {
                 continue;
             }
-            sleep();
+            RobotID robotAtCogwheel = gameBoard.getRobotOnPosition(cogwheel.getPosition());
             if (cogwheel.getElement().getTileType() == TileType.COGWHEEL_RIGHT) {
-                gameBoard.rotateRobotRight(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+                gameBoard.rotateRobotRight(robotAtCogwheel);
             } else {
-                gameBoard.rotateRobotLeft(gameBoard.getRobotOnPosition(cogwheel.getPosition()));
+                gameBoard.rotateRobotLeft(robotAtCogwheel);
             }
         }
     }
@@ -267,7 +270,7 @@ public class Phase {
                                         Map<RobotID, Position> newPositions, Map<RobotID, Boolean> moveNormally) {
         RobotID robotAtConveyorBelt = gameBoard.getRobotOnPosition(conveyorBeltPosition);
         Position newPosition = gameBoard.getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
-        if (gameBoard.isConveyorBelt(gameBoard.getTileOnPosition(newPosition))) {
+        if (gameBoard.isValidPosition(newPosition) && gameBoard.isConveyorBelt(gameBoard.getTileOnPosition(newPosition))) {
             newPositions.put(robotAtConveyorBelt, newPosition);
             moveNormally.put(robotAtConveyorBelt, false);
             Direction newDirection = gameBoard.getTileOnPosition(newPosition).getDirection();

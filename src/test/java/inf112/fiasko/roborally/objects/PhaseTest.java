@@ -310,4 +310,199 @@ public class PhaseTest {
         assertEquals(robot5.getRobotId(), board.getRobotOnPosition(new Position(2, 12)));
         assertEquals(robot6.getRobotId(), board.getRobotOnPosition(new Position(2, 14)));
     }
+
+    @Test
+    public void robotsOnConveyorBeltsFacingTheSameEmptyTileDoesNotMove() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(8, 11)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(7, 10)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(8, 11)));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(7, 10)));
+    }
+
+    @Test
+    public void robotsOnConveyorBeltsFacingTheSameHoleTileDoesNotMove() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(6, 7)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(7, 8)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(6, 7)));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(7, 8)));
+    }
+
+    @Test
+    public void robotOnConveyorBeltsFacingWallDoesNotMove() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(1, 1)));
+    }
+
+    @Test
+    public void robotBehindAnotherRobotOnConveyorBeltsFacingWallDoesNotMove() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(1, 1)));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(1, 2)));
+    }
+
+    @Test
+    public void robotBehindOtherRobotsOnSlowConveyorBeltsFacingEmptyTilesMoves() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(5, 7)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(5, 8)));
+        robots.add(new Robot(RobotID.ROBOT_3, new Position(5, 9)));
+        robots.add(new Robot(RobotID.ROBOT_4, new Position(5, 10)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+        players.add(new Player(RobotID.ROBOT_3, "Player 3"));
+        players.add(new Player(RobotID.ROBOT_4, "Player 4"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(5, 6)));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(5, 7)));
+        assertEquals(RobotID.ROBOT_3, board.getRobotOnPosition(new Position(5, 8)));
+        assertEquals(RobotID.ROBOT_4, board.getRobotOnPosition(new Position(5, 9)));
+    }
+
+    @Test
+    public void robotBehindOtherRobotsOnFastConveyorBeltsFacingEmptyTilesMoves() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(4, 7)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(4, 8)));
+        robots.add(new Robot(RobotID.ROBOT_3, new Position(4, 9)));
+        robots.add(new Robot(RobotID.ROBOT_4, new Position(4, 10)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+        players.add(new Player(RobotID.ROBOT_3, "Player 3"));
+        players.add(new Player(RobotID.ROBOT_4, "Player 4"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(4, 5)));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(4, 6)));
+        assertEquals(RobotID.ROBOT_3, board.getRobotOnPosition(new Position(4, 7)));
+        assertEquals(RobotID.ROBOT_4, board.getRobotOnPosition(new Position(4, 8)));
+    }
+
+    @Test
+    public void robotBehindOtherRobotsOnConveyorBeltsShapedAsARoundaboutMoves() {
+        long startTime = System.currentTimeMillis();
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 8)));
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(2, 8)));
+        robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 9)));
+        robots.add(new Robot(RobotID.ROBOT_4, new Position(1, 9)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+        players.add(new Player(RobotID.ROBOT_3, "Player 3"));
+        players.add(new Player(RobotID.ROBOT_4, "Player 4"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(1, 9)));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(1, 8)));
+        assertEquals(RobotID.ROBOT_3, board.getRobotOnPosition(new Position(2, 8)));
+        assertEquals(RobotID.ROBOT_4, board.getRobotOnPosition(new Position(2, 9)));
+        int elapsedTime = (int) Math.floor((System.currentTimeMillis() - startTime) / 1000f);
+        assertTrue(elapsedTime < 1);
+    }
+
+    @Test
+    public void robotOnConveyorBeltFacingHoleMovesAndDies() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(6, 7)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertFalse(board.isRobotAlive(RobotID.ROBOT_1));
+        assertNull(board.getRobotOnPosition(new Position(6, 7)));
+        assertNull(board.getRobotOnPosition(new Position(7, 7)));
+    }
+
+    @Test
+    public void robotOnConveyorBeltFacingOutOfMapMovesAndDies() {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(7, 0)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
+            Phase testPhase = new Phase(board, players, 0, null);
+            testPhase.moveAllConveyorBelts();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        assertFalse(board.isRobotAlive(RobotID.ROBOT_1));
+        assertNull(board.getRobotOnPosition(new Position(7, 0)));
+    }
 }

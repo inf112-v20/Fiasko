@@ -329,19 +329,18 @@ public class Board {
             return true;
         }
         Position positionInFront = getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
-        if (!isValidPosition(positionInFront)) {
-            return true;
+        //The tile in front of the robot is not a conveyor belt and has something on it stopping the conveyor belt
+        if ((!isValidPosition(positionInFront) && moveIsStoppedByWall(conveyorBeltPosition, positionInFront,
+                conveyorBeltDirection)) || (isValidPosition(positionInFront) &&
+                !isConveyorBelt(getTileOnPosition(positionInFront)) &&
+                hasFrontConflict(conveyorBeltPosition, positionInFront, conveyorBeltDirection))) {
+            return false;
         }
-        Tile tileInFront = getTileOnPosition(positionInFront);
         //If a conveyor belt will move the robot outside the map, the move is valid
         if (!isValidPosition(positionInFront)) {
             return true;
         }
-        //The tile in front of the robot is not a conveyor belt and has something on it stopping the conveyor belt
-        if (!isConveyorBelt(tileInFront) &&
-                hasFrontConflict(conveyorBeltPosition, positionInFront, conveyorBeltDirection)) {
-            return false;
-        }
+        Tile tileInFront = getTileOnPosition(positionInFront);
         //There is another robot trying to enter the same crossing
         if (hasCrossingConflict(positionInFront, conveyorBeltDirection)) {
             return false;

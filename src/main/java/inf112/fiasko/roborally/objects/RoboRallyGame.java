@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class represent a game which is drawable using libgdx
@@ -32,6 +33,13 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
     private Phase phase;
+
+    public Boolean getRobotPowerdown(){
+        if(getPlayerFromName(this.playerName)!=null){
+            return gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID());
+        }
+        return false;
+    }
 
     /**
      * Instantiates a new Robo Rally game
@@ -173,19 +181,20 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             removeNonLockedProgrammingCardsFromPlayers();
         }
 
-        if (gameBoard.getPowerDown(getPlayerFromName(this.playerName).getRobotID())) {
+        if (gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID())) {
             setGameState(GameState.CHOOSING_STAY_IN_POWER_DOWN);
         } else {
             setGameState(GameState.LOADING);
 
         }
-        //updateRobotPowerDown(); Should this be here?
     }
 
     @Override
     public void receiveStayInPowerDown(PowerDownContainer powerDowns) {
         for (Player player : playerList) {
-            player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
+            if(gameBoard.getPowerDown(player.getRobotID())) {
+                player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
+            }
         }
         respawnRobots();
         sendAllDeadPlayersToServer();

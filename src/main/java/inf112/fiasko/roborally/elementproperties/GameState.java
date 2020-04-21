@@ -44,6 +44,8 @@ public enum GameState {
     /**
      * Indicates that the game is no longer running
      */
-    EXITED
+    EXITED,
+
+    SKIP_POWER_DOWN_SCREEN
 
 }

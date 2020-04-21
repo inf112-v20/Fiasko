@@ -329,6 +329,9 @@ public class Board {
             return true;
         }
         Position positionInFront = getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
+        if (!isValidPosition(positionInFront)) {
+            return true;
+        }
         Tile tileInFront = getTileOnPosition(positionInFront);
         //If a conveyor belt will move the robot outside the map, the move is valid
         if (!isValidPosition(positionInFront)) {
@@ -564,7 +567,7 @@ public class Board {
      * @param position The position to test
      * @return True if the position is valid. False otherwise
      */
-    private boolean isValidPosition(Position position) {
+    public boolean isValidPosition(Position position) {
         return position.getXCoordinate() >= 0
                 && position.getXCoordinate() < boardWidth
                 && position.getYCoordinate() >= 0

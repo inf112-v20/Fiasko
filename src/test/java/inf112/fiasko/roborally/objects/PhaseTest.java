@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.Action;
+import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
@@ -107,6 +108,159 @@ public class PhaseTest {
         assertEquals(robot4.getRobotId(), board.getRobotOnPosition(robot4Position));
         phase.makeMove(RobotID.ROBOT_4, Action.MOVE_1);
         assertEquals(robot4.getRobotId(), board.getRobotOnPosition(new Position(3, 7)));
+    }
+
+    @Test
+    public void robotFiresLaserAndHitsAnotherRobot() throws InterruptedException {
+        FakeGame testGame = new FakeGame();
+        List<Robot> bot = new ArrayList<>();
+        List<Player> botPlayer = new ArrayList<>();
+        Position bot1Position = new Position(9, 12);
+        Position bot2Position = new Position(9, 13);
+        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
+        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
+        bot.add(bot1);
+        bot.add(bot2);
+        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
+        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
+        botPlayer.add(botPlayer1);
+        botPlayer.add(botPlayer2);
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
+            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
+            assertEquals(0, bot2.getDamageTaken());
+            assertEquals(0, bot1.getDamageTaken());
+            testPhase.fireAllLasers();
+            assertEquals(0, bot2.getDamageTaken());
+            assertEquals(1, bot1.getDamageTaken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void robotFiresLaserAndHitsAWallDoesNotDamageRobotOnOtherSide() throws InterruptedException {
+        FakeGame testGame = new FakeGame();
+        List<Robot> bot = new ArrayList<>();
+        List<Player> botPlayer = new ArrayList<>();
+        Position bot1Position = new Position(9, 11);
+        Position bot2Position = new Position(9, 13);
+        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
+        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
+        bot.add(bot1);
+        bot.add(bot2);
+        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
+        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
+        botPlayer.add(botPlayer1);
+        botPlayer.add(botPlayer2);
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
+            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
+            assertEquals(0, bot2.getDamageTaken());
+            assertEquals(0, bot1.getDamageTaken());
+            testPhase.fireAllLasers();
+            assertEquals(0, bot2.getDamageTaken());
+            assertEquals(0, bot1.getDamageTaken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void robotGetsHitBy2Lasers() throws InterruptedException {
+        FakeGame testGame = new FakeGame();
+        List<Robot> bot = new ArrayList<>();
+        List<Player> botPlayer = new ArrayList<>();
+        Position bot1Position = new Position(9, 12);
+        Position bot2Position = new Position(9, 13);
+        Position bot3Position = new Position(8, 12);
+        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
+        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
+        Robot bot3 = new Robot(RobotID.ROBOT_3, bot3Position);
+        bot.add(bot1);
+        bot.add(bot2);
+        bot.add(bot3);
+        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
+        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
+        Player botPlayer3 = new Player(RobotID.ROBOT_3, "Player 3");
+        botPlayer.add(botPlayer1);
+        botPlayer.add(botPlayer2);
+        botPlayer.add(botPlayer3);
+        bot3.setFacingDirection(Direction.EAST);
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
+            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
+            assertEquals(0, bot1.getDamageTaken());
+            testPhase.fireAllLasers();
+            assertEquals(2, bot1.getDamageTaken());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    @Test
+    public void robotFiresLaserAndHitsARobotDoesNotDamageRobotOnOtherSide() throws InterruptedException {
+        FakeGame testGame = new FakeGame();
+        List<Robot> bot = new ArrayList<>();
+        List<Player> botPlayer = new ArrayList<>();
+        Position bot1Position = new Position(9, 12);
+        Position bot2Position = new Position(9, 13);
+        Position bot3Position = new Position(9, 14);
+        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
+        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
+        Robot bot3 = new Robot(RobotID.ROBOT_3, bot3Position);
+        bot.add(bot1);
+        bot.add(bot2);
+        bot.add(bot3);
+        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
+        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
+        Player botPlayer3 = new Player(RobotID.ROBOT_3, "Player 3");
+        botPlayer.add(botPlayer1);
+        botPlayer.add(botPlayer2);
+        botPlayer.add(botPlayer3);
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
+            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
+            assertEquals(0, bot1.getDamageTaken());
+            testPhase.fireAllLasers();
+            assertEquals(1, bot1.getDamageTaken());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void robotGetsRotatedByCog() throws InterruptedException {
+        FakeGame testGame = new FakeGame();
+        List<Robot> bot = new ArrayList<>();
+        List<Player> botPlayer = new ArrayList<>();
+        Position bot1Position = new Position(0, 0);
+        Position bot2Position = new Position(1, 0);
+        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
+        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
+        bot.add(bot1);
+        bot.add(bot2);
+        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
+        botPlayer.add(botPlayer1);
+        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
+        botPlayer.add(botPlayer2);
+
+        try {
+            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
+            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
+            assertEquals(Direction.NORTH, bot1.getFacingDirection());
+            testPhase.rotateCogwheels();
+            assertEquals(Direction.EAST, bot1.getFacingDirection());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

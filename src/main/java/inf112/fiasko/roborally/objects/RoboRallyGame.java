@@ -181,11 +181,10 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             removeNonLockedProgrammingCardsFromPlayers();
         }
 
-        if (gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID())) {
+        if (getPlayerFromName(this.playerName)!=null&& gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID())) {
             setGameState(GameState.CHOOSING_STAY_IN_POWER_DOWN);
         } else {
             setGameState(GameState.LOADING);
-
         }
     }
 

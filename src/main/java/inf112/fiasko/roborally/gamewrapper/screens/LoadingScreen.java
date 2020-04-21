@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+
+import java.util.ArrayList;
 
 /**
  * This screen is used to wait for something
@@ -67,6 +70,14 @@ public class LoadingScreen extends AbstractScreen {
                 break;
             case EXITED:
                 roboRallyWrapper.quit("All players died. Cannot continue playing.");
+                break;
+            case CHOOSING_POWER_DOWN:
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(this.roboRallyWrapper));
+                break;
+            case SKIP_POWER_DOWN_SCREEN:
+                roboRallyWrapper.roboRallyGame.setGameState(GameState.LOADING);
+                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
+                roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(false, new ArrayList<>()));
                 break;
             default:
                 System.out.println("The loading screen doesn't know what to do with " + gameState);

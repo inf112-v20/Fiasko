@@ -135,24 +135,36 @@ public final class TextureConverterUtil {
      * @return The texture to draw
      */
     public static TextureRegion convertElement(Robot robot) {
-        if (robot.getRobotId() == RobotID.ROBOT_1) {
-            return new TextureRegion(robotsTexture, 0, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_2) {
-            return new TextureRegion(robotsTexture, 64, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_3) {
-            return new TextureRegion(robotsTexture, 2 * 64, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_4) {
-            return new TextureRegion(robotsTexture, 3 * 64, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_5) {
-            return new TextureRegion(robotsTexture, 4 * 64, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_6) {
-            return new TextureRegion(robotsTexture, 5 * 64, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_7) {
-            return new TextureRegion(robotsTexture, 6 * 64, 0, 64, 64);
-        } else if (robot.getRobotId() == RobotID.ROBOT_8) {
-            return new TextureRegion(robotsTexture, 7 * 64, 0, 64, 64);
+        return convertElement(robot.getRobotId());
+    }
+
+    /**
+     * Gets the texture representing the robot id
+     *
+     * @param robotID The id of the robot to draw
+     * @return The texture to draw
+     */
+    public static TextureRegion convertElement(RobotID robotID) {
+        switch (robotID) {
+            case ROBOT_1:
+                return new TextureRegion(robotsTexture, 0, 0, 64, 64);
+            case ROBOT_2:
+                return new TextureRegion(robotsTexture, 64, 0, 64, 64);
+            case ROBOT_3:
+                return new TextureRegion(robotsTexture, 2 * 64, 0, 64, 64);
+            case ROBOT_4:
+                return new TextureRegion(robotsTexture, 3 * 64, 0, 64, 64);
+            case ROBOT_5:
+                return new TextureRegion(robotsTexture, 4 * 64, 0, 64, 64);
+            case ROBOT_6:
+                return new TextureRegion(robotsTexture, 5 * 64, 0, 64, 64);
+            case ROBOT_7:
+                return new TextureRegion(robotsTexture, 6 * 64, 0, 64, 64);
+            case ROBOT_8:
+                return new TextureRegion(robotsTexture, 7 * 64, 0, 64, 64);
+            default:
+                throw new IllegalArgumentException("Robot has no drawable texture.");
         }
-        throw new IllegalArgumentException("Robot has no drawable texture.");
     }
 
     /**

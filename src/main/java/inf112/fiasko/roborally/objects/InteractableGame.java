@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface InteractableGame {
     /**
-     * Gets the current state og the game
+     * Gets the current state of the game
      *
      * @return The state the game is currently in
      */

@@ -59,6 +59,13 @@ public interface DrawableGame {
     List<Robot> getRobotsToDraw();
 
     /**
+     * Gets a list of all robots still participating
+     *
+     * @return A list of all robots
+     */
+    List<Robot> getAllRobots();
+
+    /**
      * Gets a list of active players to receive information about player names
      *
      * @return A list of players

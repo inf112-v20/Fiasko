@@ -91,6 +91,18 @@ public class Board {
     }
 
     /**
+     * Gets all robots from the board
+     *
+     * @return A list of robots
+     */
+    public List<Robot> getAllRobots() {
+        List<Robot> robotsCopy = new ArrayList<>(robots.values());
+        robotsCopy.addAll(deadRobots);
+        robotsCopy.replaceAll(Robot::copy);
+        return robotsCopy;
+    }
+
+    /**
      * Gets all the tiles from the board
      *
      * @return A list of all tiles on the board

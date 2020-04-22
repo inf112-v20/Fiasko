@@ -34,37 +34,6 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private ProgrammingCardDeck playerHand;
     private Phase phase;
 
-    public Boolean getRobotPowerdown(){
-        if(getPlayerFromName(this.playerName)!=null){
-            return gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID());
-        }
-        return false;
-    }
-
-    /**
-     * Instantiates a new Robo Rally game
-     *
-     * @param playerList A list of all the players participating in the game
-     * @param boardName  The playerName of the board to use
-     * @param host       Whether this player is the host
-     * @param playerName The name of the player of this instance of the game
-     * @param server     The server if this player is host. Should be null otherwise
-     * @param debug      Whether this game is to use the debugging board
-     */
-    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName,
-                         RoboRallyServer server, boolean debug) {
-        this.playerName = playerName;
-        this.host = host;
-        this.playerList = playerList;
-        this.server = server;
-        if (debug) {
-            initializeDebugMode();
-        } else {
-            initializeGame(boardName);
-        }
-        this.phase = new Phase(gameBoard, playerList, 600, this);
-    }
-
     /**
      * Instantiates a new Robo Rally game
      *
@@ -82,6 +51,13 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         this.server = server;
         initializeGame(boardName);
         this.phase = new Phase(gameBoard, playerList, 600, this);
+    }
+
+    public Boolean getRobotPowerdown() {
+        if (getPlayerFromName(this.playerName) != null) {
+            return gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID());
+        }
+        return false;
     }
 
     @Override
@@ -112,6 +88,11 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     @Override
     public List<Robot> getRobotsToDraw() {
         return gameBoard.getAliveRobots();
+    }
+
+    @Override
+    public List<Robot> getAllRobots() {
+        return gameBoard.getAllRobots();
     }
 
     @Override
@@ -186,17 +167,17 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             removeNonLockedProgrammingCardsFromPlayers();
         }
 
-        if (getPlayerFromName(this.playerName)!=null&& gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID())) {
+        if (getPlayerFromName(this.playerName) != null && gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID())) {
             setGameState(GameState.CHOOSING_STAY_IN_POWER_DOWN);
         } else {
-            setGameState(GameState.LOADING);
+            setGameState(GameState.SKIP_STAY_IN_POWER_DOWN);
         }
     }
 
     @Override
     public void receiveStayInPowerDown(PowerDownContainer powerDowns) {
         for (Player player : playerList) {
-            if(gameBoard.getPowerDown(player.getRobotID())) {
+            if (gameBoard.getPowerDown(player.getRobotID())) {
                 player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
             }
         }

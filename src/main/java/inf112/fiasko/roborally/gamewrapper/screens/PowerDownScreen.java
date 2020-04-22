@@ -58,10 +58,9 @@ public class PowerDownScreen extends AbstractScreen {
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
         String descriptiontext;
-        if(roboRallyWrapper.roboRallyGame.getGameState()==GameState.CHOOSING_POWER_DOWN){
+        if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_POWER_DOWN) {
             descriptiontext = "click the button to enter powerdown next round";
-        }
-        else{
+        } else {
             descriptiontext = "continue powerdown?";
         }
         int elapsedTime = (int) Math.floor((System.currentTimeMillis() - startTime) / 1000f);

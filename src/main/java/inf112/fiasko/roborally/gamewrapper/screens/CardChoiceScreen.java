@@ -93,12 +93,12 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if (chosenCards.size() == maxCards) {
                     List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
-                    int lockedCardsInt = 5-maxCards;
+                    int lockedCardsInt = 5 - maxCards;
                     List<ProgrammingCard> newProgram = getCards();
-                    for(int i = 4; i>(4-lockedCardsInt);i--){
-                       newProgram.add(oldProgram.get(i));
+                    for (int i = 4; i > (4 - lockedCardsInt); i--) {
+                        newProgram.add(oldProgram.get(i));
                     }
-                    System.out.println("fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuasdasdasda234234234: "+newProgram.size());
+                    System.out.println("fuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuasdasdasda234234234: " + newProgram.size());
                     System.out.println(newProgram);
 
                     roboRallyWrapper.roboRallyGame.setProgram(newProgram);

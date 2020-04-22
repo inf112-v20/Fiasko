@@ -202,7 +202,6 @@ public class PhaseTest {
     }
 
 
-
     @Test
     public void robotFiresLaserAndHitsARobotDoesNotDamageRobotOnOtherSide() throws InterruptedException {
         FakeGame testGame = new FakeGame();

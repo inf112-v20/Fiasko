@@ -16,7 +16,8 @@ public class ErrorResponse {
         this.errorMessage = errorMessage;
         this.critical = false;
     }
-    public ErrorResponse(){
+
+    public ErrorResponse() {
 
     }
 

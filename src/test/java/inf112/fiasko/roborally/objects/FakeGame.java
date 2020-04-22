@@ -1,11 +1,14 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.GameState;
-import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
-import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 
 import java.util.List;
 
+/**
+ * A class implementing just enough features of an interactable game to be able to test a phase
+ */
 public class FakeGame implements InteractableGame {
     private String winningPlayerName;
 
@@ -30,12 +33,12 @@ public class FakeGame implements InteractableGame {
     }
 
     @Override
-    public void receiveAllPrograms(ProgamsContainer programs) throws InterruptedException {
+    public void receiveAllPrograms(ProgramsContainerResponse programs) {
         //Not needed for testing
     }
 
     @Override
-    public void receiveStayInPowerDown(PowerDownContainer powerDowns) {
+    public void receiveStayInPowerDown(PowerDownContainerResponse powerDowns) {
         //Not needed for testing
     }
 

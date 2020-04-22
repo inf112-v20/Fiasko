@@ -5,8 +5,8 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
-import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
-import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 
@@ -136,7 +136,7 @@ class RoboRallyServerListener extends Listener {
             for (Connection connected : stayInPowerDown.keySet()) {
                 powerDowns.put(playerNames.get(connected), stayInPowerDown.get(connected));
             }
-            server.sendToAllClients(new PowerDownContainer(powerDowns));
+            server.sendToAllClients(new PowerDownContainerResponse(powerDowns));
             stayInPowerDown = new HashMap<>();
         }
     }
@@ -156,7 +156,7 @@ class RoboRallyServerListener extends Listener {
                 powerDown.put(playerNames.get(connected), programs.get(connected).getPowerdown());
                 program.put(playerNames.get(connected), programs.get(connected).getProgram());
             }
-            server.sendToAllClients(new ProgamsContainer(program, powerDown));
+            server.sendToAllClients(new ProgramsContainerResponse(program, powerDown));
             programs = new HashMap<>();
         }
     }

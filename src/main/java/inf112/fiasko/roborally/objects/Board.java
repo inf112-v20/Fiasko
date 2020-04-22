@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class represents a board
@@ -179,10 +180,16 @@ public class Board {
         if (robots.containsKey(robotID)) {
             robots.get(robotID).setPowerDown(powerDown);
         } else if (getRobotFromDeadRobots(robotID) != null) {
-            getRobotFromDeadRobots(robotID).setPowerDown(powerDown);
+            Objects.requireNonNull(getRobotFromDeadRobots(robotID)).setPowerDown(powerDown);
         }
     }
 
+    /**
+     * Sets the backup position of a given robot to a given position
+     *
+     * @param robotID The robot to change backup position for
+     * @param pos     The robot's new backup position
+     */
     public void setBackupPositionOfRobot(RobotID robotID, Position pos) {
         robots.get(robotID).setBackupPosition(pos);
     }
@@ -197,11 +204,17 @@ public class Board {
         if (robots.containsKey(robotID)) {
             return robots.get(robotID).isInPowerDown();
         } else if (getRobotFromDeadRobots(robotID) != null) {
-            return getRobotFromDeadRobots(robotID).isInPowerDown();
+            return Objects.requireNonNull(getRobotFromDeadRobots(robotID)).isInPowerDown();
         }
         return false;
     }
 
+    /**
+     * Gets a robot from the list of dead robots
+     *
+     * @param robotID The id of the robot to get
+     * @return The dead robot
+     */
     private Robot getRobotFromDeadRobots(RobotID robotID) {
         for (Robot robot : deadRobots) {
             if (robot.getRobotId() == robotID) {
@@ -223,7 +236,7 @@ public class Board {
     }
 
     /**
-     * sets the damage taken of robots in powerdown to 0
+     * sets the damage taken of robots in power down to 0
      */
     public void executePowerDown() {
         for (Robot robot : robots.values()) {

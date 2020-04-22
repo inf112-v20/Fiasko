@@ -27,7 +27,7 @@ public class IPAddressScreen extends AbstractScreen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
     private final Stage stage;
-    private TextField txtinput;
+    private TextField textInput;
 
     /**
      * Instantiates a new ip address screen
@@ -50,7 +50,7 @@ public class IPAddressScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 try {
-                    roboRallyWrapper.client = new RoboRallyClient(txtinput.getText(), roboRallyWrapper);
+                    roboRallyWrapper.client = new RoboRallyClient(textInput.getText(), roboRallyWrapper);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -59,10 +59,10 @@ public class IPAddressScreen extends AbstractScreen {
                 }
             }
         });
-        txtinput = new TextField("", skin);
-        txtinput.setPosition(applicationWidth / 2f - txtinput.getWidth() / 2f, 250);
-        txtinput.setSize(150, 40);
-        stage.addActor(txtinput);
+        textInput = new TextField("", skin);
+        textInput.setPosition(applicationWidth / 2f - textInput.getWidth() / 2f, 250);
+        textInput.setSize(150, 40);
+        stage.addActor(textInput);
         stage.addActor(joinButton);
 
         camera = new OrthographicCamera();

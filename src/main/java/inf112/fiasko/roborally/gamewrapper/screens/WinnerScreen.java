@@ -11,8 +11,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
-import inf112.fiasko.roborally.gamewrapper.screens.AbstractScreen;
 
+/**
+ * This screen shows which player won the game
+ */
 public class WinnerScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 

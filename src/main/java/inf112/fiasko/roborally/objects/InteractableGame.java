@@ -1,13 +1,13 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.GameState;
-import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
-import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 
 import java.util.List;
 
 /**
- * This interface describes
+ * This interface describes a game which can be interacted with
  */
 public interface InteractableGame {
     /**
@@ -44,14 +44,14 @@ public interface InteractableGame {
      * @param programs The programs container received from the server
      * @throws InterruptedException If interrupted during sleep
      */
-    void receiveAllPrograms(ProgamsContainer programs) throws InterruptedException;
+    void receiveAllPrograms(ProgramsContainerResponse programs) throws InterruptedException;
 
     /**
      * Continues turn when stay in power down is received from all players
      *
      * @param powerDowns The power down container received from the server
      */
-    void receiveStayInPowerDown(PowerDownContainer powerDowns);
+    void receiveStayInPowerDown(PowerDownContainerResponse powerDowns);
 
     /**
      * Gets the hand of this player

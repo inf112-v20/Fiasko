@@ -7,25 +7,25 @@ import java.util.List;
 /**
  * This class contains information about the game board to be used and the game's players
  */
-public class GameStartInfo {
+public class GameStartInfoResponse {
     private String boardName;
     private List<Player> playerList;
     private String playerName;
 
     /**
-     * Empty initialization method required by kryo
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
      */
-    public GameStartInfo() {
+    public GameStartInfoResponse() {
     }
 
     /**
-     * Instantiates a new GameStartInfo object
+     * Instantiates a new GameStartInfoResponse object
      *
      * @param boardName  The name of the board to be used, with extension
      * @param playerList List of players for the game
      * @param playerName The player name of the receiver
      */
-    public GameStartInfo(String boardName, List<Player> playerList, String playerName) {
+    public GameStartInfoResponse(String boardName, List<Player> playerList, String playerName) {
         this.playerName = playerName;
         this.boardName = boardName;
         this.playerList = playerList;
@@ -41,15 +41,6 @@ public class GameStartInfo {
     }
 
     /**
-     * Sets the player name of the current player
-     *
-     * @param playerName The player name of the current player
-     */
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
-
-    /**
      * Gets the list of players
      *
      * @return A list of players
@@ -59,30 +50,12 @@ public class GameStartInfo {
     }
 
     /**
-     * Sets the list of players for the game
-     *
-     * @param playerList List of players for the game
-     */
-    public void setPlayerList(List<Player> playerList) {
-        this.playerList = playerList;
-    }
-
-    /**
      * Gets the board name
      *
      * @return The board name
      */
     public String getBoardName() {
         return boardName;
-    }
-
-    /**
-     * Sets the name of the board to be used
-     *
-     * @param boardName The name of the board to be used, with extension
-     */
-    public void setBoardName(String boardName) {
-        this.boardName = boardName;
     }
 
 }

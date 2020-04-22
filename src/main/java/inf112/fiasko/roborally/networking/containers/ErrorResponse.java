@@ -17,6 +17,9 @@ public class ErrorResponse {
         this.critical = false;
     }
 
+    /**
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
+     */
     public ErrorResponse() {
 
     }

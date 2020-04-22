@@ -86,7 +86,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
                 break;
             case SKIP_STAY_IN_POWER_DOWN:
-                System.out.println("Sent false to server");
                 roboRallyWrapper.client.sendElement(false);
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 break;
@@ -212,6 +211,12 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     }
 
+    /**
+     * Gets the robot with the corresponding robot id
+     *
+     * @param robotID The robot id to get robot for
+     * @return The robot with the robot id
+     */
     private Robot getPlayersRobot(RobotID robotID) {
         for (Robot robot : roboRallyWrapper.roboRallyGame.getAllRobots()) {
             if (robot.getRobotId() == robotID) {

@@ -25,7 +25,7 @@ public class Phase {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<BoardElementContainer<Tile>> flags;
-    private InteractableGame game;
+    private final InteractableGame game;
 
     /**
      * Instantiates a new phase

@@ -8,6 +8,9 @@ public class ProgramAndPowerdownRequest {
     private Boolean powerdown;
     private List<ProgrammingCard> program;
 
+    /**
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
+     */
     public ProgramAndPowerdownRequest() {
     }
 

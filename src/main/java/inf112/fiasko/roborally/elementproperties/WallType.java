@@ -4,9 +4,21 @@ package inf112.fiasko.roborally.elementproperties;
  * This enum represents all possible wall types
  */
 public enum WallType {
+    /**
+     * A normal wall
+     */
     WALL_NORMAL(1),
+    /**
+     * A wall which consists of two connected walls
+     */
     WALL_CORNER(2),
+    /**
+     * A wall with a laser
+     */
     WALL_LASER_SINGLE(3),
+    /**
+     * A wall with two lasers
+     */
     WALL_LASER_DOUBLE(4);
 
     private final int wallTypeID;

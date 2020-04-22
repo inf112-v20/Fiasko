@@ -132,9 +132,9 @@ public class Robot {
     }
 
     /**
-     * setBackupPosition
+     * Sets the backup position of the robot
      *
-     * @param backupPosition
+     * @param backupPosition The new backup position of the robot
      */
     public void setBackupPosition(Position backupPosition) {
         this.backupPosition = backupPosition;

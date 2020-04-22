@@ -46,7 +46,6 @@ public class LoadingScreen extends AbstractScreen {
 
         if (roboRallyWrapper.roboRallyGame != null) {
             GameState gameState = roboRallyWrapper.roboRallyGame.getGameState();
-            System.out.println(gameState);
             if (gameState != GameState.LOADING) {
                 handleScreenChange(gameState);
             }

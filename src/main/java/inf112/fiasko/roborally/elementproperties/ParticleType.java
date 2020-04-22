@@ -1,5 +1,8 @@
 package inf112.fiasko.roborally.elementproperties;
 
+/**
+ * This enum represents all possible particle types
+ */
 public enum ParticleType {
     /**
      * The beam emitting from a single laser

@@ -6,8 +6,8 @@ import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
-import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
-import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
@@ -32,7 +32,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private String winningPlayerName;
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
-    private Phase phase;
+    private final Phase phase;
 
     /**
      * Instantiates a new Robo Rally game
@@ -53,7 +53,12 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         this.phase = new Phase(gameBoard, playerList, 600, this);
     }
 
-    public Boolean getRobotPowerdown() {
+    /**
+     * Gets the power down status of the client playing this instance of the game
+     *
+     * @return Whether this player's robot is in power down
+     */
+    public Boolean getRobotPowerDown() {
         if (getPlayerFromName(this.playerName) != null) {
             return gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID());
         }
@@ -140,10 +145,10 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     }
 
     @Override
-    public void receiveAllPrograms(ProgamsContainer programs) throws InterruptedException {
+    public void receiveAllPrograms(ProgramsContainerResponse programs) throws InterruptedException {
         //Reads data from server and updates player objects
-        Map<String, List<ProgrammingCard>> programMap = programs.getProgram();
-        Map<String, Boolean> powerDown = programs.getPowerdown();
+        Map<String, List<ProgrammingCard>> programMap = programs.getProgramsMap();
+        Map<String, Boolean> powerDown = programs.getPowerDownMap();
         String playerName;
         for (Player player : playerList) {
             playerName = player.getName();
@@ -175,7 +180,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     }
 
     @Override
-    public void receiveStayInPowerDown(PowerDownContainer powerDowns) {
+    public void receiveStayInPowerDown(PowerDownContainerResponse powerDowns) {
         for (Player player : playerList) {
             if (gameBoard.getPowerDown(player.getRobotID())) {
                 player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
@@ -196,26 +201,6 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     @Override
     public void setWinningPlayerName(String winningPlayerName) {
         this.winningPlayerName = winningPlayerName;
-    }
-
-    /**
-     * Initializes the game with a debugging board
-     */
-    private void initializeDebugMode() {
-        List<Robot> robots = new ArrayList<>();
-        robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 18)));
-        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 18)));
-        robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 18)));
-        robots.add(new Robot(RobotID.ROBOT_4, new Position(3, 18)));
-        robots.add(new Robot(RobotID.ROBOT_5, new Position(4, 18)));
-        robots.add(new Robot(RobotID.ROBOT_6, new Position(5, 18)));
-        robots.add(new Robot(RobotID.ROBOT_7, new Position(6, 18)));
-        robots.add(new Robot(RobotID.ROBOT_8, new Position(7, 18)));
-        try {
-            gameBoard = BoardLoaderUtil.loadBoard("boards/all_tiles_test_board.txt", robots);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -255,7 +240,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             RobotID robotID = player.getRobotID();
             TileType robotSpawn = TileType.getTileTypeFromID(robotID.getRobotIDID() + 22);
             List<BoardElementContainer<Tile>> spawnTileContainerList = gameBoard.getPositionsOfTileOnBoard(robotSpawn);
-            if (spawnTileContainerList.size() != 1) {
+            if (spawnTileContainerList.size() < 1) {
                 throw new IllegalArgumentException("The chosen board seems to be missing a robot spawn");
             }
             BoardElementContainer<Tile> spawnTileContainer = spawnTileContainerList.get(0);

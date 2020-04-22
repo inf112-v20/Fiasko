@@ -16,6 +16,9 @@ public class ProgrammingCardDeck extends AbstractDeck<ProgrammingCard> {
         super(cardList);
     }
 
+    /**
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
+     */
     public ProgrammingCardDeck() {
     }
 }

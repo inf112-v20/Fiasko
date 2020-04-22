@@ -5,15 +5,13 @@ import java.util.Map;
 /**
  * This class is used to contain power down status for all players
  */
-public class PowerDownContainer {
+public class PowerDownContainerResponse {
     private Map<String, Boolean> powerDown;
 
     /**
-     * IMPORTANT!!!
-     * DO NOT USE!
-     * Kryonet demands a no args constructor or else it throws a exception
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
      */
-    public PowerDownContainer() {
+    public PowerDownContainerResponse() {
     }
 
     /**
@@ -21,7 +19,7 @@ public class PowerDownContainer {
      *
      * @param powerDown A map between player names and whether they should remain in power down
      */
-    public PowerDownContainer(Map<String, Boolean> powerDown) {
+    public PowerDownContainerResponse(Map<String, Boolean> powerDown) {
         this.powerDown = powerDown;
     }
 

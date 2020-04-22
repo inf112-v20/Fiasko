@@ -21,8 +21,10 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
         this.cardAction = cardAction;
     }
 
+    /**
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
+     */
     public ProgrammingCard() {
-
     }
 
     /**

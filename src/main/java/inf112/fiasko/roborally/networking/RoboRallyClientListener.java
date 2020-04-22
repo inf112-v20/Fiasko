@@ -5,9 +5,9 @@ import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
-import inf112.fiasko.roborally.networking.containers.GameStartInfo;
-import inf112.fiasko.roborally.networking.containers.PowerDownContainer;
-import inf112.fiasko.roborally.networking.containers.ProgamsContainer;
+import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
+import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
 
@@ -42,14 +42,14 @@ class RoboRallyClientListener extends Listener {
                 wrapper.quit(errorResponse.getErrorMessage());
             }
             System.out.println(errorResponse.getErrorMessage());
-        } else if (object instanceof GameStartInfo) {
-            GameStartInfo info = (GameStartInfo) object;
+        } else if (object instanceof GameStartInfoResponse) {
+            GameStartInfoResponse info = (GameStartInfoResponse) object;
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null, info.getPlayerName(), wrapper.server);
         } else if (object instanceof ProgrammingCardDeck) {
             if (((ProgrammingCardDeck) object).isEmpty()) {
                 wrapper.roboRallyGame.setProgram(new ArrayList<>());
-                if (wrapper.roboRallyGame.getRobotPowerdown()) {
+                if (wrapper.roboRallyGame.getRobotPowerDown()) {
                     wrapper.roboRallyGame.setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
                 } else {
                     wrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
@@ -58,16 +58,16 @@ class RoboRallyClientListener extends Listener {
                 wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
             }
             new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();
-        } else if (object instanceof ProgamsContainer) {
+        } else if (object instanceof ProgramsContainerResponse) {
             new Thread(() -> {
                 try {
-                    wrapper.roboRallyGame.receiveAllPrograms((ProgamsContainer) object);
+                    wrapper.roboRallyGame.receiveAllPrograms((ProgramsContainerResponse) object);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }).start();
-        } else if (object instanceof PowerDownContainer) {
-            new Thread(() -> wrapper.roboRallyGame.receiveStayInPowerDown((PowerDownContainer) object)).start();
+        } else if (object instanceof PowerDownContainerResponse) {
+            new Thread(() -> wrapper.roboRallyGame.receiveStayInPowerDown((PowerDownContainerResponse) object)).start();
         }
 
     }

@@ -36,6 +36,6 @@ Dette vil også kjøre alle tester i koden
 ### Kjøreprosedyre
 ```shell script
 cd target
-java -jar roborally-0.2-alpha-jar-with-dependencies.jar
+java -jar roborally-0.4-alpha-jar-with-dependencies.jar
 ```
 Den produserte .jar filen kan alternativt flyttes til en annen mappe og dobbeltklikkes for å kjøres.

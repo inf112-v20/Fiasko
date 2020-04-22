@@ -15,7 +15,6 @@ import inf112.fiasko.roborally.gamewrapper.screens.WinnerScreen;
  */
 public class ScreenManager {
     private BoardActiveScreen boardActiveScreen;
-    private PowerDownScreen powerDownScreen;
     private LoadingScreen loadingScreen;
     private UsernameScreen usernameScreen;
     private IPAddressScreen ipAddressScreen;

@@ -366,6 +366,18 @@ public final class TextureConverterUtil {
         private final int xWest;
         private final int yWest;
 
+        /**
+         * Instantiates a new texture converter container
+         *
+         * @param xNorth The x position of the texture for a north-facing instance of the object
+         * @param yNorth The y position of the texture for a north-facing instance of the object
+         * @param xEast  The x position of the texture for a east-facing instance of the object
+         * @param yEast  The y position of the texture for a east-facing instance of the object
+         * @param xSouth The x position of the texture for a south-facing instance of the object
+         * @param ySouth The y position of the texture for a south-facing instance of the object
+         * @param xWest  The x position of the texture for a west-facing instance of the object
+         * @param yWest  The y position of the texture for a west-facing instance of the object
+         */
         TextureConverterContainer(int xNorth, int yNorth, int xEast, int yEast, int xSouth, int ySouth,
                                   int xWest, int yWest) {
             this.xNorth = xNorth;
@@ -378,34 +390,74 @@ public final class TextureConverterUtil {
             this.yWest = yWest;
         }
 
+        /**
+         * Gets the x position of the texture for a north-facing instance of the object
+         *
+         * @return The x position of the texture for a north-facing instance of the object
+         */
         public int getXNorth() {
             return xNorth;
         }
 
+        /**
+         * Gets the y position of the texture for a north-facing instance of the object
+         *
+         * @return The y position of the texture for a north-facing instance of the object
+         */
         public int getYNorth() {
             return yNorth;
         }
 
+        /**
+         * Gets the x position of the texture for a east-facing instance of the object
+         *
+         * @return The x position of the texture for a east-facing instance of the object
+         */
         public int getXEast() {
             return xEast;
         }
 
+        /**
+         * Gets the y position of the texture for a east-facing instance of the object
+         *
+         * @return The y position of the texture for a east-facing instance of the object
+         */
         public int getYEast() {
             return yEast;
         }
 
+        /**
+         * Gets the x position of the texture for a south-facing instance of the object
+         *
+         * @return The x position of the texture for a south-facing instance of the object
+         */
         public int getXSouth() {
             return xSouth;
         }
 
+        /**
+         * Gets the y position of the texture for a south-facing instance of the object
+         *
+         * @return The y position of the texture for a south-facing instance of the object
+         */
         public int getYSouth() {
             return ySouth;
         }
 
+        /**
+         * Gets the x position of the texture for a west-facing instance of the object
+         *
+         * @return The x position of the texture for a west-facing instance of the object
+         */
         public int getXWest() {
             return xWest;
         }
 
+        /**
+         * Gets the y position of the texture for a west-facing instance of the object
+         *
+         * @return The y position of the texture for a west-facing instance of the object
+         */
         public int getYWest() {
             return yWest;
         }

@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 
+import javax.swing.*;
+
 /**
  * This screen allows a user to choose their player name
  */
@@ -46,6 +48,7 @@ public class UsernameScreen extends AbstractScreen {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 String userName = textInput.getText();
                 if (nameInvalid(userName)) {
+                    JOptionPane.showMessageDialog(null, "Username cannot be empty.");
                     return;
                 }
                 roboRallyWrapper.client.sendElement(userName);

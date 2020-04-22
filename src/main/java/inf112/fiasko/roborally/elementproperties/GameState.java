@@ -6,7 +6,7 @@ package inf112.fiasko.roborally.elementproperties;
 public enum GameState {
 
     /**
-     * At the absolute start of the game, before anything has happended
+     * At the absolute start of the game, before anything has happened
      */
     BEGINNING_OF_GAME,
     /**
@@ -45,9 +45,13 @@ public enum GameState {
      * Indicates that the game is no longer running
      */
     EXITED,
-
+    /**
+     * Indicates that the game is in the process of skipping the power down screen
+     */
     SKIP_POWER_DOWN_SCREEN,
-
+    /**
+     * Indicates that the game is in the process of skipping the stay in power down screen
+     */
     SKIP_STAY_IN_POWER_DOWN
 
 }

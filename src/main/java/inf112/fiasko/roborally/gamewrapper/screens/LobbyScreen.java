@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
-import inf112.fiasko.roborally.networking.containers.GameStartInfo;
+import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.utility.IOUtil;
 import com.esotericsoftware.kryonet.Connection;
@@ -48,12 +48,12 @@ public class LobbyScreen extends AbstractScreen {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 roboRallyWrapper.server.startGame();
-                Map<Connection, String> playernames = roboRallyWrapper.server.getPlayerNames();
-                List<Player> playerlist = IOUtil.playerGenerator(playernames,
+                Map<Connection, String> playerNames = roboRallyWrapper.server.getPlayerNames();
+                List<Player> playerList = IOUtil.playerGenerator(playerNames,
                         roboRallyWrapper.server.getRobotID());
-                for (Connection connection : playernames.keySet()) {
-                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfo("Checkmate.txt"
-                            , playerlist, playernames.get(connection)));
+                for (Connection connection : playerNames.keySet()) {
+                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse("Checkmate.txt"
+                            , playerList, playerNames.get(connection)));
                 }
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 return true;

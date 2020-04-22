@@ -36,7 +36,7 @@ public class Player {
     }
 
     /**
-     * Gives you the RobotID of a player
+     * Gets the RobotID of a player
      *
      * @return A RobotID
      */
@@ -45,7 +45,7 @@ public class Player {
     }
 
     /**
-     * Gives you the Name of the player
+     * Gets the name of the player
      *
      * @return A player Name
      */
@@ -54,16 +54,7 @@ public class Player {
     }
 
     /**
-     * Sets the name of the robot
-     *
-     * @param name The new name of the robot
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Gives you the players program
+     * Gets the players program
      *
      * @return A list of programming cards
      */
@@ -85,16 +76,16 @@ public class Player {
     }
 
     /**
-     * Gives you the player hand/deck
+     * Gets the player hand/deck
      *
-     * @return a deck
+     * @return A deck
      */
     public ProgrammingCardDeck getProgrammingCardDeck() {
         return playerDeck;
     }
 
     /**
-     * Set the players deck to the given deck
+     * Sets the players deck to the given deck
      *
      * @param playerDeck A deck of cards given to the player
      */
@@ -103,7 +94,7 @@ public class Player {
     }
 
     /**
-     * Gives you the player deck with locked cards
+     * Gets the player deck with locked cards
      *
      * @return a deck with locked cards
      */
@@ -112,7 +103,7 @@ public class Player {
     }
 
     /**
-     * Gives you the players power down status
+     * Gets the players power down status
      *
      * @return Whether the player is to power down
      */

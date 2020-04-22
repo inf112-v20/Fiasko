@@ -27,6 +27,7 @@ class RoboRallyServerListener extends Listener {
     private Connection host;
     private Map<Connection, Boolean> stayInPowerDown;
     private Map<Connection, ProgramAndPowerdownRequest> programs;
+    private boolean gameStarted = false;
 
     /**
      * Instantiates a new Robo Rally server listener
@@ -75,6 +76,7 @@ class RoboRallyServerListener extends Listener {
             deadPlayers.add(connection);
             connection.close();
         }
+        this.gameStarted = true;
     }
 
     /**
@@ -174,6 +176,11 @@ class RoboRallyServerListener extends Listener {
 
     @Override
     public void connected(Connection connection) {
+        //Prevent players from joining after the game has started
+        if (gameStarted) {
+            connection.close();
+            return;
+        }
         //The first client to connect is assumed to be the host
         if (host == null) {
             host = connection;
@@ -191,7 +198,7 @@ class RoboRallyServerListener extends Listener {
 
     @Override
     public void disconnected(Connection connection) {
-        if (deadPlayers.contains(connection)) {
+        if (deadPlayers.contains(connection) || !clients.keySet().contains(connection)) {
             //Remove all traces of the player ever existing
             clients.remove(connection);
             playerNames.remove(connection);

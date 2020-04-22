@@ -30,6 +30,11 @@ class RoboRallyClientListener extends Listener {
     }
 
     @Override
+    public void disconnected(Connection connection) {
+        this.wrapper.quit("The server closed the connection.");
+    }
+
+    @Override
     public void received(Connection connection, Object object) {
         if (object instanceof ErrorResponse) {
             ErrorResponse errorResponse = (ErrorResponse) object;
@@ -42,16 +47,16 @@ class RoboRallyClientListener extends Listener {
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null, info.getPlayerName(), wrapper.server);
         } else if (object instanceof ProgrammingCardDeck) {
-            if(((ProgrammingCardDeck) object).isEmpty()){
+            if (((ProgrammingCardDeck) object).isEmpty()) {
                 wrapper.roboRallyGame.setProgram(new ArrayList<>());
-                if (wrapper.roboRallyGame.getRobotPowerdown()){
+                if (wrapper.roboRallyGame.getRobotPowerdown()) {
                     wrapper.roboRallyGame.setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
-                }
-                else {
+                } else {
                     wrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
                 }
+            } else {
+                wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
             }
-            else {wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);}
             new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();
         } else if (object instanceof ProgamsContainer) {
             new Thread(() -> {

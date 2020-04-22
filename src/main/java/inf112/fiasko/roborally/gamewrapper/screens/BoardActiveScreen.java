@@ -13,9 +13,11 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
+import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.objects.DrawableObject;
-import inf112.fiasko.roborally.objects.RoboRallyGame;
+import inf112.fiasko.roborally.objects.Player;
+import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
@@ -31,7 +33,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     private final int viewPortWidth = 12 * tileDimensions;
     private final int viewPortHeight = 12 * tileDimensions;
     private final Viewport viewport;
-    private RoboRallyGame debugGame;
     private float cameraZoom = 1;
     private int cameraX = 0;
     private int cameraY = 0;
@@ -84,13 +85,14 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             case CHOOSING_STAY_IN_POWER_DOWN:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
                 break;
-            case LOADING:
+            case SKIP_STAY_IN_POWER_DOWN:
+                System.out.println("Sent false to server");
                 roboRallyWrapper.client.sendElement(false);
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 break;
-                default:
-                    //Ignored
-                    break;
+            default:
+                //Ignored
+                break;
         }
     }
 
@@ -108,13 +110,9 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     @Override
     public boolean keyUp(int keyCode) {
-        if (keyCode == Input.Keys.HOME) {
-            RoboRallyGame temp = roboRallyWrapper.roboRallyGame;
-            roboRallyWrapper.roboRallyGame = debugGame;
-            this.debugGame = temp;
-            return true;
-        } else if (keyCode == Input.Keys.TAB && roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_CARDS) {
+        if (keyCode == Input.Keys.TAB && roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_CARDS) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(roboRallyWrapper));
+            return true;
         }
         return false;
     }
@@ -129,6 +127,7 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             return true;
         } else if (character == 'q') {
             resetCamera();
+            return true;
         }
         return false;
     }
@@ -175,8 +174,8 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     private void resetCamera() {
         camera.up.x = 0;
         camera.up.y = 1;
-        cameraZoom = 1;
-        camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
+        cameraZoom = 1.4f;
+        camera.position.set(viewPortWidth / 2f + 128, viewPortHeight / 2f + 128, 0);
     }
 
     /**
@@ -196,6 +195,30 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
                     objectTextureRegion.getRegionWidth(), objectTextureRegion.getRegionHeight(),
                     object.flipX(), object.flipY());
         }
+        int index = 1;
+        for (Player player : roboRallyWrapper.roboRallyGame.getPlayers()) {
+            String playerName = player.getName();
+            Robot robot = getPlayersRobot(player.getRobotID());
+            if (robot == null) {
+                throw new NullPointerException("Player's robot does not exist.");
+            }
+            roboRallyWrapper.font.draw(batch, playerName, viewPortWidth, 128 * index);
+            roboRallyWrapper.font.draw(batch, "DMG: " + robot.getDamageTaken() + " LV: " + robot.getAmountOfLives(),
+                    viewPortWidth, 96 + 128 * (index - 1));
+            TextureRegion robotTexture = TextureConverterUtil.convertElement(player.getRobotID());
+            batch.draw(robotTexture, viewPortWidth, 128 * (index - 1));
+            index++;
+        }
+
+    }
+
+    private Robot getPlayersRobot(RobotID robotID) {
+        for (Robot robot : roboRallyWrapper.roboRallyGame.getAllRobots()) {
+            if (robot.getRobotId() == robotID) {
+                return robot;
+            }
+        }
+        return null;
     }
 
     /**

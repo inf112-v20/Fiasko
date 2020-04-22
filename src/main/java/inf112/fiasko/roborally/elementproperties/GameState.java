@@ -46,6 +46,8 @@ public enum GameState {
      */
     EXITED,
 
-    SKIP_POWER_DOWN_SCREEN
+    SKIP_POWER_DOWN_SCREEN,
+
+    SKIP_STAY_IN_POWER_DOWN
 
 }

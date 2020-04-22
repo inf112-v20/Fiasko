@@ -6,41 +6,13 @@ vil vi gå over til en fase der målet blir å implementere ting som er gøy, me
 Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, Inc.
 
 ## Spillstatus
-Ved kjøring av .jar filen blir det vist en "splash screen" og kjørt en demo når brukeren trykker venstre musetast, 
-uten mulighet for bruker å bevege robot.
-
-## Manuell testing
-Demoen er definert i RoboRallyGame sin metode runGameLoop(). Metodene som kan brukes for testing er:
--   makeMove(Robot id, Korthandling) //Utfører en handling på en robot
--   fireAllLasers() //Fyrer av alle lasere inkludert robotlasere
--   moveAllConveyorBelts() //Flytter alle transportbånd
--   checkAllFlags() //Oppdaterer roboter som besøker flagg
--   rotateCogwheels() //Roterer tannhjul
-
-Robot id blir representert ved enumen RobotID
-Korthandling blir representert ved enumen Action
-
-Ved å bruke metodene over kan alt i en eller flere faser testes og simuleres. Den store forskjellen fra MVP er at all
-bruker-input blir hardkodet før programmet kjører.
-
-Eksempel på makeMove: makeMove(RobotID.ROBOT_1, Action.MOVE_1); //Flytter robot 1 ett steg fremover
-
-Linjene som inneholder runPhase(n) kjører spesifikke faser som bruker tilfeldig utdelte programmeringskort uten 
-integritetsvalidering. Disse bør kommenteres ut under testing.
-
-Robotene sin posisjon blir initialisert i RoboRallyGame sin metode initializeGame() og kan endres dersom det er 
-fordelaktig å starte dem på andre posisjoner.
-
-Brettet blir også lastet inn i RoboRallyGame sin metode initializeGame(). Det er 3 brett som er relevante å teste på:
--   Checkmate
--   Dizzy_Dash
--   Risky_Exchange
+Spillet er nå i en tidlig alpha. Det er antakelig mulig å spille spillet, men ukjente bugs kan forekomme.
 
 ## Knapper og kontrollmekanismer
 ### Knapper
 -   Q: Tilbakestiller kamera og kamerarotasjon
 -   R: Roterer kameraet
--   HOME: Bytter til en debug instans av spillet som lar en sjekke at alle teksturer vises riktig
+-   TAB: Bytter mellom kortvelging og brettvisning når en holder på med å velge kort
 
 ### Andre egenskaper ved brukergrensesnittet
 -   Rullehjulet vil forstørre og forminske spillbrettet

@@ -209,6 +209,11 @@ public class Phase {
                 if (game != null) {
                     game.setWinningPlayerName(player.getName());
                     game.setGameState(GameState.GAME_IS_WON);
+                    try {
+                        Thread.sleep(1000 * cycleDelay);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

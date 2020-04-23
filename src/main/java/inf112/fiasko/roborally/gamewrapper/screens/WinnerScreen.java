@@ -50,18 +50,17 @@ public class WinnerScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.2f, 1f, 0.2f, 1);
+        Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "The winner is: " +
-                        roboRallyWrapper.roboRallyGame.getWinningPlayerName(), applicationWidth / 2f - 380 / 2f,
-                applicationHeight / 2f + 100, 380, 1,
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "The winner is: ", applicationWidth / 2f - 380 / 2f,
+                applicationHeight / 2f + 300, 380, 1,
                 true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to exit the game",
-                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
+                applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 150, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();

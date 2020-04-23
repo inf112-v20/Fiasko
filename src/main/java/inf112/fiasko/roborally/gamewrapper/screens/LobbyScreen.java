@@ -1,7 +1,6 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
@@ -27,10 +25,6 @@ import java.util.Map;
  */
 public class LobbyScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
-
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
-    private final Stage stage;
 
     /**
      * Instantiates a new lobby screen
@@ -49,22 +43,20 @@ public class LobbyScreen extends AbstractScreen {
         camera.setToOrtho(false, applicationWidth, applicationHeight);
 
 
-        Skin skin=new Skin(Gdx.files.internal("uiskin.json"));
+        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         Dialog dialog = new Dialog("Setting", skin);
 
 
-        final SelectBox<String> selectBox= new SelectBox<>(skin);
-        selectBox.setItems("Dizzy_Dash","Checkmate","Risky_Exchange");
-        selectBox.setPosition(Gdx.graphics.getWidth()/2f-100,Gdx.graphics.getHeight()/2f-100);
-        selectBox.setSize(200,50);
+        final SelectBox<String> selectBox = new SelectBox<>(skin);
+        selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange");
+        selectBox.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 100);
+        selectBox.setSize(200, 50);
 
         dialog.getContentTable().defaults().pad(10);
         dialog.getContentTable().add(selectBox);
 
-
         stage.addActor(selectBox);
-
 
         startGameButton.addListener(new InputListener() {
             @Override
@@ -74,7 +66,7 @@ public class LobbyScreen extends AbstractScreen {
                 List<Player> playerList = IOUtil.playerGenerator(playerNames,
                         roboRallyWrapper.server.getRobotID());
                 for (Connection connection : playerNames.keySet()) {
-                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(selectBox.getSelected()+".txt"
+                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(selectBox.getSelected() + ".txt"
                             , playerList, playerNames.get(connection)));
                 }
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
@@ -86,15 +78,8 @@ public class LobbyScreen extends AbstractScreen {
     }
 
     @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
+        super.render(delta);
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
@@ -106,14 +91,6 @@ public class LobbyScreen extends AbstractScreen {
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
-        stage.draw();
-        stage.act();
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
     }
 
 }

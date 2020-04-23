@@ -180,7 +180,7 @@ public class Board {
         Robot alternateRobot = getRobotFromDeadRobots(robotID);
         if (robots.containsKey(robotID)) {
             robots.get(robotID).setPowerDown(powerDown);
-        } else if ( alternateRobot != null) {
+        } else if (alternateRobot != null) {
             alternateRobot.setPowerDown(powerDown);
         }
     }
@@ -409,7 +409,7 @@ public class Board {
         //If another robot is standing on a conveyor belt pointing to the tile in front, a conflict happens
         return (isValidPosition(frontLeftPosition) && isConveyorBelt(getTileOnPosition(frontLeftPosition)) &&
                 getTileOnPosition(frontLeftPosition).getDirection() ==
-                Direction.getRightRotatedDirection(conveyorBeltDirection) && hasRobotOnPosition(frontLeftPosition)) ||
+                        Direction.getRightRotatedDirection(conveyorBeltDirection) && hasRobotOnPosition(frontLeftPosition)) ||
                 (isValidPosition(frontRightPosition) && isConveyorBelt(getTileOnPosition(frontRightPosition))
                         && getTileOnPosition(frontRightPosition).getDirection() ==
                         Direction.getLeftRotatedDirection(conveyorBeltDirection)

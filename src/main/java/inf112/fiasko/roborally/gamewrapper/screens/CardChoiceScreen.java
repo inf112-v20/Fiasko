@@ -149,6 +149,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(inputMultiplexer);
+        stage.cancelTouchFocus();
     }
 
     @Override
@@ -166,6 +167,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
         renderCardText();
         roboRallyWrapper.batch.end();
         stage.draw();
+        stage.act();
     }
 
     @Override
@@ -268,7 +270,7 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-        //Nothing to do
+        stage.dispose();
     }
 
     @Override

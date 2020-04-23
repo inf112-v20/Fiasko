@@ -1,14 +1,11 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
@@ -20,9 +17,6 @@ import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 public class PowerDownScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
-    private final Stage stage;
     private long startTime;
 
     /**
@@ -41,7 +35,6 @@ public class PowerDownScreen extends AbstractScreen {
         powerDownButton.setX(applicationWidth / 2f - powerDownButton.getWidth() / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        startTime = System.currentTimeMillis();
         powerDownButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -52,10 +45,14 @@ public class PowerDownScreen extends AbstractScreen {
     }
 
     @Override
+    public void show() {
+        super.show();
+        startTime = System.currentTimeMillis();
+    }
+
+    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
+        super.render(delta);
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
         String descriptionText;
         if (roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_POWER_DOWN) {
@@ -74,7 +71,6 @@ public class PowerDownScreen extends AbstractScreen {
                 applicationWidth / 2f - 40 / 2f, applicationHeight / 2f - 100, 40, 1,
                 true);
         roboRallyWrapper.batch.end();
-        stage.draw();
 
         if (elapsedTime > 5) {
             sendPowerDownStatus(Boolean.FALSE);
@@ -102,17 +98,6 @@ public class PowerDownScreen extends AbstractScreen {
             default:
                 throw new IllegalStateException("The game is in an unexpected state. Cannot continue.");
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-        startTime = System.currentTimeMillis();
     }
 
 }

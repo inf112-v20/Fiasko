@@ -24,6 +24,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private final boolean host;
     private final String playerName;
     private final RoboRallyServer server;
+    private final Phase phase;
     private Board gameBoard;
     private List<BoardElementContainer<Tile>> repairTiles;
     private Deck<ProgrammingCard> mainDeck;
@@ -31,7 +32,6 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private String winningPlayerName;
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
-    private final Phase phase;
 
     /**
      * Instantiates a new Robo Rally game

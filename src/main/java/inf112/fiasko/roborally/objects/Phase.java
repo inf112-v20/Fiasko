@@ -21,11 +21,11 @@ public class Phase {
     private final Board gameBoard;
     private final List<Player> playerList;
     private final int cycleDelay;
+    private final InteractableGame game;
     private List<BoardElementContainer<Tile>> cogwheels;
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<BoardElementContainer<Tile>> flags;
-    private final InteractableGame game;
 
     /**
      * Instantiates a new phase

@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 
 import javax.swing.*;
@@ -21,9 +20,6 @@ import javax.swing.*;
 public class UsernameScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
-    private final Stage stage;
     private TextField textInput;
 
     /**
@@ -90,9 +86,7 @@ public class UsernameScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
+        super.render(delta);
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
@@ -100,13 +94,6 @@ public class UsernameScreen extends AbstractScreen {
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
-        stage.draw();
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
     }
 
 }

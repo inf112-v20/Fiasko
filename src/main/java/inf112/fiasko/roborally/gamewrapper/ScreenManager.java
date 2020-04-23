@@ -21,6 +21,7 @@ public class ScreenManager {
     private LobbyScreen lobbyScreen;
     private WinnerScreen winnerScreen;
     private CardChoiceScreen cardChoiceScreen;
+    private PowerDownScreen powerDownScreen;
 
     /**
      * Gets a new instance of the card choice screen
@@ -66,7 +67,10 @@ public class ScreenManager {
      * @return A power down screen instance
      */
     public synchronized PowerDownScreen getPowerDownScreen(RoboRallyWrapper roboRallyWrapper) {
-        return new PowerDownScreen(roboRallyWrapper);
+        if (this.powerDownScreen == null) {
+            this.powerDownScreen = new PowerDownScreen(roboRallyWrapper);
+        }
+        return this.powerDownScreen;
     }
 
     /**

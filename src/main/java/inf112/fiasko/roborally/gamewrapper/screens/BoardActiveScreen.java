@@ -80,7 +80,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         drawBoard(roboRallyWrapper.batch);
         roboRallyWrapper.batch.end();
 
-        // Checks if there has been found a winning player and then changes the screen to display the winning screen
         switch (roboRallyWrapper.roboRallyGame.getGameState()) {
             case GAME_IS_WON:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
@@ -211,8 +210,8 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             if (lastFlagVisited > 0) {
                 TileType flagType = TileType.getTileTypeFromID(robot.getLastFlagVisited() + 16);
                 TextureRegion flagRegion = TextureConverterUtil.convertElement(new Tile(flagType, Direction.NORTH));
-                batch.draw(flagRegion.getTexture(), viewPortWidth + 64, 128 * (index - 1), 64/2,
-                        64/2, 64, 64, 1, 1, 0, flagRegion.getRegionX(),
+                batch.draw(flagRegion.getTexture(), viewPortWidth + 64, 128 * (index - 1), 64 / 2,
+                        64 / 2, 64, 64, 1, 1, 0, flagRegion.getRegionX(),
                         flagRegion.getRegionY(), flagRegion.getRegionWidth(), flagRegion.getRegionWidth(),
                         false, false);
             }

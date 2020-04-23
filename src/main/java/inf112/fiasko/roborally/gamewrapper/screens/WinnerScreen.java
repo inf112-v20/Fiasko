@@ -18,10 +18,6 @@ import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 public class WinnerScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
-    private final Stage stage;
-
     /**
      * Instantiates a new winner screen
      *
@@ -50,9 +46,7 @@ public class WinnerScreen extends AbstractScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
+        super.render(delta);
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
@@ -63,17 +57,6 @@ public class WinnerScreen extends AbstractScreen {
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 150, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
-        stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
     }
 
 }

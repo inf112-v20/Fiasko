@@ -3,8 +3,8 @@ package inf112.fiasko.roborally.gamewrapper.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
@@ -17,9 +17,6 @@ import java.util.ArrayList;
 public class LoadingScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private final OrthographicCamera camera;
-    private final Viewport viewport;
-
     /**
      * Instantiates a new loading screen
      *
@@ -30,6 +27,7 @@ public class LoadingScreen extends AbstractScreen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         viewport = new ExtendViewport(applicationWidth, applicationHeight, camera);
+        stage = new Stage();
     }
 
     @Override
@@ -83,11 +81,6 @@ public class LoadingScreen extends AbstractScreen {
                 System.out.println("The loading screen doesn't know what to do with " + gameState);
                 break;
         }
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
     }
 
 }

@@ -401,20 +401,20 @@ public class Board {
     private boolean hasCrossingConflict(Position crossingPosition, Direction conveyorBeltDirection) {
         Position frontLeftPosition = getNewPosition(crossingPosition,
                 Direction.getLeftRotatedDirection(conveyorBeltDirection));
-        Tile frontLeftTile = getTileOnPosition(frontLeftPosition);
         Position frontRightPosition = getNewPosition(crossingPosition,
                 Direction.getRightRotatedDirection(conveyorBeltDirection));
-        Tile frontRightTile = getTileOnPosition(frontRightPosition);
         Position twoForwardPosition = getNewPosition(crossingPosition, conveyorBeltDirection);
-        Tile twoForwardTile = getTileOnPosition(twoForwardPosition);
         //If another robot is standing on a conveyor belt pointing to the tile in front, a conflict happens
-        return (isValidPosition(frontLeftPosition) && isConveyorBelt(frontLeftTile) && frontLeftTile.getDirection() ==
+        return (isValidPosition(frontLeftPosition) && isConveyorBelt(getTileOnPosition(frontLeftPosition)) &&
+                getTileOnPosition(frontLeftPosition).getDirection() ==
                 Direction.getRightRotatedDirection(conveyorBeltDirection) && hasRobotOnPosition(frontLeftPosition)) ||
-                (isValidPosition(frontRightPosition) && isConveyorBelt(frontRightTile)
-                        && frontRightTile.getDirection() == Direction.getLeftRotatedDirection(conveyorBeltDirection)
+                (isValidPosition(frontRightPosition) && isConveyorBelt(getTileOnPosition(frontRightPosition))
+                        && getTileOnPosition(frontRightPosition).getDirection() ==
+                        Direction.getLeftRotatedDirection(conveyorBeltDirection)
                         && hasRobotOnPosition(frontRightPosition)) ||
-                (isValidPosition(twoForwardPosition) && isConveyorBelt(twoForwardTile)
-                        && twoForwardTile.getDirection() == Direction.getReverseDirection(conveyorBeltDirection)
+                (isValidPosition(twoForwardPosition) && isConveyorBelt(getTileOnPosition(twoForwardPosition))
+                        && getTileOnPosition(twoForwardPosition).getDirection() ==
+                        Direction.getReverseDirection(conveyorBeltDirection)
                         && hasRobotOnPosition(twoForwardPosition));
     }
 

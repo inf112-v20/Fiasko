@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * This class represent a game which is drawable using libgdx
@@ -59,8 +58,9 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      * @return Whether this player's robot is in power down
      */
     public Boolean getRobotPowerDown() {
-        if (getPlayerFromName(this.playerName) != null) {
-            return gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID());
+        Player player = getPlayerFromName(this.playerName);
+        if (player != null) {
+            return gameBoard.getPowerDown(player.getRobotID());
         }
         return false;
     }
@@ -172,7 +172,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             removeNonLockedProgrammingCardsFromPlayers();
         }
 
-        if (getPlayerFromName(this.playerName) != null && gameBoard.getPowerDown(Objects.requireNonNull(getPlayerFromName(this.playerName)).getRobotID())) {
+        Player player = getPlayerFromName(this.playerName);
+        if (player != null && gameBoard.getPowerDown(player.getRobotID())) {
             setGameState(GameState.CHOOSING_STAY_IN_POWER_DOWN);
         } else {
             setGameState(GameState.SKIP_STAY_IN_POWER_DOWN);

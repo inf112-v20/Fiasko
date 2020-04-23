@@ -177,10 +177,11 @@ public class Board {
      * @param powerDown The status of the power down
      */
     public void setPowerDown(RobotID robotID, Boolean powerDown) {
+        Robot alternateRobot = getRobotFromDeadRobots(robotID);
         if (robots.containsKey(robotID)) {
             robots.get(robotID).setPowerDown(powerDown);
-        } else if (getRobotFromDeadRobots(robotID) != null) {
-            Objects.requireNonNull(getRobotFromDeadRobots(robotID)).setPowerDown(powerDown);
+        } else if ( alternateRobot != null) {
+            alternateRobot.setPowerDown(powerDown);
         }
     }
 
@@ -201,10 +202,11 @@ public class Board {
      * @return The power down status of the robot
      */
     public boolean getPowerDown(RobotID robotID) {
+        Robot alternateRobot = getRobotFromDeadRobots(robotID);
         if (robots.containsKey(robotID)) {
             return robots.get(robotID).isInPowerDown();
-        } else if (getRobotFromDeadRobots(robotID) != null) {
-            return Objects.requireNonNull(getRobotFromDeadRobots(robotID)).isInPowerDown();
+        } else if (alternateRobot != null) {
+            return alternateRobot.isInPowerDown();
         }
         return false;
     }

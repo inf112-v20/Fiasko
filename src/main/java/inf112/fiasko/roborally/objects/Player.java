@@ -114,7 +114,7 @@ public class Player {
     /**
      * Sets the power down status
      *
-     * @param powerDownStatus Whether the player is to take power down next round
+     * @param powerDownStatus Whether the player is to take power down next turn
      */
     public void setPowerDownNextRound(boolean powerDownStatus) {
         this.powerDownNextRound = powerDownStatus;

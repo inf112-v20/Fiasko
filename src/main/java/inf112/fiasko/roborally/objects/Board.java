@@ -643,7 +643,7 @@ public class Board {
      * Kills the robot
      *
      * <p>If the robot steps outside of the board, steps on a hole or takes too much damage, this method should be used to
-     * properly dispose of the robot until the next round.</p>
+     * properly dispose of the robot until the next turn.</p>
      *
      * @param robot The robot to kill
      */

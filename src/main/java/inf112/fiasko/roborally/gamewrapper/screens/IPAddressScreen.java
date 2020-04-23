@@ -1,22 +1,25 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * This screen allows the user to enter the ip address to connect to
@@ -38,6 +41,20 @@ public class IPAddressScreen extends AbstractScreen {
         TextButton joinButton = new TextButton("Join", skin);
         joinButton.setSize(300, 60);
         joinButton.setPosition(applicationWidth / 2f - joinButton.getWidth() / 2f, 300);
+        roboRallyWrapper.client = new RoboRallyClient(roboRallyWrapper);
+        List<InetAddress> lanServers = roboRallyWrapper.client.getLanServers();
+        Set<String> validHosts = new HashSet<>();
+        for (InetAddress address : lanServers) {
+            validHosts.add(address.getHostAddress());
+        }
+        final SelectBox<String> selectBox = new SelectBox<>(skin);
+        selectBox.setItems(validHosts.toArray(new String[0]));
+        selectBox.setPosition(-80 + (applicationWidth - selectBox.getWidth()) / 2f, 200);
+        selectBox.setSize(200, 50);
+
+        stage.addActor(selectBox);
+
+
         joinButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
@@ -47,10 +64,16 @@ public class IPAddressScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 try {
-                    roboRallyWrapper.client = new RoboRallyClient(textInput.getText(), roboRallyWrapper);
+                    String serverIp;
+                    String writtenIP = textInput.getText();
+                    if (writtenIP.isEmpty()) {
+                        serverIp = selectBox.getSelected();
+                    } else {
+                        serverIp = writtenIP;
+                    }
+                    roboRallyWrapper.client.connect(serverIp, roboRallyWrapper.defaultTCPPort, roboRallyWrapper.discoverUDPPort);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException ex) {
-                    ex.printStackTrace();
                     JOptionPane.showMessageDialog(null, "Could not connect to the server."
                             + " Please make sure the ip address you typed is correct, and that the server is online.");
                 }
@@ -80,7 +103,8 @@ public class IPAddressScreen extends AbstractScreen {
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Enter IP address and click the button to join a server",
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Enter or select IP address and click the button to " +
+                        "join a server",
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();

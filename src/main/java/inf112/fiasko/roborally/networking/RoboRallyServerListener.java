@@ -85,7 +85,13 @@ class RoboRallyServerListener extends Listener {
      * @return A mapping between connections and robot ids
      */
     public Map<Connection, String> getPlayerNames() {
-        return playerNames;
+        Map<Connection, String> alivePlayers = new HashMap<>();
+        for (Connection connection : playerNames.keySet()) {
+            if (!deadPlayers.contains(connection)) {
+                alivePlayers.put(connection, playerNames.get(connection));
+            }
+        }
+        return alivePlayers;
     }
 
     /**

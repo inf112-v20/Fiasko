@@ -46,6 +46,7 @@ class RoboRallyClientListener extends Listener {
             GameStartInfoResponse info = (GameStartInfoResponse) object;
             wrapper.roboRallyGame = new RoboRallyGame(info.getPlayerList(), info.getBoardName(),
                     wrapper.server != null, info.getPlayerName(), wrapper.server);
+            new Thread(() -> wrapper.roboRallyGame.runTurn()).start();
         } else if (object instanceof ProgrammingCardDeck) {
             if (((ProgrammingCardDeck) object).isEmpty()) {
                 wrapper.roboRallyGame.setProgram(new ArrayList<>());
@@ -57,7 +58,7 @@ class RoboRallyClientListener extends Listener {
             } else {
                 wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
             }
-            new Thread(() -> wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object)).start();
+            wrapper.roboRallyGame.setPlayerHand((ProgrammingCardDeck) object);
         } else if (object instanceof ProgramsContainerResponse) {
             new Thread(() -> {
                 try {

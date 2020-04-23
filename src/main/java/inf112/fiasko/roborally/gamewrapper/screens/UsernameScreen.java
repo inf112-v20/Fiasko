@@ -1,7 +1,6 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -47,12 +46,12 @@ public class UsernameScreen extends AbstractScreen {
                     JOptionPane.showMessageDialog(null, "Username cannot be empty.");
                     return;
                 }
-                roboRallyWrapper.client.sendElement(userName);
                 if (roboRallyWrapper.server == null) {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 } else {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLobbyScreen(roboRallyWrapper));
                 }
+                roboRallyWrapper.client.sendElement(userName);
             }
         });
         textInput = new TextField("", skin);

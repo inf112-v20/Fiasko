@@ -24,7 +24,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private final boolean host;
     private final String playerName;
     private final RoboRallyServer server;
-    private final Phase phase;
+    private Phase phase;
     private Board gameBoard;
     private List<BoardElementContainer<Tile>> repairTiles;
     private Deck<ProgrammingCard> mainDeck;
@@ -49,7 +49,6 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         this.playerList = playerList;
         this.server = server;
         initializeGame(boardName);
-        this.phase = new Phase(gameBoard, playerList, 600, this);
     }
 
     /**
@@ -187,8 +186,11 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                 player.setPowerDownNextRound(powerDowns.getPowerDown().get(player.getName()));
             }
         }
+        //Respawns robots and registers robots which are dead forever
         respawnRobots();
+        //Sends list of dead players to server and removes dead players from the player list
         sendAllDeadPlayersToServer();
+        //Resets hasTouchedFlagThisTurn
         resetHasTouchedFlagThisTurnForAllRobots();
         setGameState(GameState.BEGINNING_OF_GAME);
         runTurn();
@@ -227,7 +229,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                 mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
             }
 
-            new Thread(this::runTurn).start();
+            phase = new Phase(gameBoard, playerList, 600, this);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -249,19 +251,21 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             gameBoard.setBackupPositionOfRobot(robotID, spawnTileContainer.getPosition());
 
         }
-
     }
 
     /**
-     * Runs all the steps of one turn in the game
+     * Starts a turn in the game
      */
-    private void runTurn() {
+    public void runTurn() {
         // Sets the power down status to true on robots that have players who planned one this turn.
         // Resets players power down for next turn to false.
         updateRobotPowerDown();
         // Set damage of robots in power down to 0
         gameBoard.executePowerDown();
-        setGameState(GameState.LOADING);
+        //This check prevents the state from being overwritten if the client has already received the cards
+        if (gameState == GameState.BEGINNING_OF_GAME) {
+            setGameState(GameState.WAITING_FOR_CARDS_FROM_SERVER);
+        }
         if (host) {
             //Distributes programming cards for all players, and sends a deck to each player
             distributeProgrammingCardsToPlayers();
@@ -270,6 +274,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                 Player player = getPlayerFromName(playerName);
                 if (player != null && player.getProgrammingCardDeck() != null) {
                     server.sendToClient(connection, player.getProgrammingCardDeck());
+                } else {
+                    throw new IllegalArgumentException("Player " + playerName + " is not part of the game.");
                 }
             }
         }
@@ -279,9 +285,6 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      * Sends information about players no longer part of the game to the server
      */
     private void sendAllDeadPlayersToServer() {
-        if (host) {
-            server.setDeadPlayers(gameBoard.getRealDeadRobots());
-        }
         //Removes dead players from playerList
         playerList.removeIf((player) -> gameBoard.getRealDeadRobots().contains(player.getRobotID()));
         if (playerList.isEmpty()) {
@@ -292,7 +295,9 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                 e.printStackTrace();
             }
         }
-
+        if (host) {
+            server.setDeadPlayers(gameBoard.getRealDeadRobots());
+        }
     }
 
     /**
@@ -406,7 +411,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     }
 
     /**
-     * Sets the robot's power down status to the player's "power down next round" status and sets the players status to false
+     * Sets the robot's power down status to the player's "power down next turn" status and sets the players status to false
      */
     private void updateRobotPowerDown() {
         for (Player player : playerList) {

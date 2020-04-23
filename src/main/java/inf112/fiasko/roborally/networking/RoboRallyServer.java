@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +20,15 @@ public class RoboRallyServer {
     /**
      * Instantiates a new Robo Rally server
      *
+     * @param TCPPort The TCP port to bind to
+     * @param UDPPort The UDP port to bind to
      * @throws IOException If the server cannot be started
      */
-    public RoboRallyServer() throws IOException {
+    public RoboRallyServer(int TCPPort, int UDPPort) throws IOException {
         server = new Server();
         server.start();
         NetworkUtil.registerClasses(server.getKryo());
-        server.bind(54555);
+        server.bind(TCPPort, UDPPort);
         listener = new RoboRallyServerListener(this);
         server.addListener(listener);
     }

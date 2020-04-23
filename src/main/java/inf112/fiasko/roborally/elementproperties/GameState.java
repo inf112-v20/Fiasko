@@ -38,10 +38,6 @@ public enum GameState {
      */
     GAME_IS_WON,
     /**
-     * Indicates that the game is currently waiting for something
-     */
-    LOADING,
-    /**
      * Indicates that the game is no longer running
      */
     EXITED,

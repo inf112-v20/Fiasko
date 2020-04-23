@@ -44,9 +44,7 @@ public class LoadingScreen extends AbstractScreen {
 
         if (roboRallyWrapper.roboRallyGame != null) {
             GameState gameState = roboRallyWrapper.roboRallyGame.getGameState();
-            if (gameState != GameState.LOADING) {
-                handleScreenChange(gameState);
-            }
+            handleScreenChange(gameState);
         }
     }
 
@@ -73,12 +71,12 @@ public class LoadingScreen extends AbstractScreen {
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(this.roboRallyWrapper));
                 break;
             case SKIP_POWER_DOWN_SCREEN:
-                roboRallyWrapper.roboRallyGame.setGameState(GameState.LOADING);
+                roboRallyWrapper.roboRallyGame.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
                 roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(false, new ArrayList<>()));
                 break;
             default:
-                System.out.println("The loading screen doesn't know what to do with " + gameState);
+                //Ignored
                 break;
         }
     }

@@ -18,6 +18,8 @@ public class RoboRallyWrapper extends Game {
     public RoboRallyGame roboRallyGame;
     public RoboRallyServer server;
     public RoboRallyClient client;
+    public int defaultTCPPort = 54555;
+    public int discoverUDPPort = 54777;
 
     @Override
     public void create() {

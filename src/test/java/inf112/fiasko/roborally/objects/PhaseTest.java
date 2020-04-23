@@ -472,6 +472,7 @@ public class PhaseTest {
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
 
-        assertNull(board.getRobotOnPosition(new Position(0, 0)));
+        assertTrue(board.isRobotAlive(RobotID.ROBOT_1));
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(0, 0)));
     }
 }

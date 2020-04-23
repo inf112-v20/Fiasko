@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -44,6 +47,25 @@ public class LobbyScreen extends AbstractScreen {
         startGameButton.setX(applicationWidth / 2f - startGameButton.getWidth() / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
+
+
+        Skin skin=new Skin(Gdx.files.internal("uiskin.json"));
+
+        Dialog dialog = new Dialog("Setting", skin);
+
+
+        final SelectBox<String> selectBox= new SelectBox<>(skin);
+        selectBox.setItems("Dizzy_Dash","Checkmate","Risky_Exchange");
+        selectBox.setPosition(Gdx.graphics.getWidth()/2f-100,Gdx.graphics.getHeight()/2f-100);
+        selectBox.setSize(200,50);
+
+        dialog.getContentTable().defaults().pad(10);
+        dialog.getContentTable().add(selectBox);
+
+
+        stage.addActor(selectBox);
+
+
         startGameButton.addListener(new InputListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -52,13 +74,14 @@ public class LobbyScreen extends AbstractScreen {
                 List<Player> playerList = IOUtil.playerGenerator(playerNames,
                         roboRallyWrapper.server.getRobotID());
                 for (Connection connection : playerNames.keySet()) {
-                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse("Checkmate.txt"
+                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(selectBox.getSelected()+".txt"
                             , playerList, playerNames.get(connection)));
                 }
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
                 return true;
             }
         });
+        Gdx.input.setInputProcessor(stage);
         stage.setViewport(viewport);
     }
 
@@ -84,6 +107,7 @@ public class LobbyScreen extends AbstractScreen {
                 true);
         roboRallyWrapper.batch.end();
         stage.draw();
+        stage.act();
 
     }
 

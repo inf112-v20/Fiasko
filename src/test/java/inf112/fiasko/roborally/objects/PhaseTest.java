@@ -461,4 +461,17 @@ public class PhaseTest {
         assertFalse(board.isRobotAlive(RobotID.ROBOT_1));
         assertNull(board.getRobotOnPosition(new Position(7, 0)));
     }
+
+    @Test
+    public void robotOnConveyorBeltFacingOutOfMapMovesIntoWallIsBlocked() throws IOException, InterruptedException {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = new ArrayList<>();
+        robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 0)));
+        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+
+        Phase testPhase = createPhaseAndLoadBoard(players, robots);
+        testPhase.moveAllConveyorBelts();
+
+        assertNull(board.getRobotOnPosition(new Position(0, 0)));
+    }
 }

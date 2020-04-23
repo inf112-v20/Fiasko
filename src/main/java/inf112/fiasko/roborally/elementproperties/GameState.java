@@ -52,6 +52,13 @@ public enum GameState {
     /**
      * Indicates that the game is in the process of skipping the stay in power down screen
      */
-    SKIP_STAY_IN_POWER_DOWN
-
+    SKIP_STAY_IN_POWER_DOWN,
+    /**
+     * Indicates that the game is waiting for other players to finish programming
+     */
+    WAITING_FOR_OTHER_PLAYERS_PROGRAMS,
+    /**
+     * Indicates that the game is waiting on a new deck from the server
+     */
+    WAITING_FOR_CARDS_FROM_SERVER
 }

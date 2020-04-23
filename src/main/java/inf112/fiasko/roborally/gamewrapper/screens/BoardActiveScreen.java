@@ -12,12 +12,15 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.Robot;
+import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.utility.IOUtil;
 import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
@@ -204,6 +207,15 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             roboRallyWrapper.font.draw(batch, playerName, viewPortWidth, 128 * index);
             roboRallyWrapper.font.draw(batch, "DMG: " + robot.getDamageTaken() + " LV: " + robot.getAmountOfLives(),
                     viewPortWidth, 96 + 128 * (index - 1));
+            int lastFlagVisited = robot.getLastFlagVisited();
+            if (lastFlagVisited > 0) {
+                TileType flagType = TileType.getTileTypeFromID(robot.getLastFlagVisited() + 16);
+                TextureRegion flagRegion = TextureConverterUtil.convertElement(new Tile(flagType, Direction.NORTH));
+                batch.draw(flagRegion.getTexture(), viewPortWidth + 64, 128 * (index - 1), 64/2,
+                        64/2, 64, 64, 1, 1, 0, flagRegion.getRegionX(),
+                        flagRegion.getRegionY(), flagRegion.getRegionWidth(), flagRegion.getRegionWidth(),
+                        false, false);
+            }
             TextureRegion robotTexture = TextureConverterUtil.convertElement(player.getRobotID());
             batch.draw(robotTexture, viewPortWidth, 128 * (index - 1));
             index++;

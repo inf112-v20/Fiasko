@@ -2,7 +2,6 @@ package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -135,11 +134,6 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
             CardRectangle cardRectangle = new CardRectangle(card, programmingCard);
             cardRectangles.add(cardRectangle);
         }
-    }
-
-    @Override
-    public void show() {
-        super.show();
     }
 
     @Override

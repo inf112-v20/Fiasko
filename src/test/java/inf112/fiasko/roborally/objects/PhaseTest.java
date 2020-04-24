@@ -39,9 +39,11 @@ public class PhaseTest {
     private Player player4 = new Player(RobotID.ROBOT_4, "Player 4");
     private Player player5 = new Player(RobotID.ROBOT_5, "Player 5");
     private Player player6 = new Player(RobotID.ROBOT_6, "Player 6");
+    private FakeGame testGame;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
+        testGame = new FakeGame();
         robots.add(robot1);
         robots.add(robot2);
         robots.add(robot3);
@@ -56,12 +58,8 @@ public class PhaseTest {
         playerList.add(player4);
         playerList.add(player5);
         playerList.add(player6);
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
-            this.phase = new Phase(board, playerList, 0, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        board = BoardLoaderUtil.loadBoard("boards/Checkmate.txt", robots);
+        this.phase = new Phase(board, playerList, 0, null);
     }
 
     @Test
@@ -72,37 +70,39 @@ public class PhaseTest {
 
     @Test
     public void playerWinsAfterTouchingAllFlagsInCorrectOrder() throws IOException {
-        FakeGame testGame = new FakeGame();
         List<Robot> robots = new ArrayList<>();
-        List<Player> player = new ArrayList<>();
+        List<Player> players = getPlayers(1);
         RobotID robotID = RobotID.ROBOT_1;
         Robot robot = new Robot(robotID, new Position(0, 0));
         robots.add(robot);
-        player.add(new Player(robotID, "Player 1"));
-        board = BoardLoaderUtil.loadBoard("boards/win_test_board.txt", robots);
-        Phase testPhase = new Phase(board, player, 0, testGame);
+        Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/win_test_board.txt");
 
+        //Should have registered 0 flags
         assertEquals(0, robot.getLastFlagVisited());
         assertFalse(robot.hasTouchedFlagThisTurn());
         testPhase.checkAllFlags();
+        //Should have registered first flag
         assertEquals(1, robot.getLastFlagVisited());
         assertTrue(robot.hasTouchedFlagThisTurn());
         robot.setHasTouchedFlagThisTurn(false);
         assertNull(testGame.getWinningPlayerName());
         board.moveRobot(robotID, Direction.EAST);
         testPhase.checkAllFlags();
+        //Should have registered second flag
         assertEquals(2, robot.getLastFlagVisited());
         assertTrue(robot.hasTouchedFlagThisTurn());
         assertNull(testGame.getWinningPlayerName());
         robot.setHasTouchedFlagThisTurn(false);
         board.moveRobot(robotID, Direction.EAST);
         testPhase.checkAllFlags();
+        //Should have registered third flag
         assertEquals(3, robot.getLastFlagVisited());
         assertTrue(robot.hasTouchedFlagThisTurn());
         assertNull(testGame.getWinningPlayerName());
         robot.setHasTouchedFlagThisTurn(false);
         board.moveRobot(robotID, Direction.EAST);
         testPhase.checkAllFlags();
+        //Should have registered fourth and last flag
         assertEquals(4, robot.getLastFlagVisited());
         assertTrue(robot.hasTouchedFlagThisTurn());
         assertEquals("Player 1", testGame.getWinningPlayerName());
@@ -134,155 +134,85 @@ public class PhaseTest {
     }
 
     @Test
-    public void robotFiresLaserAndHitsAnotherRobot() throws InterruptedException {
-        FakeGame testGame = new FakeGame();
-        List<Robot> bot = new ArrayList<>();
-        List<Player> botPlayer = new ArrayList<>();
-        Position bot1Position = new Position(9, 12);
-        Position bot2Position = new Position(9, 13);
-        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
-        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
-        bot.add(bot1);
-        bot.add(bot2);
-        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
-        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
-        botPlayer.add(botPlayer1);
-        botPlayer.add(botPlayer2);
+    public void robotFiresLaserAndHitsAnotherRobot() throws InterruptedException, IOException {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = getPlayers(2);
+        Robot robot1 = new Robot(RobotID.ROBOT_1, new Position(9, 12));
+        Robot robot2 = new Robot(RobotID.ROBOT_2, new Position(9, 13));
+        robots.add(robot1);
+        robots.add(robot2);
 
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
-            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
-            assertEquals(0, bot2.getDamageTaken());
-            assertEquals(0, bot1.getDamageTaken());
-            testPhase.fireAllLasers();
-            assertEquals(0, bot2.getDamageTaken());
-            assertEquals(1, bot1.getDamageTaken());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/another_test_map.txt");
+        assertEquals(0, robot2.getDamageTaken());
+        assertEquals(0, robot1.getDamageTaken());
+        testPhase.fireAllLasers();
+        assertEquals(0, robot2.getDamageTaken());
+        assertEquals(1, robot1.getDamageTaken());
     }
 
     @Test
-    public void robotFiresLaserAndHitsAWallDoesNotDamageRobotOnOtherSide() throws InterruptedException {
-        FakeGame testGame = new FakeGame();
-        List<Robot> bot = new ArrayList<>();
-        List<Player> botPlayer = new ArrayList<>();
-        Position bot1Position = new Position(9, 11);
-        Position bot2Position = new Position(9, 13);
-        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
-        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
-        bot.add(bot1);
-        bot.add(bot2);
-        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
-        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
-        botPlayer.add(botPlayer1);
-        botPlayer.add(botPlayer2);
+    public void robotFiresLaserAndHitsAWallDoesNotDamageRobotOnOtherSide() throws InterruptedException, IOException {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = getPlayers(2);
+        Robot robot1 = new Robot(RobotID.ROBOT_1, new Position(9, 11));
+        Robot robot2 = new Robot(RobotID.ROBOT_2, new Position(9, 13));
+        robots.add(robot1);
+        robots.add(robot2);
 
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
-            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
-            assertEquals(0, bot2.getDamageTaken());
-            assertEquals(0, bot1.getDamageTaken());
-            testPhase.fireAllLasers();
-            assertEquals(0, bot2.getDamageTaken());
-            assertEquals(0, bot1.getDamageTaken());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/another_test_map.txt");
+        assertEquals(0, robot2.getDamageTaken());
+        assertEquals(0, robot1.getDamageTaken());
+        testPhase.fireAllLasers();
+        assertEquals(0, robot2.getDamageTaken());
+        assertEquals(0, robot1.getDamageTaken());
     }
 
     @Test
-    public void robotGetsHitBy2Lasers() throws InterruptedException {
-        FakeGame testGame = new FakeGame();
-        List<Robot> bot = new ArrayList<>();
-        List<Player> botPlayer = new ArrayList<>();
-        Position bot1Position = new Position(9, 12);
-        Position bot2Position = new Position(9, 13);
-        Position bot3Position = new Position(8, 12);
-        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
-        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
-        Robot bot3 = new Robot(RobotID.ROBOT_3, bot3Position);
-        bot.add(bot1);
-        bot.add(bot2);
-        bot.add(bot3);
-        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
-        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
-        Player botPlayer3 = new Player(RobotID.ROBOT_3, "Player 3");
-        botPlayer.add(botPlayer1);
-        botPlayer.add(botPlayer2);
-        botPlayer.add(botPlayer3);
-        bot3.setFacingDirection(Direction.EAST);
+    public void robotGetsHitBy2Lasers() throws InterruptedException, IOException {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = getPlayers(3);
+        Robot robot = new Robot(RobotID.ROBOT_1, new Position(9, 12));
+        Robot robot3 = new Robot(RobotID.ROBOT_3, new Position(8, 12));
+        robots.add(robot);
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(9, 13)));
+        robots.add(robot3);
+        robot3.setFacingDirection(Direction.EAST);
 
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
-            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
-            assertEquals(0, bot1.getDamageTaken());
-            testPhase.fireAllLasers();
-            assertEquals(2, bot1.getDamageTaken());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/another_test_map.txt");
+        assertEquals(0, robot.getDamageTaken());
+        testPhase.fireAllLasers();
+        assertEquals(2, robot.getDamageTaken());
     }
 
 
     @Test
-    public void robotFiresLaserAndHitsARobotDoesNotDamageRobotOnOtherSide() throws InterruptedException {
-        FakeGame testGame = new FakeGame();
-        List<Robot> bot = new ArrayList<>();
-        List<Player> botPlayer = new ArrayList<>();
-        Position bot1Position = new Position(9, 12);
-        Position bot2Position = new Position(9, 13);
-        Position bot3Position = new Position(9, 14);
-        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
-        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
-        Robot bot3 = new Robot(RobotID.ROBOT_3, bot3Position);
-        bot.add(bot1);
-        bot.add(bot2);
-        bot.add(bot3);
-        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
-        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
-        Player botPlayer3 = new Player(RobotID.ROBOT_3, "Player 3");
-        botPlayer.add(botPlayer1);
-        botPlayer.add(botPlayer2);
-        botPlayer.add(botPlayer3);
+    public void robotFiresLaserAndHitsARobotDoesNotDamageRobotOnOtherSide() throws InterruptedException, IOException {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = getPlayers(3);
+        Robot bot1 = new Robot(RobotID.ROBOT_1, new Position(9, 12));
+        robots.add(bot1);
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(9, 13)));
+        robots.add(new Robot(RobotID.ROBOT_3, new Position(9, 14)));
 
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
-            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
-            assertEquals(0, bot1.getDamageTaken());
-            testPhase.fireAllLasers();
-            assertEquals(1, bot1.getDamageTaken());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/another_test_map.txt");
+        assertEquals(0, bot1.getDamageTaken());
+        testPhase.fireAllLasers();
+        assertEquals(1, bot1.getDamageTaken());
     }
 
     @Test
-    public void robotGetsRotatedByCog() throws InterruptedException {
-        FakeGame testGame = new FakeGame();
-        List<Robot> bot = new ArrayList<>();
-        List<Player> botPlayer = new ArrayList<>();
-        Position bot1Position = new Position(0, 0);
-        Position bot2Position = new Position(1, 0);
-        Robot bot1 = new Robot(RobotID.ROBOT_1, bot1Position);
-        Robot bot2 = new Robot(RobotID.ROBOT_2, bot2Position);
-        bot.add(bot1);
-        bot.add(bot2);
-        Player botPlayer1 = new Player(RobotID.ROBOT_1, "Player 1");
-        botPlayer.add(botPlayer1);
-        Player botPlayer2 = new Player(RobotID.ROBOT_2, "Player 2");
-        botPlayer.add(botPlayer2);
+    public void robotGetsRotatedByCog() throws InterruptedException, IOException {
+        List<Robot> robots = new ArrayList<>();
+        List<Player> players = getPlayers(2);
+        Robot robot1 = new Robot(RobotID.ROBOT_1, new Position(0, 0));
+        robots.add(robot1);
+        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 0)));
 
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/another_test_map.txt", bot);
-            Phase testPhase = new Phase(board, botPlayer, 0, testGame);
-            assertEquals(Direction.NORTH, bot1.getFacingDirection());
-            testPhase.rotateCogwheels();
-            assertEquals(Direction.EAST, bot1.getFacingDirection());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/another_test_map.txt");
+
+        assertEquals(Direction.NORTH, robot1.getFacingDirection());
+        testPhase.rotateCogwheels();
+        assertEquals(Direction.EAST, robot1.getFacingDirection());
     }
 
     @Test
@@ -311,26 +241,12 @@ public class PhaseTest {
         assertEquals(robot6.getRobotId(), board.getRobotOnPosition(new Position(2, 14)));
     }
 
-    /**
-     * Loads the test board to the variable and creates a new phase
-     *
-     * @param players A list of players participating in the game
-     * @param robots  A list of robots on the board
-     * @return A phase object
-     */
-    private Phase createPhaseAndLoadBoard(List<Player> players, List<Robot> robots) throws IOException {
-        board = BoardLoaderUtil.loadBoard("boards/test_board.txt", robots);
-        return new Phase(board, players, 0, null);
-    }
-
     @Test
     public void robotsOnConveyorBeltsFacingTheSameEmptyTileDoesNotMove() throws InterruptedException, IOException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(2);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(8, 11)));
         robots.add(new Robot(RobotID.ROBOT_2, new Position(7, 10)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
-        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -342,60 +258,56 @@ public class PhaseTest {
     @Test
     public void robotsOnConveyorBeltsFacingTheSameHoleTileDoesNotMove() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
-        robots.add(new Robot(RobotID.ROBOT_1, new Position(6, 7)));
-        robots.add(new Robot(RobotID.ROBOT_2, new Position(7, 8)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
-        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+        List<Player> players = getPlayers(2);
+        Position robot1Position = new Position(6, 7);
+        Position robot2Position = new Position(7, 8);
+        robots.add(new Robot(RobotID.ROBOT_1, robot1Position));
+        robots.add(new Robot(RobotID.ROBOT_2, robot2Position));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
 
-        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(6, 7)));
-        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(7, 8)));
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(robot1Position));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(robot2Position));
     }
 
     @Test
     public void robotOnConveyorBeltsFacingWallDoesNotMove() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
-        robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        List<Player> players = getPlayers(1);
+        Position robotPosition = new Position(1, 1);
+        robots.add(new Robot(RobotID.ROBOT_1, robotPosition));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
 
-        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(1, 1)));
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(robotPosition));
     }
 
     @Test
     public void robotBehindAnotherRobotOnConveyorBeltsFacingWallDoesNotMove() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
-        robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 1)));
-        robots.add(new Robot(RobotID.ROBOT_2, new Position(1, 2)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
-        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
+        List<Player> players = getPlayers(2);
+        Position robot1Position = new Position(1, 1);
+        Position robot2Position = new Position(1, 2);
+        robots.add(new Robot(RobotID.ROBOT_1, robot1Position));
+        robots.add(new Robot(RobotID.ROBOT_2, robot2Position));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
 
-        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(1, 1)));
-        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(new Position(1, 2)));
+        assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(robot1Position));
+        assertEquals(RobotID.ROBOT_2, board.getRobotOnPosition(robot2Position));
     }
 
     @Test
     public void robotBehindOtherRobotsOnSlowConveyorBeltsFacingEmptyTilesMoves() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(4);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(5, 7)));
         robots.add(new Robot(RobotID.ROBOT_2, new Position(5, 8)));
         robots.add(new Robot(RobotID.ROBOT_3, new Position(5, 9)));
         robots.add(new Robot(RobotID.ROBOT_4, new Position(5, 10)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
-        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
-        players.add(new Player(RobotID.ROBOT_3, "Player 3"));
-        players.add(new Player(RobotID.ROBOT_4, "Player 4"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -409,15 +321,11 @@ public class PhaseTest {
     @Test
     public void robotBehindOtherRobotsOnFastConveyorBeltsFacingEmptyTilesMoves() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(4);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(4, 7)));
         robots.add(new Robot(RobotID.ROBOT_2, new Position(4, 8)));
         robots.add(new Robot(RobotID.ROBOT_3, new Position(4, 9)));
         robots.add(new Robot(RobotID.ROBOT_4, new Position(4, 10)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
-        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
-        players.add(new Player(RobotID.ROBOT_3, "Player 3"));
-        players.add(new Player(RobotID.ROBOT_4, "Player 4"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -432,15 +340,11 @@ public class PhaseTest {
     public void robotBehindOtherRobotsOnConveyorBeltsShapedAsARoundaboutMoves() throws IOException, InterruptedException {
         long startTime = System.currentTimeMillis();
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(4);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(1, 8)));
         robots.add(new Robot(RobotID.ROBOT_2, new Position(2, 8)));
         robots.add(new Robot(RobotID.ROBOT_3, new Position(2, 9)));
         robots.add(new Robot(RobotID.ROBOT_4, new Position(1, 9)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
-        players.add(new Player(RobotID.ROBOT_2, "Player 2"));
-        players.add(new Player(RobotID.ROBOT_3, "Player 3"));
-        players.add(new Player(RobotID.ROBOT_4, "Player 4"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -456,9 +360,8 @@ public class PhaseTest {
     @Test
     public void robotOnConveyorBeltFacingHoleMovesAndDies() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(1);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(6, 7)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -471,9 +374,8 @@ public class PhaseTest {
     @Test
     public void robotOnConveyorBeltFacingOutOfMapMovesAndDies() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(1);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(7, 0)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -485,9 +387,8 @@ public class PhaseTest {
     @Test
     public void robotOnConveyorBeltFacingOutOfMapMovesIntoWallIsBlocked() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(1);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(0, 0)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
@@ -499,14 +400,51 @@ public class PhaseTest {
     @Test
     public void robotOnConveyorBeltFacingOutOfMapWithOneTileBetweenCanBeMoved() throws IOException, InterruptedException {
         List<Robot> robots = new ArrayList<>();
-        List<Player> players = new ArrayList<>();
+        List<Player> players = getPlayers(1);
         robots.add(new Robot(RobotID.ROBOT_1, new Position(10, 10)));
-        players.add(new Player(RobotID.ROBOT_1, "Player 1"));
 
         Phase testPhase = createPhaseAndLoadBoard(players, robots);
         testPhase.moveAllConveyorBelts();
 
         assertTrue(board.isRobotAlive(RobotID.ROBOT_1));
         assertEquals(RobotID.ROBOT_1, board.getRobotOnPosition(new Position(10, 11)));
+    }
+
+    /**
+     * Gets a list of a specific number of players
+     *
+     * @param numberOfPlayers The number of players to generate
+     * @return A list of players
+     */
+    private List<Player> getPlayers(int numberOfPlayers) {
+        List<Player> players = new ArrayList<>();
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            players.add(new Player(RobotID.getRobotIDFromID(i), "Player " + i));
+        }
+        return players;
+    }
+
+    /**
+     * Loads a board to the variable and creates a new phase
+     *
+     * @param players A list of players participating in the game
+     * @param robots  A list of robots on the board
+     * @param boardName The name of the board to load
+     * @return A phase object
+     */
+    private Phase createPhaseAndLoadBoard(List<Player> players, List<Robot> robots, String boardName) throws IOException {
+        board = BoardLoaderUtil.loadBoard(boardName, robots);
+        return new Phase(board, players, 0, testGame);
+    }
+
+    /**
+     * Loads the test board to the variable and creates a new phase
+     *
+     * @param players A list of players participating in the game
+     * @param robots  A list of robots on the board
+     * @return A phase object
+     */
+    private Phase createPhaseAndLoadBoard(List<Player> players, List<Robot> robots) throws IOException {
+        return createPhaseAndLoadBoard(players, robots, "boards/test_board.txt");
     }
 }

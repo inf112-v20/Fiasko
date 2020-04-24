@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class RoboRallyClient {
     private final Client client;
-    private RoboRallyWrapper wrapper;
+    private final RoboRallyWrapper wrapper;
 
     /**
      * Instantiates a new Robo Rally client

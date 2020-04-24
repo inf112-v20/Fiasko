@@ -12,14 +12,14 @@ import inf112.fiasko.roborally.objects.RoboRallyGame;
  * This class acts as a wrapper around the different screens of the game
  */
 public class RoboRallyWrapper extends Game {
+    public final int defaultTCPPort = 54555;
+    public final int discoverUDPPort = 54777;
     public SpriteBatch batch;
     public BitmapFont font;
     public ScreenManager screenManager;
     public RoboRallyGame roboRallyGame;
     public RoboRallyServer server;
     public RoboRallyClient client;
-    public int defaultTCPPort = 54555;
-    public int discoverUDPPort = 54777;
 
     @Override
     public void create() {

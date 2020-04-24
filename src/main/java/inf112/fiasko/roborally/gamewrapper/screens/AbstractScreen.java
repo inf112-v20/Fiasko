@@ -15,10 +15,10 @@ public abstract class AbstractScreen implements Screen {
     protected final int applicationWidth = 600;
     protected final int applicationHeight = 800;
 
-    protected OrthographicCamera camera = new OrthographicCamera();
+    protected final OrthographicCamera camera = new OrthographicCamera();
+    protected final Stage stage = new Stage();
+    protected final InputMultiplexer inputMultiplexer = new InputMultiplexer();
     protected Viewport viewport;
-    protected Stage stage = new Stage();
-    protected InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
     @Override
     public void show() {

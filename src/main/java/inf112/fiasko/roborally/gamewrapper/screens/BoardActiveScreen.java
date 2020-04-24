@@ -12,7 +12,9 @@ import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.objects.DrawableGame;
 import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
@@ -29,6 +31,8 @@ public class BoardActiveScreen extends InteractiveScreen {
     private final int tileDimensions = 64;
     private final int viewPortWidth;
     private final int viewPortHeight;
+    private final DrawableGame drawableGame;
+    private final InteractableGame interactableGame;
     private float cameraZoom = 1;
     private int cameraX = 0;
     private int cameraY = 0;
@@ -41,9 +45,11 @@ public class BoardActiveScreen extends InteractiveScreen {
      */
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
+        this.drawableGame = this.roboRallyWrapper.roboRallyGame;
+        this.interactableGame = this.roboRallyWrapper.roboRallyGame;
 
-        viewPortWidth = roboRallyWrapper.roboRallyGame.getWidth() * tileDimensions;
-        viewPortHeight = roboRallyWrapper.roboRallyGame.getHeight() * tileDimensions;
+        viewPortWidth = drawableGame.getWidth() * tileDimensions;
+        viewPortHeight = drawableGame.getHeight() * tileDimensions;
 
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);
         camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
@@ -67,7 +73,7 @@ public class BoardActiveScreen extends InteractiveScreen {
         drawBoard(roboRallyWrapper.batch);
         roboRallyWrapper.batch.end();
 
-        switch (roboRallyWrapper.roboRallyGame.getGameState()) {
+        switch (interactableGame.getGameState()) {
             case GAME_IS_WON:
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getWinnerScreen(roboRallyWrapper));
                 break;
@@ -93,7 +99,7 @@ public class BoardActiveScreen extends InteractiveScreen {
 
     @Override
     public boolean keyUp(int keyCode) {
-        if (keyCode == Input.Keys.TAB && roboRallyWrapper.roboRallyGame.getGameState() == GameState.CHOOSING_CARDS) {
+        if (keyCode == Input.Keys.TAB && interactableGame.getGameState() == GameState.CHOOSING_CARDS) {
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getCardChoiceScreen(roboRallyWrapper));
             return true;
         }
@@ -163,7 +169,7 @@ public class BoardActiveScreen extends InteractiveScreen {
      */
     private void drawBoard(SpriteBatch batch) {
         List<DrawableObject> elementsToDraw =
-                IOUtil.getDrawableObjectsFromGame(roboRallyWrapper.roboRallyGame, tileDimensions, tileDimensions);
+                IOUtil.getDrawableObjectsFromGame(drawableGame, tileDimensions, tileDimensions);
         for (DrawableObject object : elementsToDraw) {
             TextureRegion objectTextureRegion = object.getTexture();
             batch.draw(objectTextureRegion.getTexture(), object.getXPosition(), object.getYPosition(),
@@ -175,7 +181,7 @@ public class BoardActiveScreen extends InteractiveScreen {
         }
         int index = 1;
         //Draws all participating players to the right of the board
-        for (Player player : roboRallyWrapper.roboRallyGame.getPlayers()) {
+        for (Player player : drawableGame.getPlayers()) {
             String playerName = player.getName();
             Robot robot = getPlayersRobot(player.getRobotID());
             if (robot == null) {
@@ -210,7 +216,7 @@ public class BoardActiveScreen extends InteractiveScreen {
      * @return The robot with the robot id
      */
     private Robot getPlayersRobot(RobotID robotID) {
-        for (Robot robot : roboRallyWrapper.roboRallyGame.getAllRobots()) {
+        for (Robot robot : drawableGame.getAllRobots()) {
             if (robot.getRobotId() == robotID) {
                 return robot;
             }

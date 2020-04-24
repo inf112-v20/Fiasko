@@ -53,7 +53,7 @@ public class RoboRallyGameTest {
         assertEquals(16, game.getHeight());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void invalidProgramThrowsError() {
         List<ProgrammingCard> programmingCardList = new ArrayList<>();
         programmingCardList.add(new ProgrammingCard(10, Action.MOVE_1));

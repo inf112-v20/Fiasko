@@ -24,6 +24,7 @@ public class Board {
     private Map<RobotID, Robot> robots;
     private List<Robot> deadRobots;
     private List<RobotID> realDeadRobots;
+    private List<TileType> dangerousTiles;
 
     /**
      * Initializes the board
@@ -50,6 +51,20 @@ public class Board {
         this.particles = new ListGrid<>(tiles.getWidth(), tiles.getHeight());
         this.deadRobots = new ArrayList<>();
         this.realDeadRobots = new ArrayList<>();
+        this.dangerousTiles = new ArrayList<>();
+        loadDangerousTileTypes();
+    }
+
+    /**
+     * Adds tile types which will kill the robot to the dangerousTiles list
+     */
+    private void loadDangerousTileTypes() {
+        dangerousTiles.add(TileType.HOLE);
+        dangerousTiles.add(TileType.PIT_CORNER);
+        dangerousTiles.add(TileType.PIT_EMPTY);
+        dangerousTiles.add(TileType.PIT_FULL);
+        dangerousTiles.add(TileType.PIT_NORMAL);
+        dangerousTiles.add(TileType.PIT_U);
     }
 
     /**
@@ -377,8 +392,9 @@ public class Board {
 
     /**
      * Checks whether a conveyor belt movement is stopped by either a wall or a robot
-     * @param positionInFront The position in front of the conveyor belt
-     * @param conveyorBeltPosition The position of the conveyor belt
+     *
+     * @param positionInFront       The position in front of the conveyor belt
+     * @param conveyorBeltPosition  The position of the conveyor belt
      * @param conveyorBeltDirection The direction of the conveyor belt
      * @return True if the conveyor belt cannot move
      */
@@ -418,7 +434,7 @@ public class Board {
                 Direction.getRightRotatedDirection(conveyorBeltDirection));
         //Checks for conflict at a conveyor belt coming in from the right
         boolean frontRightConflict = conveyorBeltHasConflict(getNewPosition(crossingPosition,
-                        Direction.getRightRotatedDirection(conveyorBeltDirection)),
+                Direction.getRightRotatedDirection(conveyorBeltDirection)),
                 Direction.getLeftRotatedDirection(conveyorBeltDirection));
         //Checks for conflict at a conveyor belt at the opposite side of the crossing
         boolean frontConflict = conveyorBeltHasConflict(getNewPosition(crossingPosition, conveyorBeltDirection),
@@ -427,8 +443,9 @@ public class Board {
     }
 
     /**
-     * Checks whether a poosible conflict position has a conflict
-     * @param conflictPosition The position with a potential conflict
+     * Checks whether a possible conflict position has a conflict
+     *
+     * @param conflictPosition  The position with a potential conflict
      * @param conflictDirection The direction necessary to count as a conflict
      * @return True if the position has a conflict
      */
@@ -648,13 +665,6 @@ public class Board {
             throw new IllegalArgumentException("The game board is missing a tile. This should not happen.");
         }
         TileType tileTypeRobotStepsOn = tileRobotStepsOn.getTileType();
-        List<TileType> dangerousTiles = new ArrayList<>();
-        dangerousTiles.add(TileType.HOLE);
-        dangerousTiles.add(TileType.PIT_CORNER);
-        dangerousTiles.add(TileType.PIT_EMPTY);
-        dangerousTiles.add(TileType.PIT_FULL);
-        dangerousTiles.add(TileType.PIT_NORMAL);
-        dangerousTiles.add(TileType.PIT_U);
         if (dangerousTiles.contains(tileTypeRobotStepsOn)) {
             killRobot(robot);
         }

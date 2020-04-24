@@ -131,7 +131,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
 
     @Override
     public void setProgram(List<ProgrammingCard> program) {
-        if (program.size() != 5) {
+        if (program.size() != 5 && program.size() != 0) {
             throw new IllegalArgumentException("Invalid program chosen.");
         }
         this.program = program;
@@ -307,8 +307,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      * Resets the boolean for if the robot has touched a flag this turn, to set up the next turn.
      */
     private void resetHasTouchedFlagThisTurnForAllRobots() {
-        for (Robot robot : gameBoard.getAliveRobots()) {
-            robot.setHasTouchedFlagThisTurn(false);
+        for (RobotID robotID : RobotID.values()) {
+            gameBoard.setHasTouchedFlagThisTurn(robotID, false);
         }
     }
 

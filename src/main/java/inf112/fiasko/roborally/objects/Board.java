@@ -890,7 +890,13 @@ public class Board {
      * @param hasTouched If the robot has touched a flag this turn
      */
     public void setHasTouchedFlagThisTurn(RobotID robotID, boolean hasTouched) {
-        robots.get(robotID).setHasTouchedFlagThisTurn(hasTouched);
+        Robot aliveRobot = robots.get(robotID);
+        Robot deadRobot = getRobotFromDeadRobots(robotID);
+        if (aliveRobot != null) {
+            aliveRobot.setHasTouchedFlagThisTurn(hasTouched);
+        } else if (deadRobot != null) {
+            deadRobot.setHasTouchedFlagThisTurn(hasTouched);
+        }
     }
 
     /**

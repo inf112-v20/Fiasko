@@ -71,21 +71,41 @@ public class PhaseTest {
     }
 
     @Test
-    public void playerWinsAfterTouchingAllFlagsInCorrectOrder() {
+    public void playerWinsAfterTouchingAllFlagsInCorrectOrder() throws IOException {
         FakeGame testGame = new FakeGame();
-        List<Robot> robot = new ArrayList<>();
+        List<Robot> robots = new ArrayList<>();
         List<Player> player = new ArrayList<>();
-        robot.add(new Robot(RobotID.ROBOT_1, new Position(0, 0)));
-        player.add(new Player(RobotID.ROBOT_1, "Player 1"));
+        RobotID robotID = RobotID.ROBOT_1;
+        Robot robot = new Robot(robotID, new Position(0, 0));
+        robots.add(robot);
+        player.add(new Player(robotID, "Player 1"));
+        board = BoardLoaderUtil.loadBoard("boards/win_test_board.txt", robots);
+        Phase testPhase = new Phase(board, player, 0, testGame);
 
-        try {
-            board = BoardLoaderUtil.loadBoard("boards/win_test_board.txt", robot);
-            Phase testPhase = new Phase(board, player, 0, testGame);
-            testPhase.checkAllFlags();
-            assertEquals("Player 1", testGame.getWinningPlayerName());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        assertEquals(0, robot.getLastFlagVisited());
+        assertFalse(robot.hasTouchedFlagThisTurn());
+        testPhase.checkAllFlags();
+        assertEquals(1, robot.getLastFlagVisited());
+        assertTrue(robot.hasTouchedFlagThisTurn());
+        robot.setHasTouchedFlagThisTurn(false);
+        assertNull(testGame.getWinningPlayerName());
+        board.moveRobot(robotID, Direction.EAST);
+        testPhase.checkAllFlags();
+        assertEquals(2, robot.getLastFlagVisited());
+        assertTrue(robot.hasTouchedFlagThisTurn());
+        assertNull(testGame.getWinningPlayerName());
+        robot.setHasTouchedFlagThisTurn(false);
+        board.moveRobot(robotID, Direction.EAST);
+        testPhase.checkAllFlags();
+        assertEquals(3, robot.getLastFlagVisited());
+        assertTrue(robot.hasTouchedFlagThisTurn());
+        assertNull(testGame.getWinningPlayerName());
+        robot.setHasTouchedFlagThisTurn(false);
+        board.moveRobot(robotID, Direction.EAST);
+        testPhase.checkAllFlags();
+        assertEquals(4, robot.getLastFlagVisited());
+        assertTrue(robot.hasTouchedFlagThisTurn());
+        assertEquals("Player 1", testGame.getWinningPlayerName());
     }
 
     @Test
@@ -98,11 +118,11 @@ public class PhaseTest {
     }
 
     @Test
-    public void robotDoesNotRegistersWrongFlag() {
-        assertEquals(robot4.getLastFlagVisited(), 0);
+    public void robotDoesNotRegisterWrongFlag() {
+        assertEquals(0, robot4.getLastFlagVisited());
         assertFalse(robot4.hasTouchedFlagThisTurn());
         phase.checkAllFlags();
-        assertEquals(robot4.getLastFlagVisited(), 0);
+        assertEquals(0, robot4.getLastFlagVisited());
         assertFalse(robot4.hasTouchedFlagThisTurn());
     }
 

@@ -2,21 +2,17 @@ package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
@@ -27,6 +23,7 @@ import javax.swing.JOptionPane;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.badlogic.gdx.graphics.Color.BLACK;
 import static com.badlogic.gdx.graphics.Color.GRAY;
 import static com.badlogic.gdx.graphics.Color.RED;
 import static com.badlogic.gdx.graphics.Color.WHITE;
@@ -34,17 +31,13 @@ import static com.badlogic.gdx.graphics.Color.WHITE;
 /**
  * This screen is used to let the user choose their program
  */
-public class CardChoiceScreen extends InputAdapter implements Screen {
+public class CardChoiceScreen extends InteractiveScreen implements Screen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private final OrthographicCamera camera;
     private final List<CardRectangle> cardRectangles;
     private final ShapeRenderer shapeRenderer;
-    private final Viewport viewport;
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
-    private final Stage stage;
-    private final InputMultiplexer inputMultiplexer;
 
     /**
      * Instantiates a new card choice screen
@@ -54,10 +47,11 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
         ProgrammingCardDeck deck = roboRallyWrapper.roboRallyGame.getPlayerHand();
         this.roboRallyWrapper = roboRallyWrapper;
-        camera = new OrthographicCamera();
-        int applicationWidth = 600;
-        int applicationHeight = 800;
-        this.maxCards = roboRallyWrapper.roboRallyGame.getProgramSize();
+        maxCards = roboRallyWrapper.roboRallyGame.getProgramSize();
+        if (maxCards == -1) {
+            throw new IllegalArgumentException("This player should not be able to choose any cards at this point in " +
+                    "time.");
+        }
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         cardRectangles = new ArrayList<>();
@@ -68,8 +62,6 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
         generateCards(deck);
         this.chosenCards = new ArrayList<>();
-
-        stage = new Stage();
 
         TextButton confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
         stage.addActor(confirmCards);
@@ -87,10 +79,15 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
      *
      * @return An input listener
      */
-    private InputListener getConfirmListener() {
-        return new InputListener() {
+    private ClickListener getConfirmListener() {
+        return new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 if (chosenCards.size() == maxCards) {
                     List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
                     int lockedCardsInt = 5 - maxCards;
@@ -102,12 +99,10 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
                     roboRallyWrapper.roboRallyGame.setProgram(newProgram);
                     roboRallyWrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
-                    return true;
                 } else {
                     JOptionPane.showMessageDialog(null, "You need to choose all your cards"
                             + " before confirming.");
                 }
-                return false;
             }
         };
     }
@@ -148,8 +143,8 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
 
     @Override
     public void show() {
+        super.show();
         Gdx.input.setInputProcessor(inputMultiplexer);
-        stage.cancelTouchFocus();
     }
 
     @Override
@@ -205,6 +200,13 @@ public class CardChoiceScreen extends InputAdapter implements Screen {
             float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 30;
             roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
             drawCardSymbol(cardRectangle);
+            int chosenIndex = chosenCards.indexOf(cardRectangle);
+            if (chosenIndex != -1) {
+                roboRallyWrapper.font.setColor(BLACK);
+                roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(chosenIndex + 1),
+                        cardRectangle.rectangle.x + cardRectangle.rectangle.width - 20, cardRectangle.rectangle.y + cardRectangle.rectangle.height - 5);
+                roboRallyWrapper.font.setColor(WHITE);
+            }
         }
     }
 

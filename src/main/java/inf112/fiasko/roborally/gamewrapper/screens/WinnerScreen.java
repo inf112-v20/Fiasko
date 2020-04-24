@@ -1,11 +1,9 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
@@ -22,19 +20,21 @@ public class WinnerScreen extends AbstractScreen {
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public WinnerScreen(final RoboRallyWrapper roboRallyWrapper) {
-        camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        stage = new Stage();
         stage.setViewport(viewport);
         TextButton quitButton = new SimpleButton("Quit", roboRallyWrapper.font).getButton();
         stage.addActor(quitButton);
         quitButton.setY(applicationHeight / 2f);
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        quitButton.addListener(new InputListener() {
+        quitButton.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
             }
         });
         quitButton.setX(applicationWidth / 2f + quitButton.getWidth() / 2);
@@ -48,7 +48,8 @@ public class WinnerScreen extends AbstractScreen {
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "The winner is: ", applicationWidth / 2f - 380 / 2f,
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "The winner is: " +
+                        roboRallyWrapper.roboRallyGame.getWinningPlayerName(), applicationWidth / 2f - 380 / 2f,
                 applicationHeight / 2f + 300, 380, 1,
                 true);
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Click the button to exit the game",

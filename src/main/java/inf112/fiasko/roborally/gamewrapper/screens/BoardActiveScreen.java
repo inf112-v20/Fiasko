@@ -1,17 +1,12 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.elementproperties.RobotID;
@@ -29,13 +24,11 @@ import java.util.List;
 /**
  * This screen shows the game board in real time
  */
-public class BoardActiveScreen extends AbstractScreen implements InputProcessor {
+public class BoardActiveScreen extends InteractiveScreen {
     private final RoboRallyWrapper roboRallyWrapper;
-    private final OrthographicCamera camera;
     private final int tileDimensions = 64;
     private final int viewPortWidth = 12 * tileDimensions;
     private final int viewPortHeight = 12 * tileDimensions;
-    private final Viewport viewport;
     private float cameraZoom = 1;
     private int cameraX = 0;
     private int cameraY = 0;
@@ -49,7 +42,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
 
-        camera = new OrthographicCamera();
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);
         camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
         viewport = new ExtendViewport(viewPortWidth, viewPortHeight, camera);
@@ -59,21 +51,14 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(this);
+        super.show();
+        inputMultiplexer.addProcessor(this);
         resetCamera();
     }
 
     @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-    }
-
-
-    @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT |
-                (Gdx.graphics.getBufferFormat().coverageSampling ? GL20.GL_COVERAGE_BUFFER_BIT_NV : 0));
+        super.render(delta);
         updateCamera();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
         roboRallyWrapper.batch.begin();
@@ -102,11 +87,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         for (Disposable disposable : TextureConverterUtil.getDisposableElements()) {
             disposable.dispose();
         }
-    }
-
-    @Override
-    public boolean keyDown(int keyCode) {
-        return false;
     }
 
     @Override
@@ -154,11 +134,6 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
         cameraX = (int) (positionChange[0] * cameraZoom);
         cameraY = (int) (positionChange[1] * cameraZoom);
         return true;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
     }
 
     @Override

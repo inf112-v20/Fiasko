@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -14,13 +15,15 @@ public abstract class AbstractScreen implements Screen {
     protected final int applicationWidth = 600;
     protected final int applicationHeight = 800;
 
-    protected OrthographicCamera camera;
+    protected OrthographicCamera camera = new OrthographicCamera();
     protected Viewport viewport;
-    protected Stage stage;
+    protected Stage stage = new Stage();
+    protected InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
         stage.cancelTouchFocus();
     }
 

@@ -2,8 +2,6 @@ package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
@@ -24,10 +22,8 @@ public class LoadingScreen extends AbstractScreen {
      */
     public LoadingScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
-        camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         viewport = new ExtendViewport(applicationWidth, applicationHeight, camera);
-        stage = new Stage();
     }
 
     @Override

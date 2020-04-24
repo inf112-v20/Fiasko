@@ -1,14 +1,12 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
@@ -32,9 +30,7 @@ public class LobbyScreen extends AbstractScreen {
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public LobbyScreen(final RoboRallyWrapper roboRallyWrapper) {
-        camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        stage = new Stage();
         TextButton startGameButton = new SimpleButton("Start", roboRallyWrapper.font).getButton();
         stage.addActor(startGameButton);
         startGameButton.setY(applicationHeight / 2f - 50);
@@ -47,7 +43,6 @@ public class LobbyScreen extends AbstractScreen {
 
         Dialog dialog = new Dialog("Setting", skin);
 
-
         final SelectBox<String> selectBox = new SelectBox<>(skin);
         selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange");
         selectBox.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 100);
@@ -58,19 +53,23 @@ public class LobbyScreen extends AbstractScreen {
 
         stage.addActor(selectBox);
 
-        startGameButton.addListener(new InputListener() {
+        startGameButton.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 roboRallyWrapper.server.startGame();
                 Map<Connection, String> playerNames = roboRallyWrapper.server.getPlayerNames();
                 List<Player> playerList = IOUtil.playerGenerator(playerNames,
                         roboRallyWrapper.server.getRobotID());
                 for (Connection connection : playerNames.keySet()) {
-                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(selectBox.getSelected() + ".txt"
-                            , playerList, playerNames.get(connection)));
+                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(
+                            selectBox.getSelected() + ".txt", playerList, playerNames.get(connection)));
                 }
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
-                return true;
             }
         });
         Gdx.input.setInputProcessor(stage);

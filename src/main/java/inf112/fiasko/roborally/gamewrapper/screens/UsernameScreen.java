@@ -1,9 +1,7 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -27,8 +25,6 @@ public class UsernameScreen extends AbstractScreen {
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public UsernameScreen(final RoboRallyWrapper roboRallyWrapper) {
-        stage = new Stage();
-
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton confirm = new TextButton("Confirm", skin);
         confirm.setSize(300, 60);
@@ -43,7 +39,8 @@ public class UsernameScreen extends AbstractScreen {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 String userName = textInput.getText();
                 if (nameInvalid(userName)) {
-                    JOptionPane.showMessageDialog(null, "Username cannot be empty.");
+                    JOptionPane.showMessageDialog(null, "Username cannot be empty or more " +
+                            "than 20 characters.");
                     return;
                 }
                 if (roboRallyWrapper.server == null) {
@@ -60,7 +57,6 @@ public class UsernameScreen extends AbstractScreen {
         stage.addActor(textInput);
         stage.addActor(confirm);
 
-        camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
@@ -75,7 +71,7 @@ public class UsernameScreen extends AbstractScreen {
      */
     private boolean nameInvalid(String userName) {
         //TODO: Find a way to ask the server if the name is taken
-        return "".equals(userName);
+        return "".equals(userName) || userName.length() > 20;
     }
 
     @Override

@@ -1,10 +1,8 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
@@ -25,9 +23,7 @@ public class PowerDownScreen extends AbstractScreen {
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public PowerDownScreen(final RoboRallyWrapper roboRallyWrapper) {
-        camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        stage = new Stage();
         stage.setViewport(viewport);
         TextButton powerDownButton = new SimpleButton("PowerDown", roboRallyWrapper.font).getButton();
         stage.addActor(powerDownButton);
@@ -35,11 +31,15 @@ public class PowerDownScreen extends AbstractScreen {
         powerDownButton.setX(applicationWidth / 2f - powerDownButton.getWidth() / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        powerDownButton.addListener(new InputListener() {
+        powerDownButton.addListener(new ClickListener() {
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                sendPowerDownStatus(true);
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                sendPowerDownStatus(true);
             }
         });
     }

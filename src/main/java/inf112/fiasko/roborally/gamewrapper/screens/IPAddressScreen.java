@@ -1,9 +1,7 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -12,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
-
 
 import javax.swing.*;
 import java.io.IOException;
@@ -35,8 +32,6 @@ public class IPAddressScreen extends AbstractScreen {
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public IPAddressScreen(final RoboRallyWrapper roboRallyWrapper) {
-        stage = new Stage();
-
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
         TextButton joinButton = new TextButton("Join", skin);
         joinButton.setSize(300, 60);
@@ -85,16 +80,10 @@ public class IPAddressScreen extends AbstractScreen {
         stage.addActor(textInput);
         stage.addActor(joinButton);
 
-        camera = new OrthographicCamera();
         viewport = new FitViewport(applicationWidth, applicationHeight, camera);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
         stage.setViewport(viewport);
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override

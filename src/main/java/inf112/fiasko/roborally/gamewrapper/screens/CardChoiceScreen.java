@@ -58,8 +58,6 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
         shapeRenderer.setAutoShapeType(true);
 
-        inputMultiplexer = new InputMultiplexer();
-
         generateCards(deck);
         this.chosenCards = new ArrayList<>();
 
@@ -70,8 +68,6 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
 
         confirmCards.addListener(getConfirmListener());
         stage.setViewport(viewport);
-        inputMultiplexer.addProcessor(this);
-        inputMultiplexer.addProcessor(stage);
     }
 
     /**
@@ -144,7 +140,6 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
     @Override
     public void show() {
         super.show();
-        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override

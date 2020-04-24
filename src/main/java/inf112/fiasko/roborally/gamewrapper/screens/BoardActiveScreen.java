@@ -55,7 +55,6 @@ public class BoardActiveScreen extends InteractiveScreen {
     @Override
     public void show() {
         super.show();
-        inputMultiplexer.addProcessor(this);
         resetCamera();
     }
 

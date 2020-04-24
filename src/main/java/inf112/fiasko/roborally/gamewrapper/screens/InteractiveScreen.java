@@ -7,6 +7,12 @@ import com.badlogic.gdx.InputProcessor;
  */
 public abstract class InteractiveScreen extends AbstractScreen implements InputProcessor {
     @Override
+    public void show() {
+        super.show();
+        inputMultiplexer.addProcessor(this);
+    }
+
+    @Override
     public boolean keyDown(int i) {
         return false;
     }

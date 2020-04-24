@@ -19,7 +19,15 @@ public enum WallType {
     /**
      * A wall with two lasers
      */
-    WALL_LASER_DOUBLE(4);
+    WALL_LASER_DOUBLE(4),
+    /**
+     * A pusher which pushes on every odd phase
+     */
+    WALL_PUSHER_ODD(5),
+    /**
+     * A pusher which pushes on every even phase
+     */
+    WALL_PUSHER_EVEN(6);
 
     private final int wallTypeID;
 

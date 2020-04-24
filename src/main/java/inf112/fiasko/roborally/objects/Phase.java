@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
+import inf112.fiasko.roborally.elementproperties.WallType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +27,8 @@ public class Phase {
     private List<BoardElementContainer<Tile>> conveyorBelts;
     private List<BoardElementContainer<Tile>> fastConveyorBelts;
     private List<BoardElementContainer<Tile>> flags;
+    private List<BoardElementContainer<Wall>> oddPushers;
+    private List<BoardElementContainer<Wall>> evenPushers;
 
     /**
      * Instantiates a new phase
@@ -54,10 +57,43 @@ public class Phase {
         runProgrammingCards(phaseNumber);
 
         moveAllConveyorBelts();
+        startPushers(phaseNumber);
         rotateCogwheels();
 
         fireAllLasers();
         checkAllFlags();
+    }
+
+    /**
+     * Starts all pushers which should be pushed this phase
+     *
+     * @param phaseNumber The current phase number
+     * @throws InterruptedException If interrupted while sleeping
+     */
+    private void startPushers(int phaseNumber) throws InterruptedException {
+        sleep();
+        List<BoardElementContainer<Wall>> pushersToPush;
+        if (phaseNumber % 2 == 0) {
+            pushersToPush = evenPushers;
+        } else {
+            pushersToPush = oddPushers;
+        }
+        for (BoardElementContainer<Wall> pusher : pushersToPush) {
+            runPusher(pusher.getPosition(), Direction.getReverseDirection(pusher.getElement().getDirection()));
+        }
+    }
+
+    /**
+     * Makes the pusher try to push any robot standing on it
+     *
+     * @param pusherPosition The position of the pusher which is pushing
+     * @param pushDirection  The direction of the pusher which is pushing
+     */
+    private void runPusher(Position pusherPosition, Direction pushDirection) {
+        RobotID robotToPush = gameBoard.getRobotOnPosition(pusherPosition);
+        if (robotToPush != null) {
+            gameBoard.moveRobot(robotToPush, pushDirection);
+        }
     }
 
     /**
@@ -335,5 +371,7 @@ public class Phase {
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
         flags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
                 TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
+        oddPushers = gameBoard.getPositionsOfWallOnBoard(WallType.WALL_PUSHER_ODD);
+        evenPushers = gameBoard.getPositionsOfWallOnBoard(WallType.WALL_PUSHER_EVEN);
     }
 }

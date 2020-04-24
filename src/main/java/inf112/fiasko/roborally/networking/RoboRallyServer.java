@@ -6,7 +6,6 @@ import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.util.List;
 import java.util.Map;
 

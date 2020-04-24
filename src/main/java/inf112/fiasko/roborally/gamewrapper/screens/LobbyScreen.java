@@ -24,8 +24,8 @@ import java.util.Map;
  * This screen allows the host to wait for players to join
  */
 public class LobbyScreen extends InteractiveScreen {
+    private final SelectBox<String> selectBox;
     private final RoboRallyWrapper roboRallyWrapper;
-    final SelectBox<String> selectBox;
 
     /**
      * Instantiates a new lobby screen
@@ -44,15 +44,10 @@ public class LobbyScreen extends InteractiveScreen {
 
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
-        Dialog dialog = new Dialog("Setting", skin);
-
         selectBox = new SelectBox<>(skin);
-        selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange");
-        selectBox.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 100);
+        selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange", "Twister", "Bloodbath_Chess", "Vault_Assault");
         selectBox.setSize(200, 50);
-
-        dialog.getContentTable().defaults().pad(10);
-        dialog.getContentTable().add(selectBox);
+        selectBox.setPosition((applicationWidth - selectBox.getWidth()) / 2f, applicationHeight / 2f - 120);
 
         stage.addActor(selectBox);
 

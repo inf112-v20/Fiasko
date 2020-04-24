@@ -270,9 +270,9 @@ public class PhaseTest {
         List<ProgrammingCard> testProgram1 = new ArrayList<>();
         List<ProgrammingCard> testProgram2 = new ArrayList<>();
         List<ProgrammingCard> testProgram3 = new ArrayList<>();
-        testProgram1.add(new ProgrammingCard(1, Action.MOVE_1));
-        testProgram2.add(new ProgrammingCard(10, Action.MOVE_1));
-        testProgram3.add(new ProgrammingCard(100, Action.ROTATE_LEFT));
+        testProgram1.add(new ProgrammingCard(10, Action.MOVE_1));
+        testProgram2.add(new ProgrammingCard(20, Action.MOVE_1));
+        testProgram3.add(new ProgrammingCard(30, Action.ROTATE_LEFT));
         for (int i = 0; i < 4; i++) {
             testProgram1.add(null);
             testProgram2.add(null);

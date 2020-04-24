@@ -29,9 +29,9 @@ public class ProgrammingCardDeckTest {
             e.printStackTrace();
         }
         ArrayList<ProgrammingCard> cardList = new ArrayList<>();
-        programmingCard1 = new ProgrammingCard(5, Action.MOVE_1);
-        ProgrammingCard programmingCard2 = new ProgrammingCard(6, Action.MOVE_2);
-        programmingCard3 = new ProgrammingCard(7, Action.MOVE_3);
+        programmingCard1 = new ProgrammingCard(10, Action.MOVE_1);
+        ProgrammingCard programmingCard2 = new ProgrammingCard(20, Action.MOVE_2);
+        programmingCard3 = new ProgrammingCard(30, Action.MOVE_3);
         cardList.add(programmingCard1);
         cardList.add(programmingCard2);
         cardList.add(programmingCard3);

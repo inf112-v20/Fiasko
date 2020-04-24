@@ -131,6 +131,9 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
 
     @Override
     public void setProgram(List<ProgrammingCard> program) {
+        if (program.size() != 5) {
+            throw new IllegalArgumentException("Invalid program chosen.");
+        }
         this.program = program;
     }
 

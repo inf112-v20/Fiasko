@@ -17,6 +17,9 @@ public class ProgrammingCard implements Comparable<ProgrammingCard> {
      * @param cardAction   the action of the card
      */
     public ProgrammingCard(int cardPriority, Action cardAction) {
+        if (cardPriority < 10 || cardPriority > 840 || cardPriority % 10 != 0) {
+            throw new IllegalArgumentException("You cannot create a programming card not part of the original game.");
+        }
         this.cardPriority = cardPriority;
         this.cardAction = cardAction;
     }

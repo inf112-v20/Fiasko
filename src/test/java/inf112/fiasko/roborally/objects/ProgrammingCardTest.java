@@ -15,9 +15,9 @@ public class ProgrammingCardTest {
 
     @Before
     public void setUp() {
-        programmingCard1 = new ProgrammingCard(5, Action.MOVE_1);
-        programmingCard2 = new ProgrammingCard(234, Action.ROTATE_LEFT);
-        programmingCard3 = new ProgrammingCard(2334, Action.ROTATE_LEFT);
+        programmingCard1 = new ProgrammingCard(50, Action.MOVE_1);
+        programmingCard2 = new ProgrammingCard(230, Action.ROTATE_LEFT);
+        programmingCard3 = new ProgrammingCard(500, Action.ROTATE_LEFT);
     }
 
     @Test
@@ -28,8 +28,8 @@ public class ProgrammingCardTest {
 
     @Test
     public void testGetProgrammingCardValue() {
-        assertEquals(5, programmingCard1.getPriority());
-        assertEquals(234, programmingCard2.getPriority());
-        assertEquals(2334, programmingCard3.getPriority());
+        assertEquals(50, programmingCard1.getPriority());
+        assertEquals(230, programmingCard2.getPriority());
+        assertEquals(500, programmingCard3.getPriority());
     }
 }

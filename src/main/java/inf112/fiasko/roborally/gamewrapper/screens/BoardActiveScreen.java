@@ -201,7 +201,8 @@ public class BoardActiveScreen extends AbstractScreen implements InputProcessor 
             String playerName = player.getName();
             Robot robot = getPlayersRobot(player.getRobotID());
             if (robot == null) {
-                throw new NullPointerException("Player's robot does not exist.");
+                throw new IllegalArgumentException("The robot belonging to player " + playerName +
+                        " does not exist on the board.");
             }
             roboRallyWrapper.font.draw(batch, playerName, viewPortWidth, 128 * index);
             roboRallyWrapper.font.draw(batch, "DMG: " + robot.getDamageTaken() + " LV: " + robot.getAmountOfLives(),

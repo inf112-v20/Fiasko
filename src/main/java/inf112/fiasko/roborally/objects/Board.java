@@ -356,10 +356,7 @@ public class Board {
         }
         Position positionInFront = getNewPosition(conveyorBeltPosition, conveyorBeltDirection);
         //The tile in front of the robot is not a conveyor belt and has something on it stopping the conveyor belt
-        if ((!isValidPosition(positionInFront) && moveIsStoppedByWall(conveyorBeltPosition, positionInFront,
-                conveyorBeltDirection)) || (isValidPosition(positionInFront) &&
-                !isConveyorBelt(getTileOnPosition(positionInFront)) &&
-                hasFrontConflict(conveyorBeltPosition, positionInFront, conveyorBeltDirection))) {
+        if (conveyorBeltIsStoppedByWallOrRobot(positionInFront, conveyorBeltPosition, conveyorBeltDirection)) {
             return false;
         }
         //If a conveyor belt will move the robot outside the map, the move is valid
@@ -368,7 +365,7 @@ public class Board {
         }
         Tile tileInFront = getTileOnPosition(positionInFront);
         //There is another robot trying to enter the same crossing
-        if (hasCrossingConflict(positionInFront, conveyorBeltDirection)) {
+        if (conveyorBeltHasCrossingConflict(positionInFront, conveyorBeltDirection)) {
             return false;
         }
         //The way forward seems clear
@@ -379,6 +376,21 @@ public class Board {
     }
 
     /**
+     * Checks whether a conveyor belt movement is stopped by either a wall or a robot
+     * @param positionInFront The position in front of the conveyor belt
+     * @param conveyorBeltPosition The position of the conveyor belt
+     * @param conveyorBeltDirection The direction of the conveyor belt
+     * @return True if the conveyor belt cannot move
+     */
+    private boolean conveyorBeltIsStoppedByWallOrRobot(Position positionInFront, Position conveyorBeltPosition,
+                                                       Direction conveyorBeltDirection) {
+        return ((!isValidPosition(positionInFront) && moveIsStoppedByWall(conveyorBeltPosition, positionInFront,
+                conveyorBeltDirection)) || (isValidPosition(positionInFront) &&
+                !isConveyorBelt(getTileOnPosition(positionInFront)) &&
+                conveyorBeltHasFrontConflict(conveyorBeltPosition, positionInFront, conveyorBeltDirection)));
+    }
+
+    /**
      * Checks whether a conveyor belt has anything in front of it preventing it from moving forward
      *
      * @param conveyorBeltPosition  The position of the conveyor belt
@@ -386,8 +398,8 @@ public class Board {
      * @param conveyorBeltDirection The direction of the conveyor belt
      * @return True if the conveyor belt cannot move forward
      */
-    private boolean hasFrontConflict(Position conveyorBeltPosition, Position positionInFront,
-                                     Direction conveyorBeltDirection) {
+    private boolean conveyorBeltHasFrontConflict(Position conveyorBeltPosition, Position positionInFront,
+                                                 Direction conveyorBeltDirection) {
         return moveIsStoppedByWall(conveyorBeltPosition, positionInFront, conveyorBeltDirection) ||
                 hasRobotOnPosition(positionInFront);
     }
@@ -399,24 +411,34 @@ public class Board {
      * @param conveyorBeltDirection The direction of the conveyor belt
      * @return True if there is a conflict. False otherwise
      */
-    private boolean hasCrossingConflict(Position crossingPosition, Direction conveyorBeltDirection) {
-        Position frontLeftPosition = getNewPosition(crossingPosition,
-                Direction.getLeftRotatedDirection(conveyorBeltDirection));
-        Position frontRightPosition = getNewPosition(crossingPosition,
+    private boolean conveyorBeltHasCrossingConflict(Position crossingPosition, Direction conveyorBeltDirection) {
+        //Checks for conflict at a conveyor belt coming in from the left
+        boolean frontLeftConflict = conveyorBeltHasConflict(getNewPosition(crossingPosition,
+                Direction.getLeftRotatedDirection(conveyorBeltDirection)),
                 Direction.getRightRotatedDirection(conveyorBeltDirection));
-        Position twoForwardPosition = getNewPosition(crossingPosition, conveyorBeltDirection);
-        //If another robot is standing on a conveyor belt pointing to the tile in front, a conflict happens
-        return (isValidPosition(frontLeftPosition) && isConveyorBelt(getTileOnPosition(frontLeftPosition)) &&
-                getTileOnPosition(frontLeftPosition).getDirection() ==
-                        Direction.getRightRotatedDirection(conveyorBeltDirection) && hasRobotOnPosition(frontLeftPosition)) ||
-                (isValidPosition(frontRightPosition) && isConveyorBelt(getTileOnPosition(frontRightPosition))
-                        && getTileOnPosition(frontRightPosition).getDirection() ==
-                        Direction.getLeftRotatedDirection(conveyorBeltDirection)
-                        && hasRobotOnPosition(frontRightPosition)) ||
-                (isValidPosition(twoForwardPosition) && isConveyorBelt(getTileOnPosition(twoForwardPosition))
-                        && getTileOnPosition(twoForwardPosition).getDirection() ==
-                        Direction.getReverseDirection(conveyorBeltDirection)
-                        && hasRobotOnPosition(twoForwardPosition));
+        //Checks for conflict at a conveyor belt coming in from the right
+        boolean frontRightConflict = conveyorBeltHasConflict(getNewPosition(crossingPosition,
+                        Direction.getRightRotatedDirection(conveyorBeltDirection)),
+                Direction.getLeftRotatedDirection(conveyorBeltDirection));
+        //Checks for conflict at a conveyor belt at the opposite side of the crossing
+        boolean frontConflict = conveyorBeltHasConflict(getNewPosition(crossingPosition, conveyorBeltDirection),
+                Direction.getReverseDirection(conveyorBeltDirection));
+        return frontLeftConflict || frontRightConflict || frontConflict;
+    }
+
+    /**
+     * Checks whether a poosible conflict position has a conflict
+     * @param conflictPosition The position with a potential conflict
+     * @param conflictDirection The direction necessary to count as a conflict
+     * @return True if the position has a conflict
+     */
+    private boolean conveyorBeltHasConflict(Position conflictPosition, Direction conflictDirection) {
+        if (!isValidPosition(conflictPosition)) {
+            return false;
+        }
+        Tile conflictTile = getTileOnPosition(conflictPosition);
+        return (isConveyorBelt(conflictTile) && conflictTile.getDirection() == conflictDirection &&
+                hasRobotOnPosition(conflictPosition));
     }
 
     /**

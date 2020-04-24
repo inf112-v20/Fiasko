@@ -1,12 +1,14 @@
 package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
@@ -21,8 +23,9 @@ import java.util.Map;
 /**
  * This screen allows the host to wait for players to join
  */
-public class LobbyScreen extends AbstractScreen {
+public class LobbyScreen extends InteractiveScreen {
     private final RoboRallyWrapper roboRallyWrapper;
+    final SelectBox<String> selectBox;
 
     /**
      * Instantiates a new lobby screen
@@ -43,7 +46,7 @@ public class LobbyScreen extends AbstractScreen {
 
         Dialog dialog = new Dialog("Setting", skin);
 
-        final SelectBox<String> selectBox = new SelectBox<>(skin);
+        selectBox = new SelectBox<>(skin);
         selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange");
         selectBox.setPosition(Gdx.graphics.getWidth() / 2f - 100, Gdx.graphics.getHeight() / 2f - 100);
         selectBox.setSize(200, 50);
@@ -74,6 +77,27 @@ public class LobbyScreen extends AbstractScreen {
         });
         Gdx.input.setInputProcessor(stage);
         stage.setViewport(viewport);
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        inputMultiplexer.addProcessor(this);
+    }
+
+    @Override
+    public boolean keyUp(int keyCode) {
+        if (keyCode == Input.Keys.HOME) {
+            Array<String> items = selectBox.getItems();
+            String testBoard = "all_tiles_test_board";
+            if (!items.contains(testBoard, true)) {
+                items.add(testBoard);
+                selectBox.setItems(items);
+                selectBox.setSelected(testBoard);
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override

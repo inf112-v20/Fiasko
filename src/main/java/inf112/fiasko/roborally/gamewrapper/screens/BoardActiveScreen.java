@@ -27,8 +27,8 @@ import java.util.List;
 public class BoardActiveScreen extends InteractiveScreen {
     private final RoboRallyWrapper roboRallyWrapper;
     private final int tileDimensions = 64;
-    private final int viewPortWidth = 12 * tileDimensions;
-    private final int viewPortHeight = 12 * tileDimensions;
+    private final int viewPortWidth;
+    private final int viewPortHeight;
     private float cameraZoom = 1;
     private int cameraX = 0;
     private int cameraY = 0;
@@ -41,6 +41,9 @@ public class BoardActiveScreen extends InteractiveScreen {
      */
     public BoardActiveScreen(final RoboRallyWrapper roboRallyWrapper) {
         this.roboRallyWrapper = roboRallyWrapper;
+
+        viewPortWidth = roboRallyWrapper.roboRallyGame.getWidth() * tileDimensions;
+        viewPortHeight = roboRallyWrapper.roboRallyGame.getHeight() * tileDimensions;
 
         camera.setToOrtho(false, viewPortWidth, viewPortHeight);
         camera.position.set(viewPortWidth / 2f, viewPortHeight / 2f, 0);
@@ -139,7 +142,7 @@ public class BoardActiveScreen extends InteractiveScreen {
     @Override
     public boolean scrolled(int amount) {
         if (amount < 0 && cameraZoom > 0.3 || amount > 0 && cameraZoom < 3) {
-            cameraZoom += 0.2 * amount;
+            cameraZoom += 0.1 * amount;
         }
         return true;
     }
@@ -150,8 +153,8 @@ public class BoardActiveScreen extends InteractiveScreen {
     private void resetCamera() {
         camera.up.x = 0;
         camera.up.y = 1;
-        cameraZoom = 1.4f;
-        camera.position.set(viewPortWidth / 2f + 128, viewPortHeight / 2f + 128, 0);
+        cameraZoom = 1;
+        camera.position.set(viewPortWidth / 1.5f, viewPortHeight / 2f, 0);
     }
 
     /**
@@ -172,6 +175,7 @@ public class BoardActiveScreen extends InteractiveScreen {
                     object.flipX(), object.flipY());
         }
         int index = 1;
+        //Draws all participating players to the right of the board
         for (Player player : roboRallyWrapper.roboRallyGame.getPlayers()) {
             String playerName = player.getName();
             Robot robot = getPlayersRobot(player.getRobotID());
@@ -179,20 +183,22 @@ public class BoardActiveScreen extends InteractiveScreen {
                 throw new IllegalArgumentException("The robot belonging to player " + playerName +
                         " does not exist on the board.");
             }
-            roboRallyWrapper.font.draw(batch, playerName, viewPortWidth, 128 * index);
+            roboRallyWrapper.font.getData().setScale(tileDimensions / 44);
+            roboRallyWrapper.font.draw(batch, playerName, viewPortWidth, 2 * tileDimensions * index);
             roboRallyWrapper.font.draw(batch, "DMG: " + robot.getDamageTaken() + " LV: " + robot.getAmountOfLives(),
-                    viewPortWidth, 96 + 128 * (index - 1));
+                    viewPortWidth, 1.5f * tileDimensions + 2 * tileDimensions * (index - 1));
             int lastFlagVisited = robot.getLastFlagVisited();
             if (lastFlagVisited > 0) {
                 TileType flagType = TileType.getTileTypeFromID(robot.getLastFlagVisited() + 16);
                 TextureRegion flagRegion = TextureConverterUtil.convertElement(new Tile(flagType, Direction.NORTH));
-                batch.draw(flagRegion.getTexture(), viewPortWidth + 64, 128 * (index - 1), 64 / 2,
-                        64 / 2, 64, 64, 1, 1, 0, flagRegion.getRegionX(),
+                batch.draw(flagRegion.getTexture(), viewPortWidth + tileDimensions, 2 * tileDimensions *
+                                (index - 1), tileDimensions / 2, tileDimensions / 2, tileDimensions,
+                        tileDimensions, 1, 1, 0, flagRegion.getRegionX(),
                         flagRegion.getRegionY(), flagRegion.getRegionWidth(), flagRegion.getRegionWidth(),
                         false, false);
             }
             TextureRegion robotTexture = TextureConverterUtil.convertElement(player.getRobotID());
-            batch.draw(robotTexture, viewPortWidth, 128 * (index - 1));
+            batch.draw(robotTexture, viewPortWidth, 2 * tileDimensions * (index - 1), tileDimensions, tileDimensions);
             index++;
         }
 

@@ -6,17 +6,19 @@ vil vi gå over til en fase der målet blir å implementere ting som er gøy, me
 Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, Inc.
 
 ## Spillstatus
-Spillet er nå i en tidlig alpha. Det er antakelig mulig å spille spillet, men ukjente bugs kan forekomme.
+Spillet er nå i sen alpha. Det fungerer og virker relativt stabilt, men det kan fortsatt forekomme mange endringer, 
+og nye bugs kan bli introdusert.
 
 ## Knapper og kontrollmekanismer
 ### Knapper
--   Q: Tilbakestiller kamera og kamerarotasjon
--   R: Roterer kameraet
+-   Q: Tilbakestiller kamera og kamerarotasjon på brettvisningsskjermen
+-   R: Roterer kameraet på brettvisningsskjermen
 -   TAB: Bytter mellom kortvelging og brettvisning når en holder på med å velge kort
+-   HOME: På lobby skjermen lar denne knappen deg velge et brett spesifikt laget for debugging
 
 ### Andre egenskaper ved brukergrensesnittet
--   Rullehjulet vil forstørre og forminske spillbrettet
--   Spillbrettet kan flyttes ved å holde inne venstre musetast og bevege musen i en retning
+-   Rullehjulet vil forstørre og forminske spillbrettet på brettvisningsskjermen
+-   Spillbrettet kan flyttes ved å holde inne venstre musetast og bevege musen i en retning på brettvisningsskjermen
 
 ## Bygging og kompilering
 

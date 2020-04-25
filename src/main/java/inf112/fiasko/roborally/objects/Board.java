@@ -858,29 +858,111 @@ public class Board {
      * @param laserType      The type of the laser shooting
      */
     private void updateLaserBeamOnParticleGrid(Position addPosition, Direction laserDirection, WallType laserType) {
+        ParticleType laserParticleType = laserType == WallType.WALL_LASER_SINGLE ? ParticleType.LASER_BEAM_SINGLE :
+                ParticleType.LASER_BEAM_DOUBLE;
+        Particle laserParticle = new Particle(laserParticleType, laserDirection);
         int positionX = addPosition.getXCoordinate();
         int positionY = addPosition.getYCoordinate();
-        int numberOfLasers;
-        switch (laserType) {
-            case WALL_LASER_SINGLE:
-                numberOfLasers = 1;
-                break;
-            case WALL_LASER_DOUBLE:
-                numberOfLasers = 2;
-                break;
-            default:
-                throw new IllegalArgumentException("Laser type submitted is not a laser.");
-        }
-        ParticleType type;
         Particle particleAtPosition = particles.getElement(positionX, positionY);
-        if (particleAtPosition != null && Direction.arePerpendicular(particleAtPosition.getDirection(),
-                laserDirection)) {
-            type = numberOfLasers == 1 ? ParticleType.LASER_BEAM_SINGLE_CROSS :
-                    ParticleType.LASER_BEAM_DOUBLE_CROSS;
+        if (particleAtPosition == null) {
+            particles.setElement(positionX, positionY, laserParticle);
         } else {
-            type = numberOfLasers == 1 ? ParticleType.LASER_BEAM_SINGLE : ParticleType.LASER_BEAM_DOUBLE;
+            particles.setElement(positionX, positionY, getNewLaserBeamParticle(laserParticle, particleAtPosition));
         }
-        particles.setElement(positionX, positionY, new Particle(type, laserDirection));
+    }
+
+    /**
+     * Gets the new particle to use given the laser firing and the existing beam particle
+     *
+     * @param laserBeam The laser beam which is fired
+     * @param existingBeam The laser beam which already exists at a tile
+     * @return The particle which is a combination of the two
+     */
+    private Particle getNewLaserBeamParticle(Particle laserBeam, Particle existingBeam) {
+        ParticleType laserBeamType = laserBeam.getParticleType();
+        ParticleType existingBeamType = existingBeam.getParticleType();
+        Direction laserDirection = laserBeam.getDirection();
+        Direction existingDirection = existingBeam.getDirection();
+
+        int forwardBeamsLaser = getNumberOfForwardBeams(laserBeamType);
+        int crossingBeamsLaser = getNumberOfPerpendicularBeams(laserBeamType);
+        int forwardBeamsExisting = getNumberOfForwardBeams(existingBeamType);
+        int crossingBeamsExisting  = getNumberOfPerpendicularBeams(existingBeamType);
+
+        //Flip number of beams if beams are perpendicular
+        if (Direction.arePerpendicular(laserDirection, existingDirection)) {
+            int temp = forwardBeamsExisting;
+            forwardBeamsExisting = crossingBeamsExisting;
+            crossingBeamsExisting = temp;
+        }
+        //Calculates the new number of forward beams
+        int forwardBeams = getNumberOfBeams(forwardBeamsLaser, forwardBeamsExisting);
+        //Calculates the new number of crossing beams
+        int crossingBeams = getNumberOfBeams(crossingBeamsLaser, crossingBeamsExisting);
+        //The direction should be the direction with the least amount of beams
+        Direction newDirection;
+        if (forwardBeams > crossingBeams) {
+            newDirection = existingDirection;
+        } else {
+            newDirection = laserDirection;
+        }
+        //If using the existing direction and the beams are perpendicular, the direction needs to be rotated
+        if (newDirection == existingDirection &&
+                Direction.arePerpendicular(laserDirection, existingDirection)) {
+            newDirection = Direction.getLeftRotatedDirection(newDirection);
+        }
+        //If the particle does not exist, we have to rotate the beam to get the correct one
+        ParticleType newParticleType = getNewParticleType(forwardBeams, crossingBeams);
+        if (newParticleType == null) {
+            newParticleType = getNewParticleType(crossingBeams, forwardBeams);
+            newDirection = Direction.getLeftRotatedDirection(newDirection);
+        }
+        return new Particle(newParticleType, newDirection);
+    }
+
+    /**
+     * Gets the correct number of beams given existing beams and the beams to add
+     *
+     * @param newBeams The beam count of the new beam to add
+     * @param existingBeams The beam count of the existing beam
+     * @return The new number/thickness of beams/the beam
+     */
+    private int getNumberOfBeams(int newBeams, int existingBeams) {
+        if ((newBeams + existingBeams) != 0 &&(newBeams + existingBeams) % 3 == 0) {
+            return 3;
+        } else {
+            return Math.max(newBeams, existingBeams);
+        }
+    }
+
+    /**
+     * Gets a new particle type with the given number of beams
+     * @param forwardBeams The number of beams in the direction of the laser
+     * @param perpendicularBeams The number of beams in the perpendicular direction of the laser
+     * @return The correct particle type to be displayed
+     */
+    private ParticleType getNewParticleType(int forwardBeams, int perpendicularBeams) {
+        return ParticleType.getParticleTypeFromID(10 * forwardBeams + perpendicularBeams);
+    }
+
+    /**
+     * Gets the number of beams in the forward direction given a particle type
+     *
+     * @param particleType The type of particle to check
+     * @return The number of beams in the forward direction of the laser beam
+     */
+    private int getNumberOfForwardBeams(ParticleType particleType) {
+        return particleType.getParticleTypeID() / 10;
+    }
+
+    /**
+     * Gets the number of beams in the perpendicular direction given a particle type
+     *
+     * @param particleType The type of particle to check
+     * @return The number of beams in the perpendicular direction of the laser beam
+     */
+    private int getNumberOfPerpendicularBeams(ParticleType particleType) {
+        return particleType.getParticleTypeID() % 10;
     }
 
     /**

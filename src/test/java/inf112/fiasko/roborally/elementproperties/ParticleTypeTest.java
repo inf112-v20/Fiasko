@@ -12,22 +12,22 @@ import static org.junit.Assert.assertEquals;
 public class ParticleTypeTest {
     @Test
     public void getTileTypeIDForLaserBeam() {
-        assertEquals(1, ParticleType.LASER_BEAM_SINGLE.getParticleTypeID());
+        assertEquals(10, ParticleType.LASER_BEAM_SINGLE.getParticleTypeID());
     }
 
     @Test
     public void getTileTypeFromLaserBeamID() {
-        assertEquals(ParticleType.LASER_BEAM_SINGLE, ParticleType.getParticleTypeFromID(1));
+        assertEquals(ParticleType.LASER_BEAM_SINGLE, ParticleType.getParticleTypeFromID(10));
     }
 
     @Test
     public void getTileTypeIDForLaserBeamDouble() {
-        assertEquals(2, ParticleType.LASER_BEAM_DOUBLE.getParticleTypeID());
+        assertEquals(20, ParticleType.LASER_BEAM_DOUBLE.getParticleTypeID());
     }
 
     @Test
     public void getTileTypeFromLaserBeamDoubleID() {
-        assertEquals(ParticleType.LASER_BEAM_DOUBLE, ParticleType.getParticleTypeFromID(2));
+        assertEquals(ParticleType.LASER_BEAM_DOUBLE, ParticleType.getParticleTypeFromID(20));
     }
 
     @Test

@@ -907,7 +907,7 @@ public class Board {
             newDirection = laserDirection;
         }
         //If using the existing direction and the beams are perpendicular, the direction needs to be rotated
-        if (newDirection == existingDirection &&
+        if (newDirection.equals(existingDirection) &&
                 Direction.arePerpendicular(laserDirection, existingDirection)) {
             newDirection = Direction.getLeftRotatedDirection(newDirection);
         }

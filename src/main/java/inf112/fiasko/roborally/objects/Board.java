@@ -544,7 +544,7 @@ public class Board {
      */
     public void fireAllLasers() {
         List<BoardElementContainer<Wall>> listOfWallLasers = getPositionsOfWallOnBoard(WallType.WALL_LASER_SINGLE,
-                WallType.WALL_LASER_DOUBLE);
+                WallType.WALL_LASER_DOUBLE, WallType.WALL_LASER_TRIPLE);
         for (Robot robot : robots.values()) {
             fireRobotLaser(robot.getPosition(), robot.getFacingDirection());
         }
@@ -858,8 +858,20 @@ public class Board {
      * @param laserType      The type of the laser shooting
      */
     private void updateLaserBeamOnParticleGrid(Position addPosition, Direction laserDirection, WallType laserType) {
-        ParticleType laserParticleType = laserType == WallType.WALL_LASER_SINGLE ? ParticleType.LASER_BEAM_SINGLE :
-                ParticleType.LASER_BEAM_DOUBLE;
+        ParticleType laserParticleType;
+        switch (laserType) {
+            case WALL_LASER_SINGLE:
+                laserParticleType = ParticleType.LASER_BEAM_SINGLE;
+                break;
+            case WALL_LASER_DOUBLE:
+                laserParticleType = ParticleType.LASER_BEAM_DOUBLE;
+                break;
+            case WALL_LASER_TRIPLE:
+                laserParticleType = ParticleType.LASER_BEAM_TRIPLE;
+                break;
+                default:
+                    throw new IllegalArgumentException("Invalid laser type encountered.");
+        }
         Particle laserParticle = new Particle(laserParticleType, laserDirection);
         int positionX = addPosition.getXCoordinate();
         int positionY = addPosition.getYCoordinate();

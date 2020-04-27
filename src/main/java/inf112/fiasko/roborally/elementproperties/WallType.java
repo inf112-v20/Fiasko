@@ -21,6 +21,10 @@ public enum WallType {
      */
     WALL_LASER_DOUBLE(4),
     /**
+     * A wall with three lasers
+     */
+    WALL_LASER_TRIPLE(7),
+    /**
      * A pusher which pushes on every odd phase
      */
     WALL_PUSHER_ODD(5),

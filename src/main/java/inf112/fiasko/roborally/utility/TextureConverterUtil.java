@@ -34,6 +34,7 @@ public final class TextureConverterUtil {
     private static Map<ParticleType, TextureConverterContainer> tileSheetParticleTextureMappings;
     private static Map<ParticleType, Boolean> tileSheetParticleHasRotatedTextureMappings;
     private static Map<WallType, TextureConverterContainer> tileSheetWallTextureMappings;
+    private static Map<WallType, Boolean> tileSheetWallHasRotatedTextureMappings;
 
     private TextureConverterUtil() {
     }
@@ -187,6 +188,25 @@ public final class TextureConverterUtil {
     }
 
     /**
+     * Checks whether a wall has textures for different rotations
+     *
+     * <p>For a wall without a rotated texture, the texture needs to be rotated when rendering.</p>
+     *
+     * @param wall The wall to check
+     * @return True if rotated versions of the texture exists. False otherwise
+     */
+    public static boolean hasRotatedTexture(Wall wall) {
+        if (tileSheetWallTextureMappings == null) {
+            try {
+                loadTileMappings();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return tileSheetWallHasRotatedTextureMappings.get(wall.getWallType());
+    }
+
+    /**
      * Checks whether a particle has textures for different rotations
      *
      * <p>For a particle without a rotated texture, the texture needs to be rotated when rendering.</p>
@@ -256,6 +276,7 @@ public final class TextureConverterUtil {
      */
     private static synchronized void loadWallMappings() throws IOException {
         tileSheetWallTextureMappings = new HashMap<>();
+        tileSheetWallHasRotatedTextureMappings = new HashMap<>();
         InputStream fileStream = ResourceUtil.getResourceAsInputStream("texture_sheet_wall_mapping.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(fileStream));
         String line;
@@ -263,7 +284,7 @@ public final class TextureConverterUtil {
             String[] parameters = line.split(" ");
             WallType type = WallType.valueOf(parameters[0]);
             storeTextMappingInMap(parameters, type, tileSheetWallTextureMappings,
-                    null);
+                    tileSheetWallHasRotatedTextureMappings);
         }
     }
 

@@ -150,7 +150,7 @@ public final class IOUtil {
             direction = tile.getDirection();
         } else if (element.getClass().isAssignableFrom(Wall.class)) {
             Wall wall = (Wall) element;
-            hasRotatedTexture = true;
+            hasRotatedTexture = TextureConverterUtil.hasRotatedTexture(wall);
             direction = wall.getDirection();
         } else if (element.getClass().isAssignableFrom(Particle.class)) {
             Particle particle = (Particle) element;

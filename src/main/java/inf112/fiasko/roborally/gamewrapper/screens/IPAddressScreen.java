@@ -37,7 +37,7 @@ public class IPAddressScreen extends AbstractScreen {
         joinButton.setSize(300, 60);
         joinButton.setPosition(applicationWidth / 2f - joinButton.getWidth() / 2f, 300);
         roboRallyWrapper.client = new RoboRallyClient(roboRallyWrapper);
-        List<InetAddress> lanServers = roboRallyWrapper.client.getLanServers();
+        List<InetAddress> lanServers = roboRallyWrapper.client.getLanServers(roboRallyWrapper.discoverUDPPort);
         Set<String> validHosts = new HashSet<>();
         for (InetAddress address : lanServers) {
             validHosts.add(address.getHostAddress());

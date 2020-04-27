@@ -38,14 +38,13 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      *
      * @param playerList A list of all the players participating in the game
      * @param boardName  The playerName of the board to use
-     * @param host       Whether this player is the host
      * @param playerName The name of the player of this instance of the game
      * @param server     The server if this player is host. Should be null otherwise
      */
-    public RoboRallyGame(List<Player> playerList, String boardName, boolean host, String playerName,
+    public RoboRallyGame(List<Player> playerList, String boardName, String playerName,
                          RoboRallyServer server) {
         this.playerName = playerName;
-        this.host = host;
+        this.host = server != null;
         this.playerList = playerList;
         this.server = server;
         initializeGame(boardName);

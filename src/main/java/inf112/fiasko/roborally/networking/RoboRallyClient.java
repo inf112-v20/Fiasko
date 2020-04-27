@@ -1,7 +1,7 @@
 package inf112.fiasko.roborally.networking;
 
 import com.esotericsoftware.kryonet.Client;
-import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.gamewrapper.RoboRallyUI;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;
@@ -13,16 +13,14 @@ import java.util.List;
  */
 public class RoboRallyClient {
     private final Client client;
-    private final RoboRallyWrapper wrapper;
-    private RoboRallyClientListener listener;
+    private final RoboRallyClientListener listener;
 
     /**
      * Instantiates a new Robo Rally client
      *
-     * @param wrapper The Robo Rally wrapper to be used
+     * @param wrapper The Robo Rally UI to be used
      */
-    public RoboRallyClient(RoboRallyWrapper wrapper) {
-        this.wrapper = wrapper;
+    public RoboRallyClient(RoboRallyUI wrapper) {
         client = new Client();
         client.start();
         NetworkUtil.registerClasses(client.getKryo());
@@ -45,10 +43,11 @@ public class RoboRallyClient {
     /**
      * Gets a list of addresses of local Robo Rally servers
      *
+     * @param UDPPort The port used by the game for UDP requests
      * @return A list of server ip addresses
      */
-    public List<InetAddress> getLanServers() {
-        return client.discoverHosts(wrapper.discoverUDPPort, 1000);
+    public List<InetAddress> getLanServers(int UDPPort) {
+        return client.discoverHosts(UDPPort, 1000);
     }
 
     /**

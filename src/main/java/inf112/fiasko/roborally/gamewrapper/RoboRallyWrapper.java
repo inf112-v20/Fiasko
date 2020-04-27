@@ -11,7 +11,7 @@ import inf112.fiasko.roborally.objects.RoboRallyGame;
 /**
  * This class acts as a wrapper around the different screens of the game
  */
-public class RoboRallyWrapper extends Game {
+public class RoboRallyWrapper extends Game implements RoboRallyUI {
     public final int defaultTCPPort = 54555;
     public final int discoverUDPPort = 54777;
     public SpriteBatch batch;
@@ -35,6 +35,16 @@ public class RoboRallyWrapper extends Game {
         font.dispose();
     }
 
+    @Override
+    public RoboRallyGame getGame() {
+        return roboRallyGame;
+    }
+
+    @Override
+    public void setGame(RoboRallyGame game) {
+        this.roboRallyGame = game;
+    }
+
     /**
      * Quits the game after logging the input as an error
      *
@@ -43,6 +53,11 @@ public class RoboRallyWrapper extends Game {
     public void quit(String string) {
         Gdx.app.error("Critical", string);
         Gdx.app.exit();
+    }
+
+    @Override
+    public RoboRallyServer getServer() {
+        return server;
     }
 
     /**

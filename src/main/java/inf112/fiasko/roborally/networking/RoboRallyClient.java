@@ -14,6 +14,7 @@ import java.util.List;
 public class RoboRallyClient {
     private final Client client;
     private final RoboRallyWrapper wrapper;
+    private RoboRallyClientListener listener;
 
     /**
      * Instantiates a new Robo Rally client
@@ -25,7 +26,8 @@ public class RoboRallyClient {
         client = new Client();
         client.start();
         NetworkUtil.registerClasses(client.getKryo());
-        client.addListener(new RoboRallyClientListener(wrapper));
+        this.listener = new RoboRallyClientListener(wrapper);
+        client.addListener(this.listener);
     }
 
     /**
@@ -50,6 +52,15 @@ public class RoboRallyClient {
     }
 
     /**
+     * Gets the state of the lastly sent request
+     *
+     * @return The state of the lastly sent request
+     */
+    public RequestState getLastRequestState() {
+        return this.listener.getLastRequestState();
+    }
+
+    /**
      * Sends something to the server
      *
      * @param object The object to send to the server
@@ -57,6 +68,7 @@ public class RoboRallyClient {
     public void sendElement(Object object) {
         try {
             client.sendTCP(object);
+            listener.resetLastRequestState();
         } catch (Exception e) {
             e.printStackTrace();
         }

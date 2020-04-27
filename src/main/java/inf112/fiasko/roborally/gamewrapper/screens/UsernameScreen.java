@@ -8,8 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.networking.RequestState;
+import inf112.fiasko.roborally.networking.containers.UsernameRequest;
 
 import javax.swing.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This screen allows a user to choose their player name
@@ -37,10 +40,9 @@ public class UsernameScreen extends AbstractScreen {
 
             @Override
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
-                String userName = textInput.getText();
-                if (nameInvalid(userName)) {
-                    JOptionPane.showMessageDialog(null, "Username cannot be empty or more " +
-                            "than 20 characters.");
+                if (nameInvalid(textInput.getText())) {
+                    JOptionPane.showMessageDialog(null, "Username must be unique, not " +
+                            "empty and less than 21 characters.");
                     return;
                 }
                 if (roboRallyWrapper.server == null) {
@@ -48,7 +50,7 @@ public class UsernameScreen extends AbstractScreen {
                 } else {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLobbyScreen(roboRallyWrapper));
                 }
-                roboRallyWrapper.client.sendElement(userName);
+
             }
         });
         textInput = new TextField("", skin);
@@ -70,8 +72,20 @@ public class UsernameScreen extends AbstractScreen {
      * @return False if the username can be used
      */
     private boolean nameInvalid(String userName) {
-        //TODO: Find a way to ask the server if the name is taken
-        return "".equals(userName) || userName.length() > 20;
+        if ("".equals(userName) || userName.length() > 20) {
+            return true;
+        }
+        UsernameRequest usernameRequest = new UsernameRequest(userName);
+        roboRallyWrapper.client.sendElement(usernameRequest);
+        while (roboRallyWrapper.client.getLastRequestState() == RequestState.SENT_NOT_RECEIVED) {
+            //Wait for the server to respond
+            try {
+                TimeUnit.MILLISECONDS.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return roboRallyWrapper.client.getLastRequestState() == RequestState.SENT_REJECTED;
     }
 
     @Override

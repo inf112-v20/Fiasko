@@ -5,9 +5,11 @@ import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
+import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
-import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
+import inf112.fiasko.roborally.networking.containers.UsernameRequest;
 import inf112.fiasko.roborally.objects.Deck;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
@@ -40,5 +42,7 @@ public final class NetworkUtil {
         kryo.register(ProgramsContainerResponse.class);
         kryo.register(PowerDownContainerResponse.class);
         kryo.register(HashMap.class);
+        kryo.register(UsernameRequest.class);
+        kryo.register(OkayResponse.class);
     }
 }

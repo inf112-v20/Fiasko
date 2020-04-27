@@ -5,9 +5,11 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
+import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
-import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
+import inf112.fiasko.roborally.networking.containers.UsernameRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 
 import java.util.ArrayList;
@@ -105,8 +107,8 @@ class RoboRallyServerListener extends Listener {
 
     @Override
     public void received(Connection connection, Object object) {
-        if (object instanceof String) {
-            receivedString(connection, (String) object);
+        if (object instanceof UsernameRequest) {
+            receivedUsername(connection, (UsernameRequest) object);
         } else if (object instanceof Boolean) {
             receiveContinuePowerDown(connection, (Boolean) object);
         } else if (object instanceof ProgramAndPowerdownRequest) {
@@ -118,13 +120,14 @@ class RoboRallyServerListener extends Listener {
      * Handles the receiving of a string, handled as a player name in this context
      *
      * @param connection The connection sending the string
-     * @param playerName The player name received
+     * @param request    The username request received
      */
-    private void receivedString(Connection connection, String playerName) {
+    private void receivedUsername(Connection connection, UsernameRequest request) {
+        String playerName = request.getUsername();
         if (playerNames.containsValue(playerName)) {
-            String errorMessage = "The player playerName send is already taken.";
-            connection.sendTCP(new ErrorResponse(errorMessage));
+            connection.sendTCP(new ErrorResponse("The player playerName sent is already taken."));
         } else {
+            connection.sendTCP(new OkayResponse());
             playerNames.put(connection, playerName);
         }
     }
@@ -137,6 +140,7 @@ class RoboRallyServerListener extends Listener {
      */
     private void receiveContinuePowerDown(Connection connection, Boolean bool) {
         stayInPowerDown.put(connection, bool);
+        connection.sendTCP(new OkayResponse());
         if (receivedDataFromAllConnections(stayInPowerDown)) {
             Map<String, Boolean> powerDowns = new HashMap<>();
             for (Connection connected : stayInPowerDown.keySet()) {
@@ -155,6 +159,7 @@ class RoboRallyServerListener extends Listener {
      */
     private void receiveProgramAndPowerDownRequest(Connection connection, ProgramAndPowerdownRequest request) {
         programs.put(connection, request);
+        connection.sendTCP(new OkayResponse());
         if (receivedDataFromAllConnections(programs)) {
             Map<String, Boolean> powerDown = new HashMap<>();
             Map<String, List<ProgrammingCard>> program = new HashMap<>();

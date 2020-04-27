@@ -18,7 +18,7 @@ import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 

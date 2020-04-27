@@ -9,8 +9,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
 
 @RunWith(GdxTestRunner.class)
 public class DrawableObjectTest {

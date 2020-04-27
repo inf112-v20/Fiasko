@@ -5,12 +5,15 @@ import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.elementproperties.WallType;
 import inf112.fiasko.roborally.objects.Board;
 import inf112.fiasko.roborally.objects.Grid;
+import inf112.fiasko.roborally.objects.ListGrid;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.Wall;
-import inf112.fiasko.roborally.objects.ListGrid;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 /**

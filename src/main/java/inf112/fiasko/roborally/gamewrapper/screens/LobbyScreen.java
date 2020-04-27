@@ -9,12 +9,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.esotericsoftware.kryonet.Connection;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.utility.IOUtil;
-import com.esotericsoftware.kryonet.Connection;
 
 import java.util.List;
 import java.util.Map;

@@ -2,10 +2,9 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.WallType;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
 
 public class WallTest {
     @Test

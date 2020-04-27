@@ -1,10 +1,5 @@
 package inf112.fiasko.roborally.objects;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import org.junit.Before;
@@ -12,6 +7,11 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertNull;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class RoboRallyGameTest {
     private RoboRallyGame game;

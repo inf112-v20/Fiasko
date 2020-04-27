@@ -1,11 +1,10 @@
 package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.Action;
-
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 public class ProgrammingCardTest {
 

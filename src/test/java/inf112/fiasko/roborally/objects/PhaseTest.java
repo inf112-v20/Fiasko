@@ -427,8 +427,8 @@ public class PhaseTest {
     /**
      * Loads a board to the variable and creates a new phase
      *
-     * @param players A list of players participating in the game
-     * @param robots  A list of robots on the board
+     * @param players   A list of players participating in the game
+     * @param robots    A list of robots on the board
      * @param boardName The name of the board to load
      * @return A phase object
      */

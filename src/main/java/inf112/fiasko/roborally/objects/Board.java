@@ -874,7 +874,7 @@ public class Board {
     /**
      * Gets the new particle to use given the laser firing and the existing beam particle
      *
-     * @param laserBeam The laser beam which is fired
+     * @param laserBeam    The laser beam which is fired
      * @param existingBeam The laser beam which already exists at a tile
      * @return The particle which is a combination of the two
      */
@@ -887,7 +887,7 @@ public class Board {
         int forwardBeamsLaser = getNumberOfForwardBeams(laserBeamType);
         int crossingBeamsLaser = getNumberOfPerpendicularBeams(laserBeamType);
         int forwardBeamsExisting = getNumberOfForwardBeams(existingBeamType);
-        int crossingBeamsExisting  = getNumberOfPerpendicularBeams(existingBeamType);
+        int crossingBeamsExisting = getNumberOfPerpendicularBeams(existingBeamType);
 
         //Flip number of beams if beams are perpendicular
         if (Direction.arePerpendicular(laserDirection, existingDirection)) {
@@ -923,12 +923,12 @@ public class Board {
     /**
      * Gets the correct number of beams given existing beams and the beams to add
      *
-     * @param newBeams The beam count of the new beam to add
+     * @param newBeams      The beam count of the new beam to add
      * @param existingBeams The beam count of the existing beam
      * @return The new number/thickness of beams/the beam
      */
     private int getNumberOfBeams(int newBeams, int existingBeams) {
-        if ((newBeams + existingBeams) != 0 &&(newBeams + existingBeams) % 3 == 0) {
+        if ((newBeams + existingBeams) != 0 && (newBeams + existingBeams) % 3 == 0) {
             return 3;
         } else {
             return Math.max(newBeams, existingBeams);
@@ -937,7 +937,8 @@ public class Board {
 
     /**
      * Gets a new particle type with the given number of beams
-     * @param forwardBeams The number of beams in the direction of the laser
+     *
+     * @param forwardBeams       The number of beams in the direction of the laser
      * @param perpendicularBeams The number of beams in the perpendicular direction of the laser
      * @return The correct particle type to be displayed
      */

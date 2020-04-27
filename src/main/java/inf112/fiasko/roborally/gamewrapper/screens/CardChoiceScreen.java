@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
 import inf112.fiasko.roborally.gamewrapper.SimpleButton;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 
@@ -63,9 +64,17 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
         TextButton confirmCards = new SimpleButton("Confirm cards", roboRallyWrapper.font).getButton();
         stage.addActor(confirmCards);
         confirmCards.setY(viewport.getWorldHeight() - confirmCards.getHeight());
-        confirmCards.setX(15);
+        confirmCards.setX(0);
 
         confirmCards.addListener(getConfirmListener());
+
+        TextButton confirmCardsAndPowerDown = new SimpleButton("Confirm + PowerDown",
+                roboRallyWrapper.font).getButton();
+        stage.addActor(confirmCardsAndPowerDown);
+        confirmCardsAndPowerDown.setY(viewport.getWorldHeight() - confirmCardsAndPowerDown.getHeight());
+        confirmCardsAndPowerDown.setX(confirmCards.getWidth());
+
+        confirmCardsAndPowerDown.addListener(getConfirmAndPowerDownListener());
         stage.setViewport(viewport);
     }
 
@@ -83,23 +92,50 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                if (chosenCards.size() == maxCards) {
-                    List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
-                    int lockedCardsInt = 5 - maxCards;
-                    List<ProgrammingCard> newProgram = getCards();
-                    for (int i = 4; i > (4 - lockedCardsInt); i--) {
-                        newProgram.add(oldProgram.get(i));
-                    }
-
-                    roboRallyWrapper.roboRallyGame.setProgram(newProgram);
-                    roboRallyWrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
-                    roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
-                } else {
-                    JOptionPane.showMessageDialog(null, "You need to choose all your cards"
-                            + " before confirming.");
-                }
+                confirmCards(false);
             }
         };
+    }
+
+    /**
+     * Generates a listener for confirming cards and entering power down
+     *
+     * @return An input listener
+     */
+    private ClickListener getConfirmAndPowerDownListener() {
+        return new ClickListener() {
+            @Override
+            public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
+                return true;
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                confirmCards(true);
+            }
+        };
+    }
+
+    /**
+     * Confirm cards and send to server if all are chosen
+     */
+    private void confirmCards(Boolean requestPowerDown) {
+        if (chosenCards.size() == maxCards) {
+            List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+            int lockedCardsInt = 5 - maxCards;
+            List<ProgrammingCard> newProgram = getCards();
+            for (int i = 4; i > (4 - lockedCardsInt); i--) {
+                newProgram.add(oldProgram.get(i));
+            }
+            //Save the program to get locked cards later
+            roboRallyWrapper.roboRallyGame.setProgram(newProgram);
+            roboRallyWrapper.roboRallyGame.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
+            roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
+            roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(requestPowerDown, newProgram));
+        } else {
+            JOptionPane.showMessageDialog(null, "You need to choose all your cards"
+                    + " before confirming.");
+        }
     }
 
     /**

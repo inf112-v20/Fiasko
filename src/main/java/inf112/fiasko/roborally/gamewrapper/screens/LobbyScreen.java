@@ -44,7 +44,8 @@ public class LobbyScreen extends InteractiveScreen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         selectBox = new SelectBox<>(skin);
-        selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange", "Twister", "Bloodbath_Chess", "Vault_Assault");
+        selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange", "Twister", "Bloodbath_Chess", "Vault_Assault",
+                "Island_Hop");
         selectBox.setSize(200, 50);
         selectBox.setPosition((applicationWidth - selectBox.getWidth()) / 2f, applicationHeight / 2f - 120);
 

@@ -869,8 +869,8 @@ public class Board {
             case WALL_LASER_TRIPLE:
                 laserParticleType = ParticleType.LASER_BEAM_TRIPLE;
                 break;
-                default:
-                    throw new IllegalArgumentException("Invalid laser type encountered.");
+            default:
+                throw new IllegalArgumentException("Invalid laser type encountered.");
         }
         Particle laserParticle = new Particle(laserParticleType, laserDirection);
         int positionX = addPosition.getXCoordinate();

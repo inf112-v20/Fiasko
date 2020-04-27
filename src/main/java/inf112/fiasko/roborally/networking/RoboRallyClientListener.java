@@ -110,6 +110,7 @@ class RoboRallyClientListener extends Listener {
      */
     private void receiveHand(ProgrammingCardDeck newHand) {
         new Thread(() -> {
+            //Prevents a bug where the game
             while (wrapper.roboRallyGame.getGameState() != GameState.WAITING_FOR_CARDS_FROM_SERVER) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(100);

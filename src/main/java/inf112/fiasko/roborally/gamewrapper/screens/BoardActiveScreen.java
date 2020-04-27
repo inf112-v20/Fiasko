@@ -81,8 +81,8 @@ public class BoardActiveScreen extends InteractiveScreen {
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(roboRallyWrapper));
                 break;
             case SKIP_STAY_IN_POWER_DOWN:
-                roboRallyWrapper.client.sendElement(false);
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+                roboRallyWrapper.client.sendElement(false);
                 break;
             default:
                 //Ignored

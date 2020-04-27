@@ -105,12 +105,16 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     }
 
     @Override
-    public GameState getGameState() {
+    public synchronized GameState getGameState() {
         return gameState;
     }
 
     @Override
-    public void setGameState(GameState gameState) {
+    public synchronized void setGameState(GameState gameState) {
+        if (gameState == GameState.WAITING_FOR_CARDS_FROM_SERVER && this.gameState != GameState.BEGINNING_OF_GAME) {
+            System.out.println("Unexpected game state " + gameState + " encountered.");
+            return;
+        }
         this.gameState = gameState;
     }
 
@@ -266,9 +270,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         // Set damage of robots in power down to 0
         gameBoard.executePowerDown();
         //This check prevents the state from being overwritten if the client has already received the cards
-        if (gameState == GameState.BEGINNING_OF_GAME) {
-            setGameState(GameState.WAITING_FOR_CARDS_FROM_SERVER);
-        }
+        setGameState(GameState.WAITING_FOR_CARDS_FROM_SERVER);
         if (host) {
             //Distributes programming cards for all players, and sends a deck to each player
             distributeProgrammingCardsToPlayers();

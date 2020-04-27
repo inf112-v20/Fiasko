@@ -13,6 +13,7 @@ import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This listener handles all receiving from the server
@@ -108,17 +109,26 @@ class RoboRallyClientListener extends Listener {
      * @param newHand The new hand this client can choose from
      */
     private void receiveHand(ProgrammingCardDeck newHand) {
-        if (newHand.isEmpty()) {
-            wrapper.roboRallyGame.setProgram(new ArrayList<>());
-            if (wrapper.roboRallyGame.getRobotPowerDown()) {
-                wrapper.roboRallyGame.setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
-            } else {
-                wrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
+        new Thread(() -> {
+            while (wrapper.roboRallyGame.getGameState() != GameState.WAITING_FOR_CARDS_FROM_SERVER) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        } else {
-            wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
-        }
-        wrapper.roboRallyGame.setPlayerHand(newHand);
+            if (newHand.isEmpty()) {
+                wrapper.roboRallyGame.setProgram(new ArrayList<>());
+                if (wrapper.roboRallyGame.getRobotPowerDown()) {
+                    wrapper.roboRallyGame.setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
+                } else {
+                    wrapper.roboRallyGame.setGameState(GameState.CHOOSING_POWER_DOWN);
+                }
+            } else {
+                wrapper.roboRallyGame.setGameState(GameState.CHOOSING_CARDS);
+            }
+            wrapper.roboRallyGame.setPlayerHand(newHand);
+        }).start();
     }
 
     /**

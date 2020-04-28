@@ -329,7 +329,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             }
 
             //The player has no locked cards. All previously locked cards should go into the free deck
-            if (robotDamage <= 4) {
+            if (robotDamage <= 4 || playerProgram.size() == 0) {
                 lockedPlayerDeck.emptyInto(player.getProgrammingCardDeck());
                 continue;
             }

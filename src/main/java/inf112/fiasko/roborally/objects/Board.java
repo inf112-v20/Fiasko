@@ -762,7 +762,7 @@ public class Board {
      * Kills all robots that have taken too much damage
      */
     private void killAllHeavilyDamagedRobots() {
-        Collection<Robot> robotList = robots.values();
+        List<Robot> robotList = new ArrayList<>(robots.values());
         for (Robot robot : robotList) {
             if (robot.getDamageTaken() >= 10) {
                 killRobot(robot);

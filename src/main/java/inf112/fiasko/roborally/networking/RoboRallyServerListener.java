@@ -209,7 +209,8 @@ class RoboRallyServerListener extends Listener {
 
     @Override
     public void disconnected(Connection connection) {
-        if (deadPlayers.contains(connection) || !clients.keySet().contains(connection)) {
+        if (deadPlayers.contains(connection) || !clients.containsKey(connection) ||
+                !playerNames.containsKey(connection)) {
             //Remove all traces of the player ever existing
             clients.remove(connection);
             playerNames.remove(connection);

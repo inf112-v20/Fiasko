@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 public class StartMenuScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
-    private TextField textInput;
+    private final TextField textInput;
 
     /**
      * Instantiates a new start menu screen

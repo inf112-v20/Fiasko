@@ -31,8 +31,8 @@ public class RoboRallyClient {
     /**
      * Connects to a Robo Rally server
      *
-     * @param ipAddress The ip address of the server to join
-     * @param serverPort   The port the server is hosted on
+     * @param ipAddress  The ip address of the server to join
+     * @param serverPort The port the server is hosted on
      * @throws IOException If the server cannot be connected to
      */
     public void connect(String ipAddress, int serverPort) throws IOException {

@@ -63,9 +63,6 @@ public class LoadingScreen extends AbstractScreen {
             case EXITED:
                 roboRallyWrapper.quit("All players died. Cannot continue playing.");
                 break;
-            case CHOOSING_POWER_DOWN:
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getPowerDownScreen(this.roboRallyWrapper));
-                break;
             case SKIP_POWER_DOWN_SCREEN:
                 roboRallyWrapper.roboRallyGame.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));

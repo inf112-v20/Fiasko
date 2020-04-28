@@ -26,10 +26,6 @@ public enum GameState {
      */
     CHOOSING_CARDS,
     /**
-     * Indicates that the user is in the process of choosing whether to power down
-     */
-    CHOOSING_POWER_DOWN,
-    /**
      * Indicates that the user is in the process of choosing whether to stay in power down
      */
     CHOOSING_STAY_IN_POWER_DOWN,

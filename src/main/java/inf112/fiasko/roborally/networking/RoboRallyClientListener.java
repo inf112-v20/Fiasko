@@ -114,7 +114,7 @@ class RoboRallyClientListener extends Listener {
                 if (wrapper.getGame().getRobotPowerDown()) {
                     wrapper.getGame().setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
                 } else {
-                    wrapper.getGame().setGameState(GameState.CHOOSING_POWER_DOWN);
+                    wrapper.getGame().setGameState(GameState.CHOOSING_CARDS);
                 }
             } else {
                 wrapper.getGame().setGameState(GameState.CHOOSING_CARDS);

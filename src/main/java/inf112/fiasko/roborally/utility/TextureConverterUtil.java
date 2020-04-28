@@ -29,6 +29,7 @@ import java.util.Map;
 public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
     private static final Texture robotsTexture = new Texture(Gdx.files.internal("assets/robots.png"));
+    private static final Texture effectsTexture = new Texture(Gdx.files.internal("assets/effects.png"));
     private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
     private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
     private static Map<ParticleType, TextureConverterContainer> tileSheetParticleTextureMappings;
@@ -40,6 +41,30 @@ public final class TextureConverterUtil {
     }
 
     /**
+     * Returns the texture to use to display damage tokens
+     * @return The damage token texture
+     */
+    public static TextureRegion getDamageTokenCriticalTexture() {
+        return new TextureRegion(effectsTexture, 2 * 64, 0, 64, 64);
+    }
+
+    /**
+     * Returns the texture to use to display damage tokens
+     * @return The damage token texture
+     */
+    public static TextureRegion getDamageTokenTexture() {
+        return new TextureRegion(effectsTexture, 64, 0, 64, 64);
+    }
+
+    /**
+     * Returns the texture to use to display lives
+     * @return The life texture
+     */
+    public static TextureRegion getLifeTexture() {
+        return new TextureRegion(effectsTexture, 0, 0, 64, 64);
+    }
+
+    /**
      * Gets a list of all disposable elements which should be disposed when the software closes
      *
      * @return A list of disposable elements
@@ -48,6 +73,7 @@ public final class TextureConverterUtil {
         List<Disposable> disposables = new ArrayList<>();
         disposables.add(textureSheet);
         disposables.add(robotsTexture);
+        disposables.add(effectsTexture);
         return disposables;
     }
 

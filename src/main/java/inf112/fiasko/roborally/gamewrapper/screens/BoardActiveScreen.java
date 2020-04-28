@@ -190,23 +190,77 @@ public class BoardActiveScreen extends InteractiveScreen {
             }
             roboRallyWrapper.font.getData().setScale(tileDimensions / 44);
             roboRallyWrapper.font.draw(batch, playerName, viewPortWidth, 2 * tileDimensions * index);
-            roboRallyWrapper.font.draw(batch, "DMG: " + robot.getDamageTaken() + " LV: " + robot.getAmountOfLives(),
-                    viewPortWidth, 1.5f * tileDimensions + 2 * tileDimensions * (index - 1));
-            int lastFlagVisited = robot.getLastFlagVisited();
-            if (lastFlagVisited > 0) {
-                TileType flagType = TileType.getTileTypeFromID(robot.getLastFlagVisited() + 16);
-                TextureRegion flagRegion = TextureConverterUtil.convertElement(new Tile(flagType, Direction.NORTH));
-                batch.draw(flagRegion.getTexture(), viewPortWidth + tileDimensions, 2 * tileDimensions *
-                                (index - 1), tileDimensions / 2, tileDimensions / 2, tileDimensions,
-                        tileDimensions, 1, 1, 0, flagRegion.getRegionX(),
-                        flagRegion.getRegionY(), flagRegion.getRegionWidth(), flagRegion.getRegionWidth(),
-                        false, false);
-            }
+            drawDamage(batch, robot, index);
+            drawLives(batch, robot, index);
+            drawFlag(batch, robot, index);
             TextureRegion robotTexture = TextureConverterUtil.convertElement(player.getRobotID());
             batch.draw(robotTexture, viewPortWidth, 2 * tileDimensions * (index - 1), tileDimensions, tileDimensions);
             index++;
         }
 
+    }
+
+    /**
+     * Draws the damage of the player
+     * @param batch The sprite batch to use for drawing
+     * @param robot The robot which has visited the flag
+     * @param index The index of the robot in the robot list
+     */
+    private void drawDamage(SpriteBatch batch, Robot robot, int index) {
+        int offset = 4 * (tileDimensions / 4);
+        int tokenSize = tileDimensions / 4;
+        TextureRegion damageTexture;
+        for (int i = 0; i < Math.min(robot.getDamageTaken(), 10); i++) {
+            if (i == 9) {
+                damageTexture = TextureConverterUtil.getDamageTokenCriticalTexture();
+            } else {
+                damageTexture = TextureConverterUtil.getDamageTokenTexture();
+            }
+            batch.draw(damageTexture.getTexture(), viewPortWidth + offset + ((i % 5) * tokenSize),
+                    tileDimensions + tileDimensions / 4 + 2 * tileDimensions * (index - 1) -
+                            (tokenSize * ((i / 5))),
+                    tileDimensions / 2,
+                    tileDimensions / 2, tokenSize, tokenSize, 1,
+                    1, 0, damageTexture.getRegionX(), damageTexture.getRegionY(),
+                    damageTexture.getRegionWidth(), damageTexture.getRegionWidth(), false, false);
+        }
+    }
+
+    /**
+     * Draws the lives of the player
+     * @param batch The sprite batch to use for drawing
+     * @param robot The robot which has visited the flag
+     * @param index The index of the robot in the robot list
+     */
+    private void drawLives(SpriteBatch batch, Robot robot, int index) {
+        TextureRegion lifeTexture = TextureConverterUtil.getLifeTexture();
+        int heartSize = tileDimensions / 4;
+        for (int i = 0; i < robot.getAmountOfLives(); i++) {
+            batch.draw(lifeTexture.getTexture(), viewPortWidth + heartSize / 2 + i * heartSize,
+                    tileDimensions + 2 * tileDimensions * (index - 1), tileDimensions / 2,
+                    tileDimensions / 2, heartSize, heartSize, 1,
+                    1, 0, lifeTexture.getRegionX(), lifeTexture.getRegionY(),
+                    lifeTexture.getRegionWidth(), lifeTexture.getRegionWidth(), false, false);
+        }
+    }
+
+    /**
+     * Draws the last flag the player visited
+     * @param batch The sprite batch to use for drawing
+     * @param robot The robot which has visited the flag
+     * @param index The index of the robot in the robot list
+     */
+    private void drawFlag(SpriteBatch batch, Robot robot, int index) {
+        int lastFlagVisited = robot.getLastFlagVisited();
+        if (lastFlagVisited > 0) {
+            TileType flagType = TileType.getTileTypeFromID(robot.getLastFlagVisited() + 16);
+            TextureRegion flagRegion = TextureConverterUtil.convertElement(new Tile(flagType, Direction.NORTH));
+            batch.draw(flagRegion.getTexture(), viewPortWidth + tileDimensions, 2 * tileDimensions *
+                            (index - 1), tileDimensions / 2, tileDimensions / 2, tileDimensions,
+                    tileDimensions, 1, 1, 0, flagRegion.getRegionX(),
+                    flagRegion.getRegionY(), flagRegion.getRegionWidth(), flagRegion.getRegionWidth(),
+                    false, false);
+        }
     }
 
     /**

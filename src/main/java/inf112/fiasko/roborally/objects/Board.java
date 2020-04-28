@@ -8,7 +8,6 @@ import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.elementproperties.WallType;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -242,7 +241,7 @@ public class Board {
     }
 
     /**
-     * removes one damage for a given robot given that it has taken som damage before
+     * Removes one damage for a given robot given that it has taken som damage before
      *
      * @param robotID the ID of the robot
      */
@@ -253,7 +252,7 @@ public class Board {
     }
 
     /**
-     * sets the damage taken of robots in power down to 0
+     * Sets the damage taken of robots in power down to 0
      */
     public void executePowerDown() {
         for (Robot robot : robots.values()) {
@@ -316,23 +315,8 @@ public class Board {
         if (tile == null) {
             return false;
         }
-        switch (tile.getTileType()) {
-            case CONVEYOR_BELT_SLOW:
-            case CONVEYOR_BELT_FAST:
-            case CONVEYOR_BELT_FAST_LEFT:
-            case CONVEYOR_BELT_FAST_RIGHT:
-            case CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT:
-            case CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT:
-            case CONVEYOR_BELT_FAST_SIDE_ENTRANCES:
-            case CONVEYOR_BELT_SLOW_LEFT:
-            case CONVEYOR_BELT_SLOW_RIGHT:
-            case CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT:
-            case CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT:
-            case CONVEYOR_BELT_SLOW_SIDE_ENTRANCES:
-                return true;
-            default:
-                return false;
-        }
+        int tileTypeId = tile.getTileType().getTileTypeID();
+        return tileTypeId >= 5 && tileTypeId <= 16;
     }
 
     /**

@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
@@ -18,15 +19,15 @@ import inf112.fiasko.roborally.gamewrapper.SimpleButton;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
+import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.badlogic.gdx.graphics.Color.BLACK;
-import static com.badlogic.gdx.graphics.Color.GRAY;
 import static com.badlogic.gdx.graphics.Color.RED;
 import static com.badlogic.gdx.graphics.Color.WHITE;
+import static com.badlogic.gdx.graphics.Color.YELLOW;
 
 /**
  * This screen is used to let the user choose their program
@@ -202,77 +203,47 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
      * Renders the base shape of cards
      */
     private void renderCards() {
+        roboRallyWrapper.batch.begin();
         for (CardRectangle cardRectangle : cardRectangles) {
             if (cardRectangle.selected) {
                 shapeRenderer.setColor(RED);
-                shapeRenderer.rect(cardRectangle.rectangle.x - 10, cardRectangle.rectangle.y - 10,
-                        cardRectangle.rectangle.width + 20, cardRectangle.rectangle.height + 20);
+                shapeRenderer.rectLine(cardRectangle.rectangle.x, cardRectangle.rectangle.y,
+                        cardRectangle.rectangle.x + cardRectangle.rectangle.width, cardRectangle.rectangle.y +
+                                cardRectangle.rectangle.height, 2);
             }
-            shapeRenderer.setColor(GRAY);
-            shapeRenderer.rect(cardRectangle.rectangle.x, cardRectangle.rectangle.y,
-                    cardRectangle.rectangle.width, cardRectangle.rectangle.height);
+            TextureRegion cardTexture = TextureConverterUtil.convertElement(cardRectangle.card);
+            Rectangle rectangle = cardRectangle.rectangle;
+            roboRallyWrapper.batch.draw(cardTexture.getTexture(), rectangle.getX(), rectangle.getY(),
+                    rectangle.getWidth() / 2, rectangle.getHeight() / 2,
+                    rectangle.getWidth(), rectangle.getHeight(), 1, 1, 0,
+                    cardTexture.getRegionX(), cardTexture.getRegionY(),
+                    cardTexture.getRegionWidth(), cardTexture.getRegionHeight(),
+                    false, false);
         }
+        roboRallyWrapper.batch.end();
     }
 
     /**
      * Renders the text displayed on cards
      */
     private void renderCardText() {
+        roboRallyWrapper.font.setColor(YELLOW);
         for (CardRectangle cardRectangle : cardRectangles) {
+            roboRallyWrapper.font.getData().setScale(0.8f);
             GlyphLayout layout = new GlyphLayout(roboRallyWrapper.font,
                     Integer.toString(cardRectangle.card.getPriority()));
-            float fontX = (int) (cardRectangle.rectangle.x + (cardRectangle.rectangle.width - layout.width) / 2.0);
-            float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 30;
+            float fontX = (int) (cardRectangle.rectangle.x + (cardRectangle.rectangle.width - layout.width) - 28);
+            float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 21;
             roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
-            drawCardSymbol(cardRectangle);
             int chosenIndex = chosenCards.indexOf(cardRectangle);
             if (chosenIndex != -1) {
-                roboRallyWrapper.font.setColor(BLACK);
+                roboRallyWrapper.font.setColor(YELLOW);
                 roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(chosenIndex + 1),
-                        cardRectangle.rectangle.x + cardRectangle.rectangle.width - 20, cardRectangle.rectangle.y + cardRectangle.rectangle.height - 5);
-                roboRallyWrapper.font.setColor(WHITE);
+                        cardRectangle.rectangle.x + 30, cardRectangle.rectangle.y + cardRectangle.rectangle.height - 20);
+
             }
         }
-    }
-
-    /**
-     * Draws the symbol on a card
-     *
-     * @param cardRectangle The card rectangle to draw
-     */
-    private void drawCardSymbol(CardRectangle cardRectangle) {
-        String text;
-        switch (cardRectangle.card.getAction()) {
-            case MOVE_1:
-                text = "Move 1 forward";
-                break;
-            case MOVE_2:
-                text = "Move 2 forward";
-                break;
-            case MOVE_3:
-                text = "Move 3 forward";
-                break;
-            case BACK_UP:
-                text = "Back up";
-                break;
-            case ROTATE_LEFT:
-                text = "Rotate left";
-                break;
-            case ROTATE_RIGHT:
-                text = "Rotate right";
-                break;
-            case U_TURN:
-                text = "U Turn";
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid action on CardRectangle.");
-        }
-        GlyphLayout layout = new GlyphLayout();
-        layout.setText(roboRallyWrapper.font, text, WHITE, cardRectangle.rectangle.width - 20,
-                1, true);
-        float fontX = cardRectangle.rectangle.x;
-        float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 80;
-        roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
+        roboRallyWrapper.font.setColor(WHITE);
     }
 
     @Override

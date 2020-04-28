@@ -10,6 +10,7 @@ import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.elementproperties.WallType;
 import inf112.fiasko.roborally.objects.Particle;
+import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.Wall;
@@ -30,6 +31,7 @@ public final class TextureConverterUtil {
     private static final Texture textureSheet = new Texture(Gdx.files.internal("assets/tiles.png"));
     private static final Texture robotsTexture = new Texture(Gdx.files.internal("assets/robots.png"));
     private static final Texture effectsTexture = new Texture(Gdx.files.internal("assets/effects.png"));
+    private static final Texture programmingCardsTexture = new Texture(Gdx.files.internal("assets/programmingcards.png"));
     private static Map<TileType, TextureConverterContainer> tileSheetTileTextureMappings;
     private static Map<TileType, Boolean> tileSheetTileHasRotatedTextureMappings;
     private static Map<ParticleType, TextureConverterContainer> tileSheetParticleTextureMappings;
@@ -41,7 +43,35 @@ public final class TextureConverterUtil {
     }
 
     /**
+     * Gets the texture representing the programming card
+     *
+     * @param card The card to draw
+     * @return The texture to draw
+     */
+    public static TextureRegion convertElement(ProgrammingCard card) {
+        switch (card.getAction()) {
+            case MOVE_1:
+                return new TextureRegion(programmingCardsTexture, 0, 0, 250, 400);
+            case MOVE_2:
+                return new TextureRegion(programmingCardsTexture, 250, 0, 250, 400);
+            case MOVE_3:
+                return new TextureRegion(programmingCardsTexture, 2 * 250, 0, 250, 400);
+            case ROTATE_LEFT:
+                return new TextureRegion(programmingCardsTexture, 3 * 250, 0, 250, 400);
+            case ROTATE_RIGHT:
+                return new TextureRegion(programmingCardsTexture, 4 * 250, 0, 250, 400);
+            case BACK_UP:
+                return new TextureRegion(programmingCardsTexture, 5 * 250, 0, 250, 400);
+            case U_TURN:
+                return new TextureRegion(programmingCardsTexture, 6 * 250, 0, 250, 400);
+            default:
+                throw new IllegalArgumentException("Invalid action encountered.");
+        }
+    }
+
+    /**
      * Returns the texture to use to display damage tokens
+     *
      * @return The damage token texture
      */
     public static TextureRegion getDamageTokenCriticalTexture() {
@@ -50,6 +80,7 @@ public final class TextureConverterUtil {
 
     /**
      * Returns the texture to use to display damage tokens
+     *
      * @return The damage token texture
      */
     public static TextureRegion getDamageTokenTexture() {
@@ -58,6 +89,7 @@ public final class TextureConverterUtil {
 
     /**
      * Returns the texture to use to display lives
+     *
      * @return The life texture
      */
     public static TextureRegion getLifeTexture() {

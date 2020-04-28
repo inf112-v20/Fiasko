@@ -202,6 +202,7 @@ public class BoardActiveScreen extends InteractiveScreen {
 
     /**
      * Draws the damage of the player
+     *
      * @param batch The sprite batch to use for drawing
      * @param robot The robot which has visited the flag
      * @param index The index of the robot in the robot list
@@ -228,6 +229,7 @@ public class BoardActiveScreen extends InteractiveScreen {
 
     /**
      * Draws the lives of the player
+     *
      * @param batch The sprite batch to use for drawing
      * @param robot The robot which has visited the flag
      * @param index The index of the robot in the robot list
@@ -246,6 +248,7 @@ public class BoardActiveScreen extends InteractiveScreen {
 
     /**
      * Draws the last flag the player visited
+     *
      * @param batch The sprite batch to use for drawing
      * @param robot The robot which has visited the flag
      * @param index The index of the robot in the robot list

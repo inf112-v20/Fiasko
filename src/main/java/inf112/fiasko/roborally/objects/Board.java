@@ -8,6 +8,7 @@ import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.elementproperties.WallType;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -761,7 +762,8 @@ public class Board {
      * Kills all robots that have taken too much damage
      */
     private void killAllHeavilyDamagedRobots() {
-        for (Robot robot : robots.values()) {
+        Collection<Robot> robotList = robots.values();
+        for (Robot robot : robotList) {
             if (robot.getDamageTaken() >= 10) {
                 killRobot(robot);
             }

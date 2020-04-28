@@ -109,7 +109,7 @@ public class Phase {
             if (gameBoard.hasTouchedFlagThisTurn(robotID)) {
                 continue;
             }
-            gameBoard.updateFlagOnRobot(robotID, flag.getElement().getTileType());
+            gameBoard.updateRobotFlag(robotID, flag.getElement().getType());
             checkIfPlayerWon(robotID, flags.size());
         }
     }
@@ -165,7 +165,7 @@ public class Phase {
                 continue;
             }
             RobotID robotAtCogwheel = gameBoard.getRobotOnPosition(cogwheel.getPosition());
-            if (cogwheel.getElement().getTileType() == TileType.COGWHEEL_RIGHT) {
+            if (cogwheel.getElement().getType() == TileType.COGWHEEL_RIGHT) {
                 gameBoard.rotateRobotRight(robotAtCogwheel);
             } else {
                 gameBoard.rotateRobotLeft(robotAtCogwheel);
@@ -355,23 +355,23 @@ public class Phase {
      * Generates lists containing board element containers with all tiles of certain types
      */
     private void generateTileLists() {
-        cogwheels = gameBoard.getPositionsOfTileOnBoard(TileType.COGWHEEL_RIGHT,
+        cogwheels = gameBoard.getPositionsOfTilesOnBoard(TileType.COGWHEEL_RIGHT,
                 TileType.COGWHEEL_LEFT);
-        fastConveyorBelts = gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_FAST,
+        fastConveyorBelts = gameBoard.getPositionsOfTilesOnBoard(TileType.CONVEYOR_BELT_FAST,
                 TileType.CONVEYOR_BELT_FAST_RIGHT, TileType.CONVEYOR_BELT_FAST_LEFT,
                 TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_RIGHT,
                 TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCE_LEFT,
                 TileType.CONVEYOR_BELT_FAST_SIDE_ENTRANCES);
         conveyorBelts = new ArrayList<>();
         conveyorBelts.addAll(fastConveyorBelts);
-        conveyorBelts.addAll(gameBoard.getPositionsOfTileOnBoard(TileType.CONVEYOR_BELT_SLOW,
+        conveyorBelts.addAll(gameBoard.getPositionsOfTilesOnBoard(TileType.CONVEYOR_BELT_SLOW,
                 TileType.CONVEYOR_BELT_SLOW_RIGHT, TileType.CONVEYOR_BELT_SLOW_LEFT,
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_RIGHT,
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCE_LEFT,
                 TileType.CONVEYOR_BELT_SLOW_SIDE_ENTRANCES));
-        flags = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1,
+        flags = gameBoard.getPositionsOfTilesOnBoard(TileType.FLAG_1,
                 TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
-        oddPushers = gameBoard.getPositionsOfWallOnBoard(WallType.WALL_PUSHER_ODD);
-        evenPushers = gameBoard.getPositionsOfWallOnBoard(WallType.WALL_PUSHER_EVEN);
+        oddPushers = gameBoard.getPositionsOfWallsOnBoard(WallType.WALL_PUSHER_ODD);
+        evenPushers = gameBoard.getPositionsOfWallsOnBoard(WallType.WALL_PUSHER_EVEN);
     }
 }

@@ -7,7 +7,7 @@ import inf112.fiasko.roborally.elementproperties.Position;
  *
  * @param <K> The type of element
  */
-public class BoardElementContainer<K> {
+public class BoardElementContainer<K extends BoardElement> {
     private final K element;
     private final Position position;
 
@@ -17,7 +17,7 @@ public class BoardElementContainer<K> {
      * @param element  The element
      * @param position The position
      */
-    BoardElementContainer(K element, Position position) {
+    public BoardElementContainer(K element, Position position) {
         this.element = element;
         this.position = position;
     }
@@ -32,9 +32,9 @@ public class BoardElementContainer<K> {
     }
 
     /**
-     * Gets the position
+     * Gets the position of the element
      *
-     * @return The position
+     * @return The position of the element
      */
     public Position getPosition() {
         return position;

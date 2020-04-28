@@ -6,7 +6,7 @@ import inf112.fiasko.roborally.elementproperties.TileType;
 /**
  * This class represents a simple tile
  */
-public class Tile {
+public class Tile implements BoardElement<TileType> {
 
     private TileType tileType;
     private Direction direction;
@@ -25,20 +25,12 @@ public class Tile {
         this.direction = direction;
     }
 
-    /**
-     * Gets the tile type of the tile
-     *
-     * @return The tile's tile type
-     */
-    public TileType getTileType() {
+    @Override
+    public TileType getType() {
         return tileType;
     }
 
-    /**
-     * Gets the direction of the tile
-     *
-     * @return The tile's direction
-     */
+    @Override
     public Direction getDirection() {
         return direction;
     }

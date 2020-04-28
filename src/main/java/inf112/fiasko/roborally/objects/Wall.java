@@ -6,7 +6,7 @@ import inf112.fiasko.roborally.elementproperties.WallType;
 /**
  * This class represents a wall
  */
-public class Wall {
+public class Wall implements BoardElement<WallType> {
     private final WallType wallType;
     private final Direction direction;
 
@@ -24,20 +24,12 @@ public class Wall {
         this.direction = direction;
     }
 
-    /**
-     * Gets the type of the wall
-     *
-     * @return The wall type
-     */
-    public WallType getWallType() {
+    @Override
+    public WallType getType() {
         return wallType;
     }
 
-    /**
-     * Gets the direction of the wall
-     *
-     * @return The direction of the wall
-     */
+    @Override
     public Direction getDirection() {
         return direction;
     }

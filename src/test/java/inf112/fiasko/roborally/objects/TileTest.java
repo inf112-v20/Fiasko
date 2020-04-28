@@ -20,12 +20,12 @@ public class TileTest {
 
     @Test
     public void getTileTypeFromTile() {
-        assertEquals(TileType.HOLE, tile.getTileType());
+        assertEquals(TileType.HOLE, tile.getType());
     }
 
     @Test
     public void getTileTypeFromTile2() {
-        assertEquals(TileType.COGWHEEL_RIGHT, tile2.getTileType());
+        assertEquals(TileType.COGWHEEL_RIGHT, tile2.getType());
     }
 
 

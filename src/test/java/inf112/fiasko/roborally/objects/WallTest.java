@@ -10,19 +10,19 @@ public class WallTest {
     @Test
     public void testWallGetWallTypeNormal() {
         Wall testGetWall = new Wall(WallType.WALL_NORMAL, Direction.NORTH);
-        assertEquals(WallType.WALL_NORMAL, testGetWall.getWallType());
+        assertEquals(WallType.WALL_NORMAL, testGetWall.getType());
     }
 
     @Test
     public void testWallGetWallTypeCorner() {
         Wall testGetWall = new Wall(WallType.WALL_CORNER, Direction.NORTH);
-        assertEquals(WallType.WALL_CORNER, testGetWall.getWallType());
+        assertEquals(WallType.WALL_CORNER, testGetWall.getType());
     }
 
     @Test
     public void testWallGetWallTypeLaserSingle() {
         Wall testGetWall = new Wall(WallType.WALL_LASER_SINGLE, Direction.NORTH);
-        assertEquals(WallType.WALL_LASER_SINGLE, testGetWall.getWallType());
+        assertEquals(WallType.WALL_LASER_SINGLE, testGetWall.getType());
     }
 
     @Test

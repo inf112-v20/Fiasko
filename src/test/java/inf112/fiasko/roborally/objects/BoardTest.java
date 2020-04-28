@@ -234,7 +234,7 @@ public class BoardTest {
     public void flagGetsUpdatedOnRobotWithCorrectLastVisitedFlag() {
         Robot testRobot = robotList.get(6);
         assertEquals(0, testRobot.getLastFlagVisited());
-        board.updateFlagOnRobot(RobotID.ROBOT_7, TileType.FLAG_1);
+        board.updateRobotFlag(RobotID.ROBOT_7, TileType.FLAG_1);
         assertEquals(1, testRobot.getLastFlagVisited());
     }
 
@@ -242,7 +242,7 @@ public class BoardTest {
     public void flagDoesNotUpdatedOnRobotWithWrongLastVisitedFlag() {
         Robot testRobot = robotList.get(6);
         assertEquals(0, testRobot.getLastFlagVisited());
-        board.updateFlagOnRobot(RobotID.ROBOT_7, TileType.FLAG_2);
+        board.updateRobotFlag(RobotID.ROBOT_7, TileType.FLAG_2);
         assertEquals(0, testRobot.getLastFlagVisited());
     }
 
@@ -347,74 +347,74 @@ public class BoardTest {
     @Test
     public void getPositionsOfTileOnBoardGivesCorrectAmountOfCogwheelLeftTiles() {
         assertEquals((int) tileTypeNumberMap.get(TileType.COGWHEEL_LEFT),
-                boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT).size());
+                boardWithDifferentAmountOfAllTypes.getPositionsOfTilesOnBoard(TileType.COGWHEEL_LEFT).size());
     }
 
     @Test
     public void getPositionsOfTileOnBoardHasTypeCogwheelLeft() {
-        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT);
+        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTilesOnBoard(TileType.COGWHEEL_LEFT);
         assertTrue(checkIfAllElementsAreOfSpecificTileType(boardElemList, TileType.COGWHEEL_LEFT));
     }
 
     @Test
     public void getPositionsOfTileOnBoardGivesCorrectAmountOfTileTiles() {
         assertEquals((int) tileTypeNumberMap.get(TileType.TILE),
-                boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.TILE).size());
+                boardWithDifferentAmountOfAllTypes.getPositionsOfTilesOnBoard(TileType.TILE).size());
     }
 
     @Test
     public void getPositionsOfTileOnBoardHasTypeTile() {
-        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.TILE);
+        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTilesOnBoard(TileType.TILE);
         assertTrue(checkIfAllElementsAreOfSpecificTileType(boardElemList, TileType.TILE));
     }
 
     @Test
     public void getPositionsOfWallOnBoardGivesCorrectAmountOfWallNormalWalls() {
         assertEquals((int) wallTypeNumberMap.get(WallType.WALL_NORMAL),
-                boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_NORMAL).size());
+                boardWithDifferentAmountOfAllTypes.getPositionsOfWallsOnBoard(WallType.WALL_NORMAL).size());
     }
 
     @Test
     public void getPositionsOfWallOnBoardHasTypeWallNormal() {
-        List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_NORMAL);
+        List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallsOnBoard(WallType.WALL_NORMAL);
         assertTrue(checkIfAllElementsAreOfSpecificWallType(boardElemList, WallType.WALL_NORMAL));
     }
 
     @Test
     public void getPositionsOfWallOnBoardGivesCorrectAmountOfWallCornerWalls() {
         assertEquals((int) wallTypeNumberMap.get(WallType.WALL_CORNER),
-                boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_CORNER).size());
+                boardWithDifferentAmountOfAllTypes.getPositionsOfWallsOnBoard(WallType.WALL_CORNER).size());
     }
 
     @Test
     public void getPositionsOfWallOnBoardHasTypeWallCorner() {
-        List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallOnBoard(WallType.WALL_CORNER);
+        List<BoardElementContainer<Wall>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfWallsOnBoard(WallType.WALL_CORNER);
         assertTrue(checkIfAllElementsAreOfSpecificWallType(boardElemList, WallType.WALL_CORNER));
     }
 
     @Test
     public void getPositionsOfWallOnBoardHasCorrectTypesWithMultipleParameters() {
-        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTileOnBoard(TileType.COGWHEEL_LEFT, TileType.COGWHEEL_RIGHT);
+        List<BoardElementContainer<Tile>> boardElemList = boardWithDifferentAmountOfAllTypes.getPositionsOfTilesOnBoard(TileType.COGWHEEL_LEFT, TileType.COGWHEEL_RIGHT);
         List<TileType> tileTypeList = new ArrayList<>();
         List<TileType> tileTypeListResult = new ArrayList<>();
         tileTypeList.add(TileType.COGWHEEL_LEFT);
         tileTypeList.add(TileType.COGWHEEL_RIGHT);
 
         for (BoardElementContainer<Tile> elem : boardElemList) {
-            tileTypeListResult.add(elem.getElement().getTileType());
+            tileTypeListResult.add(elem.getElement().getType());
         }
 
         assertTrue(tileTypeList.containsAll(tileTypeListResult) && tileTypeListResult.containsAll(tileTypeList));
     }
 
     private <K> boolean checkIfAllElementsAreOfSpecificWallType(List<BoardElementContainer<Wall>> elemList, K WallType) {
-        Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getElement().getWallType() == WallType;
+        Predicate<BoardElementContainer<Wall>> pred = (element) -> element.getElement().getType() == WallType;
         elemList.removeIf(pred);
         return 0 == elemList.size();
     }
 
     private <K> boolean checkIfAllElementsAreOfSpecificTileType(List<BoardElementContainer<Tile>> elemList, K TileType) {
-        Predicate<BoardElementContainer<Tile>> pred = (element) -> element.getElement().getTileType() == TileType;
+        Predicate<BoardElementContainer<Tile>> pred = (element) -> element.getElement().getType() == TileType;
         elemList.removeIf(pred);
         return 0 == elemList.size();
     }

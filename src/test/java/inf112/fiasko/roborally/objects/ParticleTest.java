@@ -20,12 +20,12 @@ public class ParticleTest {
 
     @Test
     public void getParticleTypeFromParticle() {
-        assertEquals(ParticleType.LASER_BEAM_SINGLE, particle.getParticleType());
+        assertEquals(ParticleType.LASER_BEAM_SINGLE, particle.getType());
     }
 
     @Test
     public void getParticleTypeFromParticle2() {
-        assertEquals(ParticleType.LASER_BEAM_DOUBLE_CROSS, particle2.getParticleType());
+        assertEquals(ParticleType.LASER_BEAM_DOUBLE_CROSS, particle2.getType());
     }
 
 

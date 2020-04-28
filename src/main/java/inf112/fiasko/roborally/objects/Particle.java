@@ -6,7 +6,7 @@ import inf112.fiasko.roborally.elementproperties.ParticleType;
 /**
  * This class represents a particle
  */
-public class Particle {
+public class Particle implements BoardElement<ParticleType> {
 
     private ParticleType particleType;
     private Direction direction;
@@ -25,20 +25,12 @@ public class Particle {
         this.direction = direction;
     }
 
-    /**
-     * Gets the particle type of the particle
-     *
-     * @return The particle's particle type
-     */
-    public ParticleType getParticleType() {
+    @Override
+    public ParticleType getType() {
         return particleType;
     }
 
-    /**
-     * Gets the direction of the particle
-     *
-     * @return The particle's direction
-     */
+    @Override
     public Direction getDirection() {
         return direction;
     }

@@ -6,6 +6,8 @@ import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.elementproperties.WallType;
+import inf112.fiasko.roborally.utility.GridUtil;
+import inf112.fiasko.roborally.utility.LaserHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +27,7 @@ public class Board {
     private List<Robot> deadRobots;
     private List<RobotID> realDeadRobots;
     private List<TileType> dangerousTiles;
+    private List<BoardElementContainer<Wall>> wallLasers;
 
     /**
      * Initializes the board
@@ -53,6 +56,8 @@ public class Board {
         this.realDeadRobots = new ArrayList<>();
         this.dangerousTiles = new ArrayList<>();
         loadDangerousTileTypes();
+        wallLasers = getPositionsOfWallsOnBoard(WallType.WALL_LASER_SINGLE,
+                WallType.WALL_LASER_DOUBLE, WallType.WALL_LASER_TRIPLE);
     }
 
     /**
@@ -68,9 +73,9 @@ public class Board {
     }
 
     /**
-     * All the Real dead player's robots.
+     * Gets a list of robots no longer part of the game
      *
-     * @return A list of Robots.
+     * @return Robots no longer part of the game
      */
     public List<RobotID> getRealDeadRobots() {
         return realDeadRobots;
@@ -111,9 +116,9 @@ public class Board {
      * @return A list of robots
      */
     public List<Robot> getAllRobots() {
-        List<Robot> robotsCopy = new ArrayList<>(robots.values());
-        robotsCopy.addAll(deadRobots);
+        List<Robot> robotsCopy = new ArrayList<>(deadRobots);
         robotsCopy.replaceAll(Robot::copy);
+        robotsCopy.addAll(getAliveRobots());
         return robotsCopy;
     }
 
@@ -123,7 +128,7 @@ public class Board {
      * @return A list of all tiles on the board
      */
     public List<Tile> getTiles() {
-        return getAllElementsFromGrid(tiles);
+        return GridUtil.getAllElementsFromGrid(tiles);
     }
 
     /**
@@ -132,7 +137,7 @@ public class Board {
      * @return A list of all the walls on the board
      */
     public List<Wall> getWalls() {
-        return getAllElementsFromGrid(walls);
+        return GridUtil.getAllElementsFromGrid(walls);
     }
 
     /**
@@ -141,7 +146,7 @@ public class Board {
      * @return A list of all the particles on the board
      */
     public List<Particle> getParticles() {
-        return getAllElementsFromGrid(particles);
+        return GridUtil.getAllElementsFromGrid(particles);
     }
 
     /**
@@ -191,22 +196,20 @@ public class Board {
      * @param powerDown The status of the power down
      */
     public void setPowerDown(RobotID robotID, Boolean powerDown) {
-        Robot alternateRobot = getRobotFromDeadRobots(robotID);
-        if (robots.containsKey(robotID)) {
-            robots.get(robotID).setPowerDown(powerDown);
-        } else if (alternateRobot != null) {
-            alternateRobot.setPowerDown(powerDown);
+        Robot robot = getRobot(robotID);
+        if (robot != null) {
+            robot.setPowerDown(powerDown);
         }
     }
 
     /**
      * Sets the backup position of a given robot to a given position
      *
-     * @param robotID The robot to change backup position for
-     * @param pos     The robot's new backup position
+     * @param robotID  The robot to change backup position for
+     * @param position The robot's new backup position
      */
-    public void setBackupPositionOfRobot(RobotID robotID, Position pos) {
-        robots.get(robotID).setBackupPosition(pos);
+    public void setBackupPositionOfRobot(RobotID robotID, Position position) {
+        robots.get(robotID).setBackupPosition(position);
     }
 
     /**
@@ -216,13 +219,8 @@ public class Board {
      * @return The power down status of the robot
      */
     public boolean getPowerDown(RobotID robotID) {
-        Robot alternateRobot = getRobotFromDeadRobots(robotID);
-        if (robots.containsKey(robotID)) {
-            return robots.get(robotID).isInPowerDown();
-        } else if (alternateRobot != null) {
-            return alternateRobot.isInPowerDown();
-        }
-        return false;
+        Robot robot = getRobot(robotID);
+        return robot != null && robot.isInPowerDown();
     }
 
     /**
@@ -275,7 +273,7 @@ public class Board {
     /**
      * Moves a robot one unit in a specified direction
      *
-     * @param robotID   ID of the robot to move
+     * @param robotID   Id of the robot to move
      * @param direction The direction to move the robot
      * @return True if the robot moved away from its old position
      */
@@ -315,7 +313,7 @@ public class Board {
         if (tile == null) {
             return false;
         }
-        int tileTypeId = tile.getTileType().getTileTypeID();
+        int tileTypeId = tile.getType().getTileTypeID();
         return tileTypeId >= 5 && tileTypeId <= 16;
     }
 
@@ -493,11 +491,11 @@ public class Board {
      * @param robotID The RobotID of a robot
      * @param flagID  TileType of the flag we check
      */
-    public void updateFlagOnRobot(RobotID robotID, TileType flagID) {
+    public void updateRobotFlag(RobotID robotID, TileType flagID) {
         Robot robot = robots.get(robotID);
-        int flagNr = flagID.getTileTypeID() % 16;
-        if (flagNr - 1 == robot.getLastFlagVisited()) {
-            robot.setLastFlagVisited(flagNr);
+        int flagNumber = flagID.getTileTypeID() % 16;
+        if (flagNumber - 1 == robot.getLastFlagVisited()) {
+            robot.setLastFlagVisited(flagNumber);
             setHasTouchedFlagThisTurn(robotID, true);
         }
     }
@@ -528,12 +526,10 @@ public class Board {
      * Fires all lasers on the board and kills any robot that has taken to much damage after all lasers have fired.
      */
     public void fireAllLasers() {
-        List<BoardElementContainer<Wall>> listOfWallLasers = getPositionsOfWallOnBoard(WallType.WALL_LASER_SINGLE,
-                WallType.WALL_LASER_DOUBLE, WallType.WALL_LASER_TRIPLE);
         for (Robot robot : robots.values()) {
             fireRobotLaser(robot.getPosition(), robot.getFacingDirection());
         }
-        for (BoardElementContainer<Wall> laser : listOfWallLasers) {
+        for (BoardElementContainer<Wall> laser : wallLasers) {
             fireWallLaser(laser);
         }
     }
@@ -565,10 +561,10 @@ public class Board {
      * @param tiles The tiles you want all positions for
      * @return A list of BoardElementContainers
      */
-    public List<BoardElementContainer<Tile>> getPositionsOfTileOnBoard(TileType... tiles) {
+    public List<BoardElementContainer<Tile>> getPositionsOfTilesOnBoard(TileType... tiles) {
         List<BoardElementContainer<Tile>> combinedList = new ArrayList<>();
         for (TileType tile : tiles) {
-            combinedList.addAll(makeTileList(tile, this.tiles));
+            combinedList.addAll(GridUtil.getMatchingElements(tile, this.tiles));
         }
         return combinedList;
     }
@@ -579,10 +575,10 @@ public class Board {
      * @param walls The walls you want all positions for
      * @return A list of BoardElementContainers
      */
-    public List<BoardElementContainer<Wall>> getPositionsOfWallOnBoard(WallType... walls) {
+    public List<BoardElementContainer<Wall>> getPositionsOfWallsOnBoard(WallType... walls) {
         List<BoardElementContainer<Wall>> combinedList = new ArrayList<>();
         for (WallType wall : walls) {
-            combinedList.addAll(makeTileList(wall, this.walls));
+            combinedList.addAll(GridUtil.getMatchingElements(wall, this.walls));
         }
         return combinedList;
     }
@@ -649,7 +645,7 @@ public class Board {
         if (tileRobotStepsOn == null) {
             throw new IllegalArgumentException("The game board is missing a tile. This should not happen.");
         }
-        TileType tileTypeRobotStepsOn = tileRobotStepsOn.getTileType();
+        TileType tileTypeRobotStepsOn = tileRobotStepsOn.getType();
         if (dangerousTiles.contains(tileTypeRobotStepsOn)) {
             killRobot(robot);
         }
@@ -691,58 +687,6 @@ public class Board {
     }
 
     /**
-     * Gets all elements on a grid
-     *
-     * @param grid The grid to get elements from
-     * @param <K>  The type of the elements int the grid
-     * @return A list containing all the elements in the grid
-     */
-    private <K> List<K> getAllElementsFromGrid(Grid<K> grid) {
-        List<K> elements = new ArrayList<>();
-        for (int y = grid.getHeight() - 1; y >= 0; y--) {
-            for (int x = 0; x < grid.getWidth(); x++) {
-                elements.add(grid.getElement(x, y));
-            }
-        }
-        return elements;
-    }
-
-    /**
-     * Finds all tiles/walls with a certain type
-     *
-     * @param type The type of tile/wall to look for
-     * @param grid The grid to look through
-     * @param <K>  Type of the type to look for
-     * @param <T>  Type of the grid
-     * @return List of BoardElementContainers
-     */
-    private <K, T> List<BoardElementContainer<T>> makeTileList(K type, Grid<T> grid) {
-        List<BoardElementContainer<T>> objList = new ArrayList<>();
-
-        for (int y = grid.getHeight() - 1; y >= 0; y--) {
-            for (int x = 0; x < grid.getWidth(); x++) {
-                T gridElement = grid.getElement(x, y);
-                if (gridElement != null) {
-                    if (gridElement.getClass().isAssignableFrom(Tile.class)) {
-                        Tile tile = (Tile) gridElement;
-                        if (tile.getTileType() == type) {
-                            objList.add(new BoardElementContainer<>(gridElement, new Position(x, y)));
-                        }
-                    } else if (gridElement.getClass().isAssignableFrom(Wall.class)) {
-                        Wall wall = (Wall) gridElement;
-                        if (wall.getWallType() == type) {
-                            objList.add(new BoardElementContainer<>(gridElement, new Position(x, y)));
-                        }
-                    } else {
-                        throw new IllegalArgumentException("ListGrid has unknown type.");
-                    }
-                }
-            }
-        }
-        return objList;
-    }
-
-    /**
      * Kills all robots that have taken too much damage
      */
     private void killAllHeavilyDamagedRobots() {
@@ -764,7 +708,7 @@ public class Board {
         List<Position> laserTargets = new ArrayList<>();
         getLaserTarget(laserDirection, wallLaser.getPosition(), laserTargets);
         Position hitPosition = laserTargets.get(laserTargets.size() - 1);
-        WallType laserType = wallLaser.getElement().getWallType();
+        WallType laserType = wallLaser.getElement().getType();
         updateLaserDisplay(laserTargets, laserDirection, laserType);
         if (getRobotOnPosition(hitPosition) != null) {
             applyLaserDamage(laserType, robots.get(getRobotOnPosition(hitPosition)));
@@ -844,20 +788,7 @@ public class Board {
      * @param laserType      The type of the laser shooting
      */
     private void updateLaserBeamOnParticleGrid(Position addPosition, Direction laserDirection, WallType laserType) {
-        ParticleType laserParticleType;
-        switch (laserType) {
-            case WALL_LASER_SINGLE:
-                laserParticleType = ParticleType.LASER_BEAM_SINGLE;
-                break;
-            case WALL_LASER_DOUBLE:
-                laserParticleType = ParticleType.LASER_BEAM_DOUBLE;
-                break;
-            case WALL_LASER_TRIPLE:
-                laserParticleType = ParticleType.LASER_BEAM_TRIPLE;
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid laser type encountered.");
-        }
+        ParticleType laserParticleType = LaserHelper.getParticleFromLaserType(laserType);
         Particle laserParticle = new Particle(laserParticleType, laserDirection);
         int positionX = addPosition.getXCoordinate();
         int positionY = addPosition.getYCoordinate();
@@ -865,103 +796,9 @@ public class Board {
         if (particleAtPosition == null) {
             particles.setElement(positionX, positionY, laserParticle);
         } else {
-            particles.setElement(positionX, positionY, getNewLaserBeamParticle(laserParticle, particleAtPosition));
+            particles.setElement(positionX, positionY,
+                    LaserHelper.getNewLaserBeamParticle(laserParticle, particleAtPosition));
         }
-    }
-
-    /**
-     * Gets the new particle to use given the laser firing and the existing beam particle
-     *
-     * @param laserBeam    The laser beam which is fired
-     * @param existingBeam The laser beam which already exists at a tile
-     * @return The particle which is a combination of the two
-     */
-    private Particle getNewLaserBeamParticle(Particle laserBeam, Particle existingBeam) {
-        ParticleType laserBeamType = laserBeam.getParticleType();
-        ParticleType existingBeamType = existingBeam.getParticleType();
-        Direction laserDirection = laserBeam.getDirection();
-        Direction existingDirection = existingBeam.getDirection();
-
-        int forwardBeamsLaser = getNumberOfForwardBeams(laserBeamType);
-        int crossingBeamsLaser = getNumberOfPerpendicularBeams(laserBeamType);
-        int forwardBeamsExisting = getNumberOfForwardBeams(existingBeamType);
-        int crossingBeamsExisting = getNumberOfPerpendicularBeams(existingBeamType);
-
-        //Flip number of beams if beams are perpendicular
-        if (Direction.arePerpendicular(laserDirection, existingDirection)) {
-            int temp = forwardBeamsExisting;
-            forwardBeamsExisting = crossingBeamsExisting;
-            crossingBeamsExisting = temp;
-        }
-        //Calculates the new number of forward beams
-        int forwardBeams = getNumberOfBeams(forwardBeamsLaser, forwardBeamsExisting);
-        //Calculates the new number of crossing beams
-        int crossingBeams = getNumberOfBeams(crossingBeamsLaser, crossingBeamsExisting);
-        //The direction should be the direction with the least amount of beams
-        Direction newDirection;
-        if (forwardBeams > crossingBeams) {
-            newDirection = existingDirection;
-        } else {
-            newDirection = laserDirection;
-        }
-        //If using the existing direction and the beams are perpendicular, the direction needs to be rotated
-        if (newDirection.equals(existingDirection) &&
-                Direction.arePerpendicular(laserDirection, existingDirection)) {
-            newDirection = Direction.getLeftRotatedDirection(newDirection);
-        }
-        //If the particle does not exist, we have to rotate the beam to get the correct one
-        ParticleType newParticleType = getNewParticleType(forwardBeams, crossingBeams);
-        if (newParticleType == null) {
-            newParticleType = getNewParticleType(crossingBeams, forwardBeams);
-            newDirection = Direction.getLeftRotatedDirection(newDirection);
-        }
-        return new Particle(newParticleType, newDirection);
-    }
-
-    /**
-     * Gets the correct number of beams given existing beams and the beams to add
-     *
-     * @param newBeams      The beam count of the new beam to add
-     * @param existingBeams The beam count of the existing beam
-     * @return The new number/thickness of beams/the beam
-     */
-    private int getNumberOfBeams(int newBeams, int existingBeams) {
-        if ((newBeams + existingBeams) != 0 && (newBeams + existingBeams) % 3 == 0) {
-            return 3;
-        } else {
-            return Math.max(newBeams, existingBeams);
-        }
-    }
-
-    /**
-     * Gets a new particle type with the given number of beams
-     *
-     * @param forwardBeams       The number of beams in the direction of the laser
-     * @param perpendicularBeams The number of beams in the perpendicular direction of the laser
-     * @return The correct particle type to be displayed
-     */
-    private ParticleType getNewParticleType(int forwardBeams, int perpendicularBeams) {
-        return ParticleType.getParticleTypeFromID(10 * forwardBeams + perpendicularBeams);
-    }
-
-    /**
-     * Gets the number of beams in the forward direction given a particle type
-     *
-     * @param particleType The type of particle to check
-     * @return The number of beams in the forward direction of the laser beam
-     */
-    private int getNumberOfForwardBeams(ParticleType particleType) {
-        return particleType.getParticleTypeID() / 10;
-    }
-
-    /**
-     * Gets the number of beams in the perpendicular direction given a particle type
-     *
-     * @param particleType The type of particle to check
-     * @return The number of beams in the perpendicular direction of the laser beam
-     */
-    private int getNumberOfPerpendicularBeams(ParticleType particleType) {
-        return particleType.getParticleTypeID() % 10;
     }
 
     /**
@@ -981,12 +818,9 @@ public class Board {
      * @param hasTouched If the robot has touched a flag this turn
      */
     public void setHasTouchedFlagThisTurn(RobotID robotID, boolean hasTouched) {
-        Robot aliveRobot = robots.get(robotID);
-        Robot deadRobot = getRobotFromDeadRobots(robotID);
-        if (aliveRobot != null) {
-            aliveRobot.setHasTouchedFlagThisTurn(hasTouched);
-        } else if (deadRobot != null) {
-            deadRobot.setHasTouchedFlagThisTurn(hasTouched);
+        Robot robot = getRobot(robotID);
+        if (robot != null) {
+            robot.setHasTouchedFlagThisTurn(hasTouched);
         }
     }
 
@@ -998,6 +832,21 @@ public class Board {
      */
     public boolean hasTouchedFlagThisTurn(RobotID robotID) {
         return robots.get(robotID).hasTouchedFlagThisTurn();
+    }
+
+    /**
+     * Gets the robot with the given robot id
+     *
+     * @param robotID The id of the robot to get
+     * @return The robot with the id or null if it's not in the game
+     */
+    private Robot getRobot(RobotID robotID) {
+        Robot aliveRobot = robots.get(robotID);
+        if (aliveRobot == null) {
+            return getRobotFromDeadRobots(robotID);
+        } else {
+            return aliveRobot;
+        }
     }
 
 }

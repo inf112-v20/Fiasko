@@ -228,7 +228,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
             gameBoard = BoardLoaderUtil.loadBoard("boards/" + boardName, robots);
             moveRobotsToSpawn();
 
-            repairTiles = gameBoard.getPositionsOfTileOnBoard(TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3,
+            repairTiles = gameBoard.getPositionsOfTilesOnBoard(TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3,
                     TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
 
             if (host) {
@@ -248,7 +248,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         for (Player player : playerList) {
             RobotID robotID = player.getRobotID();
             TileType robotSpawn = TileType.getTileTypeFromID(robotID.getRobotIDID() + 22);
-            List<BoardElementContainer<Tile>> spawnTileContainerList = gameBoard.getPositionsOfTileOnBoard(robotSpawn);
+            List<BoardElementContainer<Tile>> spawnTileContainerList = gameBoard.getPositionsOfTilesOnBoard(robotSpawn);
             if (spawnTileContainerList.size() < 1) {
                 throw new IllegalArgumentException("The chosen board seems to be missing a robot spawn");
             }

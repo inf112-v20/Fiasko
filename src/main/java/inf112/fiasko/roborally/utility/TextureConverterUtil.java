@@ -124,7 +124,7 @@ public final class TextureConverterUtil {
             }
         }
         Direction direction = tile.getDirection();
-        TextureConverterContainer converterContainer = tileSheetTileTextureMappings.get(tile.getTileType());
+        TextureConverterContainer converterContainer = tileSheetTileTextureMappings.get(tile.getType());
         if (converterContainer != null) {
             return getDirectionalTextureRegion(direction, converterContainer.getXNorth(),
                     converterContainer.getYNorth(), converterContainer.getXEast(), converterContainer.getYEast(),
@@ -149,7 +149,7 @@ public final class TextureConverterUtil {
             }
         }
         Direction direction = particle.getDirection();
-        TextureConverterContainer converterContainer = tileSheetParticleTextureMappings.get(particle.getParticleType());
+        TextureConverterContainer converterContainer = tileSheetParticleTextureMappings.get(particle.getType());
         if (converterContainer != null) {
             return getDirectionalTextureRegion(direction, converterContainer.getXNorth(),
                     converterContainer.getYNorth(), converterContainer.getXEast(), converterContainer.getYEast(),
@@ -177,7 +177,7 @@ public final class TextureConverterUtil {
             return null;
         }
         Direction direction = wall.getDirection();
-        TextureConverterContainer converterContainer = tileSheetWallTextureMappings.get(wall.getWallType());
+        TextureConverterContainer converterContainer = tileSheetWallTextureMappings.get(wall.getType());
         if (converterContainer != null) {
             return getDirectionalTextureRegion(direction, converterContainer.getXNorth(),
                     converterContainer.getYNorth(), converterContainer.getXEast(), converterContainer.getYEast(),
@@ -242,7 +242,7 @@ public final class TextureConverterUtil {
                 e.printStackTrace();
             }
         }
-        return tileSheetTileHasRotatedTextureMappings.get(tile.getTileType());
+        return tileSheetTileHasRotatedTextureMappings.get(tile.getType());
     }
 
     /**
@@ -261,7 +261,7 @@ public final class TextureConverterUtil {
                 e.printStackTrace();
             }
         }
-        return tileSheetWallHasRotatedTextureMappings.get(wall.getWallType());
+        return tileSheetWallHasRotatedTextureMappings.get(wall.getType());
     }
 
     /**
@@ -280,7 +280,7 @@ public final class TextureConverterUtil {
                 e.printStackTrace();
             }
         }
-        return tileSheetParticleHasRotatedTextureMappings.get(particle.getParticleType());
+        return tileSheetParticleHasRotatedTextureMappings.get(particle.getType());
     }
 
     /**

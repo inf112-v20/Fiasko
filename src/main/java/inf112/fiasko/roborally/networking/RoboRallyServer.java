@@ -19,15 +19,14 @@ public class RoboRallyServer {
     /**
      * Instantiates a new Robo Rally server
      *
-     * @param TCPPort The TCP port to bind to
-     * @param UDPPort The UDP port to bind to
+     * @param serverPort The port the server should listen on
      * @throws IOException If the server cannot be started
      */
-    public RoboRallyServer(int TCPPort, int UDPPort) throws IOException {
+    public RoboRallyServer(int serverPort) throws IOException {
         server = new Server();
         server.start();
         NetworkUtil.registerClasses(server.getKryo());
-        server.bind(TCPPort, UDPPort);
+        server.bind(serverPort, serverPort);
         listener = new RoboRallyServerListener(this);
         server.addListener(listener);
     }

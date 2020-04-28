@@ -37,14 +37,15 @@ public class IPAddressScreen extends AbstractScreen {
         joinButton.setSize(300, 60);
         joinButton.setPosition(applicationWidth / 2f - joinButton.getWidth() / 2f, 300);
         roboRallyWrapper.client = new RoboRallyClient(roboRallyWrapper);
-        List<InetAddress> lanServers = roboRallyWrapper.client.getLanServers(roboRallyWrapper.discoverUDPPort);
+
+        List<InetAddress> lanServers = roboRallyWrapper.client.getLanServers(roboRallyWrapper.networkPort);
         Set<String> validHosts = new HashSet<>();
         for (InetAddress address : lanServers) {
             validHosts.add(address.getHostAddress());
         }
         final SelectBox<String> selectBox = new SelectBox<>(skin);
         selectBox.setItems(validHosts.toArray(new String[0]));
-        selectBox.setPosition(-80 + (applicationWidth - selectBox.getWidth()) / 2f, 200);
+        selectBox.setPosition(-80 + (applicationWidth - selectBox.getWidth()) / 2f, 180);
         selectBox.setSize(200, 50);
 
         stage.addActor(selectBox);
@@ -60,15 +61,21 @@ public class IPAddressScreen extends AbstractScreen {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 try {
                     String serverIp;
+                    int serverPort = roboRallyWrapper.networkPort;
                     String writtenIP = textInput.getText();
                     if (writtenIP.isEmpty()) {
                         serverIp = selectBox.getSelected();
                     } else {
                         serverIp = writtenIP;
+                        if (serverIp.contains(":")) {
+                            String[] ipParts = serverIp.split(":");
+                            serverIp = ipParts[0];
+                            serverPort = Integer.parseInt(ipParts[1]);
+                        }
                     }
-                    roboRallyWrapper.client.connect(serverIp, roboRallyWrapper.defaultTCPPort, roboRallyWrapper.discoverUDPPort);
+                    roboRallyWrapper.client.connect(serverIp, serverPort);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
-                } catch (IOException ex) {
+                } catch (IOException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Could not connect to the server."
                             + " Please make sure the ip address you typed is correct, and that the server is online.");
                 }
@@ -96,6 +103,10 @@ public class IPAddressScreen extends AbstractScreen {
                         "join a server",
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Specify IP",
+                10, 280, 200, 1, true);
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Local servers",
+                10, 230, 200, 1, true);
         roboRallyWrapper.batch.end();
     }
 

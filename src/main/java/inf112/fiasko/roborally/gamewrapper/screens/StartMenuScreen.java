@@ -2,7 +2,9 @@ package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
@@ -17,6 +19,7 @@ import java.io.IOException;
  */
 public class StartMenuScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
+    private TextField textInput;
 
     /**
      * Instantiates a new start menu screen
@@ -31,6 +34,14 @@ public class StartMenuScreen extends AbstractScreen {
         serverButton.setY(applicationHeight / 2f);
         this.roboRallyWrapper = roboRallyWrapper;
         camera.setToOrtho(false, applicationWidth, applicationHeight);
+
+        Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+        textInput = new TextField("", skin);
+        textInput.setSize(60, 40);
+        textInput.setPosition(applicationWidth / 2f - 130, applicationHeight / 2f - textInput.getHeight() - 10);
+        textInput.setText(String.valueOf(roboRallyWrapper.networkPort));
+        stage.addActor(textInput);
+
         serverButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
@@ -40,9 +51,10 @@ public class StartMenuScreen extends AbstractScreen {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 try {
-                    roboRallyWrapper.server = new RoboRallyServer(roboRallyWrapper.defaultTCPPort, roboRallyWrapper.discoverUDPPort);
+                    roboRallyWrapper.networkPort = Integer.parseInt(textInput.getText());
+                    roboRallyWrapper.server = new RoboRallyServer(roboRallyWrapper.networkPort);
                     roboRallyWrapper.client = new RoboRallyClient(roboRallyWrapper);
-                    roboRallyWrapper.client.connect("127.0.0.1", roboRallyWrapper.defaultTCPPort, roboRallyWrapper.discoverUDPPort);
+                    roboRallyWrapper.client.connect("127.0.0.1", roboRallyWrapper.networkPort);
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException e) {
                     //Hard fail
@@ -86,7 +98,6 @@ public class StartMenuScreen extends AbstractScreen {
         serverButton.setX(applicationWidth / 2f - serverButton.getWidth() - clientButton.getWidth() / 2 - 10);
         clientButton.setX(applicationWidth / 2f - clientButton.getWidth() / 2);
         quitButton.setX(applicationWidth / 2f + clientButton.getWidth() / 2 + 10);
-
     }
 
     @Override

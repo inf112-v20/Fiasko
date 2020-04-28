@@ -32,12 +32,11 @@ public class RoboRallyClient {
      * Connects to a Robo Rally server
      *
      * @param ipAddress The ip address of the server to join
-     * @param TCPPort   The TCP port to connect to
-     * @param UDPPort   The UDP port to connect to
+     * @param serverPort   The port the server is hosted on
      * @throws IOException If the server cannot be connected to
      */
-    public void connect(String ipAddress, int TCPPort, int UDPPort) throws IOException {
-        client.connect(5000, ipAddress, TCPPort, UDPPort);
+    public void connect(String ipAddress, int serverPort) throws IOException {
+        client.connect(5000, ipAddress, serverPort, serverPort);
     }
 
     /**

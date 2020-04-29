@@ -8,7 +8,7 @@ import inf112.fiasko.roborally.objects.Particle;
 /**
  * Helps with displaying laser beams
  */
-public class LaserHelper {
+public final class LaserHelper {
 
     /**
      * Gets the correct particle type from a laser type

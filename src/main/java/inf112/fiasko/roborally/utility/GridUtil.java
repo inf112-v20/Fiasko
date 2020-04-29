@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * A helper class containing helper methods fro a grid
  */
-public class GridUtil {
+public final class GridUtil {
 
     /**
      * Gets all elements in a grid

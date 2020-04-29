@@ -10,6 +10,7 @@ public class CardRectangle {
     protected final Rectangle rectangle;
     protected final ProgrammingCard card;
     protected boolean selected = false;
+    protected boolean selectable = true;
 
     /**
      * Instantiates a new card rectangle

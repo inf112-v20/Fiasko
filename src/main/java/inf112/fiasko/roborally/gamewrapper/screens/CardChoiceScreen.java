@@ -122,12 +122,7 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
      */
     private void confirmCards(Boolean requestPowerDown) {
         if (chosenCards.size() == maxCards) {
-            List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
-            int lockedCardsInt = 5 - maxCards;
-            List<ProgrammingCard> newProgram = getCards();
-            for (int i = 4; i > (4 - lockedCardsInt); i--) {
-                newProgram.add(oldProgram.get(i));
-            }
+            List<ProgrammingCard> newProgram = getChosenAndLockedCards();
             //Save the program to get locked cards later
             roboRallyWrapper.roboRallyGame.setProgram(newProgram);
             roboRallyWrapper.roboRallyGame.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
@@ -137,6 +132,15 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
             JOptionPane.showMessageDialog(null, "You need to choose all your cards"
                     + " before confirming.");
         }
+    }
+
+    /**
+     * Gets the number of locked cards
+     *
+     * @return The number of locked cards
+     */
+    private int getNumberOfLockedCards() {
+        return 5 - maxCards;
     }
 
     /**
@@ -160,17 +164,39 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
         float cardWidth = viewport.getWorldWidth() / 3;
         float cardHeight = (viewport.getWorldHeight() - 30) / 3;
         for (int i = 0; i < cardList.size(); i++) {
-            int x = (int) (((i % 3) * cardWidth) + 10);
-            int y = (int) (((i / 3) * cardHeight + 10));
-            Rectangle card = new Rectangle();
-            card.x = x;
-            card.y = y;
-            card.width = (int) cardWidth - 20;
-            card.height = (int) cardHeight - 20;
             ProgrammingCard programmingCard = cardList.get(i);
-            CardRectangle cardRectangle = new CardRectangle(card, programmingCard);
-            cardRectangles.add(cardRectangle);
+            generateCardRectangle(i, cardWidth, cardHeight, programmingCard, true);
         }
+        List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+        for (int i = cardList.size(); i < cardList.size() + getNumberOfLockedCards(); i++) {
+            ProgrammingCard programmingCard = oldProgram.get(4 - (i - cardList.size()));
+            generateCardRectangle(i, cardWidth, cardHeight, programmingCard, false);
+        }
+    }
+
+    /**
+     * Adds a new card rectangle containing the appropriate data
+     *
+     * @param i               The index of the card rectangle relative to other card rectangles
+     * @param cardWidth       The width of the card rectangle
+     * @param cardHeight      The height of the card rectangle
+     * @param programmingCard The programming card belonging to the card rectangle
+     * @param selectable      Whether the card rectangle is selectable
+     */
+    private void generateCardRectangle(int i, float cardWidth, float cardHeight, ProgrammingCard programmingCard,
+                                       boolean selectable) {
+        int x = (int) (((i % 3) * cardWidth) + 10);
+        int y = (int) (((i / 3) * cardHeight + 10));
+        Rectangle card = new Rectangle();
+        card.x = x;
+        card.y = y;
+        card.width = (int) cardWidth - 20;
+        card.height = (int) cardHeight - 20;
+
+        CardRectangle cardRectangle = new CardRectangle(card, programmingCard);
+        cardRectangle.selectable = selectable;
+        cardRectangle.selected = !selectable;
+        cardRectangles.add(cardRectangle);
     }
 
     @Override
@@ -236,6 +262,10 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
             float fontY = cardRectangle.rectangle.y + cardRectangle.rectangle.height - 21;
             roboRallyWrapper.font.draw(roboRallyWrapper.batch, layout, fontX, fontY);
             int chosenIndex = chosenCards.indexOf(cardRectangle);
+            int totalIndex = getChosenAndLockedCards().indexOf(cardRectangle.card);
+            if (chosenIndex == -1 && totalIndex != -1) {
+                chosenIndex = totalIndex + maxCards - chosenCards.size();
+            }
             if (chosenIndex != -1) {
                 roboRallyWrapper.font.setColor(YELLOW);
                 roboRallyWrapper.font.draw(roboRallyWrapper.batch, String.valueOf(chosenIndex + 1),
@@ -244,6 +274,21 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
             }
         }
         roboRallyWrapper.font.setColor(WHITE);
+    }
+
+    /**
+     * Gets a list containing all chosen and locked programming cards
+     *
+     * @return A list of programming cards
+     */
+    private List<ProgrammingCard> getChosenAndLockedCards() {
+        List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+        int lockedCardsInt = getNumberOfLockedCards();
+        List<ProgrammingCard> newProgram = new ArrayList<>(getCards());
+        for (int i = 4; i > (4 - lockedCardsInt); i--) {
+            newProgram.add(oldProgram.get(i));
+        }
+        return newProgram;
     }
 
     @Override
@@ -275,7 +320,7 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         Vector3 transformed = viewport.unproject(new Vector3(screenX, screenY, 0));
         for (CardRectangle cardRectangle : cardRectangles) {
-            if (cardRectangle.rectangle.contains(transformed.x, transformed.y)) {
+            if (cardRectangle.rectangle.contains(transformed.x, transformed.y) && cardRectangle.selectable) {
                 if (!cardRectangle.selected && chosenCards.size() < maxCards) {
                     chosenCards.add(cardRectangle);
                     cardRectangle.selected = true;

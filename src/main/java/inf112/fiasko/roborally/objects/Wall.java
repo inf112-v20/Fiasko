@@ -8,7 +8,7 @@ import inf112.fiasko.roborally.elementproperties.WallType;
  */
 public class Wall implements BoardElement<WallType> {
     private final WallType wallType;
-    private final Direction direction;
+    private Direction direction;
 
     /**
      * Initializes a wall
@@ -32,5 +32,20 @@ public class Wall implements BoardElement<WallType> {
     @Override
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void setDirection(Direction newDirection) {
+        this.direction = newDirection;
+    }
+
+    @Override
+    public BoardElement<WallType> copy() {
+        return new Wall(wallType, direction);
+    }
+
+    @Override
+    public String toString() {
+        return wallType.getWallTypeID() + ";" + direction.getDirectionID();
     }
 }

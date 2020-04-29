@@ -23,4 +23,18 @@ public interface BoardElement<K> {
      */
     Direction getDirection();
 
+    /**
+     * Changes the direction of the element
+     *
+     * @param newDirection The element's new direction
+     */
+    void setDirection(Direction newDirection);
+
+    /**
+     * Makes a copy of the board element
+     *
+     * @return A copy of the element
+     */
+    BoardElement<K> copy();
+
 }

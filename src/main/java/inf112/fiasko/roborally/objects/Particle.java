@@ -2,6 +2,7 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.ParticleType;
+import inf112.fiasko.roborally.utility.StringUtil;
 
 /**
  * This class represents a particle
@@ -33,5 +34,21 @@ public class Particle implements BoardElement<ParticleType> {
     @Override
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void setDirection(Direction newDirection) {
+        this.direction = newDirection;
+    }
+
+    @Override
+    public BoardElement<ParticleType> copy() {
+        return new Particle(particleType, direction);
+    }
+
+    @Override
+    public String toString() {
+        return StringUtil.addLeadingZeros(particleType.getParticleTypeID(), 2) + ";" +
+                StringUtil.addLeadingZeros(direction.getDirectionID(), 2);
     }
 }

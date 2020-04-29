@@ -2,6 +2,7 @@ package inf112.fiasko.roborally.objects;
 
 import inf112.fiasko.roborally.elementproperties.Direction;
 import inf112.fiasko.roborally.elementproperties.TileType;
+import inf112.fiasko.roborally.utility.StringUtil;
 
 /**
  * This class represents a simple tile
@@ -33,5 +34,21 @@ public class Tile implements BoardElement<TileType> {
     @Override
     public Direction getDirection() {
         return direction;
+    }
+
+    @Override
+    public void setDirection(Direction newDirection) {
+        this.direction = newDirection;
+    }
+
+    @Override
+    public BoardElement<TileType> copy() {
+        return new Tile(tileType, direction);
+    }
+
+    @Override
+    public String toString() {
+        return StringUtil.addLeadingZeros(tileType.getTileTypeID(), 2) + ";" +
+                StringUtil.addLeadingZeros(direction.getDirectionID(), 2);
     }
 }

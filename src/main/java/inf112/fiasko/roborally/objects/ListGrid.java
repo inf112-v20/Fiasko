@@ -84,4 +84,24 @@ public class ListGrid<K> implements Grid<K> {
             throw new IllegalArgumentException("Coordinates are outside the bounds of the board.");
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        for (int j = 0; j < height; j++) {
+            for (int i = 0; i < width; i++) {
+                K element = getElement(i, j);
+                if (element != null) {
+                    builder.append(element.toString());
+                } else {
+                    builder.append(0);
+                }
+                if (i < width - 1) {
+                    builder.append(" ");
+                }
+            }
+            builder.append("\n");
+        }
+        return builder.toString();
+    }
 }

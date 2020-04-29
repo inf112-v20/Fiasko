@@ -449,7 +449,8 @@ public class Board {
         for (Robot robot : deadRobots) {
             if (robot.getAmountOfLives() > 0) {
                 robot.setPosition(robot.getBackupPosition());
-                robot.setFacingDirection(Direction.NORTH);
+                robot.setFacingDirection(GridUtil.getMatchingElements(TileType.FLAG_1,
+                        tiles).get(0).getElement().getDirection());
                 robot.setDamageTaken(2);
                 robots.put(robot.getRobotId(), robot);
             } else {

@@ -176,9 +176,9 @@ public class PhaseTest {
         robots.add(robot);
         robots.add(new Robot(RobotID.ROBOT_2, new Position(9, 13)));
         robots.add(robot3);
-        robot3.setFacingDirection(Direction.EAST);
-
         Phase testPhase = createPhaseAndLoadBoard(players, robots, "boards/another_test_map.txt");
+        robot3.setFacingDirection(Direction.EAST);
+        
         assertEquals(0, robot.getDamageTaken());
         testPhase.fireAllLasers();
         assertEquals(2, robot.getDamageTaken());

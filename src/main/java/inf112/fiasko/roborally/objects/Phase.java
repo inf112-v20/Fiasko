@@ -62,6 +62,11 @@ public class Phase {
 
         fireAllLasers();
         checkAllFlags();
+        updateRobotRespawn();
+    }
+
+    public void updateRobotRespawn(){
+        gameBoard.updateRobotRespawn();
     }
 
     /**
@@ -109,7 +114,7 @@ public class Phase {
             if (gameBoard.hasTouchedFlagThisTurn(robotID)) {
                 continue;
             }
-            gameBoard.updateRobotFlag(robotID, flag.getElement().getType());
+            gameBoard.updateRobotFlag(robotID, flag);
             checkIfPlayerWon(robotID, flags.size());
         }
     }

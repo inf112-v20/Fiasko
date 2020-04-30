@@ -161,8 +161,8 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
      */
     private void generateCards(ProgrammingCardDeck deck) {
         List<ProgrammingCard> cardList = deck.getCards();
-        float cardWidth = viewport.getWorldWidth() / 3;
-        float cardHeight = (viewport.getWorldHeight() - 30) / 3;
+        float cardWidth = viewport.getWorldWidth() / 3.2f;
+        float cardHeight = (viewport.getWorldHeight() - 30) / 3.2f;
         for (int i = 0; i < cardList.size(); i++) {
             ProgrammingCard programmingCard = cardList.get(i);
             generateCardRectangle(i, cardWidth, cardHeight, programmingCard, true);
@@ -211,6 +211,8 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
         renderCards();
         shapeRenderer.end();
         roboRallyWrapper.batch.begin();
+        roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Press TAB to toggle the board", 10,
+                viewport.getWorldHeight() - 50);
         renderCardText();
         roboRallyWrapper.batch.end();
         stage.draw();
@@ -255,7 +257,7 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
     private void renderCardText() {
         roboRallyWrapper.font.setColor(YELLOW);
         for (CardRectangle cardRectangle : cardRectangles) {
-            roboRallyWrapper.font.getData().setScale(0.8f);
+            roboRallyWrapper.font.getData().setScale(0.7f);
             GlyphLayout layout = new GlyphLayout(roboRallyWrapper.font,
                     Integer.toString(cardRectangle.card.getPriority()));
             float fontX = (int) (cardRectangle.rectangle.x + (cardRectangle.rectangle.width - layout.width) - 28);

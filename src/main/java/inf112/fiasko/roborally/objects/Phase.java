@@ -65,8 +65,8 @@ public class Phase {
         updateRobotRespawn();
     }
 
-    public void updateRobotRespawn(){
-        gameBoard.updateRobotRespawn();
+    public void updateRobotRespawn() {
+        gameBoard.updateRobotBackups();
     }
 
     /**

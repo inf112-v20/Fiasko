@@ -234,8 +234,8 @@ public class BoardTest {
     public void flagGetsUpdatedOnRobotWithCorrectLastVisitedFlag() {
         Robot testRobot = robotList.get(6);
         assertEquals(0, testRobot.getLastFlagVisited());
-        BoardElementContainer<Tile> flag = new BoardElementContainer<>(new Tile(TileType.FLAG_1,Direction.NORTH)
-                ,new Position(1,1));
+        BoardElementContainer<Tile> flag = new BoardElementContainer<>(new Tile(TileType.FLAG_1, Direction.NORTH)
+                , new Position(1, 1));
         board.updateRobotFlag(RobotID.ROBOT_7, flag);
         assertEquals(1, testRobot.getLastFlagVisited());
     }
@@ -244,8 +244,8 @@ public class BoardTest {
     public void flagDoesNotUpdatedOnRobotWithWrongLastVisitedFlag() {
         Robot testRobot = robotList.get(6);
         assertEquals(0, testRobot.getLastFlagVisited());
-        BoardElementContainer<Tile> flag = new BoardElementContainer<>(new Tile(TileType.FLAG_2,Direction.NORTH)
-                ,new Position(1,1));
+        BoardElementContainer<Tile> flag = new BoardElementContainer<>(new Tile(TileType.FLAG_2, Direction.NORTH)
+                , new Position(1, 1));
         board.updateRobotFlag(RobotID.ROBOT_7, flag);
         assertEquals(0, testRobot.getLastFlagVisited());
     }

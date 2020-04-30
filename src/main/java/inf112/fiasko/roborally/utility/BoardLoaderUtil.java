@@ -118,7 +118,7 @@ public final class BoardLoaderUtil {
      */
     private static void adjustRobotRotationToBoardRotation(Grid<Tile> tileGrid, List<Robot> robotList) {
         //The flags are always in the up direction
-        List<BoardElementContainer<Tile>> flags = GridUtil.getMatchingElements(TileType.FLAG_1, tileGrid);
+        List<BoardElementContainer<Tile>> flags = GridUtil.getMatchingElements(TileType.ROBOT_SPAWN_1, tileGrid);
         Direction boardDirection;
         if (flags.size() == 0) {
             boardDirection = Direction.NORTH;

@@ -56,7 +56,6 @@ public class LoadingScreen extends AbstractScreen {
             }
             return "Loading...";
         }
-        System.out.println(roboRallyWrapper.roboRallyGame.getGameState());
         switch (roboRallyWrapper.roboRallyGame.getGameState()) {
             case WAITING_FOR_OTHER_PLAYERS_PROGRAMS:
                 return "Waiting for other players to finish programming...";
@@ -71,7 +70,6 @@ public class LoadingScreen extends AbstractScreen {
             default:
                 return "Waiting for something...";
         }
-
     }
 
     /**

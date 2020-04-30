@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * This listener handles all sending and responses for the server
@@ -172,11 +171,10 @@ class RoboRallyServerListener extends Listener {
             programs = new HashMap<>();
         } else {
             List<Connection> notReceivedFrom = playersNotYetReceivedFrom(programs);
-            if (notReceivedFrom.size() != 1) {
-                return;
+            if (notReceivedFrom.size() == 1) {
+                Connection hurryUp = notReceivedFrom.get(0);
+                hurryUp.sendTCP(new HurryResponse());
             }
-            Connection hurryUp = notReceivedFrom.get(0);
-            hurryUp.sendTCP(new HurryResponse());
         }
     }
 
@@ -188,7 +186,7 @@ class RoboRallyServerListener extends Listener {
      * @return True if information has been received by all alive players
      */
     private <K> boolean receivedDataFromAllConnections(Map<Connection, K> data) {
-        Set<Connection> connections = clients.keySet();
+        List<Connection> connections = new ArrayList<>(clients.keySet());
         connections.removeAll(deadPlayers);
         return data.keySet().containsAll(connections);
     }
@@ -201,10 +199,10 @@ class RoboRallyServerListener extends Listener {
      * @return All active connections for which the map has no data
      */
     private <K> List<Connection> playersNotYetReceivedFrom(Map<Connection, K> data) {
-        Set<Connection> connections = clients.keySet();
+        List<Connection> connections = new ArrayList<>(clients.keySet());
         connections.removeAll(deadPlayers);
         connections.removeAll(data.keySet());
-        return new ArrayList<>(connections);
+        return connections;
     }
 
     @Override

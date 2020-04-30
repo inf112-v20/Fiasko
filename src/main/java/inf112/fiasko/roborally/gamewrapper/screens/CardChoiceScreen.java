@@ -123,6 +123,7 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
      */
     private void confirmCards(Boolean requestPowerDown) {
         if (chosenCards.size() == maxCards) {
+            roboRallyWrapper.shouldHurry = false;
             List<ProgrammingCard> newProgram = getChosenAndLockedCards();
             //Save the program to get locked cards later
             roboRallyWrapper.roboRallyGame.setProgram(newProgram);

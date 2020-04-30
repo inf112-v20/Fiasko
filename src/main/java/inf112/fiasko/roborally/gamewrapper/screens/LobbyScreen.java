@@ -45,7 +45,7 @@ public class LobbyScreen extends InteractiveScreen {
 
         selectBox = new SelectBox<>(skin);
         selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange", "Twister", "Bloodbath_Chess", "Vault_Assault",
-                "Island_Hop", "Chop_Shop_Challenge", "Around_The_World", "Death_Trap");
+                "Island_Hop", "Chop_Shop_Challenge", "Around_The_World", "Death_Trap", "Whirlwind_Tour");
         selectBox.setSize(200, 50);
         selectBox.setPosition((applicationWidth - selectBox.getWidth()) / 2f, applicationHeight / 2f - 120);
 

@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyUI;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
+import inf112.fiasko.roborally.networking.containers.HurryResponse;
 import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
@@ -67,6 +68,8 @@ class RoboRallyClientListener extends Listener {
             new Thread(() -> wrapper.getGame().receiveStayInPowerDown((PowerDownContainerResponse) object)).start();
         } else if (object instanceof OkayResponse) {
             this.lastRequestState = RequestState.SENT_OKAY;
+        } else if (object instanceof HurryResponse) {
+            this.wrapper.setShouldHurry(true);
         }
     }
 

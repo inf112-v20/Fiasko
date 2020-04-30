@@ -34,4 +34,11 @@ public interface RoboRallyUI {
      * @return The server of the game
      */
     RoboRallyServer getServer();
+
+    /**
+     * Sets whether the client should hurry with whatever it's doing
+     *
+     * @param shouldHurry True if the user should hurry
+     */
+    void setShouldHurry(boolean shouldHurry);
 }

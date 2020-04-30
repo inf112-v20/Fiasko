@@ -19,6 +19,7 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
     public RoboRallyGame roboRallyGame;
     public RoboRallyServer server;
     public RoboRallyClient client;
+    public boolean shouldHurry = false;
 
     @Override
     public void create() {
@@ -57,6 +58,11 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
     @Override
     public RoboRallyServer getServer() {
         return server;
+    }
+
+    @Override
+    public void setShouldHurry(boolean shouldHurry) {
+        this.shouldHurry = shouldHurry;
     }
 
     /**

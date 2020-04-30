@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
+import inf112.fiasko.roborally.networking.containers.HurryResponse;
 import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
@@ -169,6 +170,13 @@ class RoboRallyServerListener extends Listener {
             }
             server.sendToAllClients(new ProgramsContainerResponse(program, powerDown));
             programs = new HashMap<>();
+        } else {
+            List<Connection> notReceivedFrom = playersNotYetReceivedFrom(programs);
+            if (notReceivedFrom.size() != 1) {
+                return;
+            }
+            Connection hurryUp = notReceivedFrom.get(0);
+            hurryUp.sendTCP(new HurryResponse());
         }
     }
 
@@ -183,6 +191,20 @@ class RoboRallyServerListener extends Listener {
         Set<Connection> connections = clients.keySet();
         connections.removeAll(deadPlayers);
         return data.keySet().containsAll(connections);
+    }
+
+    /**
+     * Gets a list containing all connections the data has not been received from
+     *
+     * @param data The data map to check
+     * @param <K>  The type of data contained in the map
+     * @return All active connections for which the map has no data
+     */
+    private <K> List<Connection> playersNotYetReceivedFrom(Map<Connection, K> data) {
+        Set<Connection> connections = clients.keySet();
+        connections.removeAll(deadPlayers);
+        connections.removeAll(data.keySet());
+        return new ArrayList<>(connections);
     }
 
     @Override

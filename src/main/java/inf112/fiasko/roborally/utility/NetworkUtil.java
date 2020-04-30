@@ -5,6 +5,7 @@ import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
+import inf112.fiasko.roborally.networking.containers.HurryResponse;
 import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
@@ -44,5 +45,6 @@ public final class NetworkUtil {
         kryo.register(HashMap.class);
         kryo.register(UsernameRequest.class);
         kryo.register(OkayResponse.class);
+        kryo.register(HurryResponse.class);
     }
 }

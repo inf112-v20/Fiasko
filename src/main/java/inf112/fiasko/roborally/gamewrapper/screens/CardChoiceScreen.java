@@ -39,6 +39,7 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
     private final ShapeRenderer shapeRenderer;
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
+    private long timerStarted;
 
     /**
      * Instantiates a new card choice screen
@@ -213,10 +214,23 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
         roboRallyWrapper.batch.begin();
         roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Press TAB to toggle the board", 10,
                 viewport.getWorldHeight() - 50);
+        int timerSize = 30;
+        if (timerStarted != 0) {
+            roboRallyWrapper.font.draw(roboRallyWrapper.batch, "Time left: " + String.valueOf(timerSize -
+                            (System.currentTimeMillis() - timerStarted) / 1000), viewport.getWorldWidth() - 150,
+                    viewport.getWorldHeight() - 50);
+        }
         renderCardText();
         roboRallyWrapper.batch.end();
         stage.draw();
         stage.act();
+        if (roboRallyWrapper.shouldHurry && timerStarted == 0) {
+            timerStarted = System.currentTimeMillis();
+        }
+        if (System.currentTimeMillis() > timerStarted + 1000 * timerSize && timerStarted > 0) {
+            fillProgramWithRandomCards();
+            confirmCards(false);
+        }
     }
 
     @Override
@@ -249,6 +263,23 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
                     false, false);
         }
         roboRallyWrapper.batch.end();
+    }
+
+    /**
+     * Fills the user's program with enough cards to complete the program
+     */
+    private void fillProgramWithRandomCards() {
+        int missingCards = maxCards - getCards().size();
+        for (int i = 0; i < missingCards; i++) {
+            for (CardRectangle rectangle : cardRectangles) {
+                if (!rectangle.selected) {
+                    rectangle.selected = true;
+                    rectangle.selectable = false;
+                    chosenCards.add(rectangle);
+                    break;
+                }
+            }
+        }
     }
 
     /**

@@ -448,9 +448,7 @@ public class Board {
     public void respawnRobots() {
         for (Robot robot : deadRobots) {
             if (robot.getAmountOfLives() > 0) {
-                robot.setPosition(robot.getBackupPosition());
-                robot.setFacingDirection(GridUtil.getMatchingElements(TileType.FLAG_1,
-                        tiles).get(0).getElement().getDirection());
+                tryCircle(robot);
                 robot.setDamageTaken(2);
                 robots.put(robot.getRobotId(), robot);
             } else {
@@ -459,7 +457,101 @@ public class Board {
         }
         deadRobots = new ArrayList<>();
     }
+    public void tryCircle(Robot robot){
+        Position respawn = robot.getBackupPosition();
+        int startX=respawn.getXCoordinate();
+        int startY=respawn.getYCoordinate();
+        if(!hasRobotOnPosition(respawn)){
+            robot.setPosition(respawn);
+            return;
+        }
+        for(int i=1; i<3;i++){
+            if(tryRespawn(robot,i,startX,startY,Direction.NORTH)){
+                break;
+            }
+            if(tryRespawn(robot,i,startX,startY,Direction.SOUTH)){
+                break;
+            }
+            if(tryRespawn(robot,i,startX,startY,Direction.EAST)){
+                break;
+            }
+            if(tryRespawn(robot,i,startX,startY,Direction.WEST)){
+                break;
+            }
+        }
+    }
+    public Boolean tryRespawn(Robot robot,int size,int startX,int startY,Direction direction){
+        int axis;
+        for(int i=1;i<=size;i++) {
+            if (direction== Direction.NORTH ||direction== Direction.SOUTH) {
+                axis=startX;
+            }
+            else{
+                axis=startY;
+            }
+                for (int j = axis-i; j < axis+i; j++) {
+                    int[] coordinates = switchForRespawn(startX,startY,direction,j,size);
+                    int x=coordinates[0];
+                    int y=coordinates[1];
+                    Position tryRespawn = new Position(x, y);
+                    System.out.println(tryRespawn);
+                    if (!isValidPosition(tryRespawn)) {
+                        continue;
+                    }
+                    TileType tile = getTileOnPosition(tryRespawn).getType();
+                    if(checkIfRespawnHasPit(tile, direction, robot, tryRespawn)){
+                        return true;
+                    }
+                }
+        }
+        return false;
+    }
+    private int[] switchForRespawn(int startX,int startY,Direction direction,int j,int size){
+        int x;
+        int y;
+        switch (direction){
+            case NORTH:
+                x = j;
+                y = startY-size;
+                break;
+            case SOUTH:
+                x = j;
+                y = startY+size;
+                break;
+            case WEST:
+                x = startX-size;
+                y = j;
+                break;
+            case EAST:
+                x = startX+size;
+                y = j;
+                break;
+            default: throw new IllegalArgumentException("invalid direction for tile");
+        }
+        return new int[]{x,y};
+    }
 
+    public boolean checkIfRespawnHasPit(TileType tile,Direction direction,Robot robot,Position tryRespawn){
+        if ( tile!=TileType.PIT_CORNER && tile!=TileType.PIT_EMPTY &&tile!=TileType.PIT_FULL &&
+                tile!=TileType.PIT_NORMAL &&tile!=TileType.PIT_U && tile!=TileType.HOLE){
+            if(!hasRobotOnPosition(tryRespawn)){
+                robot.setFacingDirection(direction);
+                robot.setPosition(tryRespawn);
+                return true;
+            }
+        }
+        return false;
+    }
+    public void updateRobotRespawn(){
+        List<BoardElementContainer<Tile>> repaireTiles = getPositionsOfTilesOnBoard(TileType.WRENCH,
+                TileType.WRENCH_AND_HAMMER,TileType.FLAG_1,TileType.FLAG_2,TileType.FLAG_3,TileType.FLAG_4);
+        for (BoardElementContainer<Tile> repaireTile:repaireTiles) {
+            Position pos = repaireTile.getPosition();
+            if(hasRobotOnPosition(pos)){
+                getRobot(getRobotOnPosition(pos)).setBackupPosition(pos);
+            }
+        }
+    }
     /**
      * Returns a robot id for a robot on a specific position if such a robot exists
      *
@@ -490,11 +582,11 @@ public class Board {
      * Updates the flag of the robot if it stands on the correct flag.
      *
      * @param robotID The RobotID of a robot
-     * @param flagID  TileType of the flag we check
+     * @param flag  BoardElementContainer of the flag we check
      */
-    public void updateRobotFlag(RobotID robotID, TileType flagID) {
+    public void updateRobotFlag(RobotID robotID, BoardElementContainer<Tile> flag) {
         Robot robot = robots.get(robotID);
-        int flagNumber = flagID.getTileTypeID() % 16;
+        int flagNumber = flag.getElement().getType().getTileTypeID() % 16;
         if (flagNumber - 1 == robot.getLastFlagVisited()) {
             robot.setLastFlagVisited(flagNumber);
             setHasTouchedFlagThisTurn(robotID, true);

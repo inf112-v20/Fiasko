@@ -2,7 +2,6 @@ package inf112.fiasko.roborally.gamewrapper.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -32,7 +31,7 @@ import static com.badlogic.gdx.graphics.Color.YELLOW;
 /**
  * This screen is used to let the user choose their program
  */
-public class CardChoiceScreen extends InteractiveScreen implements Screen {
+public class CardChoiceScreen extends InteractiveScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
     private final List<CardRectangle> cardRectangles;
@@ -169,11 +168,29 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
             ProgrammingCard programmingCard = cardList.get(i);
             generateCardRectangle(i, cardWidth, cardHeight, programmingCard, true);
         }
-        List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+        //Adds locked cards to the card list
+        List<ProgrammingCard> oldProgram = getOldProgram();
         for (int i = cardList.size(); i < cardList.size() + getNumberOfLockedCards(); i++) {
             ProgrammingCard programmingCard = oldProgram.get(4 - (i - cardList.size()));
             generateCardRectangle(i, cardWidth, cardHeight, programmingCard, false);
         }
+    }
+
+    /**
+     * Gets the old program of the player with extra cards added
+     *
+     * @return The player's old program
+     */
+    private List<ProgrammingCard> getOldProgram() {
+        List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+        if (oldProgram != null && oldProgram.size() == 0) {
+            oldProgram = roboRallyWrapper.roboRallyGame.getExtraCards().getCards();
+            int nulls = 5 - oldProgram.size();
+            for (int i = 0; i < nulls; i++) {
+                oldProgram.add(0, null);
+            }
+        }
+        return oldProgram;
     }
 
     /**
@@ -316,38 +333,13 @@ public class CardChoiceScreen extends InteractiveScreen implements Screen {
      * @return A list of programming cards
      */
     private List<ProgrammingCard> getChosenAndLockedCards() {
-        List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+        List<ProgrammingCard> oldProgram = getOldProgram();
         int lockedCardsInt = getNumberOfLockedCards();
         List<ProgrammingCard> newProgram = new ArrayList<>(getCards());
         for (int i = 4; i > (4 - lockedCardsInt); i--) {
             newProgram.add(oldProgram.get(i));
         }
         return newProgram;
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-    }
-
-    @Override
-    public void pause() {
-        //Nothing to do
-    }
-
-    @Override
-    public void resume() {
-        //Nothing to do
-    }
-
-    @Override
-    public void hide() {
-        //Nothing to do
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
     @Override

@@ -68,6 +68,20 @@ public interface InteractableGame {
     void setPlayerHand(ProgrammingCardDeck playerHand);
 
     /**
+     * Gets extra cards necessary when the player has no program to lock
+     *
+     * @return A deck of extra cards
+     */
+    ProgrammingCardDeck getExtraCards();
+
+    /**
+     * Sets extra cards necessary when the player has no program to lock
+     *
+     * @param extraCards The extra cards to use
+     */
+    void setExtraCards(ProgrammingCardDeck extraCards);
+
+    /**
      * Gets the amount of cards the player can choose for their program
      *
      * @return The size of the player's next program

@@ -53,6 +53,16 @@ public class FakeGame implements InteractableGame {
     }
 
     @Override
+    public ProgrammingCardDeck getExtraCards() {
+        return null;
+    }
+
+    @Override
+    public void setExtraCards(ProgrammingCardDeck extraCards) {
+        //Not needed for testing
+    }
+
+    @Override
     public int getProgramSize() {
         return 0;
     }

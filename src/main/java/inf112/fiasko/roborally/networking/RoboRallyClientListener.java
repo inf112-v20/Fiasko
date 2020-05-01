@@ -6,11 +6,11 @@ import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.gamewrapper.RoboRallyUI;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
+import inf112.fiasko.roborally.networking.containers.HandResponse;
 import inf112.fiasko.roborally.networking.containers.HurryResponse;
 import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
-import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
 
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ class RoboRallyClientListener extends Listener {
             handleError((ErrorResponse) object);
         } else if (object instanceof GameStartInfoResponse) {
             receiveGameStartInfo((GameStartInfoResponse) object);
-        } else if (object instanceof ProgrammingCardDeck) {
-            receiveHand((ProgrammingCardDeck) object);
+        } else if (object instanceof HandResponse) {
+            receiveHand((HandResponse) object);
         } else if (object instanceof ProgramsContainerResponse) {
             receivePrograms((ProgramsContainerResponse) object);
         } else if (object instanceof PowerDownContainerResponse) {
@@ -102,7 +102,7 @@ class RoboRallyClientListener extends Listener {
      *
      * @param newHand The new hand this client can choose from
      */
-    private void receiveHand(ProgrammingCardDeck newHand) {
+    private void receiveHand(HandResponse newHand) {
         new Thread(() -> {
             //Prevents a bug where the game
             while (wrapper.getGame().getGameState() != GameState.WAITING_FOR_CARDS_FROM_SERVER) {
@@ -112,13 +112,14 @@ class RoboRallyClientListener extends Listener {
                     e.printStackTrace();
                 }
             }
-            if (newHand.isEmpty() && wrapper.getGame().getRobotPowerDown()) {
+            if (newHand.getNewHand().isEmpty() && wrapper.getGame().getRobotPowerDown()) {
                 wrapper.getGame().setProgram(new ArrayList<>());
                 wrapper.getGame().setGameState(GameState.SKIP_POWER_DOWN_SCREEN);
             } else {
                 wrapper.getGame().setGameState(GameState.CHOOSING_CARDS);
             }
-            wrapper.getGame().setPlayerHand(newHand);
+            wrapper.getGame().setPlayerHand(newHand.getNewHand());
+            wrapper.getGame().setExtraCards(newHand.getExtraCards());
         }).start();
     }
 

@@ -6,6 +6,7 @@ import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
+import inf112.fiasko.roborally.networking.containers.HandResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
@@ -32,6 +33,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private String winningPlayerName;
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
+    private ProgrammingCardDeck extraCards;
 
     /**
      * Instantiates a new Robo Rally game
@@ -125,6 +127,16 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     @Override
     public void setPlayerHand(ProgrammingCardDeck playerHand) {
         this.playerHand = playerHand;
+    }
+
+    @Override
+    public ProgrammingCardDeck getExtraCards() {
+        return extraCards;
+    }
+
+    @Override
+    public void setExtraCards(ProgrammingCardDeck extraCards) {
+        this.extraCards = extraCards;
     }
 
     @Override
@@ -277,12 +289,36 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                 String playerName = server.getPlayerNames().get(connection);
                 Player player = getPlayerFromName(playerName);
                 if (player != null && player.getProgrammingCardDeck() != null) {
-                    server.sendToClient(connection, player.getProgrammingCardDeck());
+                    ProgrammingCardDeck extraCards = getExtraCardsDeck(player);
+                    server.sendToClient(connection, new HandResponse(player.getProgrammingCardDeck(), extraCards));
+                    extraCards.emptyInto(player.getLockedProgrammingCardDeck());
                 } else {
                     throw new IllegalArgumentException("Player " + playerName + " is not part of the game.");
                 }
             }
         }
+    }
+
+    /**
+     * Gets a deck of extra cards to send to the player
+     *
+     * <p>These extra cards are cards which are locked, but not part of the player's program,</p>
+     *
+     * @param player The player to get extra cards for
+     * @return The extra cards to send the player
+     */
+    private ProgrammingCardDeck getExtraCardsDeck(Player player) {
+        //A player with an empty program and a robot not in power down may need extra cards
+        if (player.getProgram() == null || !player.getProgram().isEmpty() || gameBoard.getPowerDown(player.getRobotID())) {
+            return new ProgrammingCardDeck(new ArrayList<>());
+        }
+        int programSize = Math.min(5, 5 - gameBoard.getRobotDamage(player.getRobotID()) + 4);
+        int lockedCards = 5 - programSize;
+        ProgrammingCardDeck extraDeck = new ProgrammingCardDeck();
+        for (int i = 0; i < lockedCards; i++) {
+            extraDeck.draw(mainDeck);
+        }
+        return extraDeck;
     }
 
     /**

@@ -1,0 +1,94 @@
+runde 1
+backup	tester tannhjule til høyre
+move1	tester tannhjule til venstre
+move2	tester sakte transport bånd som går inn i et høyre vrid sakte transport bånd
+rotate left	tester sakte transport bånd bort til raskt transport bånd
+u turn	tester raskt transportbånd bort til flag 1 og tester at flag 1 blir registrert
+
+comfirm
+
+runde 2
+rotet left
+move 2	tester flag 2 blir registrert
+rotate right
+u turn
+move 3	tester at spiller dør av å gå av brettet
+
+comfirm + powerdown  tester at powerdown virker
+
+continue powerdown click tester at continue powerdown virker
+
+continue powerdown vent tester at det å ikke ta continue powerdown virker
+
+runde 3
+rotate right
+move 1	tester at når du treffer alle falgende så vinner du
+velg 3 tilfeldige kort
+
+comfirm
+
+du vant
+
+quit tester at quit virker
+
+
+
+
+nytt test spill
+runde 1
+rotate left
+move 1	tester 3 skade fra laser + at robot blokere laser
+move 1	tester 2 skade fra laser + at robot blokere laser
+move 1	tester 1 skade fra laser + at robot blokere laser
+back up tester 8 skade fra laser
+
+comfirm
+
+runde 2 tester at kort blir låst
+select to one available card
+
+
+tester at du respawner med 2 i skade og på skiftesnøkkel
+comfirm
+
+
+kryss ut spillet
+
+
+
+nytt spill
+runde 1 tester hull
+rotate right
+move 1
+rotate left
+u turn
+move 3	tester hull
+
+comfirm + powerdown
+
+runde 2
+rotate right
+move 2
+rotate left
+u turn
+move 3 tester pit
+
+comfirm + powerdown
+
+runde 3
+rotate right
+move 3
+rotate left
+u turn
+move 2 tester at vegg på tile foran deg stopper deg
+
+comfirm
+
+runde 4
+rotate left tester at vegg på samme tile stopper deg
+move 1
+move 1
+move 1
+move 3
+
+kryss ut spillet

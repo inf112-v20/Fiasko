@@ -41,4 +41,6 @@ public interface RoboRallyUI {
      * @param shouldHurry True if the user should hurry
      */
     void setShouldHurry(boolean shouldHurry);
+
+    boolean isTesting();
 }

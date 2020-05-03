@@ -20,6 +20,7 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
     public RoboRallyServer server;
     public RoboRallyClient client;
     public boolean shouldHurry = false;
+    public boolean isTesting = false;
 
     @Override
     public void create() {
@@ -70,5 +71,10 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
      */
     public void quit() {
         Gdx.app.exit();
+    }
+
+    @Override
+    public boolean isTesting(){
+        return this.isTesting;
     }
 }

@@ -59,21 +59,23 @@ public class LobbyScreen extends InteractiveScreen {
 
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                roboRallyWrapper.server.startGame();
-                Map<Connection, String> playerNames = roboRallyWrapper.server.getPlayerNames();
-                List<Player> playerList = IOUtil.playerGenerator(playerNames,
-                        roboRallyWrapper.server.getRobotID());
-                for (Connection connection : playerNames.keySet()) {
-                    roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(
-                            selectBox.getSelected() + ".txt", playerList, playerNames.get(connection)));
-                }
-                roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+                startGame();
             }
         });
         Gdx.input.setInputProcessor(stage);
         stage.setViewport(viewport);
     }
-
+    private void startGame(){
+        roboRallyWrapper.server.startGame();
+        Map<Connection, String> playerNames = roboRallyWrapper.server.getPlayerNames();
+        List<Player> playerList = IOUtil.playerGenerator(playerNames,
+                roboRallyWrapper.server.getRobotID());
+        for (Connection connection : playerNames.keySet()) {
+            roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(
+                    selectBox.getSelected() + ".txt", playerList, playerNames.get(connection)));
+        }
+        roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
+    }
     @Override
     public void show() {
         super.show();
@@ -91,6 +93,13 @@ public class LobbyScreen extends InteractiveScreen {
                 selectBox.setSelected(testBoard);
             }
             return true;
+        }
+        else if(keyCode == Input.Keys.T){
+            roboRallyWrapper.isTesting=true;
+            String testBoard = "Manuall_testing";
+            selectBox.getItems().add(testBoard);
+            selectBox.setSelected(testBoard);
+            startGame();
         }
         return false;
     }

@@ -868,7 +868,7 @@ public class Board {
              default:
                  throw new IllegalArgumentException("Invalid laser type encountered.");
         }
-        robot.setDamageTaken(robot.getDamageTaken() + laserDamage - 2);
+        robot.setDamageTaken(robot.getDamageTaken() + laserDamage);
     }
 
     /**

@@ -22,8 +22,14 @@ public final class DeckLoaderUtil {
      * @throws IOException If the programming cards file is invalid
      */
     public static ProgrammingCardDeck loadProgrammingCardsDeck() throws IOException {
+        return loadCards("programming_cards.txt");
+    }
+    public static ProgrammingCardDeck loadProgrammingCardsTestDeck()throws IOException{
+        return loadCards("programming_cards_manuall_testing.txt");
+    }
+    private static ProgrammingCardDeck loadCards(String cardFile) throws IOException{
         BufferedReader reader = new BufferedReader(new InputStreamReader(
-                ResourceUtil.getResourceAsInputStream("programming_cards.txt")));
+                ResourceUtil.getResourceAsInputStream(cardFile)));
         int numberOfCards = Integer.parseInt(reader.readLine());
         List<ProgrammingCard> programmingCardList = new ArrayList<>();
         for (int i = 0; i < numberOfCards; i++) {
@@ -34,5 +40,6 @@ public final class DeckLoaderUtil {
             programmingCardList.add(new ProgrammingCard(cardPriority, cardAction));
         }
         return new ProgrammingCardDeck(programmingCardList);
+
     }
 }

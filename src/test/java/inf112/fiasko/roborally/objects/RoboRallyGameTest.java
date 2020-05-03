@@ -19,7 +19,7 @@ public class RoboRallyGameTest {
     @Before
     public void setUp() {
         game = new RoboRallyGame(new ArrayList<>(), "Checkmate.txt", "Player1",
-                null);
+                null,false);
     }
 
     @Test

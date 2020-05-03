@@ -22,14 +22,27 @@ public final class DeckLoaderUtil {
      * @throws IOException If the programming cards file is invalid
      */
     public static ProgrammingCardDeck loadProgrammingCardsDeck() throws IOException {
-        return loadCards("programming_cards.txt");
+        return loadProgrammingCardsDeck("programming_cards.txt");
     }
 
+    /**
+     * Returns a programming card deck containing nine cards to use for testing
+     *
+     * @return A programming card deck with nine programming cards
+     * @throws IOException If the programming cards file is invalid
+     */
     public static ProgrammingCardDeck loadProgrammingCardsTestDeck() throws IOException {
-        return loadCards("programming_cards_manuall_testing.txt");
+        return loadProgrammingCardsDeck("programming_cards_manual_testing.txt");
     }
 
-    private static ProgrammingCardDeck loadCards(String cardFile) throws IOException {
+    /**
+     * Loads programming cards from a file
+     *
+     * @param cardFile The file containing the cards to load
+     * @return  A deck of programming cards
+     * @throws IOException If the programming cards file is invalid
+     */
+    private static ProgrammingCardDeck loadProgrammingCardsDeck(String cardFile) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 ResourceUtil.getResourceAsInputStream(cardFile)));
         int numberOfCards = Integer.parseInt(reader.readLine());

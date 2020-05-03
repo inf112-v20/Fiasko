@@ -42,5 +42,10 @@ public interface RoboRallyUI {
      */
     void setShouldHurry(boolean shouldHurry);
 
+    /**
+     * Gets whether the game should be started in test mode
+     *
+     * @return Whether the game should be started in test mode
+     */
     boolean isTesting();
 }

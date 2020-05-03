@@ -2,6 +2,7 @@ package inf112.fiasko.roborally.ui.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -66,6 +67,9 @@ public class LobbyScreen extends InteractiveScreen {
         stage.setViewport(viewport);
     }
 
+    /**
+     * Makes the server send information to players about the selected map and connected players
+     */
     private void startGame() {
         roboRallyWrapper.server.startGame();
         Map<Connection, String> playerNames = roboRallyWrapper.server.getPlayerNames();
@@ -97,7 +101,7 @@ public class LobbyScreen extends InteractiveScreen {
             return true;
         } else if (keyCode == Input.Keys.T) {
             roboRallyWrapper.isTesting = true;
-            String testBoard = "Manuall_testing";
+            String testBoard = "manual_testing";
             selectBox.getItems().add(testBoard);
             selectBox.setSelected(testBoard);
             startGame();
@@ -107,7 +111,9 @@ public class LobbyScreen extends InteractiveScreen {
 
     @Override
     public void render(float delta) {
-        super.render(delta);
+        Gdx.gl.glClearColor(0.5f, 0.5f, 0.5f, 0.5f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        camera.update();
         roboRallyWrapper.batch.setProjectionMatrix(camera.combined);
 
         roboRallyWrapper.batch.begin();
@@ -119,6 +125,8 @@ public class LobbyScreen extends InteractiveScreen {
                 applicationWidth / 2f - 380 / 2f, applicationHeight / 2f + 100, 380, 1,
                 true);
         roboRallyWrapper.batch.end();
+        stage.draw();
+        stage.act();
     }
 
 }

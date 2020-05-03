@@ -43,6 +43,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      * @param boardName  The playerName of the board to use
      * @param playerName The name of the player of this instance of the game
      * @param server     The server if this player is host. Should be null otherwise
+     * @param testingMode Whether the game should use the test deck rather than the proper deck
      */
     public RoboRallyGame(List<Player> playerList, String boardName, String playerName,
                          RoboRallyServer server, Boolean testingMode) {

@@ -854,7 +854,21 @@ public class Board {
      * @param robot     The robot getting hit by the robot
      */
     private void applyLaserDamage(WallType laserType, Robot robot) {
-        robot.setDamageTaken(robot.getDamageTaken() + laserType.getWallTypeID() - 2);
+        int laserDamage;
+        switch (laserType) {
+            case WALL_LASER_SINGLE:
+                laserDamage = 1;
+                break;
+            case WALL_LASER_DOUBLE:
+                laserDamage = 2;
+                break;
+            case WALL_LASER_TRIPLE:
+                laserDamage = 3;
+                break;
+             default:
+                 throw new IllegalArgumentException("Invalid laser type encountered.");
+        }
+        robot.setDamageTaken(robot.getDamageTaken() + laserDamage - 2);
     }
 
     /**

@@ -28,6 +28,48 @@ public final class BoardLoaderUtil {
     }
 
     /**
+     * Gets the actual file name of a board given its human-readable name
+     *
+     * @param boardName The human-readable name of a board
+     * @return The file name of the board
+     */
+    public static String getRealBoardName(String boardName) {
+        return boardName.replace(" ", "_") + ".txt";
+    }
+
+    /**
+     * Gets a list of all available boards with human-readable names
+     *
+     * @return A list of all available boards
+     * @throws IOException If the board list cannot be read
+     */
+    public static String[] getBoardListHumanReadable() throws IOException {
+        String[] boards = getBoardList();
+        for (int i = 0; i < boards.length; i++) {
+            boards[i] = boards[i].replace("_", " ").replace(".txt", "");
+        }
+        return boards;
+    }
+
+    /**
+     * Gets a list of all available boards
+     *
+     * @return A list of all available boards
+     * @throws IOException If the board list cannot be read
+     */
+    private static String[] getBoardList() throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                ResourceUtil.getResourceAsInputStream("boards.txt")));
+        int numberOfBoards = Integer.parseInt(reader.readLine());
+        String[] boardList = new String[numberOfBoards];
+        for (int i = 0; i < numberOfBoards; i++) {
+            String board = reader.readLine();
+            boardList[i] = board;
+        }
+        return boardList;
+    }
+
+    /**
      * Loads and rotates a board described in a file
      *
      * @param boardFile The file containing the board description

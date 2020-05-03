@@ -34,6 +34,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
     private ProgrammingCardDeck extraCards;
+    private Boolean testingMode;
 
     /**
      * Instantiates a new Robo Rally game
@@ -44,7 +45,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      * @param server     The server if this player is host. Should be null otherwise
      */
     public RoboRallyGame(List<Player> playerList, String boardName, String playerName,
-                         RoboRallyServer server) {
+                         RoboRallyServer server,Boolean testingMode) {
+        this.testingMode=testingMode;
         this.playerName = playerName;
         this.host = server != null;
         this.playerList = playerList;
@@ -244,7 +246,13 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                     TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
 
             if (host) {
-                mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
+                if(testingMode){
+                    mainDeck = DeckLoaderUtil.loadProgrammingCardsTestDeck();
+                }
+                else{
+                    mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
+                }
+
             }
 
             phase = new Phase(gameBoard, playerList, 600, this);

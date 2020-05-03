@@ -1,8 +1,8 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.elementproperties.Action;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
+import inf112.fiasko.roborally.objects.properties.Action;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,10 +24,12 @@ public final class DeckLoaderUtil {
     public static ProgrammingCardDeck loadProgrammingCardsDeck() throws IOException {
         return loadCards("programming_cards.txt");
     }
-    public static ProgrammingCardDeck loadProgrammingCardsTestDeck()throws IOException{
+
+    public static ProgrammingCardDeck loadProgrammingCardsTestDeck() throws IOException {
         return loadCards("programming_cards_manuall_testing.txt");
     }
-    private static ProgrammingCardDeck loadCards(String cardFile) throws IOException{
+
+    private static ProgrammingCardDeck loadCards(String cardFile) throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(
                 ResourceUtil.getResourceAsInputStream(cardFile)));
         int numberOfCards = Integer.parseInt(reader.readLine());

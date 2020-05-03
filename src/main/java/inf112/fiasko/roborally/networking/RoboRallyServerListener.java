@@ -3,7 +3,6 @@ package inf112.fiasko.roborally.networking;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.HurryResponse;
 import inf112.fiasko.roborally.networking.containers.OkayResponse;
@@ -12,6 +11,7 @@ import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.networking.containers.UsernameRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
+import inf112.fiasko.roborally.objects.properties.RobotID;
 
 import java.util.ArrayList;
 import java.util.HashMap;

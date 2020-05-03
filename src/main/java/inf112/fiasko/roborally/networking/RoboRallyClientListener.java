@@ -2,8 +2,6 @@ package inf112.fiasko.roborally.networking;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import inf112.fiasko.roborally.elementproperties.GameState;
-import inf112.fiasko.roborally.gamewrapper.RoboRallyUI;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
 import inf112.fiasko.roborally.networking.containers.HandResponse;
@@ -12,6 +10,8 @@ import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
+import inf112.fiasko.roborally.objects.properties.GameState;
+import inf112.fiasko.roborally.ui.RoboRallyUI;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -93,7 +93,7 @@ class RoboRallyClientListener extends Listener {
      */
     private void receiveGameStartInfo(GameStartInfoResponse info) {
         wrapper.setGame(new RoboRallyGame(info.getPlayerList(), info.getBoardName(), info.getPlayerName(),
-                wrapper.getServer(),wrapper.isTesting()));
+                wrapper.getServer(), wrapper.isTesting()));
         new Thread(() -> wrapper.getGame().runTurn()).start();
     }
 

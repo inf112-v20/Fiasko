@@ -1,8 +1,8 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.GameState;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
+import inf112.fiasko.roborally.objects.properties.GameState;
 
 import java.util.List;
 

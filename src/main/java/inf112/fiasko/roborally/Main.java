@@ -2,7 +2,7 @@ package inf112.fiasko.roborally;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import inf112.fiasko.roborally.gamewrapper.RoboRallyWrapper;
+import inf112.fiasko.roborally.ui.RoboRallyWrapper;
 
 /**
  * The mail class which runs the game

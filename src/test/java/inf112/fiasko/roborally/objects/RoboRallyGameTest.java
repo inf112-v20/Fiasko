@@ -1,7 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Action;
-import inf112.fiasko.roborally.elementproperties.GameState;
+import inf112.fiasko.roborally.objects.properties.Action;
+import inf112.fiasko.roborally.objects.properties.GameState;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +19,7 @@ public class RoboRallyGameTest {
     @Before
     public void setUp() {
         game = new RoboRallyGame(new ArrayList<>(), "Checkmate.txt", "Player1",
-                null,false);
+                null, false);
     }
 
     @Test

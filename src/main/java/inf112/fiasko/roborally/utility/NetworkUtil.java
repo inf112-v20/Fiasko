@@ -1,8 +1,6 @@
 package inf112.fiasko.roborally.utility;
 
 import com.esotericsoftware.kryo.Kryo;
-import inf112.fiasko.roborally.elementproperties.Action;
-import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
 import inf112.fiasko.roborally.networking.containers.HandResponse;
@@ -16,6 +14,8 @@ import inf112.fiasko.roborally.objects.Deck;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
+import inf112.fiasko.roborally.objects.properties.Action;
+import inf112.fiasko.roborally.objects.properties.RobotID;
 
 import java.util.ArrayList;
 import java.util.HashMap;

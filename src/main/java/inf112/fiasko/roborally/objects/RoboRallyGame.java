@@ -1,14 +1,14 @@
 package inf112.fiasko.roborally.objects;
 
 import com.esotericsoftware.kryonet.Connection;
-import inf112.fiasko.roborally.elementproperties.GameState;
-import inf112.fiasko.roborally.elementproperties.Position;
-import inf112.fiasko.roborally.elementproperties.RobotID;
-import inf112.fiasko.roborally.elementproperties.TileType;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
 import inf112.fiasko.roborally.networking.containers.HandResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
+import inf112.fiasko.roborally.objects.properties.GameState;
+import inf112.fiasko.roborally.objects.properties.Position;
+import inf112.fiasko.roborally.objects.properties.RobotID;
+import inf112.fiasko.roborally.objects.properties.TileType;
 import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.DeckLoaderUtil;
 
@@ -45,8 +45,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
      * @param server     The server if this player is host. Should be null otherwise
      */
     public RoboRallyGame(List<Player> playerList, String boardName, String playerName,
-                         RoboRallyServer server,Boolean testingMode) {
-        this.testingMode=testingMode;
+                         RoboRallyServer server, Boolean testingMode) {
+        this.testingMode = testingMode;
         this.playerName = playerName;
         this.host = server != null;
         this.playerList = playerList;
@@ -246,10 +246,9 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
                     TileType.FLAG_4, TileType.WRENCH, TileType.WRENCH_AND_HAMMER);
 
             if (host) {
-                if(testingMode){
+                if (testingMode) {
                     mainDeck = DeckLoaderUtil.loadProgrammingCardsTestDeck();
-                }
-                else{
+                } else {
                     mainDeck = DeckLoaderUtil.loadProgrammingCardsDeck();
                 }
 

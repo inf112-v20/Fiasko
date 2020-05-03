@@ -1,7 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Action;
-import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.objects.properties.Action;
+import inf112.fiasko.roborally.objects.properties.RobotID;
 import org.junit.Before;
 import org.junit.Test;
 

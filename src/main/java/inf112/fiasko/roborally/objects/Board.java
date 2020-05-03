@@ -1,11 +1,11 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Direction;
-import inf112.fiasko.roborally.elementproperties.ParticleType;
-import inf112.fiasko.roborally.elementproperties.Position;
-import inf112.fiasko.roborally.elementproperties.RobotID;
-import inf112.fiasko.roborally.elementproperties.TileType;
-import inf112.fiasko.roborally.elementproperties.WallType;
+import inf112.fiasko.roborally.objects.properties.Direction;
+import inf112.fiasko.roborally.objects.properties.ParticleType;
+import inf112.fiasko.roborally.objects.properties.Position;
+import inf112.fiasko.roborally.objects.properties.RobotID;
+import inf112.fiasko.roborally.objects.properties.TileType;
+import inf112.fiasko.roborally.objects.properties.WallType;
 import inf112.fiasko.roborally.utility.GridUtil;
 import inf112.fiasko.roborally.utility.LaserHelper;
 
@@ -865,8 +865,8 @@ public class Board {
             case WALL_LASER_TRIPLE:
                 laserDamage = 3;
                 break;
-             default:
-                 throw new IllegalArgumentException("Invalid laser type encountered.");
+            default:
+                throw new IllegalArgumentException("Invalid laser type encountered.");
         }
         robot.setDamageTaken(robot.getDamageTaken() + laserDamage);
     }

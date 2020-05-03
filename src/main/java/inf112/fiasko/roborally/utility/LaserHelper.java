@@ -1,9 +1,9 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.elementproperties.Direction;
-import inf112.fiasko.roborally.elementproperties.ParticleType;
-import inf112.fiasko.roborally.elementproperties.WallType;
 import inf112.fiasko.roborally.objects.Particle;
+import inf112.fiasko.roborally.objects.properties.Direction;
+import inf112.fiasko.roborally.objects.properties.ParticleType;
+import inf112.fiasko.roborally.objects.properties.WallType;
 
 /**
  * Helps with displaying laser beams

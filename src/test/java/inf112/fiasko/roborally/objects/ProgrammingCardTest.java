@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Action;
+import inf112.fiasko.roborally.objects.properties.Action;
 import org.junit.Before;
 import org.junit.Test;
 

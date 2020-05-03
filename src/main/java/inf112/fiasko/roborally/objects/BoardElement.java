@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Direction;
+import inf112.fiasko.roborally.objects.properties.Direction;
 
 /**
  * Represents an element on the board

@@ -1,7 +1,7 @@
 package inf112.fiasko.roborally.networking;
 
 import com.esotericsoftware.kryonet.Client;
-import inf112.fiasko.roborally.gamewrapper.RoboRallyUI;
+import inf112.fiasko.roborally.ui.RoboRallyUI;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;

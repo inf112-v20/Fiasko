@@ -2,7 +2,7 @@ package inf112.fiasko.roborally.networking;
 
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Server;
-import inf112.fiasko.roborally.elementproperties.RobotID;
+import inf112.fiasko.roborally.objects.properties.RobotID;
 import inf112.fiasko.roborally.utility.NetworkUtil;
 
 import java.io.IOException;

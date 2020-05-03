@@ -2,9 +2,6 @@ package inf112.fiasko.roborally.utility;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.esotericsoftware.kryonet.Connection;
-import inf112.fiasko.roborally.elementproperties.Direction;
-import inf112.fiasko.roborally.elementproperties.Position;
-import inf112.fiasko.roborally.elementproperties.RobotID;
 import inf112.fiasko.roborally.objects.DrawableGame;
 import inf112.fiasko.roborally.objects.DrawableObject;
 import inf112.fiasko.roborally.objects.Particle;
@@ -12,6 +9,9 @@ import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.Wall;
+import inf112.fiasko.roborally.objects.properties.Direction;
+import inf112.fiasko.roborally.objects.properties.Position;
+import inf112.fiasko.roborally.objects.properties.RobotID;
 
 import java.util.ArrayList;
 import java.util.List;

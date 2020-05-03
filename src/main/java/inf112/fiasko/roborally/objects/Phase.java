@@ -1,12 +1,12 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Action;
-import inf112.fiasko.roborally.elementproperties.Direction;
-import inf112.fiasko.roborally.elementproperties.GameState;
-import inf112.fiasko.roborally.elementproperties.Position;
-import inf112.fiasko.roborally.elementproperties.RobotID;
-import inf112.fiasko.roborally.elementproperties.TileType;
-import inf112.fiasko.roborally.elementproperties.WallType;
+import inf112.fiasko.roborally.objects.properties.Action;
+import inf112.fiasko.roborally.objects.properties.Direction;
+import inf112.fiasko.roborally.objects.properties.GameState;
+import inf112.fiasko.roborally.objects.properties.Position;
+import inf112.fiasko.roborally.objects.properties.RobotID;
+import inf112.fiasko.roborally.objects.properties.TileType;
+import inf112.fiasko.roborally.objects.properties.WallType;
 
 import java.util.ArrayList;
 import java.util.Collections;

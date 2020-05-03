@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Action;
+import inf112.fiasko.roborally.objects.properties.Action;
 
 /**
  * This class represents a programming card

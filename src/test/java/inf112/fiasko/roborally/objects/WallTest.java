@@ -1,7 +1,7 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Direction;
-import inf112.fiasko.roborally.elementproperties.WallType;
+import inf112.fiasko.roborally.objects.properties.Direction;
+import inf112.fiasko.roborally.objects.properties.WallType;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,6 +1,6 @@
 package inf112.fiasko.roborally.objects;
 
-import inf112.fiasko.roborally.elementproperties.Position;
+import inf112.fiasko.roborally.objects.properties.Position;
 
 /**
  * This class represents a board element and its position

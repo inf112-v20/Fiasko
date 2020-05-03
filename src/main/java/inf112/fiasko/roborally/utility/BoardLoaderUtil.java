@@ -1,8 +1,5 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.elementproperties.Direction;
-import inf112.fiasko.roborally.elementproperties.TileType;
-import inf112.fiasko.roborally.elementproperties.WallType;
 import inf112.fiasko.roborally.objects.Board;
 import inf112.fiasko.roborally.objects.BoardElement;
 import inf112.fiasko.roborally.objects.BoardElementContainer;
@@ -12,6 +9,9 @@ import inf112.fiasko.roborally.objects.Robot;
 import inf112.fiasko.roborally.objects.Tile;
 import inf112.fiasko.roborally.objects.TwoTuple;
 import inf112.fiasko.roborally.objects.Wall;
+import inf112.fiasko.roborally.objects.properties.Direction;
+import inf112.fiasko.roborally.objects.properties.TileType;
+import inf112.fiasko.roborally.objects.properties.WallType;
 
 import java.io.BufferedReader;
 import java.io.IOException;

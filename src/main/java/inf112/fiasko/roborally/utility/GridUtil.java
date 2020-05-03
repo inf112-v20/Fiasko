@@ -1,9 +1,9 @@
 package inf112.fiasko.roborally.utility;
 
-import inf112.fiasko.roborally.elementproperties.Position;
 import inf112.fiasko.roborally.objects.BoardElement;
 import inf112.fiasko.roborally.objects.BoardElementContainer;
 import inf112.fiasko.roborally.objects.Grid;
+import inf112.fiasko.roborally.objects.properties.Position;
 
 import java.util.ArrayList;
 import java.util.List;

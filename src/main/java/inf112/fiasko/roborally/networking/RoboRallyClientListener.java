@@ -93,7 +93,7 @@ class RoboRallyClientListener extends Listener {
      */
     private void receiveGameStartInfo(GameStartInfoResponse info) {
         wrapper.setGame(new RoboRallyGame(info.getPlayerList(), info.getBoardName(), info.getPlayerName(),
-                wrapper.getServer()));
+                wrapper.getServer(),wrapper.isTesting()));
         new Thread(() -> wrapper.getGame().runTurn()).start();
     }
 

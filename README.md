@@ -12,15 +12,14 @@ funksjonalitet er implementert og fungerende. Det kan fortsatt finnes bugs i kod
 ## Javadoc
 Javadoc for hele prosjektet kan finnes [her](https://inf112-v20.github.io/Fiasko/javadoc/).
 
-## Knapper og kontrollmekanismer
-### Knapper og mus
-#### Brettet
+## Knapper og mus
+### Brettet
 -   Q: Tilbakestiller kamera og kamerarotasjon på brettvisningsskjermen
 -   R: Roterer kameraet på brettvisningsskjermen
 -   TAB: Bytter mellom kortvelging og brettvisning når en holder på med å velge kort
 -   Rullehjulet vil forstørre og forminske spillbrettet på brettvisningsskjermen
 -   Spillbrettet kan flyttes ved å holde inne venstre musetast og bevege musen i en retning på brettvisningsskjermen
-#### Lobby
+### Lobby
 -   HOME: Denne knappen lar deg velge et brett spesifikt laget for debugging
 
 -   T: Denne knappen lar deg starte spillet i en modus spesialisert for manuell testing. 

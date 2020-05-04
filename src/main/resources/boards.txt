@@ -6,6 +6,7 @@ Chop_Shop_Challenge.txt
 Death_Trap.txt
 Dizzy_Dash.txt
 Island_Hop.txt
+Island_King.txt
 Lost_Bearings.txt
 Risky_Exchange.txt
 Robot_Stew.txt

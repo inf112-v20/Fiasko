@@ -1,4 +1,4 @@
-12
+13
 Around_The_World.txt
 Bloodbath_Chess.txt
 Checkmate.txt
@@ -8,6 +8,7 @@ Dizzy_Dash.txt
 Island_Hop.txt
 Lost_Bearings.txt
 Risky_Exchange.txt
+Robot_Stew.txt
 Twister.txt
 Vault_Assault.txt
 Whirlwind_Tour.txt

@@ -8,6 +8,7 @@ Dizzy_Dash.txt
 Island_Hop.txt
 Island_King.txt
 Lost_Bearings.txt
+Pilgrimage.txt
 Risky_Exchange.txt
 Robot_Stew.txt
 Twister.txt

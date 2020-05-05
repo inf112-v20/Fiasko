@@ -25,6 +25,9 @@ Javadoc for hele prosjektet kan finnes [her](https://inf112-v20.github.io/Fiasko
 -   T: Denne knappen lar deg starte spillet i en modus spesialisert for manuell testing. 
      Denne modusen støtter bare en spiller.
 
+## Mer informasjon
+For mer informasjon gå til [wikien](https://github.com/inf112-v20/Fiasko/wiki).
+
 ## Bygging og kompilering
 
 ### Forkrav for å kunne kompilere og kjøre koden

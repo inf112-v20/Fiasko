@@ -1,11 +1,16 @@
-runde 1
-backup	tester tannhjule til høyre
-move1	tester tannhjule til venstre
-move2	tester sakte transport bånd som går inn i et høyre vrid sakte transport bånd
-rotate left	tester sakte transport bånd bort til raskt transport bånd
-u turn	tester raskt transportbånd bort til flag 1 og tester at flag 1 blir registrert
+runde 1 - tester tannhjule til høyre, tannhjule til venstre, sakte transport bånd, høyre vrid sakte transport,
+raskt transport bånd, flag 1 blir registrert og vist
 
-comfirm
+program som skal kjøres: backup, move1, move2, rotate left, u-turn. Trykk confirm
+
+Robot beveger seg sør fra spawnpoint og blir rotert av tannhjul så den peker øst.
+Robot beveger seg med move1 et steg øst og blir rotert av tannhjul så den peker nord.
+Robot beveger seg med move2 to steg nord og blir flyttet av transportbånd et steg vest, og blir rotert mot øst siden
+det er en sving.
+Robot roteres mot nord av rotate left og blir flyttet av transportbånd et steg nord, til et raskt transportbånd.
+Robot roteres mot sør av u-turn og blir flyttet av raskt transportbånd to steg nord, til flagg 1, som blir registrert.
+Det forventes markert nede til høyre for blidet av roboten.
+
 
 runde 2
 rotet left

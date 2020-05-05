@@ -52,6 +52,26 @@ public final class BoardLoaderUtil {
     }
 
     /**
+     * Loads a board described in a file
+     *
+     * @param boardFile The file containing the board description
+     * @param robotList A list of robots on the board
+     * @return A board
+     * @throws IOException If the board file cannot be loaded
+     */
+    public static Board loadBoard(String boardFile, List<Robot> robotList) throws IOException {
+        TwoTuple<Grid<Tile>, Grid<Wall>> grids = loadBoardGrids(boardFile);
+        Grid<Tile> tileGrid = grids.value1;
+        Grid<Wall> wallGrid = grids.value2;
+        if (grids.value1.getHeight() < grids.value1.getWidth()) {
+            tileGrid = rotateGrid(tileGrid, true);
+            wallGrid = rotateGrid(wallGrid, true);
+        }
+        adjustRobotRotationToBoardRotation(tileGrid, robotList);
+        return new Board(tileGrid, wallGrid, robotList);
+    }
+
+    /**
      * Gets a list of all available boards
      *
      * @return A list of all available boards
@@ -67,21 +87,6 @@ public final class BoardLoaderUtil {
             boardList[i] = board;
         }
         return boardList;
-    }
-
-    /**
-     * Loads and rotates a board described in a file
-     *
-     * @param boardFile The file containing the board description
-     * @param robotList A list of robots on the board
-     * @param clockwise Whether to rotate the board clockwise
-     * @return A board
-     * @throws IOException If the board file cannot be loaded
-     */
-    public static Board loadBoardRotated(String boardFile, List<Robot> robotList, boolean clockwise) throws IOException {
-        TwoTuple<Grid<Tile>, Grid<Wall>> grids = loadBoardGrids(boardFile);
-        adjustRobotRotationToBoardRotation(grids.value1, robotList);
-        return new Board(rotateGrid(grids.value1, clockwise), rotateGrid(grids.value2, clockwise), robotList);
     }
 
     /**
@@ -139,33 +144,19 @@ public final class BoardLoaderUtil {
     }
 
     /**
-     * Loads a board described in a file
-     *
-     * @param boardFile The file containing the board description
-     * @param robotList A list of robots on the board
-     * @return A board
-     * @throws IOException If the board file cannot be loaded
-     */
-    public static Board loadBoard(String boardFile, List<Robot> robotList) throws IOException {
-        TwoTuple<Grid<Tile>, Grid<Wall>> grids = loadBoardGrids(boardFile);
-        adjustRobotRotationToBoardRotation(grids.value1, robotList);
-        return new Board(grids.value1, grids.value2, robotList);
-    }
-
-    /**
      * Changes the direction of robots to the direction which is up
      *
      * @param tileGrid  The grid containing flags
      * @param robotList The list of robots on the board
      */
     private static void adjustRobotRotationToBoardRotation(Grid<Tile> tileGrid, List<Robot> robotList) {
-        //The flags are always in the up direction
-        List<BoardElementContainer<Tile>> flags = GridUtil.getMatchingElements(TileType.ROBOT_SPAWN_1, tileGrid);
+        //The spawns are always in the up direction
+        List<BoardElementContainer<Tile>> spawns = GridUtil.getMatchingElements(TileType.ROBOT_SPAWN_1, tileGrid);
         Direction boardDirection;
-        if (flags.size() == 0) {
+        if (spawns.size() == 0) {
             boardDirection = Direction.NORTH;
         } else {
-            boardDirection = flags.get(0).getElement().getDirection();
+            boardDirection = spawns.get(0).getElement().getDirection();
         }
         for (Robot robot : robotList) {
             robot.setFacingDirection(boardDirection);

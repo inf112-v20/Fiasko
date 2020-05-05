@@ -36,7 +36,7 @@ public class RoboRallyClient {
      * @throws IOException If the server cannot be connected to
      */
     public void connect(String ipAddress, int serverPort) throws IOException {
-        client.connect(5000, ipAddress, serverPort, serverPort);
+        client.connect(1000, ipAddress, serverPort, serverPort);
     }
 
     /**
@@ -46,7 +46,7 @@ public class RoboRallyClient {
      * @return A list of server ip addresses
      */
     public List<InetAddress> getLanServers(int UDPPort) {
-        return client.discoverHosts(UDPPort, 1000);
+        return client.discoverHosts(UDPPort, 500);
     }
 
     /**

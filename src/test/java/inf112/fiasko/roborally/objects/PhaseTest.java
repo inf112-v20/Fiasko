@@ -86,21 +86,21 @@ public class PhaseTest {
         assertTrue(robot.hasTouchedFlagThisTurn());
         robot.setHasTouchedFlagThisTurn(false);
         assertNull(testGame.getWinningPlayerName());
-        board.moveRobot(robotID, Direction.EAST);
+        board.moveRobot(robotID, Direction.SOUTH);
         testPhase.checkAllFlags();
         //Should have registered second flag
         assertEquals(2, robot.getLastFlagVisited());
         assertTrue(robot.hasTouchedFlagThisTurn());
         assertNull(testGame.getWinningPlayerName());
         robot.setHasTouchedFlagThisTurn(false);
-        board.moveRobot(robotID, Direction.EAST);
+        board.moveRobot(robotID, Direction.SOUTH);
         testPhase.checkAllFlags();
         //Should have registered third flag
         assertEquals(3, robot.getLastFlagVisited());
         assertTrue(robot.hasTouchedFlagThisTurn());
         assertNull(testGame.getWinningPlayerName());
         robot.setHasTouchedFlagThisTurn(false);
-        board.moveRobot(robotID, Direction.EAST);
+        board.moveRobot(robotID, Direction.SOUTH);
         testPhase.checkAllFlags();
         //Should have registered fourth and last flag
         assertEquals(4, robot.getLastFlagVisited());

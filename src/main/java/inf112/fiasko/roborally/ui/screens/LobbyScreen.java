@@ -15,8 +15,10 @@ import inf112.fiasko.roborally.networking.containers.GameStartInfoResponse;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.ui.RoboRallyWrapper;
 import inf112.fiasko.roborally.ui.SimpleButton;
+import inf112.fiasko.roborally.utility.BoardLoaderUtil;
 import inf112.fiasko.roborally.utility.IOUtil;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -45,8 +47,11 @@ public class LobbyScreen extends InteractiveScreen {
         Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
 
         selectBox = new SelectBox<>(skin);
-        selectBox.setItems("Dizzy_Dash", "Checkmate", "Risky_Exchange", "Twister", "Bloodbath_Chess", "Vault_Assault",
-                "Island_Hop", "Chop_Shop_Challenge", "Around_The_World", "Death_Trap", "Whirlwind_Tour");
+        try {
+            selectBox.setItems(BoardLoaderUtil.getBoardListHumanReadable());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         selectBox.setSize(200, 50);
         selectBox.setPosition((applicationWidth - selectBox.getWidth()) / 2f, applicationHeight / 2f - 120);
 
@@ -77,7 +82,7 @@ public class LobbyScreen extends InteractiveScreen {
                 roboRallyWrapper.server.getRobotID());
         for (Connection connection : playerNames.keySet()) {
             roboRallyWrapper.server.sendToClient(connection, new GameStartInfoResponse(
-                    selectBox.getSelected() + ".txt", playerList, playerNames.get(connection)));
+                    BoardLoaderUtil.getRealBoardName(selectBox.getSelected()), playerList, playerNames.get(connection)));
         }
         roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(roboRallyWrapper));
     }

@@ -49,6 +49,6 @@ public class Tile implements BoardElement<TileType> {
     @Override
     public String toString() {
         return StringUtil.addLeadingZeros(tileType.getTileTypeID(), 2) + ";" +
-                StringUtil.addLeadingZeros(direction.getDirectionID(), 2);
+                direction.getDirectionID();
     }
 }

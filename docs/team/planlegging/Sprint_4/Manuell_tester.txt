@@ -52,16 +52,13 @@ Roboten beveger seg med back up et steg mot øst, og tar to skade av laser. Robo
 nede til høyre på skjermen.
 
 
-runde 2 tester at kort blir låst
-select to one available card
+runde 2 - tester at kort blir låst
 
+Program som skal kjøres: tilfeldig. Trykk confirm
 
-tester at du respawner med 2 i skade og på skiftesnøkkel
-confirm
-
-
-kryss ut spillet
-
+Roboten utører tilfelig kort, blir drept av laser.
+Respawner på skitesnøkkel med to skade.
+Spiller krysser ut spillet og spillet terminerer med melding: "Process finished with exit code -1"
 
 
 nytt spill

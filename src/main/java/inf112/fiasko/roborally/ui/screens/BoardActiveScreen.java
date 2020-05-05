@@ -59,12 +59,6 @@ public class BoardActiveScreen extends InteractiveScreen {
     }
 
     @Override
-    public void show() {
-        super.show();
-        resetCamera();
-    }
-
-    @Override
     public void render(float delta) {
         super.render(delta);
         updateCamera();

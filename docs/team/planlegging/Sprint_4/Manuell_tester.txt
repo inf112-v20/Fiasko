@@ -112,14 +112,16 @@ Roboten beveger seg med move3 null steg mot øst, siden den blir stoppet av vegg
 Spiller krysser ut spillet så det terminerer med melding: "Process finished with exit code -1"
 
 
-nytt spill
+Spill 4:
+runde 1
 
-runde 1 - bevege til test
-rotate right
-move 3
-move 2
-move 1
-move 1
+Program som skal kjøres: rotate right, move3, move2, move1, move1. Trykk confirm
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move3 tre steg mot øst.
+Roboten beveger seg med move2 to steg mot øst.
+Roboten beveger seg med move1 et steg mot øst.
+Roboten beveger seg med move1 et steg mot øst.
 
 runde 2
 rotate right

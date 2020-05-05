@@ -463,7 +463,7 @@ public class Board {
      *
      * @param robot The robot to re-spawn
      */
-    public void respawnRobot(Robot robot) {
+    private void respawnRobot(Robot robot) {
         Position backupPosition = robot.getBackupPosition();
         int startX = backupPosition.getXCoordinate();
         int startY = backupPosition.getYCoordinate();
@@ -499,7 +499,7 @@ public class Board {
      * @param direction The direction of the face of the square to check
      * @return Whether the robot was re-spawned
      */
-    public boolean tryRobotRespawn(Robot robot, int size, int startX, int startY, Direction direction) {
+    private boolean tryRobotRespawn(Robot robot, int size, int startX, int startY, Direction direction) {
         int axis;
         for (int i = 1; i <= size; i++) {
             if (direction == Direction.NORTH || direction == Direction.SOUTH) {

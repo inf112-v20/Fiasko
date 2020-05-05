@@ -1,6 +1,7 @@
 package inf112.fiasko.roborally.ui;
 
 import inf112.fiasko.roborally.networking.RoboRallyServer;
+import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
 
 /**
@@ -12,7 +13,7 @@ public interface RoboRallyUI {
      *
      * @return The game used by the UI
      */
-    RoboRallyGame getGame();
+    InteractableGame getGame();
 
     /**
      * Sets the robo rally game being rendered by the UI

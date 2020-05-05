@@ -102,4 +102,15 @@ public interface InteractableGame {
      */
     void setProgram(List<ProgrammingCard> program);
 
+    /**
+     * Starts a turn in the game
+     */
+    void runTurn();
+
+    /**
+     * Gets the power down status of the client playing this instance of the game
+     *
+     * @return Whether this player's robot is in power down
+     */
+    boolean getRobotPowerDown();
 }

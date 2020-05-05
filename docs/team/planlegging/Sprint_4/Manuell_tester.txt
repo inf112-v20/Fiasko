@@ -61,7 +61,7 @@ Program som skal kjøres: tilfeldig. Trykk confirm
 
 Roboten utører tilfelig kort, blir drept av laser.
 Respawner på skitesnøkkel med to skade.
-Spiller krysser ut spillet og spillet terminerer med melding: "Process finished with exit code -1"
+Spiller krysser ut spillet så det terminerer med melding: "Process finished with exit code -1"
 
 
 Spill 3:
@@ -100,14 +100,17 @@ Roboten roteres mot sør av u-turn.
 Roboten beveger seg med move2 et steg mot sør, og blir stoppet av en vegg som står fremfor den.
 
 
-runde 4
-rotate left tester at vegg på samme tile stopper deg
-move 1
-move 1
-move 1
-move 3
+runde 4 - tester vegg som står på samme tile som robot
 
-kryss ut spillet
+Program som skal kjøres: rotate left, move1, move1, move1, move3. Trykk confirm
+
+Roboten roteres mot øst av rotate left, og står mot en vegg som står på samme tile.
+Roboten beveger seg med move1 null steg mot øst, siden den blir stoppet av veggen.
+Roboten beveger seg med move1 null steg mot øst, siden den blir stoppet av veggen.
+Roboten beveger seg med move1 null steg mot øst, siden den blir stoppet av veggen.
+Roboten beveger seg med move3 null steg mot øst, siden den blir stoppet av veggen.
+Spiller krysser ut spillet så det terminerer med melding: "Process finished with exit code -1"
+
 
 nytt spill
 

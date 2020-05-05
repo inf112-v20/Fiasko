@@ -137,19 +137,14 @@ Program som skal kjøres: move1, tilfeldig, tilfeldig, tilfeldig, tilfeldig. Try
 
 Roboten respawner på skiftesnøkkelen du ble dyttet av. Roboten beveger seg med move1 et steg mot nord, og blir skubbet
  av brettet av oddetallspusheren så roboten dør.
+ Neste runde endres ikke respawn siden du dør før første fase er ferdig.
 
-move 1
-velg 4 til random kort
-pusheren skal dytte deg på første fase i runden (oddetallspusher)
-siden du dør før første fase er ferdig skal respawn ikke endres
 
-runde 4
-respawner på skiftesnøkkelen du respawnet sist
+runde 4 - tester terminering av spill når alle spillere er dø
 
-move 1
-velg 4 til random kort
-pusheren skal dytte deg på første fase i runden (oddetallspusher)
-du er nå tom for liv og spillet skal terminere neste runde
+Program som skal kjøres: move1, tilfeldig, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
 
-runde 5
-spillet terminerer og du får meldingen: "[Critical] All players died. Cannot continue playing."
+Roboten respawner på skiftesnøkkelen du respawnet sist. Roboten beveger seg med move1 et steg mot nord, og blir skubbet
+av brettet av oddetallspusheren så roboten dør.
+Du er nå tom for liv og spillet skal terminere neste runde med meldingen:
+"[Critical] All players died. Cannot continue playing."

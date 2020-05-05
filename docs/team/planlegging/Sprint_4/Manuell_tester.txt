@@ -82,21 +82,23 @@ runde 2 - tester pit
 Program som skal kjøres: rotate right, move2, rotate left, u-turn, move3. Trykk confirm + powerdown
 
 Roboten roteres mot øst av rotate right, og står på spawn.
-Roboten beveger seg med move2 et steg mot øst.
+Roboten beveger seg med move2 to steg mot øst.
 Roboten roteres mot nord av rotate left.
 Roboten roteres mot sør av u-turn.
 Roboten beveger seg med move3 to steg mot sør, inn i pitten og dør.
 Roboten respawner på spawn og går i powerdown for å få 0 skade.
 
 
-runde 3
-rotate right
-move 3
-rotate left
-u turn
-move 2 tester at vegg på tile foran deg stopper deg
+runde 3 - tester vegg som står fremfor robot
 
-confirm
+Program som skal kjøres: rotate right, move3, rotate left, u-turn, move2. Trykk confirm
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move3 tre steg mot øst.
+Roboten roteres mot nord av rotate left.
+Roboten roteres mot sør av u-turn.
+Roboten beveger seg med move2 et steg mot sør, og blir stoppet av en vegg som står fremfor den.
+
 
 runde 4
 rotate left tester at vegg på samme tile stopper deg

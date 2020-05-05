@@ -1,3 +1,4 @@
+Spill 1:
 runde 1 - tester tannhjule til høyre, tannhjule til venstre, sakte transport bånd, høyre vrid sakte transport,
 raskt transport bånd, flag 1 blir registrert og vist
 
@@ -12,10 +13,10 @@ Robot roteres mot sør av u-turn og blir flyttet av raskt transportbånd to steg
 Det forventes markert nede til høyre for blidet av roboten.
 
 
-runde 2 - tester at flag 2 blir registrert, roboten dør av å gå av brettet, comfirm + powerdown, continue powerdown,
+runde 2 - tester at flag 2 blir registrert, roboten dør av å gå av brettet, confirm + powerdown, continue powerdown,
 ikke ta continue powerdown
 
-Program som skal kjøres: rotate left, move2, rotate right, u-turn, move3. Trykk comfirm + powerdown
+Program som skal kjøres: rotate left, move2, rotate right, u-turn, move3. Trykk confirm + powerdown
 
 Roboten roteres mot øst av rotate left, og står på flagg 1.
 Roboten beveger seg med move2 to steg øst til flagg 2, som blir registrert og markert.
@@ -38,22 +39,25 @@ Spiller får opp vinnerskjerm som viser spillernavn og en quit knapp.
 Spiller trykker på quit og spillet terminerer med melding: "Process finished with exit code -1"
 
 
-nytt test spill
-runde 1
-rotate left
-move 1	tester 3 skade fra laser + at robot blokere laser
-move 1	tester 2 skade fra laser + at robot blokere laser
-move 1	tester 1 skade fra laser + at robot blokere laser
-back up tester 8 skade fra laser
+Spill 2:
+runde 1 - tester at robot kan ta 1, 2 og 3 skade fra laser,
 
-comfirm
+Program som skal kjøres: rotate left, move1, move1, move1, back up. Trykk confirm
+
+Roboten roteres mot vest av rotate left, og står på spawn.
+Roboten beveger seg med move1 et steg mot vest, og tar tre skade av laser.
+Roboten beveger seg med move1 et steg mot vest, og tar to skade av laser.
+Roboten beveger seg med move1 et steg mot vest, og tar en skade av laser.
+Roboten beveger seg med back up et steg mot øst, og tar to skade av laser. Robot skal nå ha 8 skade, som viser
+nede til høyre på skjermen.
+
 
 runde 2 tester at kort blir låst
 select to one available card
 
 
 tester at du respawner med 2 i skade og på skiftesnøkkel
-comfirm
+confirm
 
 
 kryss ut spillet
@@ -68,7 +72,7 @@ rotate left
 u turn
 move 3	tester hull
 
-comfirm + powerdown
+confirm + powerdown
 
 runde 2
 rotate right
@@ -77,7 +81,7 @@ rotate left
 u turn
 move 3 tester pit
 
-comfirm + powerdown
+confirm + powerdown
 
 runde 3
 rotate right
@@ -86,7 +90,7 @@ rotate left
 u turn
 move 2 tester at vegg på tile foran deg stopper deg
 
-comfirm
+confirm
 
 runde 4
 rotate left tester at vegg på samme tile stopper deg

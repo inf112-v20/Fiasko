@@ -1,94 +1,150 @@
+Hver runde får du en spesifik kortstokk: en rotate right, en rotate left, en u-turn, en backup, en move 3, en move 2, tre move 1.
+Tester som krever flere roboter må testes med multiplayer (de har også automatiske tester).
+
+Spill 1:
+runde 1 - tester tannhjule til høyre, tannhjule til venstre, sakte transport bånd, høyre vrid sakte transport,
+raskt transport bånd, flag 1 blir registrert og vist
+
+Program som skal kjøres: backup, move1, move2, rotate left, u-turn. Trykk confirm
+
+Robot beveger seg sør fra spawnpoint og blir rotert av tannhjul så den peker øst.
+Robot beveger seg med move1 et steg øst og blir rotert av tannhjul så den peker nord.
+Robot beveger seg med move2 to steg nord og blir flyttet av transportbånd et steg vest, og blir rotert mot øst siden
+det er en sving.
+Robot roteres mot nord av rotate left og blir flyttet av transportbånd et steg nord, til et raskt transportbånd.
+Robot roteres mot sør av u-turn og blir flyttet av raskt transportbånd to steg nord, til flagg 1, som blir registrert.
+Det forventes markert nede til høyre for blidet av roboten.
+
+
+runde 2 - tester at flag 2 blir registrert, roboten dør av å gå av brettet, confirm + powerdown, continue powerdown,
+ikke ta continue powerdown
+
+Program som skal kjøres: rotate left, move2, rotate right, u-turn, move3. Trykk confirm + powerdown
+
+Roboten roteres mot øst av rotate left, og står på flagg 1.
+Roboten beveger seg med move2 to steg øst til flagg 2, som blir registrert og markert.
+Roboten roteres mot sør av rotate right, og står på flagg 2.
+Roboten roteres mot nord av u-turn, og står på flagg 2.
+Roboten beveger seg med move3 tre steg nord og går av brettet. Roboten dør og et hjerte forsvinner nede på skjermen.
+Roboten respawner på flagg 2 og går i powerdown.
+Spiller trykker continue powerdown og robot går i powerdown enda en runde.
+Spiller trykker ikke contine powerdown og robot går ikke i powerdown.
+
+
+runde 3 - tester at når du treffer alle falgende så vinner du, når du vinner får du vinnerskjermen,
+du kan trykke quit knappen på vinnerskjermen for å lukke spillet
+
+Program som skal kjøres: rotate right, move1, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
+
+Roboten roteres mot øst av rotate right, og står på flagg 2.
+Roboten beveger seg med move1 et steg mot øst til flagg 3.
+Spiller får opp vinnerskjerm som viser spillernavn og en quit knapp.
+Spiller trykker på quit og spillet terminerer med melding: "Process finished with exit code -1"
+
+
+Spill 2:
+runde 1 - tester at robot kan ta 1, 2 og 3 skade fra laser,
+
+Program som skal kjøres: rotate left, move1, move1, move1, back up. Trykk confirm
+
+Roboten roteres mot vest av rotate left, og står på spawn.
+Roboten beveger seg med move1 et steg mot vest, og tar tre skade av laser.
+Roboten beveger seg med move1 et steg mot vest, og tar to skade av laser.
+Roboten beveger seg med move1 et steg mot vest, og tar en skade av laser.
+Roboten beveger seg med back up et steg mot øst, og tar to skade av laser. Robot skal nå ha 8 skade, som viser
+nede til høyre på skjermen.
+
+
+runde 2 - tester at kort blir låst
+
+Program som skal kjøres: tilfeldig. Trykk confirm
+
+Roboten utører tilfelig kort, blir drept av laser.
+Respawner på skitesnøkkel med to skade.
+Spiller krysser ut spillet så det terminerer med melding: "Process finished with exit code -1"
+
+
+Spill 3:
+runde 1 - tester hull
+
+Program som skal kjøres: rotate right, move1, rotate left, u-turn, move3. Trykk confirm + powerdown
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move1 et steg mot øst.
+Roboten roteres mot nord av rotate left.
+Roboten roteres mot sør av u-turn.
+Roboten beveger seg med move3 to steg mot sør, inn i hullet og dør.
+Roboten respawner på spawn og går i powerdown for å få 0 skade.
+
+
+runde 2 - tester pit
+
+Program som skal kjøres: rotate right, move2, rotate left, u-turn, move3. Trykk confirm + powerdown
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move2 to steg mot øst.
+Roboten roteres mot nord av rotate left.
+Roboten roteres mot sør av u-turn.
+Roboten beveger seg med move3 to steg mot sør, inn i pitten og dør.
+Roboten respawner på spawn og går i powerdown for å få 0 skade.
+
+
+runde 3 - tester vegg som står fremfor robot
+
+Program som skal kjøres: rotate right, move3, rotate left, u-turn, move2. Trykk confirm
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move3 tre steg mot øst.
+Roboten roteres mot nord av rotate left.
+Roboten roteres mot sør av u-turn.
+Roboten beveger seg med move2 et steg mot sør, og blir stoppet av en vegg som står fremfor den.
+
+
+runde 4 - tester vegg som står på samme tile som robot
+
+Program som skal kjøres: rotate left, move1, move1, move1, move3. Trykk confirm
+
+Roboten roteres mot øst av rotate left, og står mot en vegg som står på samme tile.
+Roboten beveger seg med move1 null steg mot øst, siden den blir stoppet av veggen.
+Roboten beveger seg med move1 null steg mot øst, siden den blir stoppet av veggen.
+Roboten beveger seg med move1 null steg mot øst, siden den blir stoppet av veggen.
+Roboten beveger seg med move3 null steg mot øst, siden den blir stoppet av veggen.
+Spiller krysser ut spillet så det terminerer med melding: "Process finished with exit code -1"
+
+
+Spill 4:
 runde 1
-backup	tester tannhjule til høyre
-move1	tester tannhjule til venstre
-move2	tester sakte transport bånd som går inn i et høyre vrid sakte transport bånd
-rotate left	tester sakte transport bånd bort til raskt transport bånd
-u turn	tester raskt transportbånd bort til flag 1 og tester at flag 1 blir registrert
 
-comfirm
+Program som skal kjøres: rotate right, move3, move2, move1, move1. Trykk confirm
 
-runde 2
-rotet left
-move 2	tester flag 2 blir registrert
-rotate right
-u turn
-move 3	tester at spiller dør av å gå av brettet
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move3 tre steg mot øst.
+Roboten beveger seg med move2 to steg mot øst.
+Roboten beveger seg med move1 et steg mot øst.
+Roboten beveger seg med move1 et steg mot øst, blir flyttet av transportbånd et steg mot nord.
 
-comfirm + powerdown  tester at powerdown virker
+runde 2 - tester partallspusher
 
-continue powerdown click tester at continue powerdown virker
+Program som skal kjøres: rotate right, rotate left, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
 
-continue powerdown vent tester at det å ikke ta continue powerdown virker
-
-runde 3
-rotate right
-move 1	tester at når du treffer alle falgende så vinner du
-velg 3 tilfeldige kort
-
-comfirm
-
-du vant
-
-quit tester at quit virker
+Roboten roteres mot sør av rotate right, står på partallspusher og skiftesnøkkel blir oppdatert spawn.
+Roboten roteres mot øst av rotate left, og blir skubbet av brettet av partallspusheren så roboten dør.
 
 
+runde 3 - tester oddetallspusher
+
+Program som skal kjøres: move1, tilfeldig, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
+
+Roboten respawner på skiftesnøkkelen du ble dyttet av. Roboten beveger seg med move1 et steg mot nord, og blir skubbet
+ av brettet av oddetallspusheren så roboten dør.
+ Neste runde endres ikke respawn siden du dør før første fase er ferdig.
 
 
-nytt test spill
-runde 1
-rotate left
-move 1	tester 3 skade fra laser + at robot blokere laser
-move 1	tester 2 skade fra laser + at robot blokere laser
-move 1	tester 1 skade fra laser + at robot blokere laser
-back up tester 8 skade fra laser
+runde 4 - tester terminering av spill når alle spillere er dø
 
-comfirm
+Program som skal kjøres: move1, tilfeldig, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
 
-runde 2 tester at kort blir låst
-select to one available card
-
-
-tester at du respawner med 2 i skade og på skiftesnøkkel
-comfirm
-
-
-kryss ut spillet
-
-
-
-nytt spill
-runde 1 tester hull
-rotate right
-move 1
-rotate left
-u turn
-move 3	tester hull
-
-comfirm + powerdown
-
-runde 2
-rotate right
-move 2
-rotate left
-u turn
-move 3 tester pit
-
-comfirm + powerdown
-
-runde 3
-rotate right
-move 3
-rotate left
-u turn
-move 2 tester at vegg på tile foran deg stopper deg
-
-comfirm
-
-runde 4
-rotate left tester at vegg på samme tile stopper deg
-move 1
-move 1
-move 1
-move 3
-
-kryss ut spillet
+Roboten respawner på skiftesnøkkelen du respawnet sist. Roboten beveger seg med move1 et steg mot nord, og blir skubbet
+av brettet av oddetallspusheren så roboten dør.
+Du er nå tom for liv og spillet skal terminere neste runde med meldingen:
+"[Critical] All players died. Cannot continue playing."

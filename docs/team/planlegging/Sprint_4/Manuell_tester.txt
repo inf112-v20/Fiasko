@@ -131,8 +131,12 @@ Roboten roteres mot sør av rotate right, står på partallspusher og skiftesnø
 Roboten roteres mot øst av rotate left, og blir skubbet av brettet av partallspusheren så roboten dør.
 
 
-runde 3
-respawner på skiftesnøkkelen du ble dyttet av
+runde 3 - tester oddetallspusher
+
+Program som skal kjøres: move1, tilfeldig, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
+
+Roboten respawner på skiftesnøkkelen du ble dyttet av. Roboten beveger seg med move1 et steg mot nord, og blir skubbet
+ av brettet av oddetallspusheren så roboten dør.
 
 move 1
 velg 4 til random kort

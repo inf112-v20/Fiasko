@@ -62,10 +62,13 @@ public class Phase {
 
         fireAllLasers();
         checkAllFlags();
-        updateRobotRespawn();
+        updateRobotBackups();
     }
 
-    public void updateRobotRespawn() {
+    /**
+     * Updates backups for all robots standing on a repair tile
+     */
+    private void updateRobotBackups() {
         gameBoard.updateRobotBackups();
     }
 

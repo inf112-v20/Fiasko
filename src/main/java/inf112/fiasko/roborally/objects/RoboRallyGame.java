@@ -34,7 +34,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
     private ProgrammingCardDeck extraCards;
-    private Boolean testingMode;
+    private final Boolean testingMode;
 
     /**
      * Instantiates a new Robo Rally game
@@ -55,12 +55,8 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         initializeGame(boardName);
     }
 
-    /**
-     * Gets the power down status of the client playing this instance of the game
-     *
-     * @return Whether this player's robot is in power down
-     */
-    public Boolean getRobotPowerDown() {
+    @Override
+    public boolean getRobotPowerDown() {
         Player player = getPlayerFromName(this.playerName);
         if (player != null) {
             return gameBoard.getPowerDown(player.getRobotID());
@@ -279,9 +275,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
         }
     }
 
-    /**
-     * Starts a turn in the game
-     */
+    @Override
     public void runTurn() {
         // Sets the power down status to true on robots that have players who planned one this turn.
         // Resets players power down for next turn to false.

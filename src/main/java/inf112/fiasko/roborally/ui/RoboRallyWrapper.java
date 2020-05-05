@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
+import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
 
 /**
@@ -37,7 +38,7 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
     }
 
     @Override
-    public RoboRallyGame getGame() {
+    public InteractableGame getGame() {
         return roboRallyGame;
     }
 

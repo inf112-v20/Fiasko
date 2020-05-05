@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
 import inf112.fiasko.roborally.objects.properties.GameState;
@@ -39,6 +40,7 @@ public class CardChoiceScreen extends InteractiveScreen {
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
     private long timerStarted;
+    private final InteractableGame game;
 
     /**
      * Instantiates a new card choice screen
@@ -46,9 +48,10 @@ public class CardChoiceScreen extends InteractiveScreen {
      * @param roboRallyWrapper The Robo Rally wrapper which is parent of this screen
      */
     public CardChoiceScreen(final RoboRallyWrapper roboRallyWrapper) {
-        ProgrammingCardDeck deck = roboRallyWrapper.roboRallyGame.getPlayerHand();
+        game = roboRallyWrapper.getGame();
+        ProgrammingCardDeck deck = game.getPlayerHand();
         this.roboRallyWrapper = roboRallyWrapper;
-        maxCards = roboRallyWrapper.roboRallyGame.getProgramSize();
+        maxCards = game.getProgramSize();
         if (maxCards == -1) {
             throw new IllegalArgumentException("This player should not be able to choose any cards at this point in " +
                     "time.");
@@ -125,8 +128,8 @@ public class CardChoiceScreen extends InteractiveScreen {
             roboRallyWrapper.shouldHurry = false;
             List<ProgrammingCard> newProgram = getChosenAndLockedCards();
             //Save the program to get locked cards later
-            roboRallyWrapper.roboRallyGame.setProgram(newProgram);
-            roboRallyWrapper.roboRallyGame.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
+            game.setProgram(newProgram);
+            game.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
             roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(requestPowerDown, newProgram));
         } else {
@@ -182,9 +185,9 @@ public class CardChoiceScreen extends InteractiveScreen {
      * @return The player's old program
      */
     private List<ProgrammingCard> getOldProgram() {
-        List<ProgrammingCard> oldProgram = roboRallyWrapper.roboRallyGame.getProgram();
+        List<ProgrammingCard> oldProgram = game.getProgram();
         if (oldProgram != null && oldProgram.size() == 0) {
-            oldProgram = roboRallyWrapper.roboRallyGame.getExtraCards().getCards();
+            oldProgram = game.getExtraCards().getCards();
             int nulls = 5 - oldProgram.size();
             for (int i = 0; i < nulls; i++) {
                 oldProgram.add(0, null);

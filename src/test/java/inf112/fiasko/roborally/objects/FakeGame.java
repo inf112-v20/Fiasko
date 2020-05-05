@@ -76,4 +76,14 @@ public class FakeGame implements InteractableGame {
     public void setProgram(List<ProgrammingCard> program) {
         //Not needed for testing
     }
+
+    @Override
+    public void runTurn() {
+        //Not needed for testing
+    }
+
+    @Override
+    public boolean getRobotPowerDown() {
+        return false;
+    }
 }

@@ -27,18 +27,15 @@ Spiller trykker continue powerdown og robot går i powerdown enda en runde.
 Spiller trykker ikke contine powerdown og robot går ikke i powerdown.
 
 
-runde 3
-rotate right
-move 1	tester at når du treffer alle falgende så vinner du
-velg 3 tilfeldige kort
+runde 3 - tester at når du treffer alle falgende så vinner du, når du vinner får du vinnerskjermen,
+du kan trykke quit knappen på vinnerskjermen for å lukke spillet
 
-comfirm
+Program som skal kjøres: rotate right, move1, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
 
-du vant
-
-quit tester at quit virker
-
-
+Roboten roteres mot øst av rotate right, og står på flagg 2.
+Roboten beveger seg med move1 et steg mot øst til flagg 3.
+Spiller får opp vinnerskjerm som viser spillernavn og en quit knapp.
+Spiller trykker på quit og spillet terminerer med melding: "Process finished with exit code -1"
 
 
 nytt test spill

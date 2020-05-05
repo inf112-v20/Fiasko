@@ -121,13 +121,15 @@ Roboten roteres mot øst av rotate right, og står på spawn.
 Roboten beveger seg med move3 tre steg mot øst.
 Roboten beveger seg med move2 to steg mot øst.
 Roboten beveger seg med move1 et steg mot øst.
-Roboten beveger seg med move1 et steg mot øst.
+Roboten beveger seg med move1 et steg mot øst, blir flyttet av transportbånd et steg mot nord.
 
-runde 2
-rotate right
-rotate left
-velg 3 til random kort
-pusheren skal dytte deg på andre fase i runden (siden det er en partallspusher)
+runde 2 - tester partallspusher
+
+Program som skal kjøres: rotate right, rotate left, tilfeldig, tilfeldig, tilfeldig. Trykk confirm
+
+Roboten roteres mot sør av rotate right, står på partallspusher og skiftesnøkkel blir oppdatert spawn.
+Roboten roteres mot øst av rotate left, og blir skubbet av brettet av partallspusheren så roboten dør.
+
 
 runde 3
 respawner på skiftesnøkkelen du ble dyttet av

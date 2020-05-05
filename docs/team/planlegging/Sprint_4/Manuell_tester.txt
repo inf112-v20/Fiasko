@@ -1,7 +1,7 @@
 runde 1 - tester tannhjule til høyre, tannhjule til venstre, sakte transport bånd, høyre vrid sakte transport,
 raskt transport bånd, flag 1 blir registrert og vist
 
-program som skal kjøres: backup, move1, move2, rotate left, u-turn. Trykk confirm
+Program som skal kjøres: backup, move1, move2, rotate left, u-turn. Trykk confirm
 
 Robot beveger seg sør fra spawnpoint og blir rotert av tannhjul så den peker øst.
 Robot beveger seg med move1 et steg øst og blir rotert av tannhjul så den peker nord.
@@ -12,18 +12,20 @@ Robot roteres mot sør av u-turn og blir flyttet av raskt transportbånd to steg
 Det forventes markert nede til høyre for blidet av roboten.
 
 
-runde 2
-rotet left
-move 2	tester flag 2 blir registrert
-rotate right
-u turn
-move 3	tester at spiller dør av å gå av brettet
+runde 2 - tester at flag 2 blir registrert, roboten dør av å gå av brettet, comfirm + powerdown, continue powerdown,
+ikke ta continue powerdown
 
-comfirm + powerdown  tester at powerdown virker
+Program som skal kjøres: rotate left, move2, rotate right, u-turn, move3. Trykk comfirm + powerdown
 
-continue powerdown click tester at continue powerdown virker
+Roboten roteres mot øst av rotate left, og står på flagg 1.
+Roboten beveger seg med move2 to steg øst til flagg 2, som blir registrert og markert.
+Roboten roteres mot sør av rotate right, og står på flagg 2.
+Roboten roteres mot nord av u-turn, og står på flagg 2.
+Roboten beveger seg med move3 tre steg nord og går av brettet. Roboten dør og et hjerte forsvinner nede på skjermen.
+Roboten respawner på flagg 2 og går i powerdown.
+Spiller trykker continue powerdown og robot går i powerdown enda en runde.
+Spiller trykker ikke contine powerdown og robot går ikke i powerdown.
 
-continue powerdown vent tester at det å ikke ta continue powerdown virker
 
 runde 3
 rotate right

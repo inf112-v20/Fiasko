@@ -51,7 +51,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 
 ## Deloppgave 2
 ### Brukerhistorier runde
-#### Brukerhistorie
+#### Brukerhistorie 1
 *   Som runde trenger jeg å kunne kjøre faser for å progresere spillet.
 
 *Akseptansekrav*
@@ -60,7 +60,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 *Arbeidsoppgaver*
 *   Legg til en funksjon for å kjøre fem faser.
 
-#### Brukerhistorie
+#### Brukerhistorie 2
 *   Som spiller trenger jeg å få tildelt programmeringskort for å kunne lage et program.
 
 *Akseptansekrav*
@@ -70,7 +70,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 *Arbeidsoppgaver*
 *   Legg til funksjon for å tildele programmeringskort til alle spillere.
 
-#### Brukerhistorie
+#### Brukerhistorie 3
 *   Som spiller trenger jeg å få mulighet til å annonsere powerdown for at roboten min vil kunne ta en powerdown.
 
 *Akseptansekrav*
@@ -83,7 +83,7 @@ alle klientene må forvente å mota dette objektet.
 
 *   Legg til en funksjon for å gi spiller en mulighet for å gå i powerdown.
  
-#### Brukerhistorie
+#### Brukerhistorie 4
 *   Som robot trenger jeg å kunne gå i powerdown for å kunne kurere all skade.
 
 *Akseptansekrav*
@@ -92,7 +92,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Legg til funksjon for å gå i powerdown.
 
-#### Brukerhistorie
+#### Brukerhistorie 5
 *   Som reperasjonstile trenger jeg å kunne fikse skade på roboter for å gjennomføre min funksjon.
 
 *Akseptansekrav*
@@ -102,7 +102,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Legg til en funksjon som aktiverer alle reperasjonstiles og reparere roboter som står der.
 
-#### Brukerhistorie
+#### Brukerhistorie 6
 *   Som spiller må jeg kunne levere inn mine gamle ulåste kort for å få nye kort.
 
 *Akseptansekrav*
@@ -111,7 +111,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Legg til funksjon for å samle inn kort som ikke er låst.
 
-#### Brukerhistorie
+#### Brukerhistorie 7
 *   Som spiller må jeg få mulighet til å fortsette min powerdown for å kunne fikse eventuell ny skade.
 
 *Akseptansekrav*
@@ -120,7 +120,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Legg til funksjon for å gi spillere som er i powerdown mulighet for å fortsette i powerdown.
 
-#### Brukerhistorie
+#### Brukerhistorie 8
 *   Som spiller må roboten min kunne bli respawnet for å kunne ta del i spillet videre, gitt jeg har flere liv.
 
 *Akseptansekrav*
@@ -131,7 +131,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Legg til en funksjon som gjennoppliver roboter som har flere liv.
 
-#### Brukerhistorie
+#### Brukerhistorie 9
 *   Som spiller må registrene mine bli låst ut ifra hvor mye skade jeg har, for å representere en skadet robot.
 
 *Akseptansekrav*
@@ -142,7 +142,7 @@ alle klientene må forvente å mota dette objektet.
 *   Legg til en funksjon for å låse register.
 
 ### Brukerhistorier GUI/Nettverk
-#### Brukerhistorie
+#### Brukerhistorie 10
 *   Som spiller må jeg kunne velge kort for å programmere roboten min.
 
 *Akseptansekrav*
@@ -151,7 +151,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar en bruker velge kort.
 
-#### Brukerhistorie    
+#### Brukerhistorie 11
 *   Som spiller når jeg treffer det siste flagget mitt skal/må spillet stoppe for at jeg skal kunne vinne.
 
 *Akseptansekrav*
@@ -160,7 +160,7 @@ alle klientene må forvente å mota dette objektet.
 *Arbeidsoppgaver*
 *   Lage en libgdx skjerm som sier hvilken spiller som har vunnet.
 
-#### Brukerhistorie
+#### Brukerhistorie 12
 *   Som spiller må en person også være en severe som kan dele ut informasjon til alle andre klienter for å ha et 
 sentralt distribusjons senter for informasjon.
 
@@ -170,7 +170,7 @@ sentralt distribusjons senter for informasjon.
 *Arbeidsoppgaver*
 *   Legge til funksjonalitet som starter en server dersom brukeren velger å starte som server.
 
-#### Brukerhistorie
+#### Brukerhistorie 13
 *   Som klient må jeg kunne sende inn spillernavnet mitt til serveren for å bli identifisert i spillet.
 
 *Akseptansekrav*
@@ -181,7 +181,7 @@ sentralt distribusjons senter for informasjon.
 *   Serveren må forvente å mota navn fra spillere å må bruke det navnet til å lage en spiller.
 *   Lage et grafisk grensesnitt som lar en klient koble seg til en server.
 
-#### Brukerhistorie    
+#### Brukerhistorie 14 
 *   Som spiller må jeg kunne se hvilken robot som er min for at jeg skal kunne identifisere roboten min.
 
 *Akseptansekrav*
@@ -190,7 +190,7 @@ sentralt distribusjons senter for informasjon.
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar deg se navn på alle spillere og hvilken robot som tilhører hver spiller.
 
-#### Brukerhistorie
+#### Brukerhistorie 15
 *   Som server må jeg kunne sende programmerings kortene, brett navn og en player list med alle spillerne for at 
 spillet skal bli synkronisert.
 
@@ -202,7 +202,7 @@ spillet skal bli synkronisert.
 *   Serveren må kunne sende programmeringskortene, spiller listen og brett navnet til alle klientene og 
 alle klientene må forvente å mota dette objektet.
 
-#### Brukerhistorie
+#### Brukerhistorie 16
 *   Som klient må jeg kunne sende informasjon om jeg skal i powerdown, programmet mitt og de ubrukte 
 kortene mine inn til serveren for at spillet skal bli synkronisert.
 
@@ -213,7 +213,7 @@ kortene mine inn til serveren for at spillet skal bli synkronisert.
 *Arbeidsoppgaver*
 *   Alle klienter må kunne sende inn informasjon om de skal i powerdown og programmet spilleren har programmert. 
 
-#### Brukerhistorie
+#### Brukerhistorie 17
 *   Som server må jeg kunne sende informasjon om alle som skal i powerdown og alle sine programmer for at 
 spillet skal bli synkronisert.
 
@@ -227,7 +227,7 @@ alle har samme informasjon.
 
 *   Klientene må forvente å mota denne informasjon.
 
-#### Brukerhistorie
+#### Brukerhistorie 18
 *   Som Host må jeg kunne samle inn alle ulåste kort fra spillerne for at integriteten til kortstokken skal ivaretas.
 
 *Akseptansekrav*
@@ -236,7 +236,7 @@ alle har samme informasjon.
 *Arbeidsoppgaver*
 *   Flytte ubrukte kort tilbake i hoved deck hvis denne instans av spillet inneholder en host.
 
-#### Brukerhistorie
+#### Brukerhistorie 19
 *   Som klient må jeg få mulighet til å fortsette powerdown og sende den informasjonen inn til serveren for at ønsket om 
 powerdown skal bli vedlikeholdt mellom alle klientene.
 
@@ -249,11 +249,11 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 *   Lage et grafisk grensesnitt som lar en bruker fortsette powerdown.
 *   Klienten må få mulighet til å fortsette powerdown og serveren må forvente å mota denne informasjonen. 
 
-#### Brukerhistorie
-*   Som server må jeg kunne sende informasjon om alle roboter i powerdown og sende nye programmerings kort til alle
- klientene for at spillet skal bli synkronisert.
+#### Brukerhistorie 20
+*   Som server må jeg kunne sende informasjon om alle roboter i powerdown og sende nye programmerings kort til alle 
+klientene for at spillet skal bli synkronisert.
  
- *Akseptansekrav*
+*Akseptansekrav*
 *   Serveren må kunne sende informasjon om alle roboter i powerdown og nye programmerings kort til alle klientene.
 *   Klientene må forvente å mota informasjon om powerdown og de nye programmeringskortene.
 
@@ -261,7 +261,7 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 *   Serveren må kunne sende informasjon om alle som fortsetter powerdown og nye programmeringskort. 
 *   Klienten må forvente å motta denne informasjonen.
  
-#### Brukerhistorie
+#### Brukerhistorie 21
 *   Som server må jeg kunne håndtere spillere som taper for at klienter som har tapt ikke skal bli spurt om input.
 
 *Akseptansekrav*
@@ -271,7 +271,7 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 *   Serveren makerer alle som har død og derfor ikke skal ha input fra.
 *   Serveren må håndtere en spiller som er dø og blir avkoblet og som ikke er host.
  
-#### Brukerhistorie   
+#### Brukerhistorie 22
 *   Som spiller må jeg ha et grensesnitt for å bestemme om jeg skal være server, klient eller avslutte.
 
 *Akseptansekrav*
@@ -280,7 +280,7 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar brukeren velge å starte som server, koble til en server eller avslutte spillet.
 
-#### Brukerhistorie
+#### Brukerhistorie 23
 *   Som spiller må jeg ha et grensesnitt for å bestemme om hvilken server jeg skal bli med.
 
 *Akseptansekrav*
@@ -290,7 +290,7 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 *   Lage en libgdx skjerm som viser servere som kjører på samme nettverk på default port.
 *   Skjermen må inneholde mulighet for å kunne spesifisere ip og port for en vilkårlig server.
 
-#### Brukerhistorie
+#### Brukerhistorie 24
 *   Som spiller må jeg ha et grensesnitt for å kunne skrive inn spiller navnet mitt.
 
 *Akseptansekrav*
@@ -299,7 +299,7 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar en klient skrive inn sitt spiller navn.
 
-#### Brukerhistorie    
+#### Brukerhistorie 25 
 *   Som spiller må jeg ha et grensesnitt som viser at jeg venter på noe, for å ikke bli forvirret når ingenting skjer.
 
 *Akseptansekrav*

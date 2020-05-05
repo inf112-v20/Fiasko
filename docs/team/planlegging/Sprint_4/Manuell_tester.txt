@@ -92,3 +92,37 @@ move 1
 move 3
 
 kryss ut spillet
+
+nytt spill
+
+runde 1 - bevege til test
+rotate right
+move 3
+move 2
+move 1
+move 1
+
+runde 2
+rotate right
+rotate left
+velg 3 til random kort
+pusheren skal dytte deg på andre fase i runden (siden det er en partallspusher)
+
+runde 3
+respawner på skiftesnøkkelen du ble dyttet av
+
+move 1
+velg 4 til random kort
+pusheren skal dytte deg på første fase i runden (oddetallspusher)
+siden du dør før første fase er ferdig skal respawn ikke endres
+
+runde 4
+respawner på skiftesnøkkelen du respawnet sist
+
+move 1
+velg 4 til random kort
+pusheren skal dytte deg på første fase i runden (oddetallspusher)
+du er nå tom for liv og spillet skal terminere neste runde
+
+runde 5
+spillet terminerer og du får meldingen: "[Critical] All players died. Cannot continue playing."

@@ -61,8 +61,18 @@ Respawner på skitesnøkkel med to skade.
 Spiller krysser ut spillet og spillet terminerer med melding: "Process finished with exit code -1"
 
 
-nytt spill
-runde 1 tester hull
+Spill 3:
+runde 1 - tester hull
+
+Program som skal kjøres: rotate right, move1, rotate left, u-turn, move3. Trykk confirm + powerdown
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move1 et steg mot øst.
+Roboten roteres mot nord av rotate left.
+Roboten roteres mot sør av u-turn.
+Roboten beveger seg med move3 to steg mot sør, inn i hullet og dør.
+Roboten respawner på spawn og går i powerdown for å få 0 skade.
+
 rotate right
 move 1
 rotate left

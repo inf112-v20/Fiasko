@@ -1,3 +1,6 @@
+Hver runde får du en spesifik kortstokk: en rotate right, en rotate left, en u-turn, en backup, en move 3, en move 2, tre move 1.
+Tester som krever flere roboter må testes med multiplayer (de har også automatiske tester).
+
 Spill 1:
 runde 1 - tester tannhjule til høyre, tannhjule til venstre, sakte transport bånd, høyre vrid sakte transport,
 raskt transport bånd, flag 1 blir registrert og vist
@@ -73,15 +76,8 @@ Roboten roteres mot sør av u-turn.
 Roboten beveger seg med move3 to steg mot sør, inn i hullet og dør.
 Roboten respawner på spawn og går i powerdown for å få 0 skade.
 
-rotate right
-move 1
-rotate left
-u turn
-move 3	tester hull
 
-confirm + powerdown
-
-runde 2
+runde 2 - tester
 rotate right
 move 2
 rotate left

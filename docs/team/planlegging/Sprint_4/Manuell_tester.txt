@@ -77,14 +77,17 @@ Roboten beveger seg med move3 to steg mot sør, inn i hullet og dør.
 Roboten respawner på spawn og går i powerdown for å få 0 skade.
 
 
-runde 2 - tester
-rotate right
-move 2
-rotate left
-u turn
-move 3 tester pit
+runde 2 - tester pit
 
-confirm + powerdown
+Program som skal kjøres: rotate right, move2, rotate left, u-turn, move3. Trykk confirm + powerdown
+
+Roboten roteres mot øst av rotate right, og står på spawn.
+Roboten beveger seg med move2 et steg mot øst.
+Roboten roteres mot nord av rotate left.
+Roboten roteres mot sør av u-turn.
+Roboten beveger seg med move3 to steg mot sør, inn i pitten og dør.
+Roboten respawner på spawn og går i powerdown for å få 0 skade.
+
 
 runde 3
 rotate right

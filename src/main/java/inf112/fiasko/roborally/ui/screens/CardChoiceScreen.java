@@ -39,8 +39,8 @@ public class CardChoiceScreen extends InteractiveScreen {
     private final ShapeRenderer shapeRenderer;
     private final List<CardRectangle> chosenCards;
     private final int maxCards;
-    private long timerStarted;
     private final InteractableGame game;
+    private long timerStarted;
 
     /**
      * Instantiates a new card choice screen

@@ -39,7 +39,7 @@ public final class DeckLoaderUtil {
      * Loads programming cards from a file
      *
      * @param cardFile The file containing the cards to load
-     * @return  A deck of programming cards
+     * @return A deck of programming cards
      * @throws IOException If the programming cards file is invalid
      */
     private static ProgrammingCardDeck loadProgrammingCardsDeck(String cardFile) throws IOException {

@@ -42,7 +42,7 @@ public class UsernameScreen extends AbstractScreen {
             public void touchUp(InputEvent e, float x, float y, int point, int button) {
                 if (nameInvalid(textInput.getText())) {
                     JOptionPane.showMessageDialog(null, "Username must be unique, not " +
-                            "empty and less than 21 characters.");
+                            "empty and less than 21 characters.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 if (roboRallyWrapper.server == null) {

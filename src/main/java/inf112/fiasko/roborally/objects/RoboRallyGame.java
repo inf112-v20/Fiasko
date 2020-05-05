@@ -25,6 +25,7 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private final boolean host;
     private final String playerName;
     private final RoboRallyServer server;
+    private final Boolean testingMode;
     private Phase phase;
     private Board gameBoard;
     private List<BoardElementContainer<Tile>> repairTiles;
@@ -34,15 +35,14 @@ public class RoboRallyGame implements DrawableGame, InteractableGame {
     private List<ProgrammingCard> program;
     private ProgrammingCardDeck playerHand;
     private ProgrammingCardDeck extraCards;
-    private final Boolean testingMode;
 
     /**
      * Instantiates a new Robo Rally game
      *
-     * @param playerList A list of all the players participating in the game
-     * @param boardName  The playerName of the board to use
-     * @param playerName The name of the player of this instance of the game
-     * @param server     The server if this player is host. Should be null otherwise
+     * @param playerList  A list of all the players participating in the game
+     * @param boardName   The playerName of the board to use
+     * @param playerName  The name of the player of this instance of the game
+     * @param server      The server if this player is host. Should be null otherwise
      * @param testingMode Whether the game should use the test deck rather than the proper deck
      */
     public RoboRallyGame(List<Player> playerList, String boardName, String playerName,

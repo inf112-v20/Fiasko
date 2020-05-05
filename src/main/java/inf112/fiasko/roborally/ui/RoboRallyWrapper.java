@@ -4,10 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 import inf112.fiasko.roborally.networking.RoboRallyClient;
 import inf112.fiasko.roborally.networking.RoboRallyServer;
 import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.RoboRallyGame;
+import inf112.fiasko.roborally.utility.TextureConverterUtil;
 
 /**
  * This class acts as a wrapper around the different screens of the game
@@ -35,6 +37,9 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
     public void dispose() {
         batch.dispose();
         font.dispose();
+        for (Disposable disposable : TextureConverterUtil.getDisposableElements()) {
+            disposable.dispose();
+        }
     }
 
     @Override
@@ -47,14 +52,10 @@ public class RoboRallyWrapper extends Game implements RoboRallyUI {
         this.roboRallyGame = game;
     }
 
-    /**
-     * Quits the game after logging the input as an error
-     *
-     * @param string The error causing the game to quit
-     */
+    @Override
     public void quit(String string) {
         Gdx.app.error("Critical", string);
-        Gdx.app.exit();
+        quit();
     }
 
     @Override

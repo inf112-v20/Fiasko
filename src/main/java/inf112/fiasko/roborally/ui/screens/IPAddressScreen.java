@@ -77,7 +77,8 @@ public class IPAddressScreen extends AbstractScreen {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Could not connect to the server."
-                            + " Please make sure the ip address you typed is correct, and that the server is online.");
+                                    + " Please make sure the ip address you typed is correct, and that the server is online.",
+                            "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

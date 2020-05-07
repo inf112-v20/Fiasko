@@ -56,6 +56,7 @@ public class BoardActiveScreen extends InteractiveScreen {
         viewport = new ExtendViewport(viewPortWidth, viewPortHeight, camera);
 
         lastTouch = new Vector2();
+        resetCamera();
     }
 
     @Override

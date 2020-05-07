@@ -3,7 +3,7 @@ package inf112.fiasko.roborally.utility;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.esotericsoftware.kryonet.Connection;
 import inf112.fiasko.roborally.objects.DrawableGame;
-import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.ui.DrawableObject;
 import inf112.fiasko.roborally.objects.Particle;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.Robot;

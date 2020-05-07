@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.fiasko.roborally.GdxTestRunner;
+import inf112.fiasko.roborally.ui.DrawableObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

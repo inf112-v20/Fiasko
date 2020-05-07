@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import inf112.fiasko.roborally.objects.DrawableGame;
-import inf112.fiasko.roborally.objects.DrawableObject;
+import inf112.fiasko.roborally.ui.DrawableObject;
 import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.Robot;

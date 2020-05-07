@@ -1,4 +1,4 @@
-package inf112.fiasko.roborally.objects;
+package inf112.fiasko.roborally.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

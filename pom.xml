@@ -43,12 +43,6 @@
 
         <dependency>
             <groupId>com.badlogicgames.gdx</groupId>
-            <artifactId>gdx-backend-lwjgl</artifactId>
-            <version>1.9.9</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx-backend-headless</artifactId>
             <version>1.9.9</version>
         </dependency>

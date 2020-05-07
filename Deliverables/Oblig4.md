@@ -14,7 +14,7 @@ Rollefordelingen i teamet fungerer fint slik som vi har det.
 
 ### Retrospektiv
 #### Plan
-Det vi planlaa var å ha tre digitale møter per korte sprint (en uke) for parprogrammering, 
+Det vi planla var å ha tre digitale møter per korte sprint (en uke) for parprogrammering, 
 planlegging og generell diskusjon rundt prosjektet. Vi bruker oppsettet til scrum med parprogrammering lagt til.
 Dette var metodikken vi planlagte å bruke fra starten av prosjektet og det har fortsatt å være dette oppsettet vi 
 har valgt bruke gjennom hele prosjektet.
@@ -309,3 +309,6 @@ klientene for at spillet skal bli synkronisert.
 
 *Arbeidsoppgaver*
 *   Lage en libgdx skjerm som viser at spillet venter på noe.
+
+## Deloppgave 3
+-   For dokumentasjon om bygging, testing og kjøring, se [README.md](../README.md).

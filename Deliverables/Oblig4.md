@@ -10,11 +10,11 @@ Rollefordelingen i teamet fungerer fint slik som vi har det.
 
 *   Vi skulle passet mer på i starten å ikke lage isfjell ved oppdeling av arbeidsoppgaver.
 
-*   Alltid lage brukerhistorier før implementering.
+*   Det er viktig å alltid lage brukerhistorier før implementering.
 
 ### Retrospektiv
 #### Plan
-Det vi planlagte var å ha tre digitale møter per korte sprint (en uke) for parprogrammering, 
+Det vi planla var å ha tre digitale møter per korte sprint (en uke) for parprogrammering, 
 planlegging og generell diskusjon rundt prosjektet. Vi bruker oppsettet til scrum med parprogrammering lagt til.
 Dette var metodikken vi planlagte å bruke fra starten av prosjektet og det har fortsatt å være dette oppsettet vi 
 har valgt bruke gjennom hele prosjektet.
@@ -28,11 +28,12 @@ legge seg til i oppgaven på prosjekttavlen for så å flytte oppgaven fra "To d
 
 #### Gjennomførelse
 Vi har gjennomført planen vår som planlagt.
-Det vi syntes at vi har gjort bra er at alle har vært tilstede på alle møter vi har hatt.
+Det vi syntes at vi har gjort bra er at (nesten) alle har vært tilstede på alle møter vi har hatt.
 
 #### Forbedringspunkter
-Vi ville kommunisert med gruppeleder på et tidligere tidspunkt for å klarere hvilket krav som faktisk skal møtes 
-til innlevering. I tillegg til å sjekke retteskjema. Dele opp arbeidsoppgaver i passelige biter, for å unngå isfjell.
+Vi ville kommunisert med gruppeleder på et tidligere tidspunkt for å klarere hvilke krav som faktisk skal møtes 
+til innlevering, i tillegg til å sjekke retteskjemet. Vi har lært det er viktig å dele opp arbeidsoppgaver i passelige 
+biter, for å unngå isfjell.
 Alltid lag brukerhistorie før implementering, et problem vi hadde i starten. 
 Ha tester som automatisk sjekker at alt funker som det skal, og lag manuelle tester for det som ikke 
 kan testes automatisk. Tenk på funksjonalitet i forhold til lettvinthet ved implementasjon av ting som multiplayer. 
@@ -43,9 +44,9 @@ Prosjektmetodikken vi har valgt ville vi også brukt hvis vi måtte begynt på n
 ### Gruppedynamikk og kommunikasjon
 Kommunikasjonen innad i teamet har i all hovedsak fungert fint.
 Vi brukte allerede online møter før nedstenging, så da gikk vi fra to timer til 8 timer online møte i uken. 
-Vi jobber typisk først sammen for så å dele oss opp i flere samtaler ut fra hvem som jobber sammen.
+Vi jobber typisk først sammen for så å dele oss opp i flere samtaler ut ifra hvem som jobber sammen.
 Visualisering i form av tavle ble noe vanskeligere når vi måtte bruke skjermdeling av paint i stedet for 
-en fysisk tavle. Når vi ikke har fysisk møter, ser vi heller ikke gruppeleder, noe som førte til mindre kommunikasjon.
+en fysisk tavle. Når vi ikke hadde fysisk møter, så vi heller ikke gruppeleder, noe som førte til mindre kommunikasjon.
 Når vi sitter i forskjellige samtaler er det også vanskeligere for teamleder å ha oversikt over hele gruppen. 
 Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 
@@ -98,7 +99,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 
 -   Vise låste kort
 
-### Brukerhistorier runde
+### Brukerhistorier for en runde
 #### Brukerhistorie 1
 *   Som runde trenger jeg å kunne kjøre faser for å progresere spillet.
 
@@ -112,7 +113,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 *   Som spiller trenger jeg å få tildelt programmeringskort for å kunne lage et program.
 
 *Akseptansekrav*
-*   Del ut programmeringskort fra spillet sitt dekk til hver spiller.
+*   Del ut programmeringskort fra spillet sin kortstokk til hver spiller.
 *   Spillere får antall programmeringskort ut ifra hvor mye skade de har blitt påført.
 
 *Arbeidsoppgaver*
@@ -169,7 +170,7 @@ alle klientene må forvente å mota dette objektet.
 *   Legg til funksjon for å gi spillere som er i powerdown mulighet for å fortsette i powerdown.
 
 #### Brukerhistorie 8
-*   Som spiller må roboten min kunne bli respawnet for å kunne ta del i spillet videre, gitt jeg har flere liv.
+*   Som spiller må roboten min kunne bli respawnet for å kunne ta del i spillet videre, gitt at den har flere liv.
 
 *Akseptansekrav*
 *   En robot som dør får ett mindre liv.
@@ -184,79 +185,80 @@ alle klientene må forvente å mota dette objektet.
 
 *Akseptansekrav*
 *   Roboter med mer enn fire skade, får låst antall register over fire skade.
-*   Kort som står i låste register blir ikke samlet inn og kan ikke endres.
+*   Kort som står i låste registre blir ikke samlet inn og kan ikke endres.
 
 *Arbeidsoppgaver*
-*   Legg til en funksjon for å låse register.
+*   Legg til en funksjon for å låse registre.
 
-### Brukerhistorier GUI/Nettverk
+### Brukerhistorier for GUI/Nettverk
 #### Brukerhistorie 10
 *   Som spiller må jeg kunne velge kort for å programmere roboten min.
 
 *Akseptansekrav*
-*   Det finnes et grafisk grensesnitt som velger kort.
+*   Det finnes et grafisk grensesnitt for å velge kort.
 
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar en bruker velge kort.
 
 #### Brukerhistorie 11
-*   Som spiller når jeg treffer det siste flagget mitt skal/må spillet stoppe for at jeg skal kunne vinne.
+*   Som spiller, når jeg treffer det siste flagget mitt skal/må spillet stoppe for at jeg skal kunne vinne.
 
 *Akseptansekrav*
 *   Det blir vist en skjerm som sier hvem som vinner.
 
 *Arbeidsoppgaver*
 *   Lage en libgdx skjerm som sier hvilken spiller som har vunnet.
+*   Få spillet til å ikke fortsette til neste runde, men bytte til vinneskjermen i stedet
 
 #### Brukerhistorie 12
-*   Som spiller må en person også være en severe som kan dele ut informasjon til alle andre klienter for å ha et 
-sentralt distribusjons senter for informasjon.
+*   Som spiller må en person også være en server som kan dele ut informasjon til alle klienter for å ha et 
+sentralt distribusjons-senter for informasjon.
 
 *Akseptansekrav*
 *   Det finnes en funksjon som lar deg velge å bli en server.
 
 *Arbeidsoppgaver*
+*   Legge til en grafisk knapp som lar spilleren starte en serever
 *   Legge til funksjonalitet som starter en server dersom brukeren velger å starte som server.
 
 #### Brukerhistorie 13
 *   Som klient må jeg kunne sende inn spillernavnet mitt til serveren for å bli identifisert i spillet.
 
 *Akseptansekrav*
-*   Det finnes et grafisk grensesnitt som lar klienten skrive inn navnet sitt og sender det til serveren.
-*   Serveren må forvente å mota navnet fra spilleren.
+*   Det finnes et grafisk grensesnitt som lar klienten skrive inn navnet sitt og sende det til serveren.
+*   Serveren må forvente å motta navnet fra spilleren.
 
 *Arbeidsoppgaver*
-*   Serveren må forvente å mota navn fra spillere å må bruke det navnet til å lage en spiller.
+*   Serveren må forvente å motta navn fra spillere og må bruke det navnet til å lage en spiller.
 *   Lage et grafisk grensesnitt som lar en klient koble seg til en server.
 
-#### Brukerhistorie 14 
+#### Brukerhistorie 14
 *   Som spiller må jeg kunne se hvilken robot som er min for at jeg skal kunne identifisere roboten min.
 
 *Akseptansekrav*
-*   Brettet må kunne vise hvilken robot som passere med hvilken spiller.
+*   Brettet må kunne vise hvilken robot som hører til hvilken spiller.
 
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar deg se navn på alle spillere og hvilken robot som tilhører hver spiller.
 
 #### Brukerhistorie 15
-*   Som server må jeg kunne sende programmerings kortene, brett navn og en player list med alle spillerne for at 
-spillet skal bli synkronisert.
+*   Som server må jeg kunne sende brettnavn og en spillerliste med alle spillerne for at spillet skal bli synkronisert.
 
 *Akseptansekrav*
-*   Serveren må sende programmeringskort, brett navnet og en liste med alle spilleren til alle klientene.
-*   Klientene må forvente å mota programmeringskort, brett navnet og en liste med alle spilleren.
+*   Serveren må sende brettnavnet og en liste med alle spillerne til alle klientene.
+*   Klientene må forvente å mota brettnavnet og en liste med alle spillerne.
 
 *Arbeidsoppgaver*
-*   Serveren må kunne sende programmeringskortene, spiller listen og brett navnet til alle klientene og 
-alle klientene må forvente å mota dette objektet.
+*   Serveren må kunne sende spillerlisten og brettnavnet til alle klientene, og 
+alle klientene må forvente å motta dette objektet.
 
 #### Brukerhistorie 16
-*   Som klient må jeg kunne sende informasjon om jeg skal i powerdown, programmet mitt og de ubrukte 
-kortene mine inn til serveren for at spillet skal bli synkronisert.
+*   Som klient må jeg kunne sende informasjon om jeg skal i powerdown og programmet mitt inn til serveren for at spillet 
+skal bli synkronisert.
 
 *Akseptansekrav*
-*   Klienten må kunne sende powerdown, programmet mitt og de ubrukte kortene inn til serveren.
-*   Serven må forvente å mota informasjon om powerdown, programmet til klienten og de ubrukte kortene til klienten.
+*   Klienten må kunne sende powerdown og programmet mitt inn til serveren.
+*   Serven må forvente å motta informasjon om powerdown og programmet til klienten.
 
 *Arbeidsoppgaver*
 *   Alle klienter må kunne sende inn informasjon om de skal i powerdown og programmet spilleren har programmert. 
@@ -267,7 +269,7 @@ spillet skal bli synkronisert.
 
 *Akseptansekrav*
 *   Serveren må kunne sende informasjon om alle som skal i powerdown til alle klientene.
-*   Klientene må forvente å mota informasjon om alle som skal i powerdown.
+*   Klientene må forvente å motta informasjon om alle som skal i powerdown.
 
 *Arbeidsoppgaver*
 *   Informasjon om powerdown og programmeringskort må sendes tilbake til alle klienter slik at 
@@ -282,7 +284,7 @@ alle har samme informasjon.
 *   Host må samle inn alle de ulåste kortene ut ifra programmene som blir mottatt fra serveren.
 
 *Arbeidsoppgaver*
-*   Flytte ubrukte kort tilbake i hoved deck hvis denne instans av spillet inneholder en host.
+*   Flytte ubrukte kort tilbake i hovedkortstokken hvis denne instansen av spillet er en host.
 
 #### Brukerhistorie 19
 *   Som klient må jeg få mulighet til å fortsette powerdown og sende den informasjonen inn til serveren for at ønsket om 
@@ -295,7 +297,7 @@ powerdown skal bli vedlikeholdt mellom alle klientene.
 
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar en bruker fortsette powerdown.
-*   Klienten må få mulighet til å fortsette powerdown og serveren må forvente å mota denne informasjonen. 
+*   Klienten må få mulighet til å fortsette powerdown og serveren må forvente å motta denne informasjonen. 
 
 #### Brukerhistorie 20
 *   Som server må jeg kunne sende informasjon om alle roboter i powerdown og sende nye programmerings kort til alle 
@@ -303,7 +305,7 @@ klientene for at spillet skal bli synkronisert.
  
 *Akseptansekrav*
 *   Serveren må kunne sende informasjon om alle roboter i powerdown og nye programmerings kort til alle klientene.
-*   Klientene må forvente å mota informasjon om powerdown og de nye programmeringskortene.
+*   Klientene må forvente å motta informasjon om powerdown og de nye programmeringskortene.
 
 *Arbeidsoppgaver*
 *   Serveren må kunne sende informasjon om alle som fortsetter powerdown og nye programmeringskort. 
@@ -317,19 +319,19 @@ klientene for at spillet skal bli synkronisert.
 
 *Arbeidsoppgaver*
 *   Serveren makerer alle som har død og derfor ikke skal ha input fra.
-*   Serveren må håndtere en spiller som er dø og blir avkoblet og som ikke er host.
+*   Serveren må håndtere en spiller som er død og blir frakoblet og som ikke er host.
  
 #### Brukerhistorie 22
 *   Som spiller må jeg ha et grensesnitt for å bestemme om jeg skal være server, klient eller avslutte.
 
 *Akseptansekrav*
-*   Det finnes et grafisk grensesnitt for å kunne velge å være server, klient eller å avslutte. 
+*   Det finnes et grafisk grensesnitt for å kunne velge å være server, klient eller å avslutte.
 
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar brukeren velge å starte som server, koble til en server eller avslutte spillet.
 
 #### Brukerhistorie 23
-*   Som spiller må jeg ha et grensesnitt for å bestemme om hvilken server jeg skal bli med.
+*   Som spiller må jeg ha et grensesnitt for å bestemme hvilken server jeg skal koble til.
 
 *Akseptansekrav*
 *   Det finnes et grafisk grensesnitt for å kunne velge server.
@@ -339,10 +341,10 @@ klientene for at spillet skal bli synkronisert.
 *   Skjermen må inneholde mulighet for å kunne spesifisere ip og port for en vilkårlig server.
 
 #### Brukerhistorie 24
-*   Som spiller må jeg ha et grensesnitt for å kunne skrive inn spiller navnet mitt.
+*   Som spiller må jeg ha et grensesnitt for å kunne skrive inn spiller-navnet mitt.
 
 *Akseptansekrav*
-*   Det finnes et grafisk grensesnitt for å kunne skrive inn spiller navnet.
+*   Det finnes et grafisk grensesnitt for å kunne skrive inn spiller-navnet.
 
 *Arbeidsoppgaver*
 *   Lage et grafisk grensesnitt som lar en klient skrive inn sitt spiller navn.

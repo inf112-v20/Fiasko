@@ -56,7 +56,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 
 ### Systemkrav denne sprinten
 
-##### MVP Krav
+#### MVP Krav
 
 *   En spiller taper når de mister alle liv.
 
@@ -83,22 +83,15 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 
 *   Ikke samle sammen kort som er låst.
 
-##### Nye implementerte NTH (Nice to have)
+#### Nye implementerte NTH (Nice to have)
 
 *   Kunne velge hvilket brett man vil spille på
-
 *   Flere funksjonelle tiles (partalls pushere og oddetalls pushere)
-
 *   Bedre grafikk for bedre brukeropplevelse (informasjon som liv, skade etc.)
-
 *   Automatisk scanning av LAN
-
 *   Kunne velge hvilken port man vil
-
 *   Host kan se antall spillere koblet til spillet før start
-
 *   En spiller har valget mellom å se på spillet eller disconnecte etter han/hun har tapt.
-
 *   Vise låste kort
 
 ### Brukerhistorier for en runde

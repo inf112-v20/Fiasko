@@ -362,6 +362,10 @@ Vi valgte å ha med powerdown i MVP for å forlenge lengden på spillet og gjør
 Den eneste kjente bugen er at når en spiller sier at den skal i powerdown neste runde og dør i inneverende runde, går 
 den automatisk i powerdown uten å få mulighet til å avbryte powerdown.
 
+Det finnes også noen advarsler som dukker opp på noen datamaskiner på grunn av noen av avhengighetene til spillet, men 
+det er såvidt vi vet ingen ting å gjøre med bortsett fra å vente på oppdateringer av avhengighetene. Disse advarslene 
+påvirker ikke spillet.
+
 ## Deloppgave 3
 For dokumentasjon om bygging, testing og kjøring, samt ekstra informasjon om grensesnitt og nettverk, se 
 [readme](../README.md) og [wiki](https://github.com/inf112-v20/Fiasko/wiki).

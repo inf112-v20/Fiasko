@@ -93,6 +93,7 @@ Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 *   Host kan se antall spillere koblet til spillet før start
 *   En spiller har valget mellom å se på spillet eller disconnecte etter han/hun har tapt.
 *   Vise låste kort
+*   Vise en timer når alle andre spillere har låst programmet sitt
 
 ### Brukerhistorier for en runde
 #### Brukerhistorie 1

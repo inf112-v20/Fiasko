@@ -30,7 +30,7 @@ public class Player {
     }
 
     /**
-     * Empty constructor required by kryo
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
      */
     public Player() {
     }

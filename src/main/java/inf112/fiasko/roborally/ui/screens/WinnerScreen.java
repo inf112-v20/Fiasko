@@ -26,7 +26,19 @@ public class WinnerScreen extends AbstractScreen {
         stage.addActor(quitButton);
         quitButton.setY(applicationHeight / 2f);
         camera.setToOrtho(false, applicationWidth, applicationHeight);
-        quitButton.addListener(new ClickListener() {
+        quitButton.addListener(getQuitButtonListener());
+        quitButton.setX(applicationWidth / 2f + quitButton.getWidth() / 2);
+        this.roboRallyWrapper = roboRallyWrapper;
+        camera.setToOrtho(false, applicationWidth, applicationHeight);
+    }
+
+    /**
+     * Gets the listener for the quit button
+     *
+     * @return A click listener to trigger on the quit button
+     */
+    private ClickListener getQuitButtonListener() {
+        return new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
@@ -36,10 +48,7 @@ public class WinnerScreen extends AbstractScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
             }
-        });
-        quitButton.setX(applicationWidth / 2f + quitButton.getWidth() / 2);
-        this.roboRallyWrapper = roboRallyWrapper;
-        camera.setToOrtho(false, applicationWidth, applicationHeight);
+        };
     }
 
     @Override

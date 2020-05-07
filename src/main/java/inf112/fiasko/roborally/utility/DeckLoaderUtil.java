@@ -15,6 +15,9 @@ import java.util.List;
  */
 public final class DeckLoaderUtil {
 
+    private DeckLoaderUtil() {
+    }
+
     /**
      * Returns a programming card deck containing all official programming cards
      *

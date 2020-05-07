@@ -10,6 +10,9 @@ import java.util.Random;
 public abstract class AbstractDeck<T> implements Deck<T> {
     private final List<T> cardList;
 
+    /**
+     * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
+     */
     public AbstractDeck() {
         this.cardList = new ArrayList<>();
     }

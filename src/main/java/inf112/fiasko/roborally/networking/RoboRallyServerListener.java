@@ -7,7 +7,7 @@ import inf112.fiasko.roborally.networking.containers.ErrorResponse;
 import inf112.fiasko.roborally.networking.containers.HurryResponse;
 import inf112.fiasko.roborally.networking.containers.OkayResponse;
 import inf112.fiasko.roborally.networking.containers.PowerDownContainerResponse;
-import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerDownRequest;
 import inf112.fiasko.roborally.networking.containers.ProgramsContainerResponse;
 import inf112.fiasko.roborally.networking.containers.UsernameRequest;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
@@ -28,7 +28,7 @@ class RoboRallyServerListener extends Listener {
     private final RoboRallyServer server;
     private Connection host;
     private Map<Connection, Boolean> stayInPowerDown;
-    private Map<Connection, ProgramAndPowerdownRequest> programs;
+    private Map<Connection, ProgramAndPowerDownRequest> programs;
     private boolean gameStarted = false;
 
     /**
@@ -111,8 +111,8 @@ class RoboRallyServerListener extends Listener {
             receivedUsername(connection, (UsernameRequest) object);
         } else if (object instanceof Boolean) {
             receiveContinuePowerDown(connection, (Boolean) object);
-        } else if (object instanceof ProgramAndPowerdownRequest) {
-            receiveProgramAndPowerDownRequest(connection, (ProgramAndPowerdownRequest) object);
+        } else if (object instanceof ProgramAndPowerDownRequest) {
+            receiveProgramAndPowerDownRequest(connection, (ProgramAndPowerDownRequest) object);
         }
     }
 
@@ -157,14 +157,14 @@ class RoboRallyServerListener extends Listener {
      * @param connection The connection sending the program and power down request
      * @param request    The program and power down request received
      */
-    private void receiveProgramAndPowerDownRequest(Connection connection, ProgramAndPowerdownRequest request) {
+    private void receiveProgramAndPowerDownRequest(Connection connection, ProgramAndPowerDownRequest request) {
         programs.put(connection, request);
         connection.sendTCP(new OkayResponse());
         if (receivedDataFromAllConnections(programs)) {
             Map<String, Boolean> powerDown = new HashMap<>();
             Map<String, List<ProgrammingCard>> program = new HashMap<>();
             for (Connection connected : programs.keySet()) {
-                powerDown.put(playerNames.get(connected), programs.get(connected).getPowerdown());
+                powerDown.put(playerNames.get(connected), programs.get(connected).getPowerDown());
                 program.put(playerNames.get(connected), programs.get(connected).getProgram());
             }
             server.sendToAllClients(new ProgramsContainerResponse(program, powerDown));

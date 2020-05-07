@@ -42,7 +42,32 @@ public class StartMenuScreen extends AbstractScreen {
         textInput.setText(String.valueOf(roboRallyWrapper.networkPort));
         stage.addActor(textInput);
 
-        serverButton.addListener(new ClickListener() {
+        serverButton.addListener(getCreateButtonListener());
+
+        TextButton clientButton = new SimpleButton("Join", roboRallyWrapper.font).getButton();
+        stage.addActor(clientButton);
+        clientButton.setY(applicationHeight / 2f);
+        camera.setToOrtho(false, applicationWidth, applicationHeight);
+        Gdx.input.setInputProcessor(stage);
+        clientButton.addListener(getJoinButtonListener());
+
+        TextButton quitButton = new SimpleButton("Quit", roboRallyWrapper.font).getButton();
+        stage.addActor(quitButton);
+        quitButton.setY(applicationHeight / 2f);
+        camera.setToOrtho(false, applicationWidth, applicationHeight);
+        quitButton.addListener(getQuitButtonListener());
+        serverButton.setX(applicationWidth / 2f - serverButton.getWidth() - clientButton.getWidth() / 2 - 10);
+        clientButton.setX(applicationWidth / 2f - clientButton.getWidth() / 2);
+        quitButton.setX(applicationWidth / 2f + clientButton.getWidth() / 2 + 10);
+    }
+
+    /**
+     * Gets the listener for the create button
+     *
+     * @return A click listener to trigger on the create button
+     */
+    private ClickListener getCreateButtonListener() {
+        return new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
@@ -61,14 +86,16 @@ public class StartMenuScreen extends AbstractScreen {
                     roboRallyWrapper.quit("Server could not be started");
                 }
             }
-        });
+        };
+    }
 
-        TextButton clientButton = new SimpleButton("Join", roboRallyWrapper.font).getButton();
-        stage.addActor(clientButton);
-        clientButton.setY(applicationHeight / 2f);
-        camera.setToOrtho(false, applicationWidth, applicationHeight);
-        Gdx.input.setInputProcessor(stage);
-        clientButton.addListener(new ClickListener() {
+    /**
+     * Gets the listener for the join button
+     *
+     * @return A click listener to trigger on the join button
+     */
+    private ClickListener getJoinButtonListener() {
+        return new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
@@ -78,13 +105,16 @@ public class StartMenuScreen extends AbstractScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getIPAddressScreen(roboRallyWrapper));
             }
-        });
+        };
+    }
 
-        TextButton quitButton = new SimpleButton("Quit", roboRallyWrapper.font).getButton();
-        stage.addActor(quitButton);
-        quitButton.setY(applicationHeight / 2f);
-        camera.setToOrtho(false, applicationWidth, applicationHeight);
-        quitButton.addListener(new ClickListener() {
+    /**
+     * Gets the listener for the quit button
+     *
+     * @return A click listener to trigger on the quit button
+     */
+    private ClickListener getQuitButtonListener() {
+        return new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
@@ -94,10 +124,7 @@ public class StartMenuScreen extends AbstractScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 roboRallyWrapper.quit();
             }
-        });
-        serverButton.setX(applicationWidth / 2f - serverButton.getWidth() - clientButton.getWidth() / 2 - 10);
-        clientButton.setX(applicationWidth / 2f - clientButton.getWidth() / 2);
-        quitButton.setX(applicationWidth / 2f + clientButton.getWidth() / 2 + 10);
+        };
     }
 
     @Override

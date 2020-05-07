@@ -3,7 +3,6 @@ package inf112.fiasko.roborally.utility;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.esotericsoftware.kryonet.Connection;
 import inf112.fiasko.roborally.objects.DrawableGame;
-import inf112.fiasko.roborally.ui.DrawableObject;
 import inf112.fiasko.roborally.objects.Particle;
 import inf112.fiasko.roborally.objects.Player;
 import inf112.fiasko.roborally.objects.Robot;
@@ -12,6 +11,7 @@ import inf112.fiasko.roborally.objects.Wall;
 import inf112.fiasko.roborally.objects.properties.Direction;
 import inf112.fiasko.roborally.objects.properties.Position;
 import inf112.fiasko.roborally.objects.properties.RobotID;
+import inf112.fiasko.roborally.ui.DrawableObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +21,7 @@ import java.util.Map;
  * This class helps with tasks which mix primitive classes and classes from external libraries
  */
 public final class IOUtil {
+
     private IOUtil() {
     }
 

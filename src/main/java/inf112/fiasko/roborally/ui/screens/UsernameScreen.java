@@ -32,7 +32,26 @@ public class UsernameScreen extends AbstractScreen {
         TextButton confirm = new TextButton("Confirm", skin);
         confirm.setSize(300, 60);
         confirm.setPosition(applicationWidth / 2f - confirm.getWidth() / 2, 300);
-        confirm.addListener(new ClickListener() {
+        confirm.addListener(getConfirmButtonClickListener());
+        textInput = new TextField("", skin);
+        textInput.setPosition(applicationWidth / 2f - textInput.getWidth() / 2, 250);
+        textInput.setSize(150, 40);
+        stage.addActor(textInput);
+        stage.addActor(confirm);
+
+        viewport = new FitViewport(applicationWidth, applicationHeight, camera);
+        this.roboRallyWrapper = roboRallyWrapper;
+        camera.setToOrtho(false, applicationWidth, applicationHeight);
+        stage.setViewport(viewport);
+    }
+
+    /**
+     * Gets the listener for the confirm button
+     *
+     * @return A click listener to trigger on the confirm button
+     */
+    private ClickListener getConfirmButtonClickListener() {
+        return new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
@@ -52,17 +71,7 @@ public class UsernameScreen extends AbstractScreen {
                 }
 
             }
-        });
-        textInput = new TextField("", skin);
-        textInput.setPosition(applicationWidth / 2f - textInput.getWidth() / 2, 250);
-        textInput.setSize(150, 40);
-        stage.addActor(textInput);
-        stage.addActor(confirm);
-
-        viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        this.roboRallyWrapper = roboRallyWrapper;
-        camera.setToOrtho(false, applicationWidth, applicationHeight);
-        stage.setViewport(viewport);
+        };
     }
 
     /**

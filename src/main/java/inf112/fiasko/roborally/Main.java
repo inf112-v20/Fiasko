@@ -9,12 +9,12 @@ import inf112.fiasko.roborally.ui.RoboRallyWrapper;
  */
 public class Main {
     public static void main(String[] args) {
-        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Robo Rally";
-        cfg.width = 900;
-        cfg.height = 900;
-        cfg.samples = 3;
+        LwjglApplicationConfiguration configuration = new LwjglApplicationConfiguration();
+        configuration.title = "Robo Rally";
+        configuration.width = 900;
+        configuration.height = 900;
+        configuration.samples = 3;
 
-        new LwjglApplication(new RoboRallyWrapper(), cfg);
+        new LwjglApplication(new RoboRallyWrapper(), configuration);
     }
 }

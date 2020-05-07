@@ -1,6 +1,12 @@
 package inf112.fiasko.roborally.utility;
 
+/**
+ * This class helps with tasks related to string manipulation
+ */
 public final class StringUtil {
+
+    private StringUtil() {
+    }
 
     /**
      * Adds zeros to a number until it reaches a set length and converts it to a string

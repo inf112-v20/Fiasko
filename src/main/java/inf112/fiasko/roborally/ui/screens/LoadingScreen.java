@@ -3,7 +3,7 @@ package inf112.fiasko.roborally.ui.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerDownRequest;
 import inf112.fiasko.roborally.objects.properties.GameState;
 import inf112.fiasko.roborally.ui.RoboRallyWrapper;
 
@@ -68,7 +68,7 @@ public class LoadingScreen extends AbstractScreen {
             case SKIP_STAY_IN_POWER_DOWN:
                 return "Waiting for players to choose whether to stay in power down...";
             default:
-                return "Waiting for something...";
+                return "Loading...";
         }
     }
 
@@ -94,7 +94,7 @@ public class LoadingScreen extends AbstractScreen {
             case SKIP_POWER_DOWN_SCREEN:
                 roboRallyWrapper.roboRallyGame.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
                 roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
-                roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(false, new ArrayList<>()));
+                roboRallyWrapper.client.sendElement(new ProgramAndPowerDownRequest(false, new ArrayList<>()));
                 break;
             default:
                 //Ignored

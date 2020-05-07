@@ -10,7 +10,6 @@ public class UsernameRequest {
      * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
      */
     public UsernameRequest() {
-
     }
 
     /**

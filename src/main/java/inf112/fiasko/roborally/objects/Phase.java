@@ -148,15 +148,22 @@ public class Phase {
             List<ProgrammingCard> playerProgram = player.getProgram();
             if (!playerProgram.isEmpty()) {
                 ProgrammingCard programmingCard = playerProgram.get(phase - 1);
+                //Stores the original priority of the program
                 originalPriority.add(programmingCard.getPriority());
+                //Stores the player's robot
                 robotsToDoAction.add(player.getRobotID());
+                //Stores the programming card to be run
                 programToBeRun.add(programmingCard);
             }
         }
+        //Sorts the programming cards
         Collections.sort(programToBeRun);
         for (ProgrammingCard card : programToBeRun) {
-            int i = originalPriority.indexOf(card.getPriority());
-            RobotID robot = robotsToDoAction.get(i);
+            //Gets the index of the priority of the card which is equal to the index of the robot
+            int robotIndex = originalPriority.indexOf(card.getPriority());
+            //Gets the robot belonging to the player which played the programming card
+            RobotID robot = robotsToDoAction.get(robotIndex);
+            //Moves the robot according to the programming card
             makeMove(robot, card.getAction());
         }
     }
@@ -253,6 +260,7 @@ public class Phase {
                 if (game != null) {
                     game.setWinningPlayerName(player.getName());
                     game.setGameState(GameState.GAME_IS_WON);
+                    //Sleeps to prevent the game state to change before the wrapper catches up
                     try {
                         Thread.sleep(1000 * cycleDelay);
                     } catch (InterruptedException e) {

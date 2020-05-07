@@ -26,8 +26,8 @@ public class Board {
     private Map<RobotID, Robot> robots;
     private List<Robot> deadRobots;
     private List<RobotID> realDeadRobots;
-    private List<TileType> dangerousTiles;
     private List<BoardElementContainer<Wall>> wallLasers;
+    private List<BoardElementContainer<Tile>> repairTiles;
 
     /**
      * Initializes the board
@@ -54,22 +54,10 @@ public class Board {
         this.particles = new ListGrid<>(tiles.getWidth(), tiles.getHeight());
         this.deadRobots = new ArrayList<>();
         this.realDeadRobots = new ArrayList<>();
-        this.dangerousTiles = new ArrayList<>();
-        loadDangerousTileTypes();
         wallLasers = getPositionsOfWallsOnBoard(WallType.WALL_LASER_SINGLE,
                 WallType.WALL_LASER_DOUBLE, WallType.WALL_LASER_TRIPLE);
-    }
-
-    /**
-     * Adds tile types which will kill the robot to the dangerousTiles list
-     */
-    private void loadDangerousTileTypes() {
-        dangerousTiles.add(TileType.HOLE);
-        dangerousTiles.add(TileType.PIT_CORNER);
-        dangerousTiles.add(TileType.PIT_EMPTY);
-        dangerousTiles.add(TileType.PIT_FULL);
-        dangerousTiles.add(TileType.PIT_NORMAL);
-        dangerousTiles.add(TileType.PIT_U);
+        repairTiles = getPositionsOfTilesOnBoard(TileType.WRENCH,
+                TileType.WRENCH_AND_HAMMER, TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
     }
 
     /**
@@ -241,7 +229,7 @@ public class Board {
     /**
      * Removes one damage for a given robot given that it has taken som damage before
      *
-     * @param robotID the ID of the robot
+     * @param robotID The ID of the robot
      */
     public void repairRobotOnTile(RobotID robotID) {
         Robot robot = robots.get(robotID);
@@ -264,7 +252,7 @@ public class Board {
      * Get the damage of a specific robot
      *
      * @param robot The RobotID of a robot
-     * @return The amount of damage the robot has currently
+     * @return The amount of damage the robot currently has
      */
     public int getRobotDamage(RobotID robot) {
         return robots.get(robot).getDamageTaken();
@@ -299,7 +287,7 @@ public class Board {
         }
         robot.setPosition(newPosition);
         //Some tiles may kill the robot if stepped on.
-        killRobotIfStepsOnDangerousTile(robot, newPosition);
+        killRobotIfStepsInHole(robot, newPosition);
         return true;
     }
 
@@ -443,7 +431,7 @@ public class Board {
 
     /**
      * Moves all dead robots to their backups and makes them part of the board again, and if a robot has no lives
-     * it will be removed from the game.
+     * it will be removed from the game
      */
     public void respawnRobots() {
         for (Robot robot : deadRobots) {
@@ -478,14 +466,14 @@ public class Board {
             }
             return;
         }
-        int circleSize = 1;
+        int squareSize = 1;
         boolean hasRespawned = false;
         while (!hasRespawned) {
-            hasRespawned = tryRobotRespawn(robot, circleSize, startX, startY, Direction.NORTH) ||
-                    tryRobotRespawn(robot, circleSize, startX, startY, Direction.EAST) ||
-                    tryRobotRespawn(robot, circleSize, startX, startY, Direction.SOUTH) ||
-                    tryRobotRespawn(robot, circleSize, startX, startY, Direction.WEST);
-            circleSize++;
+            hasRespawned = tryRobotRespawn(robot, squareSize, startX, startY, Direction.NORTH) ||
+                    tryRobotRespawn(robot, squareSize, startX, startY, Direction.EAST) ||
+                    tryRobotRespawn(robot, squareSize, startX, startY, Direction.SOUTH) ||
+                    tryRobotRespawn(robot, squareSize, startX, startY, Direction.WEST);
+            squareSize++;
         }
     }
 
@@ -560,8 +548,6 @@ public class Board {
      * Updates backup position of all robots on a repair tile
      */
     public void updateRobotBackups() {
-        List<BoardElementContainer<Tile>> repairTiles = getPositionsOfTilesOnBoard(TileType.WRENCH,
-                TileType.WRENCH_AND_HAMMER, TileType.FLAG_1, TileType.FLAG_2, TileType.FLAG_3, TileType.FLAG_4);
         for (BoardElementContainer<Tile> repairTile : repairTiles) {
             Position position = repairTile.getPosition();
             if (hasRobotOnPosition(position)) {
@@ -751,13 +737,8 @@ public class Board {
      * @param robot       The robot attempting to move
      * @param newPosition The position the robot is attempting to move to
      */
-    private void killRobotIfStepsOnDangerousTile(Robot robot, Position newPosition) {
-        Tile tileRobotStepsOn = tiles.getElement(newPosition.getXCoordinate(), newPosition.getYCoordinate());
-        if (tileRobotStepsOn == null) {
-            throw new IllegalArgumentException("The game board is missing a tile. This should not happen.");
-        }
-        TileType tileTypeRobotStepsOn = tileRobotStepsOn.getType();
-        if (dangerousTiles.contains(tileTypeRobotStepsOn)) {
+    private void killRobotIfStepsInHole(Robot robot, Position newPosition) {
+        if (hasHole(newPosition)) {
             killRobot(robot);
         }
     }
@@ -815,12 +796,16 @@ public class Board {
      * @param wallLaser The wall laser being fired
      */
     private void fireWallLaser(BoardElementContainer<Wall> wallLaser) {
+        //Reverses direction since a laser points the opposite direction of the wall it's attached to
         Direction laserDirection = Direction.getReverseDirection(wallLaser.getElement().getDirection());
         List<Position> laserTargets = new ArrayList<>();
+        //Stores all positions visited by the laser beam in laserTargets
         getLaserTarget(laserDirection, wallLaser.getPosition(), laserTargets);
         Position hitPosition = laserTargets.get(laserTargets.size() - 1);
         WallType laserType = wallLaser.getElement().getType();
+        //Displays the laser beam in the particle grid
         updateLaserDisplay(laserTargets, laserDirection, laserType);
+        //Applies damage if the laser stops because it hits a robot
         if (getRobotOnPosition(hitPosition) != null) {
             applyLaserDamage(laserType, robots.get(getRobotOnPosition(hitPosition)));
         }

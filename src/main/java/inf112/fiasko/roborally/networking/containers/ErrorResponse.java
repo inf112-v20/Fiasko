@@ -21,7 +21,6 @@ public class ErrorResponse {
      * Empty constructor required by KryoNet. DO NOT REMOVE THIS!!!
      */
     public ErrorResponse() {
-
     }
 
     /**

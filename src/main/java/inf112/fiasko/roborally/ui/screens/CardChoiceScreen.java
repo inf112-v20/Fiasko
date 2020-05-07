@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import inf112.fiasko.roborally.networking.containers.ProgramAndPowerdownRequest;
+import inf112.fiasko.roborally.networking.containers.ProgramAndPowerDownRequest;
 import inf112.fiasko.roborally.objects.InteractableGame;
 import inf112.fiasko.roborally.objects.ProgrammingCard;
 import inf112.fiasko.roborally.objects.ProgrammingCardDeck;
@@ -121,7 +121,9 @@ public class CardChoiceScreen extends InteractiveScreen {
     }
 
     /**
-     * Confirm cards and send to server if all are chosen
+     * Confirm cards and send to server together with power down choice if all are chosen
+     *
+     * @param requestPowerDown Whether the user wants to enter power down
      */
     private void confirmCards(Boolean requestPowerDown) {
         if (chosenCards.size() == maxCards) {
@@ -131,7 +133,7 @@ public class CardChoiceScreen extends InteractiveScreen {
             game.setProgram(newProgram);
             game.setGameState(GameState.WAITING_FOR_OTHER_PLAYERS_PROGRAMS);
             roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getLoadingScreen(this.roboRallyWrapper));
-            roboRallyWrapper.client.sendElement(new ProgramAndPowerdownRequest(requestPowerDown, newProgram));
+            roboRallyWrapper.client.sendElement(new ProgramAndPowerDownRequest(requestPowerDown, newProgram));
         } else {
             JOptionPane.showMessageDialog(null, "You need to choose all your cards"
                     + " before confirming.");

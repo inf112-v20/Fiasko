@@ -13,6 +13,9 @@ import java.util.List;
  */
 public final class GridUtil {
 
+    private GridUtil() {
+    }
+
     /**
      * Gets all elements in a grid
      *

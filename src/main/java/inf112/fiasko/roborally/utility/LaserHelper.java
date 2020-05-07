@@ -10,6 +10,9 @@ import inf112.fiasko.roborally.objects.properties.WallType;
  */
 public final class LaserHelper {
 
+    private LaserHelper() {
+    }
+
     /**
      * Gets the correct particle type from a laser type
      *

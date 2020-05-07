@@ -51,7 +51,27 @@ public class IPAddressScreen extends AbstractScreen {
         stage.addActor(selectBox);
 
 
-        joinButton.addListener(new ClickListener() {
+        joinButton.addListener(getJoinButtonListener(selectBox));
+        textInput = new TextField("", skin);
+        textInput.setPosition(applicationWidth / 2f - textInput.getWidth() / 2f, 250);
+        textInput.setSize(150, 40);
+        stage.addActor(textInput);
+        stage.addActor(joinButton);
+
+        viewport = new FitViewport(applicationWidth, applicationHeight, camera);
+        this.roboRallyWrapper = roboRallyWrapper;
+        camera.setToOrtho(false, applicationWidth, applicationHeight);
+        stage.setViewport(viewport);
+    }
+
+    /**
+     * Gets the listener to use for the join button
+     *
+     * @param selectBox The select box containing ip addresses of local servers
+     * @return A click listener to trigger on the join button
+     */
+    private ClickListener getJoinButtonListener(SelectBox<String> selectBox) {
+        return new ClickListener() {
             @Override
             public boolean touchDown(InputEvent e, float x, float y, int point, int button) {
                 return true;
@@ -77,21 +97,11 @@ public class IPAddressScreen extends AbstractScreen {
                     roboRallyWrapper.setScreen(roboRallyWrapper.screenManager.getUsernameScreen(roboRallyWrapper));
                 } catch (IOException | NumberFormatException ex) {
                     JOptionPane.showMessageDialog(null, "Could not connect to the server."
-                                    + " Please make sure the ip address you typed is correct, and that the server is online.",
-                            "Error", JOptionPane.ERROR_MESSAGE);
+                            + " Please make sure the ip address you typed is correct, and that the server is " +
+                            "online.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        });
-        textInput = new TextField("", skin);
-        textInput.setPosition(applicationWidth / 2f - textInput.getWidth() / 2f, 250);
-        textInput.setSize(150, 40);
-        stage.addActor(textInput);
-        stage.addActor(joinButton);
-
-        viewport = new FitViewport(applicationWidth, applicationHeight, camera);
-        this.roboRallyWrapper = roboRallyWrapper;
-        camera.setToOrtho(false, applicationWidth, applicationHeight);
-        stage.setViewport(viewport);
+        };
     }
 
     @Override

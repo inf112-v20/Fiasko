@@ -41,6 +41,7 @@ Selv når vi kodet med multiplayer in mind, måtte vi endre en del for å støtt
 
 Prosjektmetodikken vi har valgt ville vi også brukt hvis vi måtte begynt på nytt.
 
+#### Prosjekttavle
 ![PNG](../Deliverables/Screenshots/Prosjekttavle_07_05_2020.PNG "Skjermdump prosjekttavle")
 
 ### Gruppedynamikk og kommunikasjon
@@ -372,9 +373,11 @@ For dokumentasjon om bygging, testing og kjøring, samt ekstra informasjon om gr
 [readme](../README.md) og [wiki](https://github.com/inf112-v20/Fiasko/wiki).
 
 ### Manuell testing
-Manuelle tester finner du [her](../docs/team/planlegging/Sprint_4/Manuelle_tester.md). Mer informasjon om manuell 
+Manuelle tester finner du [her](Manuelle_tester.md). Mer informasjon om manuell 
 testing finner du [her](https://github.com/inf112-v20/Fiasko/wiki/Manuell-testing).
 
 ### UML
 ![UML](../Deliverables/Umls/UmlOblig4.png)
+
+### UML uten interfaces og nettverk
 ![UML](../Deliverables/Umls/UmlObli4Simple.png)

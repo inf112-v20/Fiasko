@@ -24,7 +24,7 @@ import java.util.Set;
 public class IPAddressScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private TextField textInput;
+    private final TextField textInput;
 
     /**
      * Instantiates a new ip address screen

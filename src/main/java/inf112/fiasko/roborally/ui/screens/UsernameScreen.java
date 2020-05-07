@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 public class UsernameScreen extends AbstractScreen {
     private final RoboRallyWrapper roboRallyWrapper;
 
-    private TextField textInput;
+    private final TextField textInput;
 
     /**
      * Instantiates a new username screen

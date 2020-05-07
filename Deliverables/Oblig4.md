@@ -374,3 +374,6 @@ den automatisk i powerdown uten å få mulighet til å avbryte powerdown.
 
 ### Manuell testing
 [Manuelle tester finner du her](../docs/team/planlegging/Sprint_4/Manuelle_tester.md)
+
+## Deloppgave 3
+-   For dokumentasjon om bygging, testing og kjøring, se [README.md](../README.md).

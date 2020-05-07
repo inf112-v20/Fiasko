@@ -373,7 +373,7 @@ For dokumentasjon om bygging, testing og kjøring, samt ekstra informasjon om gr
 [readme](../README.md) og [wiki](https://github.com/inf112-v20/Fiasko/wiki).
 
 ### Manuell testing
-Manuelle tester finner du [her](Manuelle_tester.md). Mer informasjon om manuell 
+Manuelle tester finner du [her](ManuelleTester.md). Mer informasjon om manuell 
 testing finner du [her](https://github.com/inf112-v20/Fiasko/wiki/Manuell-testing).
 
 ### UML

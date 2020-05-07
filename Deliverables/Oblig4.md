@@ -363,10 +363,12 @@ Den eneste kjente bugen er at når en spiller sier at den skal i powerdown neste
 den automatisk i powerdown uten å få mulighet til å avbryte powerdown.
 
 ## Deloppgave 3
-*   For dokumentasjon om bygging, testing og kjøring, se [README.md](../README.md).
+For dokumentasjon om bygging, testing og kjøring, samt ekstra informasjon om grensesnitt og nettverk, se 
+[readme](../README.md) og [wiki](https://github.com/inf112-v20/Fiasko/wiki).
 
 ### Manuell testing
-[Manuelle tester finner du her](../docs/team/planlegging/Sprint_4/Manuelle_tester.md)
+Manuelle tester finner du [her](../docs/team/planlegging/Sprint_4/Manuelle_tester.md). Mer informasjon om manuell 
+testing finner du [her](https://github.com/inf112-v20/Fiasko/wiki/Manuell-testing).
 
 ### UML
 ![UML](../Deliverables/Umls/UmlOblig4.png)

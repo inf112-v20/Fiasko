@@ -28,5 +28,5 @@ For mer informasjon gå til [wikien](https://github.com/inf112-v20/Fiasko/wiki/B
 -   T: Denne knappen lar deg starte spillet i en modus spesialisert for manuell testing. 
      Denne modusen støtter bare en spiller.
 
-## Bygging og kompilering
+## Bygging og kjøring
 Se relevant side på [wikien](https://github.com/inf112-v20/Fiasko/wiki/Bygging-og-kj%C3%B8ring).

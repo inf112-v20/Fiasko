@@ -41,6 +41,8 @@ Selv når vi kodet med multiplayer in mind, måtte vi endre en del for å støtt
 
 Prosjektmetodikken vi har valgt ville vi også brukt hvis vi måtte begynt på nytt.
 
+![PNG](../Deliverables/Screenshots/Prosjekttavle_07_05_2020.PNG "Skjermdump prosjekttavle")
+
 ### Gruppedynamikk og kommunikasjon
 Kommunikasjonen innad i teamet har i all hovedsak fungert fint.
 Vi brukte allerede online møter før nedstenging, så da gikk vi fra to timer til 8 timer online møte i uken. 
@@ -309,3 +311,6 @@ klientene for at spillet skal bli synkronisert.
 
 *Arbeidsoppgaver*
 *   Lage en libgdx skjerm som viser at spillet venter på noe.
+
+### Manuell testing
+[Manuelle tester finner du her](../docs/team/planlegging/Sprint_4/Manuelle_tester.md)

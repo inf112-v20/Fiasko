@@ -50,6 +50,54 @@ Når vi sitter i forskjellige samtaler er det også vanskeligere for teamleder �
 Det tar lenger tid å få hjelp enn om vi satt i samme rom.
 
 ## Deloppgave 2
+
+### Systemkrav denne sprinten
+
+##### MVP Krav
+
+-   En spiller taper når de mister alle liv.
+
+-   En spiller må kunne vinne.
+
+-   Runder (Består av 5 faser. Du får nye kort, reparasjon, powerdown etc.).
+
+-   Faser (Ett kort fra hver spiller blir brukt, og objekter på brettet interagerer. 
+    Registrering av flagg skjer etter hver fase).
+
+-   Kunne spille med andre spillere over lan/internett.
+
+-   Spillere beveger seg hver fase og kort bestemmer hvem som går først.
+
+-   Velge kort i starten av runden.
+
+-   Kunne velge powerdown etter alle har låst kortene sine.
+
+-   Ved slutten av runden mister roboten en i skade hvis de står på en reparasjonsbrikke eller flagg.
+
+-   Hvis en spiller er i powerdown blir spilleren spurt (i starten av nye runden) om han vil bli i powerdown eller ikke.
+
+-   Samle inn kort i slutten av en runde.
+
+-   Ikke samle sammen kort som er låst.
+
+##### Nye implementerte NTH (Nice to have)
+
+-   Kunne velge hvilket brett man vil spille på
+
+-   Flere funksjonelle tiles (partalls pushere og oddetalls pushere)
+
+-   Bedre grafikk for bedre brukeropplevelse (informasjon som liv, skade etc.)
+
+-   Automatisk scanning av LAN
+
+-   Kunne velge hvilken port man vil
+
+-   Host kan se antall spillere koblet til spillet før start
+
+-   En spiller har valget mellom å se på spillet eller disconnecte etter han/hun har tapt.
+
+-   Vise låste kort
+
 ### Brukerhistorier runde
 #### Brukerhistorie 1
 *   Som runde trenger jeg å kunne kjøre faser for å progresere spillet.

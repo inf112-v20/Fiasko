@@ -7,12 +7,15 @@ Alle regler er hentet fra 2005 utgaven av spillguiden fra Wizards of the Coast, 
 
 ## Spillstatus
 Spillet er i hovedsak ferdig. Det er en del ekstra funksjoner og innhold som kan legges til, men all nødvendig 
-funksjonalitet er implementert og fungerende. Det kan fortsatt finnes bugs i koden, men spillet er trolig stabilt.
+funksjonalitet er implementert og fungerende i en akseptabel grad. Det kan fortsatt finnes bugs i koden, men spillet er 
+trolig stabilt.
 
 ## Javadoc
 Javadoc for hele prosjektet kan finnes [her](https://inf112-v20.github.io/Fiasko/javadoc/).
 
 ## Knapper og mus
+Her er en liten oversikt over knapper og musefunksjonalitet. 
+For mer informasjon gå til [wikien](https://github.com/inf112-v20/Fiasko/wiki/Brukergrensesnitt).
 ### Brettet
 -   Q: Tilbakestiller kamera og kamerarotasjon på brettvisningsskjermen
 -   R: Roterer kameraet på brettvisningsskjermen
@@ -25,27 +28,5 @@ Javadoc for hele prosjektet kan finnes [her](https://inf112-v20.github.io/Fiasko
 -   T: Denne knappen lar deg starte spillet i en modus spesialisert for manuell testing. 
      Denne modusen støtter bare en spiller.
 
-## Mer informasjon
-For mer informasjon gå til [wikien](https://github.com/inf112-v20/Fiasko/wiki).
-
 ## Bygging og kompilering
-
-### Forkrav for å kunne kompilere og kjøre koden
--   [java](https://www.java.com/en/download/)
--   [git](https://git-scm.com/)
--   [maven](https://maven.apache.org/)
-
-### Byggeprosedyre
-```shell script
-git clone https://github.com/inf112-v20/Fiasko.git
-cd Fiasko
-mvn clean install
-```
-Dette vil også kjøre alle tester i koden
-
-### Kjøreprosedyre
-```shell script
-cd target
-java -jar roborally-1.0-jar-with-dependencies.jar
-```
-Den produserte .jar filen kan alternativt flyttes til en annen mappe og dobbeltklikkes for å kjøres.
+Se relevant side på [wikien](https://github.com/inf112-v20/Fiasko/wiki/Bygging-og-kj%C3%B8ring).
